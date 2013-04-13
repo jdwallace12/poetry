@@ -1,6 +1,6 @@
 <head>
   <title>
-    Top Applications
+    Magnetic Poetry
   </title>
 </head>
 
@@ -9,11 +9,10 @@
 </body>
 
 <template name = "list">
-  <h2> Top Applications</h2>
   <div id="outer">
-    {{loginButtons}}
-    {{#each apps}}
-      <div class="app {{selected}}">
+    <h1 id="header">Magnetic Poetry</h1>
+    {{#each magnets}}
+      <div class="magnet {{selected}}" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
         <div class="name">{{name}}</div>
         <div class="votes">{{votes}}</div>
         <div class="voters">
@@ -21,10 +20,14 @@
             <img src="https://graph.facebook.com/{{.}}/picture"
           {{/each}}
         </div>
-        <input type="button" class="vote btn" value="vote!">
+        <!-- <input type="button" class="vote btn" value="vote!"> -->
       </div>
     {{else}}
-      No application
+      No magnets
     {{/each}}
   </div>
+</template>
+
+<template name="magnet">
+
 </template>

@@ -1,3 +1,41 @@
-.selected {
+@nice-blue: #5B83AD;
+@light-blue: (@nice-blue + #111);
+
+
+
+body {
+  padding: 30px;
+  background: #eeeeee; 
+}
+
+#header { 
+  color: white; 
+  text-align: center;
+}
+
+#outer { 
+  position: relative;
+  background: url('gray-bg.jpeg') no-repeat;
+  background-size: cover;
+
+  width: 500px; 
+  height: 500px;
+  border: 1px solid black;
+  margin: 0 auto; 
+}
+
+.login-buttons {
+  float:right;
+}
+
+.magnet {
+  position: absolute;
+  background: white;
+  padding: 5px 10px; 
+  border: 3px outset gray;
+  max-width: 100px;
+  margin: 0 auto;
+}
+.magnet:hover, .selected { 
   background: yellow;
 }
