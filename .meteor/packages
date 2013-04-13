@@ -12,8 +12,15 @@ accounts-password
 accounts-facebook
 d3
 backbone
+<<<<<<< HEAD
 less
 coffeescript
 jquery-waypoints
 bootstrap
+=======
+coffeescript
+bootstrap
+jquery-waypoints
+less
+>>>>>>> 88ecad562b8164643a387f597704a47a4fdc2056
 email
