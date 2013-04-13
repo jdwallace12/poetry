@@ -50,7 +50,7 @@ $(function () {
       prevDraggedId = e.target.id;
     }
     
-    if (now - prevDraggedTime > 250) {
+    if (now - prevDraggedTime > 1000) {
       if (!magnetId) {
         magnetId = e.target.id;
       }
