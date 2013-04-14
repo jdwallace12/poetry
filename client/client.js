@@ -3,14 +3,14 @@ Template.list.magnets = function () {
   return Magnets.find({}, {sort: {votes: -1}});
 };
 
-Template.list.selected = function() {
+Template.magnet.selected = function() {
   if (Session.get('currentMagnet') === this._id)
     return "selected";
   else
     return "";
 };
 
-Template.list.magnetId = function() {
+Template.magnet.magnetId = function() {
   return this._id;
 };
 
