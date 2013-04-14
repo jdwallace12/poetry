@@ -16,8 +16,6 @@ Meteor.methods({
 });
 
 Meteor.startup(function () {
-  console.log('Starting Magnets');
-  console.log(Magnets.find().count());
   if (Magnets.find().count() < 3) {
     var words = ["hey", "time", "let's",
                  "love", "can", "awesome",
@@ -30,7 +28,7 @@ Meteor.startup(function () {
       Magnets.insert({name: words[i], top: Math.floor(Random.fraction()*100)*5, left: Math.floor(Random.fraction()*100)*5});
     }
   } else {
-    var magnets = Magnets.find({}); 
-    debugger
+    var magnets = Magnets.find({}).fetch();
+    // _.each(magnets, function(a) { console.log(a); });
   }
 });

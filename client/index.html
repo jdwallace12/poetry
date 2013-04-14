@@ -2,6 +2,8 @@
   <title>
     Magnetic Poetry
   </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
@@ -10,24 +12,20 @@
 
 <template name = "list">
   <div id="outer">
+    <input type="button" value="init draggables for touch" class="init btn"/>
+    <br>
+    <br>
     <h1 id="header">Magnetic Poetry</h1>
     {{#each magnets}}
-      <div class="magnet {{selected}}" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
-        <div class="name">{{name}}</div>
-        <div class="votes">{{votes}}</div>
-        <div class="voters">
-          {{#each voters}}
-            <img src="https://graph.facebook.com/{{.}}/picture"
-          {{/each}}
-        </div>
-        <!-- <input type="button" class="vote btn" value="vote!"> -->
-      </div>
+      {{> magnet}}
     {{else}}
-      No magnets ... 
     {{/each}}
   </div>
 </template>
 
 <template name="magnet">
-
+  <div class="magnet {{selected}} ui-draggable" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
+    <div class="name">{{name}}</div>
+  </div>
 </template>
+

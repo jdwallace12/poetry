@@ -15,22 +15,31 @@ Template.list.magnetId = function() {
 };
 
 Template.list.events = {
-  'click div.magnet' : function () { 
-      Session.set('currentMagnet', this._id); 
-    },
-  // 'click input.vote' : function() { 
-  //     Magnets.update( Session.get('currentMagnet'), 
-  //         {$inc: {votes: 1}}); 
-  //   }
-  'mouseover div.magnet': function (e) {
+  'click input.init' : function (e, template) {
+    $('.magnet').draggable({
+      distance: 3,
+      handle: '.name', 
+      cursor: 'move'
+    });
+  }
+};
+
+Template.magnet.events = {
+  'mouseover div.magnet': function (e, template) {
     var $magnet = $(e.currentTarget);
-     
+   
     if (!$magnet.data('isDraggable')) {
-      $magnet.data('isDraggable', true).draggable({distance: 3});
-    }
+      $magnet.data('isDraggable', true).draggable({
+        distance: 3,
+        handle: '.name', 
+        cursor: 'move'
+      });
+    } 
   } 
 };
 
+Meteor.startup(function () {
+}); 
 
 $(function () {
 
@@ -41,18 +50,17 @@ $(function () {
   $('body').on('drag', '.magnet', function (e) {
     var now = new Date().getTime();
     var magnetId;
-
-    $(e.target).addClass('selected');
+    Session.set('currentMagnet', e.target.id);
 
     if (e.target.id != prevDraggedId) {
-      magnetId = e.target.id;
+      magnetId = Session.get('currentMagnet');
       elevate(magnetId);
-      prevDraggedId = e.target.id;
+      prevDraggedId = magnetId;
     }
     
     if (now - prevDraggedTime > 1000) {
       if (!magnetId) {
-        magnetId = e.target.id;
+        magnetId = magnetId;
       }
       dragged(magnetId, $(e.target).position());
       prevDraggedTime = now;
@@ -60,7 +68,6 @@ $(function () {
   });
   
   $('body').on('dragstop', '.magnet', function (e) {
-    $(e.target).removeClass('selected');
     var magnetId = e.target.id;
     elevate(magnetId);
     dragged(magnetId, $(e.target).position());
@@ -81,5 +88,4 @@ $(function () {
     Magnets.update(magnetId, {$set: {z_index: 0}});
   }
 })
-
 
