@@ -19,7 +19,9 @@ Template.list.events = {
     $('.magnet').draggable({
       distance: 3,
       handle: '.name', 
-      cursor: 'move'
+      cursor: 'move',
+      snap: true,
+      snapTolerance: 30
     });
   }
 };
@@ -32,7 +34,9 @@ Template.magnet.events = {
       $magnet.data('isDraggable', true).draggable({
         distance: 3,
         handle: '.name', 
-        cursor: 'move'
+        cursor: 'move',
+         snap: true,
+         snapTolerance: 30 
       });
     } 
   } 
