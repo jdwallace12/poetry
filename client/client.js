@@ -21,7 +21,7 @@ Template.list.events = {
       handle: '.name', 
       cursor: 'move',
       snap: true,
-      snapTolerance: 30
+      snapTolerance: 25
     });
   }
 };
@@ -36,7 +36,7 @@ Template.magnet.events = {
         handle: '.name', 
         cursor: 'move',
          snap: true,
-         snapTolerance: 30 
+         snapTolerance: 25
       });
     } 
   } 
