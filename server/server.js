@@ -25,7 +25,7 @@ Meteor.startup(function () {
                  "party", "sugar", "bear", "honey", "muffin", "can", "butt", "ass", "y", "the", "a", "an", "it", "stinks", "sucks", "fat", "one", "in", "at", "and", "as", "he", "she", "on", "Chipotle", "burrito", "mucous", "dingleberries"];
     for (var i = 0; i < words.length; i++) {
       console.log(words[i]);
-      Magnets.insert({name: words[i], top: Math.floor(Random.fraction()*100)*5, left: Math.floor(Random.fraction()*100)*5});
+      Magnets.insert({name: words[i], top: Math.floor(Random.fraction()*100)*8, left: Math.floor(Random.fraction()*100)*12});
     }
   } else {
     var magnets = Magnets.find({}).fetch();

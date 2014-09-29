@@ -14,6 +14,24 @@ Template.magnet.magnetId = function() {
   return this._id;
 };
 
+
+// Handle movieForm events
+Template.wordForm.events = {
+    'submit': function (e, tmpl) {
+        // Don't postback
+        e.preventDefault();
+ 
+        // create the new movie
+        var newWord = {
+            name: tmpl.find("#name_of_word").value
+            
+        };
+ 
+        // add the movie to the db
+        Magnets.insert(newWord);
+    }
+};
+
 Template.list.events = {
   'click input.init' : function (e, template) {
     $('.magnet').draggable({

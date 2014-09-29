@@ -12,9 +12,9 @@
 
 <template name = "list">
   <div id="outer">
-    <input type="button" value="init draggables for touch" class="init btn"/>
+   <!--  <input type="button" value="init draggables for touch" class="init btn"/>
     <br>
-    <br>
+    <br> -->
     <!-- <h1 id="header">Magnetic Poetry</h1> -->
     {{#each magnets}}
       {{> magnet}}
@@ -27,5 +27,24 @@
   <div class="magnet {{selected}} ui-draggable" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
     <div class="name">{{name}}</div>
   </div>
+      <div class="new_word_container">
+     {{>wordForm}}
+    </div>
+</template>
+
+
+<template name="wordForm">
+    <fieldset>
+    <form>
+        <div>
+            <label>              
+                <input id="name_of_word" />
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Add Word" />
+        </div>
+    </form>
+    </fieldset>
 </template>
 
