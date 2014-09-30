@@ -7,7 +7,13 @@
 </head>
 
 <body>
+  <div id="wrap">
   {{> list}}
+     <div id="footer">
+     {{>wordForm}}
+    </div>
+  
+</div>
 </body>
 
 <template name = "list">
@@ -27,9 +33,6 @@
   <div class="magnet {{selected}} ui-draggable" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
     <div class="name">{{name}}</div>
   </div>
-      <div class="new_word_container">
-     {{>wordForm}}
-    </div>
 </template>
 
 

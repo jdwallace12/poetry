@@ -1,0 +1,42 @@
+{
+  "format": "site-archive-pre1",
+  "builtBy": "Meteor METEOR@0.9.3",
+  "programs": [
+    {
+      "name": "web.browser",
+      "arch": "web.browser",
+      "path": "programs/web.browser/program.json",
+      "cordovaDependencies": {
+        "org.apache.cordova.console": "0.2.10",
+        "org.apache.cordova.inappbrowser": "0.5.1",
+        "org.apache.cordova.file": "1.3.0",
+        "org.apache.cordova.file-transfer": "0.4.4",
+        "org.apache.cordova.device": "0.2.11",
+        "com.rjfun.cordova.httpd": "https://github.com/meteor/cordova-httpd/tarball/0f1c8bc17e567c57a68427b0fe5e692ab6568d7f"
+      }
+    },
+    {
+      "name": "server",
+      "arch": "os.osx.x86_64",
+      "path": "programs/server/start.sh",
+      "cordovaDependencies": {
+        "org.apache.cordova.console": "0.2.10",
+        "org.apache.cordova.inappbrowser": "0.5.1",
+        "org.apache.cordova.file": "1.3.0",
+        "org.apache.cordova.file-transfer": "0.4.4",
+        "org.apache.cordova.device": "0.2.11",
+        "com.rjfun.cordova.httpd": "https://github.com/meteor/cordova-httpd/tarball/0f1c8bc17e567c57a68427b0fe5e692ab6568d7f"
+      }
+    },
+    {
+      "name": "ctl",
+      "arch": "os",
+      "path": "programs/ctl/start.sh",
+      "cordovaDependencies": {
+        "org.apache.cordova.console": "0.2.10"
+      }
+    }
+  ],
+  "control": "ctl",
+  "meteorRelease": "METEOR@0.9.3"
+}
