@@ -32,7 +32,9 @@ Template.wordForm.events = {
         $("#name_of_word").val("");
 
         // add the word to the db
+
         Magnets.insert(newWord);
+        
     }
 };
 

@@ -680,18 +680,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/client.js?13c2a6c4ca5469e017ef0c9946f9c77bd4525378",
-      "size": 3031,
-      "hash": "13c2a6c4ca5469e017ef0c9946f9c77bd4525378"
+      "url": "/client/client.js?7a36025dd0796ab6de2b82622c10554710e396b7",
+      "size": 3041,
+      "hash": "7a36025dd0796ab6de2b82622c10554710e396b7"
     },
     {
       "path": "app/poetry.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/poetry.js?d928ec7ec02fe13ca6d274ef4acd1c17a43ccdb3",
-      "size": 588,
-      "hash": "d928ec7ec02fe13ca6d274ef4acd1c17a43ccdb3"
+      "url": "/poetry.js?3c9cf12c71e516492e9751f2decb496dc9d065ea",
+      "size": 680,
+      "hash": "3c9cf12c71e516492e9751f2decb496dc9d065ea"
     },
     {
       "path": "354492d63e2451da530ad8ec41529d858c65a5bd.css",

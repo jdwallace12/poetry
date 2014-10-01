@@ -7,7 +7,9 @@ if (Meteor.isClient) {
     UI.body.events({
         'click #delete': function(e) {
             e.preventDefault();
-            Meteor.call('removeAllMagnets');
+            if (confirm('Are you sure you want to delete everything?')) {
+                Meteor.call('removeAllMagnets');
+            }
         }
     });
 }
