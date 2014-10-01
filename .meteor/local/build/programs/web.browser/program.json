@@ -680,9 +680,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/client.js?7a36025dd0796ab6de2b82622c10554710e396b7",
-      "size": 3041,
-      "hash": "7a36025dd0796ab6de2b82622c10554710e396b7"
+      "url": "/client/client.js?7582e834b8ff089a890938965056d8ed6c1b3c1e",
+      "size": 3141,
+      "hash": "7582e834b8ff089a890938965056d8ed6c1b3c1e"
     },
     {
       "path": "app/poetry.js",

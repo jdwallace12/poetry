@@ -1,4 +1,12 @@
-(function(){Template.list.magnets = function() {
+(function(){Meteor.methods({
+  'set_position': function(magnetId, position) {
+    console.log(position)
+    Magnets.update(magnetId, {$set: {top: position.top, left: position.left}});
+  }
+
+});
+
+Template.list.magnets = function() {
     //mongo syntax for finding everythign in Appliaations
     return Magnets.find({}, {
         sort: {
@@ -24,17 +32,9 @@ Template.wordForm.events = {
     'submit': function(e, tmpl) {
         // Don't postback
         e.preventDefault();
-
-        // create the new word
-        var newWord = {
-            name: tmpl.find("#name_of_word").value
-        };
+        // add the word to the db     
+        Magnets.insert({name: tmpl.find("#name_of_word").value, top: Math.floor(Random.fraction()*100)*6, left: Math.floor(Random.fraction()*100)*8});
         $("#name_of_word").val("");
-
-        // add the word to the db
-
-        Magnets.insert(newWord);
-        
     }
 };
 
@@ -68,9 +68,6 @@ Template.magnet.events = {
 };
 
 Meteor.startup(function() {});
-$('#delete').on("click", function(){
-  Meteor.call('removeAllMagnets');
-});
 $(function() {
 
     var prevDraggedId = '';
