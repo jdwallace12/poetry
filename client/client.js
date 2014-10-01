@@ -1,11 +1,3 @@
-Meteor.methods({
-  'set_position': function(magnetId, position) {
-    console.log(position)
-    Magnets.update(magnetId, {$set: {top: position.top, left: position.left}});
-  }
-
-});
-
 Template.list.magnets = function() {
     //mongo syntax for finding everythign in Appliaations
     return Magnets.find({}, {
