@@ -653,9 +653,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?ae30d82c3f9c09894c6f4130e3ef1daaad5290e4",
-      "size": 1968,
-      "hash": "ae30d82c3f9c09894c6f4130e3ef1daaad5290e4"
+      "url": "/client/template.index.js?5d912366ba1251ca5706378e749ae67035f7d7e7",
+      "size": 2111,
+      "hash": "5d912366ba1251ca5706378e749ae67035f7d7e7"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -680,29 +680,29 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/client.js?cd7efd6818df068e56d72521d33c66a59d5a8ecf",
-      "size": 2470,
-      "hash": "cd7efd6818df068e56d72521d33c66a59d5a8ecf"
+      "url": "/client/client.js?c2c8b900755ce10f69e18c0a668252865f134fbf",
+      "size": 3111,
+      "hash": "c2c8b900755ce10f69e18c0a668252865f134fbf"
     },
     {
       "path": "app/poetry.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/poetry.js?be8f67a0a722109a88b92dcf5f1ab70323dd383e",
-      "size": 245,
-      "hash": "be8f67a0a722109a88b92dcf5f1ab70323dd383e"
+      "url": "/poetry.js?9322b348d852a92a40f5c5e669a05d3cbb220617",
+      "size": 247,
+      "hash": "9322b348d852a92a40f5c5e669a05d3cbb220617"
     },
     {
-      "path": "78ee64bc3c45626fa4b287187a0810b07ce1e49e.css",
+      "path": "354492d63e2451da530ad8ec41529d858c65a5bd.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/78ee64bc3c45626fa4b287187a0810b07ce1e49e.css",
-      "sourceMap": "78ee64bc3c45626fa4b287187a0810b07ce1e49e.css.map",
-      "sourceMapUrl": "/78ee64bc3c45626fa4b287187a0810b07ce1e49e.map",
-      "size": 159230,
-      "hash": "78ee64bc3c45626fa4b287187a0810b07ce1e49e"
+      "url": "/354492d63e2451da530ad8ec41529d858c65a5bd.css",
+      "sourceMap": "354492d63e2451da530ad8ec41529d858c65a5bd.css.map",
+      "sourceMapUrl": "/354492d63e2451da530ad8ec41529d858c65a5bd.map",
+      "size": 159350,
+      "hash": "354492d63e2451da530ad8ec41529d858c65a5bd"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -735,7 +735,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "d349a14c394a09392a70df77226b2567ddaef848"
+      "hash": "bb7ff7de4a6af60a9037518683ab37408061838b"
     }
   ]
 }

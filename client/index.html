@@ -1,50 +1,49 @@
 <head>
-  <title>
-    Magnetic Poetry
-  </title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        Magnetic Poetry
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-  <div id="wrap">
-  {{> list}}
-     <div id="footer">
-     {{>wordForm}}
+    <div id="wrap">
+        {{> list}}
+        <div id="footer">
+            {{>wordForm}}
+            
+        </div>
     </div>
-  
-</div>
 </body>
 
-<template name = "list">
-  <div id="outer">
-   <!--  <input type="button" value="init draggables for touch" class="init btn"/>
+<template name="list">
+    <div id="outer">
+        <!--  <input type="button" value="init draggables for touch" class="init btn"/>
     <br>
     <br> -->
-    <!-- <h1 id="header">Magnetic Poetry</h1> -->
-    {{#each magnets}}
-      {{> magnet}}
-    {{else}}
-    {{/each}}
-  </div>
+        <!-- <h1 id="header">Magnetic Poetry</h1> -->
+        {{#each magnets}} {{> magnet}} {{else}} {{/each}}
+    </div>    
 </template>
 
 <template name="magnet">
-  <div class="magnet {{selected}} ui-draggable" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
-    <div class="name">{{name}}</div>
-  </div>
+    <div class="magnet {{selected}} ui-draggable" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
+        <div class="name">{{name}}</div>
+    </div>
 </template>
 
 
 <template name="wordForm">
     <fieldset>
-    <form>
-        <div>
-            <label>              
-                <input id="name_of_word" placeholder="Enter a word and press enter"/>
-            </label>
-        </div>       
-    </form>
+        <form>
+            <div>
+                <label>
+                    <input id="name_of_word" placeholder="Enter a word and press enter" />
+                </label>
+            </div>
+        </form>
     </fieldset>
+    <div class="clear-form">
+                <p id="delete">Clear Board</p>
+            </div>
 </template>
-

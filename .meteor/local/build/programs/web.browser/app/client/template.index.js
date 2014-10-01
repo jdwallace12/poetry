@@ -3,9 +3,9 @@ Template.body.addContent((function() {
   var view = this;
   return HTML.DIV({
     id: "wrap"
-  }, "\n  ", Spacebars.include(view.lookupTemplate("list")), "\n     ", HTML.DIV({
+  }, "\n        ", Spacebars.include(view.lookupTemplate("list")), "\n        ", HTML.DIV({
     id: "footer"
-  }, "\n     ", Spacebars.include(view.lookupTemplate("wordForm")), "\n    "), "\n  \n");
+  }, "\n            ", Spacebars.include(view.lookupTemplate("wordForm")), "\n            \n        "), "\n    ");
 }));
 Meteor.startup(Template.body.renderToDocument);
 
@@ -14,13 +14,13 @@ Template["list"] = new Template("Template.list", (function() {
   var view = this;
   return HTML.DIV({
     id: "outer"
-  }, HTML.Raw('\n   <!--  <input type="button" value="init draggables for touch" class="init btn"/>\n    <br>\n    <br> -->\n    <!-- <h1 id="header">Magnetic Poetry</h1> -->\n    '), Blaze.Each(function() {
+  }, HTML.Raw('\n        <!--  <input type="button" value="init draggables for touch" class="init btn"/>\n    <br>\n    <br> -->\n        <!-- <h1 id="header">Magnetic Poetry</h1> -->\n        '), Blaze.Each(function() {
     return Spacebars.call(view.lookup("magnets"));
   }, function() {
-    return [ "\n      ", Spacebars.include(view.lookupTemplate("magnet")), "\n    " ];
+    return [ " ", Spacebars.include(view.lookupTemplate("magnet")), " " ];
   }, function() {
-    return "\n    ";
-  }), "\n  ");
+    return " ";
+  }), "\n    ");
 }));
 
 Template.__checkName("magnet");
@@ -36,17 +36,17 @@ Template["magnet"] = new Template("Template.magnet", (function() {
     style: function() {
       return [ "top: ", Spacebars.mustache(view.lookup("top")), "px; left: ", Spacebars.mustache(view.lookup("left")), "px;" ];
     }
-  }, "\n    ", HTML.DIV({
+  }, "\n        ", HTML.DIV({
     "class": "name"
   }, Blaze.View(function() {
     return Spacebars.mustache(view.lookup("name"));
-  })), "\n  ");
+  })), "\n    ");
 }));
 
 Template.__checkName("wordForm");
 Template["wordForm"] = new Template("Template.wordForm", (function() {
   var view = this;
-  return HTML.Raw('<fieldset>\n    <form>\n        <div>\n            <label>              \n                <input id="name_of_word" placeholder="Enter a word and press enter">\n            </label>\n        </div>       \n    </form>\n    </fieldset>');
+  return HTML.Raw('<fieldset>\n        <form>\n            <div>\n                <label>\n                    <input id="name_of_word" placeholder="Enter a word and press enter">\n                </label>\n            </div>\n        </form>\n    </fieldset>\n    <div class="clear-form">\n                <p id="delete">Clear Board</p>\n            </div>');
 }));
 
 })();
