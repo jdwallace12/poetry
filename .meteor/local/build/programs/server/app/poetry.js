@@ -3,11 +3,31 @@
 //Application.find().fetch()
 //Application.update('id', {$inc: {votes}});
 
-if ( Meteor.isClient ) {
+if (Meteor.isClient) {
+    UI.body.events({
+        'click #delete': function(e) {
+            e.preventDefault();
+            Meteor.call('removeAllMagnets');
+        }
+    });
 }
 
-if ( Meteor.isServer ) {
-	
+
+if (Meteor.isServer) {
+    Meteor.startup(function() {
+
+        return Meteor.methods({
+
+            removeAllMagnets: function() {
+
+                return Magnets.remove({});
+
+            }
+
+        });
+
+    });
+
 }
 
 })();

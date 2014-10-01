@@ -36,13 +36,6 @@ Template.wordForm.events = {
     }
 };
 
-Template.wordForm.events = {
-    'click #delete': function(e) {
-        if (confirm("Are you sure?")) {
-            Magnets.remove({});
-        }
-    }
-};
 
 Template.list.events = {
     'click input.init': function(e, template) {
@@ -73,7 +66,9 @@ Template.magnet.events = {
 };
 
 Meteor.startup(function() {});
-
+$('#delete').on("click", function(){
+  Meteor.call('removeAllMagnets');
+});
 $(function() {
 
     var prevDraggedId = '';

@@ -3,11 +3,11 @@
     if (!Meteor.user())
       return;
     
-    Magnets.update(magnetId, 
+    Magnets.update(magnetId,
                    {$inc: {votes:1},
                     $addToSet: { voters: Meteor.user().services.faceboook.username}
     });
-  }, 
+  },
   'set_position': function(magnetId, position) {
     console.log(position)
     Magnets.update(magnetId, {$set: {top: position.top, left: position.left}});
