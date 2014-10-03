@@ -58,6 +58,4 @@ function getUsername(id) {
 }
 
 
-$('#chat-box-trigger').on('click', function(){
-  $('.chat-wrap').show();
-});
+

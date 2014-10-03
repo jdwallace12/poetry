@@ -711,9 +711,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/chat.js?83c1a88972fe950c4159bd3998d6a7ad51b53dae",
-      "size": 1299,
-      "hash": "83c1a88972fe950c4159bd3998d6a7ad51b53dae"
+      "url": "/client/chat.js?c2535d979041ad03b016fa4ee2ba7f66c7eeca03",
+      "size": 1223,
+      "hash": "c2535d979041ad03b016fa4ee2ba7f66c7eeca03"
     },
     {
       "path": "app/client/client.js",
@@ -756,9 +756,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/users.js?dc45c8e632c10ade0846e138bf40505974fe5c13",
-      "size": 139,
-      "hash": "dc45c8e632c10ade0846e138bf40505974fe5c13"
+      "url": "/users.js?417012970e93e5b61fa653891d268e8c7d822064",
+      "size": 130,
+      "hash": "417012970e93e5b61fa653891d268e8c7d822064"
     },
     {
       "path": "bebc5fc908d7370e7ec323a4743de4f61142e9a7.css",
