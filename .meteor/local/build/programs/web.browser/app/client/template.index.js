@@ -1,11 +1,13 @@
 (function(){
 Template.body.addContent((function() {
   var view = this;
-  return HTML.DIV({
+  return [ HTML.Raw('<div class="chat-trigger">\n   <button type="button" id="chat-box-trigger" class="btn btn-success">Chat</button>\n    </div>\n    '), HTML.DIV({
+    "class": "chat-wrap"
+  }, "\n        ", HTML.Raw('<button type="button" id="close" class="btn btn-default pull-right">Close</button>'), "\n      ", Spacebars.include(view.lookupTemplate("mainBox")), "\n  "), "\n    ", HTML.DIV({
     id: "wrap"
   }, "\n        ", Spacebars.include(view.lookupTemplate("list")), "\n        ", HTML.DIV({
     id: "footer"
-  }, "\n            ", Spacebars.include(view.lookupTemplate("wordForm")), "\n            \n        "), "\n    ");
+  }, "\n            ", Spacebars.include(view.lookupTemplate("wordForm")), "\n            \n        "), "\n    ") ];
 }));
 Meteor.startup(Template.body.renderToDocument);
 

@@ -329,6 +329,16 @@
       "path": "packages/standard-app-packages.js"
     },
     {
+      "sourceMap": "packages/percolate_momentum.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/percolate_momentum.js"
+    },
+    {
+      "sourceMap": "packages/lepozepo_streams.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/lepozepo_streams.js"
+    },
+    {
       "sourceMap": "packages/reload.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/reload.js"
@@ -360,7 +370,13 @@
       "path": "app/server/server.js"
     },
     {
+      "path": "app/chat.js"
+    },
+    {
       "path": "app/poetry.js"
+    },
+    {
+      "path": "app/users.js"
     }
   ]
 }

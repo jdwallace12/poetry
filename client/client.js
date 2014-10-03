@@ -33,6 +33,7 @@ Template.wordForm.events = {
 
 Template.list.events = {
     'click input.init': function(e, template) {
+      
         $('.magnet').draggable({
             distance: 3,
             handle: '.name',
@@ -45,6 +46,7 @@ Template.list.events = {
 
 Template.magnet.events = {
     'mouseover div.magnet': function(e, template) {
+
         var $magnet = $(e.currentTarget);
 
         if (!$magnet.data('isDraggable')) {
@@ -55,9 +57,10 @@ Template.magnet.events = {
                 snap: true,
                 snapTolerance: 25
             });
-        }
+        }        
     }
 };
+    
 
 Meteor.startup(function() {});
 $(function() {
@@ -93,6 +96,16 @@ $(function() {
         prevDraggedId = '';
         deelevate(magnetId);
     });
+
+$('#chat-box-trigger').on('click', function(){
+  $('.chat-wrap').show();
+  $('#chat-box-trigger').hide();
+});
+
+$('#close').on('click', function(){
+    $('.chat-wrap').hide();
+    $('#chat-box-trigger').show();
+});
 
     function dragged(magnetId, position) {
         Magnets.update({

@@ -574,6 +574,28 @@
       "hash": "be7072e6abfda638502b63fa0f809c85c8c2b8ed"
     },
     {
+      "path": "packages/percolate_momentum.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/percolate_momentum.js?db2d3436201afc793dba899c60a4b48768d2eced",
+      "sourceMap": "packages/percolate_momentum.js.map",
+      "sourceMapUrl": "/packages/db2d3436201afc793dba899c60a4b48768d2eced.map",
+      "size": 582201,
+      "hash": "db2d3436201afc793dba899c60a4b48768d2eced"
+    },
+    {
+      "path": "packages/lepozepo_streams.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/lepozepo_streams.js?34e6d5793081ce97a53e7fb43e07085452019b4e",
+      "sourceMap": "packages/lepozepo_streams.js.map",
+      "sourceMapUrl": "/packages/34e6d5793081ce97a53e7fb43e07085452019b4e.map",
+      "size": 9255,
+      "hash": "34e6d5793081ce97a53e7fb43e07085452019b4e"
+    },
+    {
       "path": "packages/autoupdate.js",
       "where": "client",
       "type": "js",
@@ -644,18 +666,27 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/global-imports.js?fabe592d7795a9c2aa0dcfc334dafa79a8804bcc",
-      "size": 730,
-      "hash": "fabe592d7795a9c2aa0dcfc334dafa79a8804bcc"
+      "url": "/packages/global-imports.js?00b3200254be7b565f1a565621b268cb4a60457a",
+      "size": 781,
+      "hash": "00b3200254be7b565f1a565621b268cb4a60457a"
     },
     {
       "path": "app/client/template.index.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?5d912366ba1251ca5706378e749ae67035f7d7e7",
-      "size": 2111,
-      "hash": "5d912366ba1251ca5706378e749ae67035f7d7e7"
+      "url": "/client/template.index.js?1b9dbda38ee543f2e34b0e5bee30218dd1a12dee",
+      "size": 2492,
+      "hash": "1b9dbda38ee543f2e34b0e5bee30218dd1a12dee"
+    },
+    {
+      "path": "app/client/template.main.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/client/template.main.js?25532dff720719d51e1415c69eb8ec02f568f4cc",
+      "size": 1436,
+      "hash": "25532dff720719d51e1415c69eb8ec02f568f4cc"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -676,13 +707,40 @@
       "hash": "ff619efbce821e061b5555c32241eaf27221a61d"
     },
     {
+      "path": "app/client/chat.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/client/chat.js?83c1a88972fe950c4159bd3998d6a7ad51b53dae",
+      "size": 1299,
+      "hash": "83c1a88972fe950c4159bd3998d6a7ad51b53dae"
+    },
+    {
       "path": "app/client/client.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/client.js?95e0aa486c4f476befd5425de2716382190625e0",
-      "size": 2959,
-      "hash": "95e0aa486c4f476befd5425de2716382190625e0"
+      "url": "/client/client.js?c666538c0a22acb975247ec7997358bcdba37d52",
+      "size": 3195,
+      "hash": "c666538c0a22acb975247ec7997358bcdba37d52"
+    },
+    {
+      "path": "app/client/users.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/client/users.js?c731fb40bfccbec7d4bbc850fb5b78b291a354f4",
+      "size": 84,
+      "hash": "c731fb40bfccbec7d4bbc850fb5b78b291a354f4"
+    },
+    {
+      "path": "app/chat.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/chat.js?aded56e74f0ce758fa600b648673a00448116e50",
+      "size": 182,
+      "hash": "aded56e74f0ce758fa600b648673a00448116e50"
     },
     {
       "path": "app/poetry.js",
@@ -694,15 +752,24 @@
       "hash": "3c9cf12c71e516492e9751f2decb496dc9d065ea"
     },
     {
-      "path": "67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.css",
+      "path": "app/users.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/users.js?dc45c8e632c10ade0846e138bf40505974fe5c13",
+      "size": 139,
+      "hash": "dc45c8e632c10ade0846e138bf40505974fe5c13"
+    },
+    {
+      "path": "bebc5fc908d7370e7ec323a4743de4f61142e9a7.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.css",
-      "sourceMap": "67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.css.map",
-      "sourceMapUrl": "/67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.map",
-      "size": 159511,
-      "hash": "67c81bd61bc2d0ac0804943eb6a66d8b51fc881d"
+      "url": "/bebc5fc908d7370e7ec323a4743de4f61142e9a7.css",
+      "sourceMap": "bebc5fc908d7370e7ec323a4743de4f61142e9a7.css.map",
+      "sourceMapUrl": "/bebc5fc908d7370e7ec323a4743de4f61142e9a7.map",
+      "size": 159902,
+      "hash": "bebc5fc908d7370e7ec323a4743de4f61142e9a7"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -735,7 +802,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "bb7ff7de4a6af60a9037518683ab37408061838b"
+      "hash": "f13753956ef16247f251c816d3f9296b8c70609f"
     }
   ]
 }
