@@ -7,6 +7,13 @@
 </head>
 
 <body>
+        <div class="chat-trigger">
+   <button type="button" id="chat-box-trigger" class="btn btn-success">Chat</button>
+    </div>
+    <div class="chat-wrap">
+        <button type="button" id="close" class="btn btn-default pull-right">Close</button>
+      {{> mainBox}}
+  </div>
     <div id="wrap">
         {{> list}}
         <div id="footer">

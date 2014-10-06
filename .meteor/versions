@@ -36,6 +36,7 @@ insecure@1.0.0
 jquery-waypoints@1.0.0
 jquery@1.0.0
 json@1.0.0
+lepozepo:streams@0.2.0
 less@1.0.9
 livedata@1.0.10
 localstorage@1.0.0
@@ -51,6 +52,7 @@ oauth2@1.1.0
 oauth@1.1.0
 observe-sequence@1.0.2
 ordered-dict@1.0.0
+percolate:momentum@0.0.2
 random@1.0.0
 reactive-dict@1.0.3
 reactive-var@1.0.2

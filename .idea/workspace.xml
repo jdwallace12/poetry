@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1554410e-d6d3-4f22-a567-caa86dda25f5" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chat.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/chat.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/main.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/main.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/users.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/users.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/README" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/main.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/boot.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/config.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/npm-shrinkwrap.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/npm/ctl-helper/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/npm/ddp/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/npm/logging/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/npm/mongo/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/application-configuration.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/application-configuration.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/base64.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/base64.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/binary-heap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/binary-heap.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/callback-hook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/callback-hook.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/check.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/check.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ctl-helper.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ctl-helper.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ctl.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ctl.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ddp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ddp.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ejson.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ejson.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/follower-livedata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/follower-livedata.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/geojson-utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/geojson-utils.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/id-map.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/id-map.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/json.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/json.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/logging.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/logging.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/meteor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/meteor.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/minimongo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/minimongo.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/mongo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/mongo.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ordered-dict.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/ordered-dict.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/random.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/random.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/retry.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/retry.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/tracker.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/tracker.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/packages/underscore.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/program.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/ctl/start.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/app/poetry.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/app/server/server.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/assets/packages/boilerplate-generator/boilerplate_web.browser.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/assets/packages/boilerplate-generator/boilerplate_web.cordova.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/assets/packages/oauth/end_of_popup_response.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/assets/packages/oauth/end_of_redirect_response.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/boot.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/config.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm-shrinkwrap.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/ddp/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/email/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/http/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/logging/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/minifiers/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/mongo/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/npm-bcrypt/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/npm/webapp/node_modules" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-base.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-facebook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-facebook.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-oauth.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-oauth.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-password.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-password.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-ui.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/accounts-ui.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/application-configuration.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/application-configuration.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/autopublish.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/autopublish.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/autoupdate.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/autoupdate.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/backbone.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/backbone.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/base64.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/base64.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/binary-heap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/binary-heap.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/blaze-tools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/blaze-tools.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/blaze.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/blaze.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/boilerplate-generator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/boilerplate-generator.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/bootstrap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/bootstrap.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/callback-hook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/callback-hook.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/check.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/check.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/coffeescript.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/coffeescript.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/d3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/d3.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ddp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ddp.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/deps.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/deps.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ejson.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ejson.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/email.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/email.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/facebook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/facebook.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/follower-livedata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/follower-livedata.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/geojson-utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/geojson-utils.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/global-imports.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/html-tools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/html-tools.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/htmljs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/htmljs.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/http.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/http.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/id-map.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/id-map.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/insecure.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/insecure.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/jquery-waypoints.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/jquery-waypoints.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/jquery.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/json.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/json.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/less.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/less.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/livedata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/livedata.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/localstorage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/localstorage.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/logging.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/logging.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/meteor-platform.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/meteor-platform.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/meteor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/meteor.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/minifiers.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/minifiers.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/minimongo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/minimongo.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/mongo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/mongo.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/npm-bcrypt.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/npm-bcrypt.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/oauth.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/oauth.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/oauth2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/oauth2.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/observe-sequence.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/observe-sequence.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ordered-dict.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ordered-dict.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/random.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/random.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/reactive-var.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/reactive-var.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/reload.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/reload.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/retry.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/retry.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/routepolicy.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/routepolicy.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/service-configuration.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/service-configuration.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/session.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/session.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/sha.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/sha.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/spacebars-compiler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/spacebars-compiler.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/spacebars.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/spacebars.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/srp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/srp.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/standard-app-packages.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/standard-app-packages.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/templating.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/templating.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/tracker.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/tracker.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ui.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/ui.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/underscore.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/url.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/url.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/webapp-hashing.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/webapp-hashing.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/webapp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/packages/webapp.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/program.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/server/start.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/app/client/client.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/app/client/template.index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/app/client/vendor/jquery-ui.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/app/client/vendor/jquery.ui.touch-punch.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/app/gray-bg.jpeg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/app/poetry.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/head.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-base.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-base.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-facebook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-facebook.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-oauth.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-oauth.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-password.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-password.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-ui-unstyled.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-ui-unstyled.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-ui.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/accounts-ui.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/application-configuration.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/application-configuration.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/autopublish.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/autopublish.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/autoupdate.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/autoupdate.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/backbone.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/backbone.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/base64.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/base64.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/blaze.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/blaze.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/bootstrap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/bootstrap.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/bootstrap/img/glyphicons-halflings-white.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/bootstrap/img/glyphicons-halflings.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/check.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/check.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/coffeescript.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/coffeescript.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/d3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/d3.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ddp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ddp.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/deps.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/deps.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ejson.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ejson.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/email.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/email.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/facebook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/facebook.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/follower-livedata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/follower-livedata.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/geojson-utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/geojson-utils.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/global-imports.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/htmljs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/htmljs.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/id-map.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/id-map.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/insecure.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/insecure.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/jquery-waypoints.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/jquery-waypoints.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/jquery.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/json.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/json.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/less.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/less.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/livedata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/livedata.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/localstorage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/localstorage.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/logging.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/logging.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/meteor-platform.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/meteor-platform.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/meteor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/meteor.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/minimongo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/minimongo.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/mongo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/mongo.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/oauth.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/oauth.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/oauth2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/oauth2.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/observe-sequence.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/observe-sequence.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ordered-dict.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ordered-dict.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/random.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/random.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/reactive-dict.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/reactive-dict.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/reactive-var.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/reactive-var.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/reload.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/reload.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/retry.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/retry.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/service-configuration.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/service-configuration.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/session.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/session.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/sha.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/sha.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/spacebars.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/spacebars.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/srp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/srp.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/standard-app-packages.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/standard-app-packages.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/templating.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/templating.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/tracker.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/tracker.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ui.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/ui.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/underscore.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/url.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/url.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/webapp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/packages/webapp.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/programs/web.browser/program.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/server/.bundle_version.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/build/star.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/db/METEOR-PORT" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.meteor/local/db/meteor.1" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/local/db/journal/j._0" afterPath="$PROJECT_DIR$/.meteor/local/db/journal/j._0" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/local/db/journal/lsn" afterPath="$PROJECT_DIR$/.meteor/local/db/journal/lsn" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/.gitignore" afterPath="$PROJECT_DIR$/.meteor/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/client.js" afterPath="$PROJECT_DIR$/client/client.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core.less" afterPath="$PROJECT_DIR$/core.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/packages" afterPath="$PROJECT_DIR$/.meteor/packages" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/release" afterPath="$PROJECT_DIR$/.meteor/release" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/versions" afterPath="$PROJECT_DIR$/.meteor/versions" />
+    </list>
+    <ignored path="poetry.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="poetry" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="22" />
+    <option name="width" value="1280" />
+    <option name="height" value="774" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="poetry" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="poetry" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="poetry" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunManager">
+    <list size="0" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1554410e-d6d3-4f22-a567-caa86dda25f5" name="Default" comment="" />
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="22" width="1280" height="774" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32957748" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+</project>
+
