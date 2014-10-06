@@ -653,9 +653,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?5d912366ba1251ca5706378e749ae67035f7d7e7",
-      "size": 2111,
-      "hash": "5d912366ba1251ca5706378e749ae67035f7d7e7"
+      "url": "/client/template.index.js?e0fff4778445bd2e00d757a819734444d2a5d610",
+      "size": 3616,
+      "hash": "e0fff4778445bd2e00d757a819734444d2a5d610"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -685,6 +685,15 @@
       "hash": "95e0aa486c4f476befd5425de2716382190625e0"
     },
     {
+      "path": "app/chatt.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/chatt.js?7cd43f5756f48d95e6d1d5c6906e6a175e6727e3",
+      "size": 1460,
+      "hash": "7cd43f5756f48d95e6d1d5c6906e6a175e6727e3"
+    },
+    {
       "path": "app/poetry.js",
       "where": "client",
       "type": "js",
@@ -694,15 +703,15 @@
       "hash": "3c9cf12c71e516492e9751f2decb496dc9d065ea"
     },
     {
-      "path": "67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.css",
+      "path": "063a7f15928e8c1db5ca05c01c9c5900deaa5767.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.css",
-      "sourceMap": "67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.css.map",
-      "sourceMapUrl": "/67c81bd61bc2d0ac0804943eb6a66d8b51fc881d.map",
-      "size": 159511,
-      "hash": "67c81bd61bc2d0ac0804943eb6a66d8b51fc881d"
+      "url": "/063a7f15928e8c1db5ca05c01c9c5900deaa5767.css",
+      "sourceMap": "063a7f15928e8c1db5ca05c01c9c5900deaa5767.css.map",
+      "sourceMapUrl": "/063a7f15928e8c1db5ca05c01c9c5900deaa5767.map",
+      "size": 159563,
+      "hash": "063a7f15928e8c1db5ca05c01c9c5900deaa5767"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",

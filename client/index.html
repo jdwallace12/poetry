@@ -7,6 +7,10 @@
 </head>
 
 <body>
+        <div class="chat-wrap">
+        {{> input}}
+        {{> messages}}
+    </div>
     <div id="wrap">
         {{> list}}
         <div id="footer">
@@ -22,7 +26,10 @@
     <br>
     <br> -->
         <!-- <h1 id="header">Magnetic Poetry</h1> -->
-        {{#each magnets}} {{> magnet}} {{else}} {{/each}}
+        {{#each magnets}} 
+        {{> magnet}}
+         {{else}} 
+         {{/each}}
     </div>    
 </template>
 
@@ -46,4 +53,30 @@
     <div class="clear-form">
                 <p id="delete">Clear Board</p>
             </div>
+</template>
+
+
+
+<template name="input">
+    <div id="input" class="well">
+        <strong>Your message</strong>
+        <textarea class="input-xlarge" rows="3" id="newMessage"></textarea>
+        <input type="text" class="input-xlarge" placeholder="Your name..." id="username" />
+        <a class="btn btn-primary" id="send">Send</a>
+    </div>
+</template>
+
+<template name="messages">
+    <div id="messages">
+        {{#each messages}}
+            {{> message}}
+        {{/each}}
+    </div>
+</template>
+
+<template name="message">
+    <blockquote>
+        <p>{{message}}</p>
+        <small>{{username}}</small>
+    </blockquote>
 </template>
