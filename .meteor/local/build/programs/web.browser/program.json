@@ -689,9 +689,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?aa612b70162a27aef3cc8e9b9f1fb26f49938ed7",
-      "size": 1133,
-      "hash": "aa612b70162a27aef3cc8e9b9f1fb26f49938ed7"
+      "url": "/client/script.js?1dad1cb0bcb1a9a1ceb1b50434d14eb74c1acd4d",
+      "size": 1124,
+      "hash": "1dad1cb0bcb1a9a1ceb1b50434d14eb74c1acd4d"
     },
     {
       "path": "app/chatt.js",
