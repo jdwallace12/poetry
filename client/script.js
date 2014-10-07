@@ -23,6 +23,7 @@ $(document).ready(function() {
     $(document).keyup(function(e) {
         if (e.keyCode == KEYCODE_ENTER) {
             $('#send').click();
+            e.preventDefault();
         }
     });
 
