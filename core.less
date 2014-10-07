@@ -1,6 +1,6 @@
 @nice-blue: #5B83AD;
 @light-blue: (@nice-blue + #111);
- body {
+body {
     padding: 30px;
     background: #34495e;
     width: 100%;
@@ -78,8 +78,28 @@ input:focus, textarea:focus {
     transition: all 0.3s;
     background: #ffffff;
 }
-
 .chat-wrap {
     position: fixed;
     z-index: 9999;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+}
+.message-wrap {
+    background: #ffffff;
+    overflow-y: scroll;
+    max-height: 102px;
+    position: relative;
+    top: -30px;
+}
+.chat-room-message-wrap {
+    padding: 5px;
+    border-bottom: 1px dotted #cccccc;
+    p {
+        padding-top: 10px;
+    }
+}
+#send {
+    position: relative;
+    top: -5px;
 }

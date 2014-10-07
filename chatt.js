@@ -15,13 +15,10 @@ if (Meteor.isClient) {
   Template.input.events({
     'click #send': function() {
       var message = $('#newMessage').val();
-      var username = $('#username').val();
-      if (!message || !username) {
-        alert('Fill out both fields yo!');
-      }
+
+  
       Meteor.saveMessage({
-        message: message,
-        username: username
+        message: message
       });
     }
   });
@@ -31,13 +28,11 @@ if (Meteor.isClient) {
   });
 
   Meteor.saveMessage = function(content) {
-    var username = content.username;
     var message = content.message;
-    if (!username || !message) {
+    if (!message) {
       return;
     }
     Messages.insert({
-      username: username,
       message: message,
       timestamp: Date.now()
     }, function(err, id) {
@@ -46,7 +41,6 @@ if (Meteor.isClient) {
       }
       if (id) {
         $('#newMessage').val('');
-        $('#username').val('');
       }
     });
   };
