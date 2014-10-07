@@ -20,7 +20,6 @@ if (Meteor.isClient) {
       Meteor.saveMessage({
         message: message
       });
-      $('.chat-open').effect( "highlight" );
     }
   });
 
