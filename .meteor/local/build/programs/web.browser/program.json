@@ -689,18 +689,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?bf1727f8353de514f754e392a4936fff67a97fc3",
-      "size": 1045,
-      "hash": "bf1727f8353de514f754e392a4936fff67a97fc3"
+      "url": "/client/script.js?f65a7cb735f3b33cbe7bea594edf0b02b42b8ca3",
+      "size": 1055,
+      "hash": "f65a7cb735f3b33cbe7bea594edf0b02b42b8ca3"
     },
     {
       "path": "app/chatt.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/chatt.js?fc098c5cfc7c47c23582fcb567b175f468e19947",
-      "size": 1199,
-      "hash": "fc098c5cfc7c47c23582fcb567b175f468e19947"
+      "url": "/chatt.js?8c077f7fdd127fa6f3a2b99e49a006863df76624",
+      "size": 1276,
+      "hash": "8c077f7fdd127fa6f3a2b99e49a006863df76624"
     },
     {
       "path": "app/poetry.js",

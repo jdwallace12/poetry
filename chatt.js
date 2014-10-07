@@ -15,7 +15,6 @@ if (Meteor.isClient) {
   Template.input.events({
     'click #send': function() {
       var message = $('#newMessage').val();
-
   
       Meteor.saveMessage({
         message: message
@@ -41,6 +40,8 @@ if (Meteor.isClient) {
       }
       if (id) {
         $('#newMessage').val('');
+        $('.chat-open').effect( "highlight");
+        $('.chat-open').hide();
       }
     });
   };
