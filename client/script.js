@@ -17,23 +17,22 @@ $(document).ready(function() {
         }
     });
 
-    $(document).keypress(function(event) {
-
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == '13') {
+    var KEYCODE_ENTER = 13;
+    $(document).keyup(function(e) {
+        if (e.keyCode == KEYCODE_ENTER) {
             $('#send').click();
         }
     });
 
-    $(document).mouseup(function (e)
-{
-    var container = $(".chat-wrap");
 
-    if (!container.is(e.target) // if the target of the click isn't the container...
-        && container.has(e.target).length === 0) // ... nor a descendant of the container
-    {
-        container.hide();
-         $('.chat-open').show();
-    }
-});
+    $(document).mouseup(function(e) {
+        var container = $(".chat-wrap");
+
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            container.hide();
+            $('.chat-open').show();
+        }
+    });
 });
