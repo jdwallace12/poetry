@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $('.chat-wrap').hide();
+    $('.chat-open').show();
     $('#close_chat').on('click', function() {
         $('.chat-wrap').hide();
         $('.chat-open').show();
@@ -20,7 +22,7 @@ $(document).ready(function() {
     var KEYCODE_ENTER = 13;
     $(document).keyup(function(e) {
         if (e.keyCode == KEYCODE_ENTER) {
-            $('#send').click();          
+            $('#send').click();
         }
     });
 

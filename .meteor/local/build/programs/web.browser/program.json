@@ -653,9 +653,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?347f1ae1d8800f1ff4c183ab2c7d68f83d4f3a96",
+      "url": "/client/template.index.js?c36c187b456d614c0fea9c71e11c006b970dc559",
       "size": 3679,
-      "hash": "347f1ae1d8800f1ff4c183ab2c7d68f83d4f3a96"
+      "hash": "c36c187b456d614c0fea9c71e11c006b970dc559"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -689,18 +689,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?f65a7cb735f3b33cbe7bea594edf0b02b42b8ca3",
-      "size": 1055,
-      "hash": "f65a7cb735f3b33cbe7bea594edf0b02b42b8ca3"
+      "url": "/client/script.js?aa12a84203278f8c2d16c009024085d7de645761",
+      "size": 1101,
+      "hash": "aa12a84203278f8c2d16c009024085d7de645761"
     },
     {
       "path": "app/chatt.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/chatt.js?8c077f7fdd127fa6f3a2b99e49a006863df76624",
-      "size": 1276,
-      "hash": "8c077f7fdd127fa6f3a2b99e49a006863df76624"
+      "url": "/chatt.js?e1737ec2b5f71aad65fe22234c7472be7cbfbb23",
+      "size": 1198,
+      "hash": "e1737ec2b5f71aad65fe22234c7472be7cbfbb23"
     },
     {
       "path": "app/poetry.js",

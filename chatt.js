@@ -40,8 +40,6 @@ if (Meteor.isClient) {
       }
       if (id) {
         $('#newMessage').val('');
-        $('.chat-open').effect( "highlight");
-        $('.chat-open').hide();
       }
     });
   };

@@ -56,7 +56,7 @@ Template["wordForm"] = new Template("Template.wordForm", (function() {
 Template.__checkName("input");
 Template["input"] = new Template("Template.input", (function() {
   var view = this;
-  return HTML.Raw('<div id="input" class="well" style="margin-top: -17px;">\n        <strong>Your message</strong>\n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:93%;">\n        <a class="btn btn-primary" id="send">Send</a>\n    </div>');
+  return HTML.Raw('<div id="input" class="well" style="margin-top: -17px;">\n        <strong>Your message</strong>\n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:80%;">\n        <a class="btn btn-primary" id="send">Send</a>\n    </div>');
 }));
 
 Template.__checkName("messages");
