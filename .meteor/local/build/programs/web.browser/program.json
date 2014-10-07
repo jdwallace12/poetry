@@ -698,9 +698,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/chatt.js?fc098c5cfc7c47c23582fcb567b175f468e19947",
-      "size": 1199,
-      "hash": "fc098c5cfc7c47c23582fcb567b175f468e19947"
+      "url": "/chatt.js?045a3359306d4ed73dd0298ae466591700169e27",
+      "size": 1244,
+      "hash": "045a3359306d4ed73dd0298ae466591700169e27"
     },
     {
       "path": "app/poetry.js",
