@@ -25,7 +25,11 @@ Template.wordForm.events = {
         // Don't postback
         e.preventDefault();
         // add the word to the db     
-        Magnets.insert({name: tmpl.find("#name_of_word").value, top: Math.floor(Random.fraction()*100)*6, left: Math.floor(Random.fraction()*100)*8});
+        Magnets.insert({
+            name: tmpl.find("#name_of_word").value,
+            top: Math.floor(Random.fraction() * 100) * 6,
+            left: Math.floor(Random.fraction() * 100) * 8
+        });
         $("#name_of_word").val("");
     }
 };
@@ -59,8 +63,11 @@ Template.magnet.events = {
     }
 };
 
-Meteor.startup(function() {});
+
+Meteor.startup(function() {
+});
 $(function() {
+
 
     var prevDraggedId = '';
     var prevDraggedTime = 0;
@@ -122,14 +129,13 @@ $(function() {
         });
     }
 
-    $(document).keypress(function(event){
+    $(document).keypress(function(event) {
 
-    var keycode = (event.keyCode ? event.keyCode : event.which);
-    if(keycode == '13'){
-        $('#send').click();   
-    }
-
-});
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            $('#send').click();
+        }
+    });
 });
 
 })();

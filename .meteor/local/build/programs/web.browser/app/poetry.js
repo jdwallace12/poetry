@@ -12,6 +12,9 @@ if (Meteor.isClient) {
             }
         }
     });
+          $('#close_chat').on('click', function(){
+        ('.chat-wrap').hide();
+    });
 }
 
 

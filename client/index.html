@@ -8,10 +8,14 @@
 
 <body>
     <div class="chat-wrap">
+        <a href="#" id="close_chat"><p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p></a>
         {{> input}}
         <div class="message-wrap">
             {{> messages}}
         </div>
+    </div>
+    <div class="chat-open">
+        <p>Chat</p>
     </div>
     <div id="wrap">
         {{> list}}

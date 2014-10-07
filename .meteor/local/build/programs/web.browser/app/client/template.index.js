@@ -3,9 +3,9 @@ Template.body.addContent((function() {
   var view = this;
   return [ HTML.DIV({
     "class": "chat-wrap"
-  }, "\n        ", Spacebars.include(view.lookupTemplate("input")), "\n        ", HTML.DIV({
+  }, "\n        ", HTML.Raw('<a href="#" id="close_chat"><p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p></a>'), "\n        ", Spacebars.include(view.lookupTemplate("input")), "\n        ", HTML.DIV({
     "class": "message-wrap"
-  }, "\n            ", Spacebars.include(view.lookupTemplate("messages")), "\n        "), "\n    "), "\n    ", HTML.DIV({
+  }, "\n            ", Spacebars.include(view.lookupTemplate("messages")), "\n        "), "\n    "), HTML.Raw('\n    <div class="chat-open">\n        <p>Chat</p>\n    </div>\n    '), HTML.DIV({
     id: "wrap"
   }, "\n        ", Spacebars.include(view.lookupTemplate("list")), "\n        ", HTML.DIV({
     id: "footer"
