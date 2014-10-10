@@ -31,7 +31,7 @@ Template.wordForm.events = {
         // add the word to the db     
         Magnets.insert({
             name: tmpl.find("#name_of_word").value,
-            top: Math.floor(Random.fraction() * 100) * 6,
+            top: Math.floor(Random.fraction() * 100) * 7,
             left: Math.floor(Random.fraction() * 100) * 8
         });
         $("#name_of_word").val("");
