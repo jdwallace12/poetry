@@ -28,20 +28,39 @@
       "path": "packages/jquery.js"
     },
     {
-      "sourceMap": "packages/accounts-ui.js.map",
+      "sourceMap": "packages/d3.js.map",
       "sourceMapRoot": "packages",
-      "path": "packages/accounts-ui.js"
-    },
-    {
-      "node_modules": "npm/npm-bcrypt/node_modules",
-      "sourceMap": "packages/npm-bcrypt.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/npm-bcrypt.js"
+      "path": "packages/d3.js"
     },
     {
       "sourceMap": "packages/json.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/json.js"
+    },
+    {
+      "sourceMap": "packages/backbone.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/backbone.js"
+    },
+    {
+      "sourceMap": "packages/less.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/less.js"
+    },
+    {
+      "sourceMap": "packages/coffeescript.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/coffeescript.js"
+    },
+    {
+      "sourceMap": "packages/jquery-waypoints.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/jquery-waypoints.js"
+    },
+    {
+      "sourceMap": "packages/bootstrap.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/bootstrap.js"
     },
     {
       "sourceMap": "packages/base64.js.map",
@@ -54,6 +73,12 @@
       "path": "packages/ejson.js"
     },
     {
+      "node_modules": "npm/logging/node_modules",
+      "sourceMap": "packages/logging.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/logging.js"
+    },
+    {
       "sourceMap": "packages/check.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/check.js"
@@ -64,20 +89,9 @@
       "path": "packages/random.js"
     },
     {
-      "sourceMap": "packages/callback-hook.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/callback-hook.js"
-    },
-    {
       "sourceMap": "packages/tracker.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/tracker.js"
-    },
-    {
-      "node_modules": "npm/logging/node_modules",
-      "sourceMap": "packages/logging.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/logging.js"
     },
     {
       "sourceMap": "packages/retry.js.map",
@@ -191,6 +205,11 @@
       "path": "packages/webapp.js"
     },
     {
+      "sourceMap": "packages/callback-hook.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/callback-hook.js"
+    },
+    {
       "node_modules": "npm/ddp/node_modules",
       "sourceMap": "packages/ddp.js.map",
       "sourceMapRoot": "packages",
@@ -205,6 +224,23 @@
       "sourceMap": "packages/application-configuration.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/application-configuration.js"
+    },
+    {
+      "node_modules": "npm/email/node_modules",
+      "sourceMap": "packages/email.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/email.js"
+    },
+    {
+      "sourceMap": "packages/standard-app-packages.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/standard-app-packages.js"
+    },
+    {
+      "node_modules": "npm/npm-bcrypt/node_modules",
+      "sourceMap": "packages/npm-bcrypt.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/npm-bcrypt.js"
     },
     {
       "sourceMap": "packages/binary-heap.js.map",
@@ -233,100 +269,14 @@
       "path": "packages/srp.js"
     },
     {
-      "node_modules": "npm/email/node_modules",
-      "sourceMap": "packages/email.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/email.js"
-    },
-    {
       "sourceMap": "packages/accounts-password.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/accounts-password.js"
     },
     {
-      "sourceMap": "packages/service-configuration.js.map",
+      "sourceMap": "packages/accounts-ui.js.map",
       "sourceMapRoot": "packages",
-      "path": "packages/service-configuration.js"
-    },
-    {
-      "sourceMap": "packages/localstorage.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/localstorage.js"
-    },
-    {
-      "sourceMap": "packages/url.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/url.js"
-    },
-    {
-      "sourceMap": "packages/oauth.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/oauth.js",
-      "assets": {
-        "end_of_popup_response.html": "assets/packages/oauth/end_of_popup_response.html",
-        "end_of_redirect_response.html": "assets/packages/oauth/end_of_redirect_response.html"
-      }
-    },
-    {
-      "sourceMap": "packages/accounts-oauth.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/accounts-oauth.js"
-    },
-    {
-      "sourceMap": "packages/oauth2.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/oauth2.js"
-    },
-    {
-      "node_modules": "npm/http/node_modules",
-      "sourceMap": "packages/http.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/http.js"
-    },
-    {
-      "sourceMap": "packages/facebook.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/facebook.js"
-    },
-    {
-      "sourceMap": "packages/accounts-facebook.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/accounts-facebook.js"
-    },
-    {
-      "sourceMap": "packages/d3.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/d3.js"
-    },
-    {
-      "sourceMap": "packages/backbone.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/backbone.js"
-    },
-    {
-      "sourceMap": "packages/less.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/less.js"
-    },
-    {
-      "sourceMap": "packages/coffeescript.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/coffeescript.js"
-    },
-    {
-      "sourceMap": "packages/jquery-waypoints.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/jquery-waypoints.js"
-    },
-    {
-      "sourceMap": "packages/bootstrap.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/bootstrap.js"
-    },
-    {
-      "sourceMap": "packages/standard-app-packages.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/standard-app-packages.js"
+      "path": "packages/accounts-ui.js"
     },
     {
       "sourceMap": "packages/reload.js.map",
@@ -364,6 +314,11 @@
     },
     {
       "path": "app/poetry.js"
+    },
+    {
+      "sourceMap": "packages/service-configuration.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/service-configuration.js"
     }
   ]
 }

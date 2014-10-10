@@ -6,9 +6,6 @@
 autopublish
 insecure
 jquery
-accounts-ui
-accounts-password
-accounts-facebook
 d3
 backbone
 less
@@ -17,4 +14,6 @@ jquery-waypoints
 bootstrap
 email
 standard-app-packages
+accounts-password
+accounts-ui
 

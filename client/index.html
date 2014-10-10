@@ -8,8 +8,17 @@
 
 <body>
     <div class="chat-wrap">
+           {{#if currentUser}}
+           {{else}}
+        <div class="signin">
+          {{> loginButtons}}
+      </div>
+      {{/if}}
         <a href="#" id="close_chat"><p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p></a>
+        {{#if currentUser}}
         {{> input}}
+        {{/if}}
+
         <div class="message-wrap">
             {{> messages}}
         </div>
@@ -63,18 +72,20 @@
     <div id="input" class="well" style="margin-top: -17px;">
         <strong>Your message</strong>
         <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:80%;" />
-        <a class="btn btn-primary" type="button" id="send">Send</a>
+        <a class="btn btn-primary" type="button" id="send">Send</a>        
     </div>
 </template>
 
 <template name="messages">
     <div id="messages">
-        {{#each messages}} {{> message}} {{/each}}
+        {{#each messages}} 
+        {{> message}} 
+        {{/each}}
     </div>
 </template>
 
 <template name="message">
     <div class="chat-room-message-wrap">
-        <p>{{message}}</p>
+       <p class="message-text"> <strong>{{user.username}}:</strong></p> <p class="message-text">{{message}}</p>
     </div>
 </template>

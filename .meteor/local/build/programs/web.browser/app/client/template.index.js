@@ -3,7 +3,19 @@ Template.body.addContent((function() {
   var view = this;
   return [ HTML.DIV({
     "class": "chat-wrap"
-  }, "\n        ", HTML.Raw('<a href="#" id="close_chat"><p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p></a>'), "\n        ", Spacebars.include(view.lookupTemplate("input")), "\n        ", HTML.DIV({
+  }, "\n           ", Blaze.If(function() {
+    return Spacebars.call(view.lookup("currentUser"));
+  }, function() {
+    return "\n           ";
+  }, function() {
+    return [ "\n        ", HTML.DIV({
+      "class": "signin"
+    }, "\n          ", Spacebars.include(view.lookupTemplate("loginButtons")), "\n      "), "\n      " ];
+  }), "\n        ", HTML.Raw('<a href="#" id="close_chat"><p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p></a>'), "\n        ", Blaze.If(function() {
+    return Spacebars.call(view.lookup("currentUser"));
+  }, function() {
+    return [ "\n        ", Spacebars.include(view.lookupTemplate("input")), "\n        " ];
+  }), "\n\n        ", HTML.DIV({
     "class": "message-wrap"
   }, "\n            ", Spacebars.include(view.lookupTemplate("messages")), "\n        "), "\n    "), HTML.Raw('\n    <div class="chat-open">\n        <p>Chat</p>\n    </div>\n    '), HTML.DIV({
     id: "wrap"
@@ -56,7 +68,7 @@ Template["wordForm"] = new Template("Template.wordForm", (function() {
 Template.__checkName("input");
 Template["input"] = new Template("Template.input", (function() {
   var view = this;
-  return HTML.Raw('<div id="input" class="well" style="margin-top: -17px;">\n        <strong>Your message</strong>\n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:80%;">\n        <a class="btn btn-primary" type="button" id="send">Send</a>\n    </div>');
+  return HTML.Raw('<div id="input" class="well" style="margin-top: -17px;">\n        <strong>Your message</strong>\n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:80%;">\n        <a class="btn btn-primary" type="button" id="send">Send</a>        \n    </div>');
 }));
 
 Template.__checkName("messages");
@@ -67,7 +79,7 @@ Template["messages"] = new Template("Template.messages", (function() {
   }, "\n        ", Blaze.Each(function() {
     return Spacebars.call(view.lookup("messages"));
   }, function() {
-    return [ " ", Spacebars.include(view.lookupTemplate("message")), " " ];
+    return [ " \n        ", Spacebars.include(view.lookupTemplate("message")), " \n        " ];
   }), "\n    ");
 }));
 
@@ -76,7 +88,13 @@ Template["message"] = new Template("Template.message", (function() {
   var view = this;
   return HTML.DIV({
     "class": "chat-room-message-wrap"
-  }, "\n        ", HTML.P(Blaze.View(function() {
+  }, "\n       ", HTML.P({
+    "class": "message-text"
+  }, " ", HTML.STRONG(Blaze.View(function() {
+    return Spacebars.mustache(Spacebars.dot(view.lookup("user"), "username"));
+  }), ":")), " ", HTML.P({
+    "class": "message-text"
+  }, Blaze.View(function() {
     return Spacebars.mustache(view.lookup("message"));
   })), "\n    ");
 }));

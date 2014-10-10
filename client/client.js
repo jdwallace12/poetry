@@ -1,3 +1,7 @@
+Accounts.ui.config({
+   passwordSignupFields: 'USERNAME_ONLY'
+});
+
 Template.list.magnets = function() {
     //mongo syntax for finding everythign in Appliaations
     return Magnets.find({}, {
