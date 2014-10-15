@@ -34,7 +34,7 @@ Template.wordForm.events = {
             top: Math.floor(Random.fraction() * 100) * 7,
             left: Math.floor(Random.fraction() * 100) * 8           
         });
-         $('.magnet:first-child').effect('highlight', {color: "#f1c40f;"}, 2000);
+         $('.magnet:last').effect('highlight', {color: "#f1c40f;"}, 2000);
         $("#name_of_word").val("");
     }
 };

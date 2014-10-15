@@ -614,9 +614,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/client.js?8bb4694b780776cdc9b1661bd80752286d558b85",
-      "size": 3371,
-      "hash": "8bb4694b780776cdc9b1661bd80752286d558b85"
+      "url": "/client/client.js?d9048c61090271b01bc3480a6b63b057350ed813",
+      "size": 3364,
+      "hash": "d9048c61090271b01bc3480a6b63b057350ed813"
     },
     {
       "path": "app/client/script.js",
