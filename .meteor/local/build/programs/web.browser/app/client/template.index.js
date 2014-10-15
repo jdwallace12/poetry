@@ -17,10 +17,11 @@ Template.body.addContent((function() {
     return [ "\n        ", Spacebars.include(view.lookupTemplate("input")), "\n        " ];
   }), "\n\n        ", HTML.DIV({
     "class": "message-wrap"
-  }, "\n            ", Spacebars.include(view.lookupTemplate("messages")), "\n        "), "\n    "), HTML.Raw('\n    <div class="chat-open">\n        <p>Chat</p>\n    </div>\n    '), HTML.DIV({
+  }, "\n            ", Spacebars.include(view.lookupTemplate("messages")), "\n        "), "\n    "), HTML.Raw('\n    <div class="chat-open">\n        <p>Chat</p>\n    </div>\n    <div class="footer-open">\n        <p>Add Words</p>\n    </div>\n    '), HTML.DIV({
     id: "wrap"
   }, "\n        ", Spacebars.include(view.lookupTemplate("list")), "\n        ", HTML.DIV({
-    id: "footer"
+    id: "footer",
+    style: "display:none;"
   }, "\n            ", Spacebars.include(view.lookupTemplate("wordForm")), "\n        "), "\n    ") ];
 }));
 Meteor.startup(Template.body.renderToDocument);

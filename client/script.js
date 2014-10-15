@@ -4,8 +4,10 @@ $(document).ready(function() {
     $('#close_chat').on('click', function() {
         $('.chat-wrap').hide();
         $('.chat-open').show();
+        $('.footer-open').show();
     });
     $('.chat-open').on('click', function() {
+        $('.footer-open').hide();
         $('.chat-open').hide();
         $('.chat-wrap').show();
         $('#newMessage').focus();
@@ -32,6 +34,9 @@ $(document).ready(function() {
         }
      });
 
+    $('.footer-open').on('click', function(){
+        $('#footer').toggle();
+    });
 
     // var KEYCODE_ENTER = 13;
     // $(document).keyup(function(e) {

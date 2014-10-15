@@ -587,9 +587,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?656e9cdb65598f67bd835e1be175d7830e181b5a",
-      "size": 4524,
-      "hash": "656e9cdb65598f67bd835e1be175d7830e181b5a"
+      "url": "/client/template.index.js?1dcbb9fec5260e7c14221e44c1c6a38b6a252975",
+      "size": 4621,
+      "hash": "1dcbb9fec5260e7c14221e44c1c6a38b6a252975"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -623,9 +623,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?13465ee14837e3bd20256aae04a7dab7c851ba7a",
-      "size": 1472,
-      "hash": "13465ee14837e3bd20256aae04a7dab7c851ba7a"
+      "url": "/client/script.js?996080b2c517a37cd5b85052dccf124c004e093c",
+      "size": 1625,
+      "hash": "996080b2c517a37cd5b85052dccf124c004e093c"
     },
     {
       "path": "app/chatt.js",
@@ -646,15 +646,15 @@
       "hash": "73ccf7f3c0208c140d23dbec7864345dc530ab16"
     },
     {
-      "path": "f8ea09ad3063b6b5cec5a47e921e72ab32835361.css",
+      "path": "f956b212b18e321d08457381d6bced88d58d2c45.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/f8ea09ad3063b6b5cec5a47e921e72ab32835361.css",
-      "sourceMap": "f8ea09ad3063b6b5cec5a47e921e72ab32835361.css.map",
-      "sourceMapUrl": "/f8ea09ad3063b6b5cec5a47e921e72ab32835361.map",
-      "size": 159969,
-      "hash": "f8ea09ad3063b6b5cec5a47e921e72ab32835361"
+      "url": "/f956b212b18e321d08457381d6bced88d58d2c45.css",
+      "sourceMap": "f956b212b18e321d08457381d6bced88d58d2c45.css.map",
+      "sourceMapUrl": "/f956b212b18e321d08457381d6bced88d58d2c45.map",
+      "size": 160269,
+      "hash": "f956b212b18e321d08457381d6bced88d58d2c45"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
