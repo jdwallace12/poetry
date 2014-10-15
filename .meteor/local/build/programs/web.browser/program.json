@@ -587,9 +587,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?1dcbb9fec5260e7c14221e44c1c6a38b6a252975",
+      "url": "/client/template.index.js?ad4e617daa659b045976db2b37db914b7b02e42f",
       "size": 4621,
-      "hash": "1dcbb9fec5260e7c14221e44c1c6a38b6a252975"
+      "hash": "ad4e617daa659b045976db2b37db914b7b02e42f"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
