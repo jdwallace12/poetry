@@ -10,3 +10,5 @@ if (typeof Package === 'undefined') Package = {};
 Package.jquery = {};
 
 })();
+
+//# sourceMappingURL=jquery.js.map

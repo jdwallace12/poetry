@@ -3341,129 +3341,130 @@ var MODIFIERS = {                                                               
     }                                                                                                 // 288
   },                                                                                                  // 289
   $addToSet: function (target, field, arg) {                                                          // 290
-    var x = target[field];                                                                            // 291
-    if (x === undefined)                                                                              // 292
-      target[field] = [arg];                                                                          // 293
-    else if (!(x instanceof Array))                                                                   // 294
-      throw MinimongoError("Cannot apply $addToSet modifier to non-array");                           // 295
-    else {                                                                                            // 296
-      var isEach = false;                                                                             // 297
-      if (typeof arg === "object") {                                                                  // 298
-        for (var k in arg) {                                                                          // 299
-          if (k === "$each")                                                                          // 300
-            isEach = true;                                                                            // 301
-          break;                                                                                      // 302
-        }                                                                                             // 303
-      }                                                                                               // 304
-      var values = isEach ? arg["$each"] : [arg];                                                     // 305
-      _.each(values, function (value) {                                                               // 306
-        for (var i = 0; i < x.length; i++)                                                            // 307
-          if (LocalCollection._f._equal(value, x[i]))                                                 // 308
-            return;                                                                                   // 309
-        x.push(EJSON.clone(value));                                                                   // 310
-      });                                                                                             // 311
-    }                                                                                                 // 312
-  },                                                                                                  // 313
-  $pop: function (target, field, arg) {                                                               // 314
-    if (target === undefined)                                                                         // 315
-      return;                                                                                         // 316
-    var x = target[field];                                                                            // 317
-    if (x === undefined)                                                                              // 318
-      return;                                                                                         // 319
-    else if (!(x instanceof Array))                                                                   // 320
-      throw MinimongoError("Cannot apply $pop modifier to non-array");                                // 321
-    else {                                                                                            // 322
-      if (typeof arg === 'number' && arg < 0)                                                         // 323
-        x.splice(0, 1);                                                                               // 324
-      else                                                                                            // 325
-        x.pop();                                                                                      // 326
-    }                                                                                                 // 327
-  },                                                                                                  // 328
-  $pull: function (target, field, arg) {                                                              // 329
-    if (target === undefined)                                                                         // 330
-      return;                                                                                         // 331
-    var x = target[field];                                                                            // 332
-    if (x === undefined)                                                                              // 333
-      return;                                                                                         // 334
-    else if (!(x instanceof Array))                                                                   // 335
-      throw MinimongoError("Cannot apply $pull/pullAll modifier to non-array");                       // 336
-    else {                                                                                            // 337
-      var out = [];                                                                                   // 338
-      if (typeof arg === "object" && !(arg instanceof Array)) {                                       // 339
-        // XXX would be much nicer to compile this once, rather than                                  // 340
-        // for each document we modify.. but usually we're not                                        // 341
-        // modifying that many documents, so we'll let it slide for                                   // 342
-        // now                                                                                        // 343
-                                                                                                      // 344
-        // XXX Minimongo.Matcher isn't up for the job, because we need                                // 345
-        // to permit stuff like {$pull: {a: {$gt: 4}}}.. something                                    // 346
-        // like {$gt: 4} is not normally a complete selector.                                         // 347
-        // same issue as $elemMatch possibly?                                                         // 348
-        var matcher = new Minimongo.Matcher(arg);                                                     // 349
-        for (var i = 0; i < x.length; i++)                                                            // 350
-          if (!matcher.documentMatches(x[i]).result)                                                  // 351
-            out.push(x[i]);                                                                           // 352
-      } else {                                                                                        // 353
-        for (var i = 0; i < x.length; i++)                                                            // 354
-          if (!LocalCollection._f._equal(x[i], arg))                                                  // 355
-            out.push(x[i]);                                                                           // 356
-      }                                                                                               // 357
-      target[field] = out;                                                                            // 358
-    }                                                                                                 // 359
-  },                                                                                                  // 360
-  $pullAll: function (target, field, arg) {                                                           // 361
-    if (!(typeof arg === "object" && arg instanceof Array))                                           // 362
-      throw MinimongoError("Modifier $pushAll/pullAll allowed for arrays only");                      // 363
-    if (target === undefined)                                                                         // 364
-      return;                                                                                         // 365
-    var x = target[field];                                                                            // 366
-    if (x === undefined)                                                                              // 367
-      return;                                                                                         // 368
-    else if (!(x instanceof Array))                                                                   // 369
-      throw MinimongoError("Cannot apply $pull/pullAll modifier to non-array");                       // 370
-    else {                                                                                            // 371
-      var out = [];                                                                                   // 372
-      for (var i = 0; i < x.length; i++) {                                                            // 373
-        var exclude = false;                                                                          // 374
-        for (var j = 0; j < arg.length; j++) {                                                        // 375
-          if (LocalCollection._f._equal(x[i], arg[j])) {                                              // 376
-            exclude = true;                                                                           // 377
-            break;                                                                                    // 378
-          }                                                                                           // 379
-        }                                                                                             // 380
-        if (!exclude)                                                                                 // 381
-          out.push(x[i]);                                                                             // 382
-      }                                                                                               // 383
-      target[field] = out;                                                                            // 384
-    }                                                                                                 // 385
-  },                                                                                                  // 386
-  $rename: function (target, field, arg, keypath, doc) {                                              // 387
-    if (keypath === arg)                                                                              // 388
-      // no idea why mongo has this restriction..                                                     // 389
-      throw MinimongoError("$rename source must differ from target");                                 // 390
-    if (target === null)                                                                              // 391
-      throw MinimongoError("$rename source field invalid");                                           // 392
-    if (typeof arg !== "string")                                                                      // 393
-      throw MinimongoError("$rename target must be a string");                                        // 394
-    if (target === undefined)                                                                         // 395
-      return;                                                                                         // 396
-    var v = target[field];                                                                            // 397
-    delete target[field];                                                                             // 398
-                                                                                                      // 399
-    var keyparts = arg.split('.');                                                                    // 400
-    var target2 = findModTarget(doc, keyparts, {forbidArray: true});                                  // 401
-    if (target2 === null)                                                                             // 402
-      throw MinimongoError("$rename target field invalid");                                           // 403
-    var field2 = keyparts.pop();                                                                      // 404
-    target2[field2] = v;                                                                              // 405
-  },                                                                                                  // 406
-  $bit: function (target, field, arg) {                                                               // 407
-    // XXX mongo only supports $bit on integers, and we only support                                  // 408
-    // native javascript numbers (doubles) so far, so we can't support $bit                           // 409
-    throw MinimongoError("$bit is not supported");                                                    // 410
-  }                                                                                                   // 411
-};                                                                                                    // 412
-                                                                                                      // 413
+    var isEach = false;                                                                               // 291
+    if (typeof arg === "object") {                                                                    // 292
+      //check if first key is '$each'                                                                 // 293
+      for (var k in arg) {                                                                            // 294
+        if (k === "$each")                                                                            // 295
+          isEach = true;                                                                              // 296
+        break;                                                                                        // 297
+      }                                                                                               // 298
+    }                                                                                                 // 299
+    var values = isEach ? arg["$each"] : [arg];                                                       // 300
+    var x = target[field];                                                                            // 301
+    if (x === undefined)                                                                              // 302
+      target[field] = values;                                                                         // 303
+    else if (!(x instanceof Array))                                                                   // 304
+      throw MinimongoError("Cannot apply $addToSet modifier to non-array");                           // 305
+    else {                                                                                            // 306
+      _.each(values, function (value) {                                                               // 307
+        for (var i = 0; i < x.length; i++)                                                            // 308
+          if (LocalCollection._f._equal(value, x[i]))                                                 // 309
+            return;                                                                                   // 310
+        x.push(EJSON.clone(value));                                                                   // 311
+      });                                                                                             // 312
+    }                                                                                                 // 313
+  },                                                                                                  // 314
+  $pop: function (target, field, arg) {                                                               // 315
+    if (target === undefined)                                                                         // 316
+      return;                                                                                         // 317
+    var x = target[field];                                                                            // 318
+    if (x === undefined)                                                                              // 319
+      return;                                                                                         // 320
+    else if (!(x instanceof Array))                                                                   // 321
+      throw MinimongoError("Cannot apply $pop modifier to non-array");                                // 322
+    else {                                                                                            // 323
+      if (typeof arg === 'number' && arg < 0)                                                         // 324
+        x.splice(0, 1);                                                                               // 325
+      else                                                                                            // 326
+        x.pop();                                                                                      // 327
+    }                                                                                                 // 328
+  },                                                                                                  // 329
+  $pull: function (target, field, arg) {                                                              // 330
+    if (target === undefined)                                                                         // 331
+      return;                                                                                         // 332
+    var x = target[field];                                                                            // 333
+    if (x === undefined)                                                                              // 334
+      return;                                                                                         // 335
+    else if (!(x instanceof Array))                                                                   // 336
+      throw MinimongoError("Cannot apply $pull/pullAll modifier to non-array");                       // 337
+    else {                                                                                            // 338
+      var out = [];                                                                                   // 339
+      if (typeof arg === "object" && !(arg instanceof Array)) {                                       // 340
+        // XXX would be much nicer to compile this once, rather than                                  // 341
+        // for each document we modify.. but usually we're not                                        // 342
+        // modifying that many documents, so we'll let it slide for                                   // 343
+        // now                                                                                        // 344
+                                                                                                      // 345
+        // XXX Minimongo.Matcher isn't up for the job, because we need                                // 346
+        // to permit stuff like {$pull: {a: {$gt: 4}}}.. something                                    // 347
+        // like {$gt: 4} is not normally a complete selector.                                         // 348
+        // same issue as $elemMatch possibly?                                                         // 349
+        var matcher = new Minimongo.Matcher(arg);                                                     // 350
+        for (var i = 0; i < x.length; i++)                                                            // 351
+          if (!matcher.documentMatches(x[i]).result)                                                  // 352
+            out.push(x[i]);                                                                           // 353
+      } else {                                                                                        // 354
+        for (var i = 0; i < x.length; i++)                                                            // 355
+          if (!LocalCollection._f._equal(x[i], arg))                                                  // 356
+            out.push(x[i]);                                                                           // 357
+      }                                                                                               // 358
+      target[field] = out;                                                                            // 359
+    }                                                                                                 // 360
+  },                                                                                                  // 361
+  $pullAll: function (target, field, arg) {                                                           // 362
+    if (!(typeof arg === "object" && arg instanceof Array))                                           // 363
+      throw MinimongoError("Modifier $pushAll/pullAll allowed for arrays only");                      // 364
+    if (target === undefined)                                                                         // 365
+      return;                                                                                         // 366
+    var x = target[field];                                                                            // 367
+    if (x === undefined)                                                                              // 368
+      return;                                                                                         // 369
+    else if (!(x instanceof Array))                                                                   // 370
+      throw MinimongoError("Cannot apply $pull/pullAll modifier to non-array");                       // 371
+    else {                                                                                            // 372
+      var out = [];                                                                                   // 373
+      for (var i = 0; i < x.length; i++) {                                                            // 374
+        var exclude = false;                                                                          // 375
+        for (var j = 0; j < arg.length; j++) {                                                        // 376
+          if (LocalCollection._f._equal(x[i], arg[j])) {                                              // 377
+            exclude = true;                                                                           // 378
+            break;                                                                                    // 379
+          }                                                                                           // 380
+        }                                                                                             // 381
+        if (!exclude)                                                                                 // 382
+          out.push(x[i]);                                                                             // 383
+      }                                                                                               // 384
+      target[field] = out;                                                                            // 385
+    }                                                                                                 // 386
+  },                                                                                                  // 387
+  $rename: function (target, field, arg, keypath, doc) {                                              // 388
+    if (keypath === arg)                                                                              // 389
+      // no idea why mongo has this restriction..                                                     // 390
+      throw MinimongoError("$rename source must differ from target");                                 // 391
+    if (target === null)                                                                              // 392
+      throw MinimongoError("$rename source field invalid");                                           // 393
+    if (typeof arg !== "string")                                                                      // 394
+      throw MinimongoError("$rename target must be a string");                                        // 395
+    if (target === undefined)                                                                         // 396
+      return;                                                                                         // 397
+    var v = target[field];                                                                            // 398
+    delete target[field];                                                                             // 399
+                                                                                                      // 400
+    var keyparts = arg.split('.');                                                                    // 401
+    var target2 = findModTarget(doc, keyparts, {forbidArray: true});                                  // 402
+    if (target2 === null)                                                                             // 403
+      throw MinimongoError("$rename target field invalid");                                           // 404
+    var field2 = keyparts.pop();                                                                      // 405
+    target2[field2] = v;                                                                              // 406
+  },                                                                                                  // 407
+  $bit: function (target, field, arg) {                                                               // 408
+    // XXX mongo only supports $bit on integers, and we only support                                  // 409
+    // native javascript numbers (doubles) so far, so we can't support $bit                           // 410
+    throw MinimongoError("$bit is not supported");                                                    // 411
+  }                                                                                                   // 412
+};                                                                                                    // 413
+                                                                                                      // 414
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

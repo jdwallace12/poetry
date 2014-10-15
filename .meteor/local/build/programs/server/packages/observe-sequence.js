@@ -351,3 +351,5 @@ Package['observe-sequence'] = {
 };
 
 })();
+
+//# sourceMappingURL=observe-sequence.js.map

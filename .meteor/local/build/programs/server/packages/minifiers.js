@@ -5,7 +5,7 @@ var Meteor = Package.meteor.Meteor;
 var _ = Package.underscore._;
 
 /* Package-scope variables */
-var CssTools, UglifyJSMinify, MinifyAst;
+var CssTools, UglifyJSMinify, UglifyJS, MinifyAst;
 
 (function () {
 
@@ -177,12 +177,12 @@ traverse.declaration = function(node, last) {                                   
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
-UglifyJSMinify = Npm.require('uglify-js').minify;                                                                    // 1
-                                                                                                                     // 2
-var cssParse = Npm.require('css-parse');                                                                             // 3
-var cssStringify = Npm.require('css-stringify');                                                                     // 4
-var path = Npm.require('path');                                                                                      // 5
-var url = Npm.require('url');                                                                                        // 6
+var cssParse = Npm.require('css-parse');                                                                             // 1
+var cssStringify = Npm.require('css-stringify');                                                                     // 2
+var path = Npm.require('path');                                                                                      // 3
+var url = Npm.require('url');                                                                                        // 4
+UglifyJS = Npm.require('uglify-js');                                                                                 // 5
+UglifyJSMinify = UglifyJS.minify;                                                                                    // 6
                                                                                                                      // 7
 CssTools = {                                                                                                         // 8
   parseCss: cssParse,                                                                                                // 9
@@ -324,7 +324,10 @@ CssTools = {                                                                    
 if (typeof Package === 'undefined') Package = {};
 Package.minifiers = {
   CssTools: CssTools,
-  UglifyJSMinify: UglifyJSMinify
+  UglifyJSMinify: UglifyJSMinify,
+  UglifyJS: UglifyJS
 };
 
 })();
+
+//# sourceMappingURL=minifiers.js.map

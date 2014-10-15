@@ -202,3 +202,5 @@ Package.email = {
 };
 
 })();
+
+//# sourceMappingURL=email.js.map

@@ -8,6 +8,7 @@ var BlazeTools = Package['blaze-tools'].BlazeTools;
 var _ = Package.underscore._;
 var CssTools = Package.minifiers.CssTools;
 var UglifyJSMinify = Package.minifiers.UglifyJSMinify;
+var UglifyJS = Package.minifiers.UglifyJS;
 
 /* Package-scope variables */
 var SpacebarsCompiler, TemplateTag;
@@ -729,303 +730,310 @@ var builtInBlockHelpers = SpacebarsCompiler._builtInBlockHelpers = {            
 };                                                                                        // 14
                                                                                           // 15
                                                                                           // 16
-// Some `UI.*` paths are special in that they generate code that                          // 17
- // doesn't folow the normal lookup rules for dotted symbols. The                         // 18
- // following names must be prefixed with `UI.` when you use them in a                    // 19
- // template.                                                                             // 20
-var builtInUIPaths = {                                                                    // 21
-  // `template` is a local variable defined in the generated render                       // 22
-  // function for the template in which `UI.contentBlock` (or                             // 23
-  // `UI.elseBlock`) is invoked. `template` is a reference to the                         // 24
-  // template itself.                                                                     // 25
-  'contentBlock': 'view.templateContentBlock',                                            // 26
-  'elseBlock': 'view.templateElseBlock',                                                  // 27
-                                                                                          // 28
-  // `Template` is the global template namespace. If you define a                         // 29
-  // template named `foo` in Spacebars, it gets defined as                                // 30
-  // `Template.foo` in JavaScript.                                                        // 31
-  'dynamic': 'Template.__dynamic'                                                         // 32
-};                                                                                        // 33
-                                                                                          // 34
-// A "reserved name" can't be used as a <template> name.  This                            // 35
-// function is used by the template file scanner.                                         // 36
-SpacebarsCompiler.isReservedName = function (name) {                                      // 37
-  return builtInBlockHelpers.hasOwnProperty(name);                                        // 38
-};                                                                                        // 39
-                                                                                          // 40
-var makeObjectLiteral = function (obj) {                                                  // 41
-  var parts = [];                                                                         // 42
-  for (var k in obj)                                                                      // 43
-    parts.push(BlazeTools.toObjectLiteralKey(k) + ': ' + obj[k]);                         // 44
-  return '{' + parts.join(', ') + '}';                                                    // 45
-};                                                                                        // 46
-                                                                                          // 47
-_.extend(CodeGen.prototype, {                                                             // 48
-  codeGenTemplateTag: function (tag) {                                                    // 49
-    var self = this;                                                                      // 50
-    if (tag.position === HTMLTools.TEMPLATE_TAG_POSITION.IN_START_TAG) {                  // 51
-      // Special dynamic attributes: `<div {{attrs}}>...`                                 // 52
-      // only `tag.type === 'DOUBLE'` allowed (by earlier validation)                     // 53
-      return BlazeTools.EmitCode('function () { return ' +                                // 54
-          self.codeGenMustache(tag.path, tag.args, 'attrMustache')                        // 55
-          + '; }');                                                                       // 56
-    } else {                                                                              // 57
-      if (tag.type === 'DOUBLE' || tag.type === 'TRIPLE') {                               // 58
-        var code = self.codeGenMustache(tag.path, tag.args);                              // 59
-        if (tag.type === 'TRIPLE') {                                                      // 60
-          code = 'Spacebars.makeRaw(' + code + ')';                                       // 61
-        }                                                                                 // 62
-        if (tag.position !== HTMLTools.TEMPLATE_TAG_POSITION.IN_ATTRIBUTE) {              // 63
-          // Reactive attributes are already wrapped in a function,                       // 64
-          // and there's no fine-grained reactivity.                                      // 65
-          // Anywhere else, we need to create a View.                                     // 66
-          code = 'Blaze.View(function () { return ' + code + '; })';                      // 67
-        }                                                                                 // 68
-        return BlazeTools.EmitCode(code);                                                 // 69
-      } else if (tag.type === 'INCLUSION' || tag.type === 'BLOCKOPEN') {                  // 70
-        var path = tag.path;                                                              // 71
-                                                                                          // 72
-        if (tag.type === 'BLOCKOPEN' &&                                                   // 73
-            builtInBlockHelpers.hasOwnProperty(path[0])) {                                // 74
-          // if, unless, with, each.                                                      // 75
-          //                                                                              // 76
-          // If someone tries to do `{{> if}}`, we don't                                  // 77
-          // get here, but an error is thrown when we try to codegen the path.            // 78
-                                                                                          // 79
-          // Note: If we caught these errors earlier, while scanning, we'd be able to     // 80
-          // provide nice line numbers.                                                   // 81
-          if (path.length > 1)                                                            // 82
-            throw new Error("Unexpected dotted path beginning with " + path[0]);          // 83
-          if (! tag.args.length)                                                          // 84
-            throw new Error("#" + path[0] + " requires an argument");                     // 85
-                                                                                          // 86
-          // `args` must exist (tag.args.length > 0)                                      // 87
-          var dataCode = self.codeGenInclusionDataFunc(tag.args) || 'null';               // 88
-          // `content` must exist                                                         // 89
-          var contentBlock = (('content' in tag) ?                                        // 90
-                              self.codeGenBlock(tag.content) : null);                     // 91
-          // `elseContent` may not exist                                                  // 92
-          var elseContentBlock = (('elseContent' in tag) ?                                // 93
-                                  self.codeGenBlock(tag.elseContent) : null);             // 94
-                                                                                          // 95
-          var callArgs = [dataCode, contentBlock];                                        // 96
-          if (elseContentBlock)                                                           // 97
-            callArgs.push(elseContentBlock);                                              // 98
-                                                                                          // 99
-          return BlazeTools.EmitCode(                                                     // 100
-            builtInBlockHelpers[path[0]] + '(' + callArgs.join(', ') + ')');              // 101
+// Mapping of "macros" which, when preceded by `Template.`, expand                        // 17
+// to special code rather than following the lookup rules for dotted                      // 18
+// symbols.                                                                               // 19
+var builtInTemplateMacros = {                                                             // 20
+  // `view` is a local variable defined in the generated render                           // 21
+  // function for the template in which `Template.contentBlock` or                        // 22
+  // `Template.elseBlock` is invoked.                                                     // 23
+  'contentBlock': 'view.templateContentBlock',                                            // 24
+  'elseBlock': 'view.templateElseBlock',                                                  // 25
+                                                                                          // 26
+  // Confusingly, this makes `{{> Template.dynamic}}` an alias                            // 27
+  // for `{{> __dynamic}}`, where "__dynamic" is the template that                        // 28
+  // implements the dynamic template feature.                                             // 29
+  'dynamic': 'Template.__dynamic'                                                         // 30
+};                                                                                        // 31
+                                                                                          // 32
+// A "reserved name" can't be used as a <template> name.  This                            // 33
+// function is used by the template file scanner.                                         // 34
+//                                                                                        // 35
+// Note that the runtime imposes additional restrictions, for example                     // 36
+// banning the name "body" and names of built-in object properties                        // 37
+// like "toString".                                                                       // 38
+SpacebarsCompiler.isReservedName = function (name) {                                      // 39
+  return builtInBlockHelpers.hasOwnProperty(name) ||                                      // 40
+    builtInTemplateMacros.hasOwnProperty(name);                                           // 41
+};                                                                                        // 42
+                                                                                          // 43
+var makeObjectLiteral = function (obj) {                                                  // 44
+  var parts = [];                                                                         // 45
+  for (var k in obj)                                                                      // 46
+    parts.push(BlazeTools.toObjectLiteralKey(k) + ': ' + obj[k]);                         // 47
+  return '{' + parts.join(', ') + '}';                                                    // 48
+};                                                                                        // 49
+                                                                                          // 50
+_.extend(CodeGen.prototype, {                                                             // 51
+  codeGenTemplateTag: function (tag) {                                                    // 52
+    var self = this;                                                                      // 53
+    if (tag.position === HTMLTools.TEMPLATE_TAG_POSITION.IN_START_TAG) {                  // 54
+      // Special dynamic attributes: `<div {{attrs}}>...`                                 // 55
+      // only `tag.type === 'DOUBLE'` allowed (by earlier validation)                     // 56
+      return BlazeTools.EmitCode('function () { return ' +                                // 57
+          self.codeGenMustache(tag.path, tag.args, 'attrMustache')                        // 58
+          + '; }');                                                                       // 59
+    } else {                                                                              // 60
+      if (tag.type === 'DOUBLE' || tag.type === 'TRIPLE') {                               // 61
+        var code = self.codeGenMustache(tag.path, tag.args);                              // 62
+        if (tag.type === 'TRIPLE') {                                                      // 63
+          code = 'Spacebars.makeRaw(' + code + ')';                                       // 64
+        }                                                                                 // 65
+        if (tag.position !== HTMLTools.TEMPLATE_TAG_POSITION.IN_ATTRIBUTE) {              // 66
+          // Reactive attributes are already wrapped in a function,                       // 67
+          // and there's no fine-grained reactivity.                                      // 68
+          // Anywhere else, we need to create a View.                                     // 69
+          code = 'Blaze.View(function () { return ' + code + '; })';                      // 70
+        }                                                                                 // 71
+        return BlazeTools.EmitCode(code);                                                 // 72
+      } else if (tag.type === 'INCLUSION' || tag.type === 'BLOCKOPEN') {                  // 73
+        var path = tag.path;                                                              // 74
+                                                                                          // 75
+        if (tag.type === 'BLOCKOPEN' &&                                                   // 76
+            builtInBlockHelpers.hasOwnProperty(path[0])) {                                // 77
+          // if, unless, with, each.                                                      // 78
+          //                                                                              // 79
+          // If someone tries to do `{{> if}}`, we don't                                  // 80
+          // get here, but an error is thrown when we try to codegen the path.            // 81
+                                                                                          // 82
+          // Note: If we caught these errors earlier, while scanning, we'd be able to     // 83
+          // provide nice line numbers.                                                   // 84
+          if (path.length > 1)                                                            // 85
+            throw new Error("Unexpected dotted path beginning with " + path[0]);          // 86
+          if (! tag.args.length)                                                          // 87
+            throw new Error("#" + path[0] + " requires an argument");                     // 88
+                                                                                          // 89
+          // `args` must exist (tag.args.length > 0)                                      // 90
+          var dataCode = self.codeGenInclusionDataFunc(tag.args) || 'null';               // 91
+          // `content` must exist                                                         // 92
+          var contentBlock = (('content' in tag) ?                                        // 93
+                              self.codeGenBlock(tag.content) : null);                     // 94
+          // `elseContent` may not exist                                                  // 95
+          var elseContentBlock = (('elseContent' in tag) ?                                // 96
+                                  self.codeGenBlock(tag.elseContent) : null);             // 97
+                                                                                          // 98
+          var callArgs = [dataCode, contentBlock];                                        // 99
+          if (elseContentBlock)                                                           // 100
+            callArgs.push(elseContentBlock);                                              // 101
                                                                                           // 102
-        } else {                                                                          // 103
-          var compCode = self.codeGenPath(path, {lookupTemplate: true});                  // 104
-          if (path.length > 1) {                                                          // 105
-            // capture reactivity                                                         // 106
-            compCode = 'function () { return Spacebars.call(' + compCode +                // 107
-              '); }';                                                                     // 108
-          }                                                                               // 109
-                                                                                          // 110
-          var dataCode = self.codeGenInclusionDataFunc(tag.args);                         // 111
-          var content = (('content' in tag) ?                                             // 112
-                         self.codeGenBlock(tag.content) : null);                          // 113
-          var elseContent = (('elseContent' in tag) ?                                     // 114
-                             self.codeGenBlock(tag.elseContent) : null);                  // 115
-                                                                                          // 116
-          var includeArgs = [compCode];                                                   // 117
-          if (content) {                                                                  // 118
-            includeArgs.push(content);                                                    // 119
-            if (elseContent)                                                              // 120
-              includeArgs.push(elseContent);                                              // 121
-          }                                                                               // 122
-                                                                                          // 123
-          var includeCode =                                                               // 124
-                'Spacebars.include(' + includeArgs.join(', ') + ')';                      // 125
+          return BlazeTools.EmitCode(                                                     // 103
+            builtInBlockHelpers[path[0]] + '(' + callArgs.join(', ') + ')');              // 104
+                                                                                          // 105
+        } else {                                                                          // 106
+          var compCode = self.codeGenPath(path, {lookupTemplate: true});                  // 107
+          if (path.length > 1) {                                                          // 108
+            // capture reactivity                                                         // 109
+            compCode = 'function () { return Spacebars.call(' + compCode +                // 110
+              '); }';                                                                     // 111
+          }                                                                               // 112
+                                                                                          // 113
+          var dataCode = self.codeGenInclusionDataFunc(tag.args);                         // 114
+          var content = (('content' in tag) ?                                             // 115
+                         self.codeGenBlock(tag.content) : null);                          // 116
+          var elseContent = (('elseContent' in tag) ?                                     // 117
+                             self.codeGenBlock(tag.elseContent) : null);                  // 118
+                                                                                          // 119
+          var includeArgs = [compCode];                                                   // 120
+          if (content) {                                                                  // 121
+            includeArgs.push(content);                                                    // 122
+            if (elseContent)                                                              // 123
+              includeArgs.push(elseContent);                                              // 124
+          }                                                                               // 125
                                                                                           // 126
-          // calling convention compat -- set the data context around the                 // 127
-          // entire inclusion, so that if the name of the inclusion is                    // 128
-          // a helper function, it gets the data context in `this`.                       // 129
-          // This makes for a pretty confusing calling convention --                      // 130
-          // In `{{#foo bar}}`, `foo` is evaluated in the context of `bar`                // 131
-          // -- but it's what we shipped for 0.8.0.  The rationale is that                // 132
-          // `{{#foo bar}}` is sugar for `{{#with bar}}{{#foo}}...`.                      // 133
-          if (dataCode) {                                                                 // 134
-            includeCode =                                                                 // 135
-              'Blaze._TemplateWith(' + dataCode + ', function () { return ' +             // 136
-              includeCode + '; })';                                                       // 137
-          }                                                                               // 138
-                                                                                          // 139
-          if (path[0] === 'UI' &&                                                         // 140
-              (path[1] === 'contentBlock' || path[1] === 'elseBlock')) {                  // 141
-            includeCode = 'Blaze._InOuterTemplateScope(view, function () { return '       // 142
-              + includeCode + '; })';                                                     // 143
-          }                                                                               // 144
-                                                                                          // 145
-          return BlazeTools.EmitCode(includeCode);                                        // 146
-        }                                                                                 // 147
-      } else {                                                                            // 148
-        // Can't get here; TemplateTag validation should catch any                        // 149
-        // inappropriate tag types that might come out of the parser.                     // 150
-        throw new Error("Unexpected template tag type: " + tag.type);                     // 151
-      }                                                                                   // 152
-    }                                                                                     // 153
-  },                                                                                      // 154
-                                                                                          // 155
-  // `path` is an array of at least one string.                                           // 156
-  //                                                                                      // 157
-  // If `path.length > 1`, the generated code may be reactive                             // 158
-  // (i.e. it may invalidate the current computation).                                    // 159
-  //                                                                                      // 160
-  // No code is generated to call the result if it's a function.                          // 161
+          var includeCode =                                                               // 127
+                'Spacebars.include(' + includeArgs.join(', ') + ')';                      // 128
+                                                                                          // 129
+          // calling convention compat -- set the data context around the                 // 130
+          // entire inclusion, so that if the name of the inclusion is                    // 131
+          // a helper function, it gets the data context in `this`.                       // 132
+          // This makes for a pretty confusing calling convention --                      // 133
+          // In `{{#foo bar}}`, `foo` is evaluated in the context of `bar`                // 134
+          // -- but it's what we shipped for 0.8.0.  The rationale is that                // 135
+          // `{{#foo bar}}` is sugar for `{{#with bar}}{{#foo}}...`.                      // 136
+          if (dataCode) {                                                                 // 137
+            includeCode =                                                                 // 138
+              'Blaze._TemplateWith(' + dataCode + ', function () { return ' +             // 139
+              includeCode + '; })';                                                       // 140
+          }                                                                               // 141
+                                                                                          // 142
+          // XXX BACK COMPAT - UI is the old name, Template is the new                    // 143
+          if ((path[0] === 'UI' || path[0] === 'Template') &&                             // 144
+              (path[1] === 'contentBlock' || path[1] === 'elseBlock')) {                  // 145
+            // Call contentBlock and elseBlock in the appropriate scope                   // 146
+            includeCode = 'Blaze._InOuterTemplateScope(view, function () { return '       // 147
+              + includeCode + '; })';                                                     // 148
+          }                                                                               // 149
+                                                                                          // 150
+          return BlazeTools.EmitCode(includeCode);                                        // 151
+        }                                                                                 // 152
+      } else {                                                                            // 153
+        // Can't get here; TemplateTag validation should catch any                        // 154
+        // inappropriate tag types that might come out of the parser.                     // 155
+        throw new Error("Unexpected template tag type: " + tag.type);                     // 156
+      }                                                                                   // 157
+    }                                                                                     // 158
+  },                                                                                      // 159
+                                                                                          // 160
+  // `path` is an array of at least one string.                                           // 161
   //                                                                                      // 162
-  // Options:                                                                             // 163
-  //                                                                                      // 164
-  // - lookupTemplate {Boolean} If true, generated code also looks in                     // 165
-  //   the list of templates. (After helpers, before data context).                       // 166
-  //   Used when generating code for `{{> foo}}` or `{{#foo}}`. Only                      // 167
-  //   used for non-dotted paths.                                                         // 168
-  codeGenPath: function (path, opts) {                                                    // 169
-    if (builtInBlockHelpers.hasOwnProperty(path[0]))                                      // 170
-      throw new Error("Can't use the built-in '" + path[0] + "' here");                   // 171
-    // Let `{{#if UI.contentBlock}}` check whether this template was invoked via          // 172
-    // inclusion or as a block helper, in addition to supporting                          // 173
-    // `{{> UI.contentBlock}}`.                                                           // 174
-    if (path.length >= 2 &&                                                               // 175
-        path[0] === 'UI' && builtInUIPaths.hasOwnProperty(path[1])) {                     // 176
-      if (path.length > 2)                                                                // 177
-        throw new Error("Unexpected dotted path beginning with " +                        // 178
-                        path[0] + '.' + path[1]);                                         // 179
-      return builtInUIPaths[path[1]];                                                     // 180
-    }                                                                                     // 181
-                                                                                          // 182
-    var firstPathItem = BlazeTools.toJSLiteral(path[0]);                                  // 183
-    var lookupMethod = 'lookup';                                                          // 184
-    if (opts && opts.lookupTemplate && path.length === 1)                                 // 185
-      lookupMethod = 'lookupTemplate';                                                    // 186
-    var code = 'view.' + lookupMethod + '(' + firstPathItem + ')';                        // 187
-                                                                                          // 188
-    if (path.length > 1) {                                                                // 189
-      code = 'Spacebars.dot(' + code + ', ' +                                             // 190
-        _.map(path.slice(1), BlazeTools.toJSLiteral).join(', ') + ')';                    // 191
-    }                                                                                     // 192
-                                                                                          // 193
-    return code;                                                                          // 194
-  },                                                                                      // 195
-                                                                                          // 196
-  // Generates code for an `[argType, argValue]` argument spec,                           // 197
-  // ignoring the third element (keyword argument name) if present.                       // 198
-  //                                                                                      // 199
-  // The resulting code may be reactive (in the case of a PATH of                         // 200
-  // more than one element) and is not wrapped in a closure.                              // 201
-  codeGenArgValue: function (arg) {                                                       // 202
-    var self = this;                                                                      // 203
-                                                                                          // 204
-    var argType = arg[0];                                                                 // 205
-    var argValue = arg[1];                                                                // 206
-                                                                                          // 207
-    var argCode;                                                                          // 208
-    switch (argType) {                                                                    // 209
-    case 'STRING':                                                                        // 210
-    case 'NUMBER':                                                                        // 211
-    case 'BOOLEAN':                                                                       // 212
-    case 'NULL':                                                                          // 213
-      argCode = BlazeTools.toJSLiteral(argValue);                                         // 214
-      break;                                                                              // 215
-    case 'PATH':                                                                          // 216
-      argCode = self.codeGenPath(argValue);                                               // 217
-      break;                                                                              // 218
-    default:                                                                              // 219
-      // can't get here                                                                   // 220
-      throw new Error("Unexpected arg type: " + argType);                                 // 221
-    }                                                                                     // 222
-                                                                                          // 223
-    return argCode;                                                                       // 224
-  },                                                                                      // 225
-                                                                                          // 226
-  // Generates a call to `Spacebars.fooMustache` on evaluated arguments.                  // 227
-  // The resulting code has no function literals and must be wrapped in                   // 228
-  // one for fine-grained reactivity.                                                     // 229
-  codeGenMustache: function (path, args, mustacheType) {                                  // 230
-    var self = this;                                                                      // 231
-                                                                                          // 232
-    var nameCode = self.codeGenPath(path);                                                // 233
-    var argCode = self.codeGenMustacheArgs(args);                                         // 234
-    var mustache = (mustacheType || 'mustache');                                          // 235
-                                                                                          // 236
-    return 'Spacebars.' + mustache + '(' + nameCode +                                     // 237
-      (argCode ? ', ' + argCode.join(', ') : '') + ')';                                   // 238
-  },                                                                                      // 239
-                                                                                          // 240
-  // returns: array of source strings, or null if no                                      // 241
-  // args at all.                                                                         // 242
-  codeGenMustacheArgs: function (tagArgs) {                                               // 243
-    var self = this;                                                                      // 244
-                                                                                          // 245
-    var kwArgs = null; // source -> source                                                // 246
-    var args = null; // [source]                                                          // 247
-                                                                                          // 248
-    // tagArgs may be null                                                                // 249
-    _.each(tagArgs, function (arg) {                                                      // 250
-      var argCode = self.codeGenArgValue(arg);                                            // 251
+  // If `path.length > 1`, the generated code may be reactive                             // 163
+  // (i.e. it may invalidate the current computation).                                    // 164
+  //                                                                                      // 165
+  // No code is generated to call the result if it's a function.                          // 166
+  //                                                                                      // 167
+  // Options:                                                                             // 168
+  //                                                                                      // 169
+  // - lookupTemplate {Boolean} If true, generated code also looks in                     // 170
+  //   the list of templates. (After helpers, before data context).                       // 171
+  //   Used when generating code for `{{> foo}}` or `{{#foo}}`. Only                      // 172
+  //   used for non-dotted paths.                                                         // 173
+  codeGenPath: function (path, opts) {                                                    // 174
+    if (builtInBlockHelpers.hasOwnProperty(path[0]))                                      // 175
+      throw new Error("Can't use the built-in '" + path[0] + "' here");                   // 176
+    // Let `{{#if Template.contentBlock}}` check whether this template was                // 177
+    // invoked via inclusion or as a block helper, in addition to supporting              // 178
+    // `{{> Template.contentBlock}}`.                                                     // 179
+    // XXX BACK COMPAT - UI is the old name, Template is the new                          // 180
+    if (path.length >= 2 &&                                                               // 181
+        (path[0] === 'UI' || path[0] === 'Template')                                      // 182
+        && builtInTemplateMacros.hasOwnProperty(path[1])) {                               // 183
+      if (path.length > 2)                                                                // 184
+        throw new Error("Unexpected dotted path beginning with " +                        // 185
+                        path[0] + '.' + path[1]);                                         // 186
+      return builtInTemplateMacros[path[1]];                                              // 187
+    }                                                                                     // 188
+                                                                                          // 189
+    var firstPathItem = BlazeTools.toJSLiteral(path[0]);                                  // 190
+    var lookupMethod = 'lookup';                                                          // 191
+    if (opts && opts.lookupTemplate && path.length === 1)                                 // 192
+      lookupMethod = 'lookupTemplate';                                                    // 193
+    var code = 'view.' + lookupMethod + '(' + firstPathItem + ')';                        // 194
+                                                                                          // 195
+    if (path.length > 1) {                                                                // 196
+      code = 'Spacebars.dot(' + code + ', ' +                                             // 197
+        _.map(path.slice(1), BlazeTools.toJSLiteral).join(', ') + ')';                    // 198
+    }                                                                                     // 199
+                                                                                          // 200
+    return code;                                                                          // 201
+  },                                                                                      // 202
+                                                                                          // 203
+  // Generates code for an `[argType, argValue]` argument spec,                           // 204
+  // ignoring the third element (keyword argument name) if present.                       // 205
+  //                                                                                      // 206
+  // The resulting code may be reactive (in the case of a PATH of                         // 207
+  // more than one element) and is not wrapped in a closure.                              // 208
+  codeGenArgValue: function (arg) {                                                       // 209
+    var self = this;                                                                      // 210
+                                                                                          // 211
+    var argType = arg[0];                                                                 // 212
+    var argValue = arg[1];                                                                // 213
+                                                                                          // 214
+    var argCode;                                                                          // 215
+    switch (argType) {                                                                    // 216
+    case 'STRING':                                                                        // 217
+    case 'NUMBER':                                                                        // 218
+    case 'BOOLEAN':                                                                       // 219
+    case 'NULL':                                                                          // 220
+      argCode = BlazeTools.toJSLiteral(argValue);                                         // 221
+      break;                                                                              // 222
+    case 'PATH':                                                                          // 223
+      argCode = self.codeGenPath(argValue);                                               // 224
+      break;                                                                              // 225
+    default:                                                                              // 226
+      // can't get here                                                                   // 227
+      throw new Error("Unexpected arg type: " + argType);                                 // 228
+    }                                                                                     // 229
+                                                                                          // 230
+    return argCode;                                                                       // 231
+  },                                                                                      // 232
+                                                                                          // 233
+  // Generates a call to `Spacebars.fooMustache` on evaluated arguments.                  // 234
+  // The resulting code has no function literals and must be wrapped in                   // 235
+  // one for fine-grained reactivity.                                                     // 236
+  codeGenMustache: function (path, args, mustacheType) {                                  // 237
+    var self = this;                                                                      // 238
+                                                                                          // 239
+    var nameCode = self.codeGenPath(path);                                                // 240
+    var argCode = self.codeGenMustacheArgs(args);                                         // 241
+    var mustache = (mustacheType || 'mustache');                                          // 242
+                                                                                          // 243
+    return 'Spacebars.' + mustache + '(' + nameCode +                                     // 244
+      (argCode ? ', ' + argCode.join(', ') : '') + ')';                                   // 245
+  },                                                                                      // 246
+                                                                                          // 247
+  // returns: array of source strings, or null if no                                      // 248
+  // args at all.                                                                         // 249
+  codeGenMustacheArgs: function (tagArgs) {                                               // 250
+    var self = this;                                                                      // 251
                                                                                           // 252
-      if (arg.length > 2) {                                                               // 253
-        // keyword argument (represented as [type, value, name])                          // 254
-        kwArgs = (kwArgs || {});                                                          // 255
-        kwArgs[arg[2]] = argCode;                                                         // 256
-      } else {                                                                            // 257
-        // positional argument                                                            // 258
-        args = (args || []);                                                              // 259
-        args.push(argCode);                                                               // 260
-      }                                                                                   // 261
-    });                                                                                   // 262
-                                                                                          // 263
-    // put kwArgs in options dictionary at end of args                                    // 264
-    if (kwArgs) {                                                                         // 265
-      args = (args || []);                                                                // 266
-      args.push('Spacebars.kw(' + makeObjectLiteral(kwArgs) + ')');                       // 267
-    }                                                                                     // 268
-                                                                                          // 269
-    return args;                                                                          // 270
-  },                                                                                      // 271
-                                                                                          // 272
-  codeGenBlock: function (content) {                                                      // 273
-    return SpacebarsCompiler.codeGen(content);                                            // 274
-  },                                                                                      // 275
+    var kwArgs = null; // source -> source                                                // 253
+    var args = null; // [source]                                                          // 254
+                                                                                          // 255
+    // tagArgs may be null                                                                // 256
+    _.each(tagArgs, function (arg) {                                                      // 257
+      var argCode = self.codeGenArgValue(arg);                                            // 258
+                                                                                          // 259
+      if (arg.length > 2) {                                                               // 260
+        // keyword argument (represented as [type, value, name])                          // 261
+        kwArgs = (kwArgs || {});                                                          // 262
+        kwArgs[arg[2]] = argCode;                                                         // 263
+      } else {                                                                            // 264
+        // positional argument                                                            // 265
+        args = (args || []);                                                              // 266
+        args.push(argCode);                                                               // 267
+      }                                                                                   // 268
+    });                                                                                   // 269
+                                                                                          // 270
+    // put kwArgs in options dictionary at end of args                                    // 271
+    if (kwArgs) {                                                                         // 272
+      args = (args || []);                                                                // 273
+      args.push('Spacebars.kw(' + makeObjectLiteral(kwArgs) + ')');                       // 274
+    }                                                                                     // 275
                                                                                           // 276
-  codeGenInclusionDataFunc: function (args) {                                             // 277
-    var self = this;                                                                      // 278
+    return args;                                                                          // 277
+  },                                                                                      // 278
                                                                                           // 279
-    var dataFuncCode = null;                                                              // 280
-                                                                                          // 281
-    if (! args.length) {                                                                  // 282
-      // e.g. `{{#foo}}`                                                                  // 283
-      return null;                                                                        // 284
-    } else if (args[0].length === 3) {                                                    // 285
-      // keyword arguments only, e.g. `{{> point x=1 y=2}}`                               // 286
-      var dataProps = {};                                                                 // 287
-      _.each(args, function (arg) {                                                       // 288
-        var argKey = arg[2];                                                              // 289
-        dataProps[argKey] = 'Spacebars.call(' + self.codeGenArgValue(arg) + ')';          // 290
-      });                                                                                 // 291
-      dataFuncCode = makeObjectLiteral(dataProps);                                        // 292
-    } else if (args[0][0] !== 'PATH') {                                                   // 293
-      // literal first argument, e.g. `{{> foo "blah"}}`                                  // 294
-      //                                                                                  // 295
-      // tag validation has confirmed, in this case, that there is only                   // 296
-      // one argument (`args.length === 1`)                                               // 297
-      dataFuncCode = self.codeGenArgValue(args[0]);                                       // 298
-    } else if (args.length === 1) {                                                       // 299
-      // one argument, must be a PATH                                                     // 300
-      dataFuncCode = 'Spacebars.call(' + self.codeGenPath(args[0][1]) + ')';              // 301
-    } else {                                                                              // 302
-      // Multiple positional arguments; treat them as a nested                            // 303
-      // "data mustache"                                                                  // 304
-      dataFuncCode = self.codeGenMustache(args[0][1], args.slice(1),                      // 305
-                                          'dataMustache');                                // 306
-    }                                                                                     // 307
-                                                                                          // 308
-    return 'function () { return ' + dataFuncCode + '; }';                                // 309
-  }                                                                                       // 310
-                                                                                          // 311
-});                                                                                       // 312
-                                                                                          // 313
+  codeGenBlock: function (content) {                                                      // 280
+    return SpacebarsCompiler.codeGen(content);                                            // 281
+  },                                                                                      // 282
+                                                                                          // 283
+  codeGenInclusionDataFunc: function (args) {                                             // 284
+    var self = this;                                                                      // 285
+                                                                                          // 286
+    var dataFuncCode = null;                                                              // 287
+                                                                                          // 288
+    if (! args.length) {                                                                  // 289
+      // e.g. `{{#foo}}`                                                                  // 290
+      return null;                                                                        // 291
+    } else if (args[0].length === 3) {                                                    // 292
+      // keyword arguments only, e.g. `{{> point x=1 y=2}}`                               // 293
+      var dataProps = {};                                                                 // 294
+      _.each(args, function (arg) {                                                       // 295
+        var argKey = arg[2];                                                              // 296
+        dataProps[argKey] = 'Spacebars.call(' + self.codeGenArgValue(arg) + ')';          // 297
+      });                                                                                 // 298
+      dataFuncCode = makeObjectLiteral(dataProps);                                        // 299
+    } else if (args[0][0] !== 'PATH') {                                                   // 300
+      // literal first argument, e.g. `{{> foo "blah"}}`                                  // 301
+      //                                                                                  // 302
+      // tag validation has confirmed, in this case, that there is only                   // 303
+      // one argument (`args.length === 1`)                                               // 304
+      dataFuncCode = self.codeGenArgValue(args[0]);                                       // 305
+    } else if (args.length === 1) {                                                       // 306
+      // one argument, must be a PATH                                                     // 307
+      dataFuncCode = 'Spacebars.call(' + self.codeGenPath(args[0][1]) + ')';              // 308
+    } else {                                                                              // 309
+      // Multiple positional arguments; treat them as a nested                            // 310
+      // "data mustache"                                                                  // 311
+      dataFuncCode = self.codeGenMustache(args[0][1], args.slice(1),                      // 312
+                                          'dataMustache');                                // 313
+    }                                                                                     // 314
+                                                                                          // 315
+    return 'function () { return ' + dataFuncCode + '; }';                                // 316
+  }                                                                                       // 317
+                                                                                          // 318
+});                                                                                       // 319
+                                                                                          // 320
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1166,3 +1174,5 @@ Package['spacebars-compiler'] = {
 };
 
 })();
+
+//# sourceMappingURL=spacebars-compiler.js.map

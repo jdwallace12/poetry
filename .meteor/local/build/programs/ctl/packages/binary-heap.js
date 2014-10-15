@@ -365,3 +365,5 @@ Package['binary-heap'] = {
 };
 
 })();
+
+//# sourceMappingURL=binary-heap.js.map

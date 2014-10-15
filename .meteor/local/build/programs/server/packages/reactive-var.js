@@ -125,3 +125,5 @@ Package['reactive-var'] = {
 };
 
 })();
+
+//# sourceMappingURL=reactive-var.js.map

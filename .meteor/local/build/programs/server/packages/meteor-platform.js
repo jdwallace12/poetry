@@ -11,3 +11,5 @@ if (typeof Package === 'undefined') Package = {};
 Package['meteor-platform'] = {};
 
 })();
+
+//# sourceMappingURL=meteor-platform.js.map

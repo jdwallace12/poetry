@@ -61,3 +61,5 @@ Package['service-configuration'] = {
 };
 
 })();
+
+//# sourceMappingURL=service-configuration.js.map

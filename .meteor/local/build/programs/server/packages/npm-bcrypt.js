@@ -28,3 +28,5 @@ Package['npm-bcrypt'] = {
 };
 
 })();
+
+//# sourceMappingURL=npm-bcrypt.js.map

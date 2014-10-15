@@ -10,3 +10,5 @@ if (typeof Package === 'undefined') Package = {};
 Package['accounts-ui'] = {};
 
 })();
+
+//# sourceMappingURL=accounts-ui.js.map

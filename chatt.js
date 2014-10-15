@@ -25,9 +25,11 @@ if (Meteor.isClient) {
     });
 
 
-       Template.input.events({
+    Template.input.events({
         'click #delete_chat': function(messages) {
-          Meteor.call('removeAllMessages');
+            if (confirm('Are you sure you want to delete the chat?')) {
+                Meteor.call('removeAllMessages');
+            }
         }
     });
 
@@ -51,6 +53,7 @@ if (Meteor.isClient) {
             }
             if (id) {
                 $('#newMessage').val('');
+                $('.chat-room-message-wrap:first-child').effect('highlight');
             }
         });
     };

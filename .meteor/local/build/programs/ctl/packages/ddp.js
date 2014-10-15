@@ -84,7 +84,7 @@ _.extend(LivedataTest.ClientStream.prototype, {                                 
   send: function (data) {                                                                                              // 36
     var self = this;                                                                                                   // 37
     if (self.currentStatus.connected) {                                                                                // 38
-      self.client.send(data);                                                                                          // 39
+      self.client.messages.write(data);                                                                                // 39
     }                                                                                                                  // 40
   },                                                                                                                   // 41
                                                                                                                        // 42
@@ -166,67 +166,176 @@ _.extend(LivedataTest.ClientStream.prototype, {                                 
     // Since server-to-server DDP is still an experimental feature, we only                                            // 118
     // require the module if we actually create a server-to-server                                                     // 119
     // connection.                                                                                                     // 120
-    var FayeWebSocket = Npm.require('faye-websocket');                                                                 // 121
+    var websocketDriver = Npm.require('websocket-driver');                                                             // 121
                                                                                                                        // 122
     // We would like to specify 'ddp' as the subprotocol here. The npm module we                                       // 123
     // used to use as a client would fail the handshake if we ask for a                                                // 124
     // subprotocol and the server doesn't send one back (and sockjs doesn't).                                          // 125
     // Faye doesn't have that behavior; it's unclear from reading RFC 6455 if                                          // 126
     // Faye is erroneous or not.  So for now, we don't specify protocols.                                              // 127
-    var client = self.client = new FayeWebSocket.Client(                                                               // 128
-      toWebsocketUrl(self.endpoint),                                                                                   // 129
-      [/*no subprotocols*/],                                                                                           // 130
-      {headers: self.headers}                                                                                          // 131
-    );                                                                                                                 // 132
-                                                                                                                       // 133
-    self._clearConnectionTimer();                                                                                      // 134
-    self.connectionTimer = Meteor.setTimeout(                                                                          // 135
-      function () {                                                                                                    // 136
-        self._lostConnection(                                                                                          // 137
-          new DDP.ConnectionError("DDP connection timed out"));                                                        // 138
-      },                                                                                                               // 139
-      self.CONNECT_TIMEOUT);                                                                                           // 140
-                                                                                                                       // 141
-    self.client.on('open', Meteor.bindEnvironment(function () {                                                        // 142
-      return self._onConnect(client);                                                                                  // 143
-    }, "stream connect callback"));                                                                                    // 144
-                                                                                                                       // 145
-    var clientOnIfCurrent = function (event, description, f) {                                                         // 146
-      self.client.on(event, Meteor.bindEnvironment(function () {                                                       // 147
-        // Ignore events from any connection we've already cleaned up.                                                 // 148
-        if (client !== self.client)                                                                                    // 149
-          return;                                                                                                      // 150
-        f.apply(this, arguments);                                                                                      // 151
-      }, description));                                                                                                // 152
-    };                                                                                                                 // 153
+    var wsUrl = toWebsocketUrl(self.endpoint);                                                                         // 128
+    var client = self.client = websocketDriver.client(wsUrl);                                                          // 129
+                                                                                                                       // 130
+    self._clearConnectionTimer();                                                                                      // 131
+    self.connectionTimer = Meteor.setTimeout(                                                                          // 132
+      function () {                                                                                                    // 133
+        self._lostConnection(                                                                                          // 134
+          new DDP.ConnectionError("DDP connection timed out"));                                                        // 135
+      },                                                                                                               // 136
+      self.CONNECT_TIMEOUT);                                                                                           // 137
+                                                                                                                       // 138
+    var onConnect = function () {                                                                                      // 139
+      client.start();                                                                                                  // 140
+    };                                                                                                                 // 141
+    var stream = self._createSocket(wsUrl, onConnect);                                                                 // 142
+                                                                                                                       // 143
+    if (!self.client) {                                                                                                // 144
+      // We hit a connection timeout or other issue while yielding in                                                  // 145
+      // _createSocket. Drop the connection.                                                                           // 146
+      stream.end();                                                                                                    // 147
+      return;                                                                                                          // 148
+    }                                                                                                                  // 149
+                                                                                                                       // 150
+    _.each(self.headers, function (header, name) {                                                                     // 151
+      client.setHeader(name, header);                                                                                  // 152
+    });                                                                                                                // 153
                                                                                                                        // 154
-    clientOnIfCurrent('error', 'stream error callback', function (error) {                                             // 155
-      if (!self.options._dontPrintErrors)                                                                              // 156
-        Meteor._debug("stream error", error.message);                                                                  // 157
+    self.client.on('open', Meteor.bindEnvironment(function () {                                                        // 155
+      return self._onConnect(client);                                                                                  // 156
+    }, "stream connect callback"));                                                                                    // 157
                                                                                                                        // 158
-      // Faye's 'error' object is not a JS error (and among other things,                                              // 159
-      // doesn't stringify well). Convert it to one.                                                                   // 160
-      self._lostConnection(new DDP.ConnectionError(error.message));                                                    // 161
-    });                                                                                                                // 162
-                                                                                                                       // 163
-                                                                                                                       // 164
-    clientOnIfCurrent('close', 'stream close callback', function () {                                                  // 165
-      self._lostConnection();                                                                                          // 166
-    });                                                                                                                // 167
-                                                                                                                       // 168
-                                                                                                                       // 169
-    clientOnIfCurrent('message', 'stream message callback', function (message) {                                       // 170
-      // Ignore binary frames, where message.data is a Buffer                                                          // 171
-      if (typeof message.data !== "string")                                                                            // 172
-        return;                                                                                                        // 173
+    var clientOnIfCurrent = function (event, description, f) {                                                         // 159
+      self.client.on(event, Meteor.bindEnvironment(function () {                                                       // 160
+        // Ignore events from any connection we've already cleaned up.                                                 // 161
+        if (client !== self.client)                                                                                    // 162
+          return;                                                                                                      // 163
+        f.apply(this, arguments);                                                                                      // 164
+      }, description));                                                                                                // 165
+    };                                                                                                                 // 166
+                                                                                                                       // 167
+    var finalize = Meteor.bindEnvironment(function () {                                                                // 168
+      stream.end();                                                                                                    // 169
+      if (client === self.client) {                                                                                    // 170
+        self._lostConnection();                                                                                        // 171
+      }                                                                                                                // 172
+    }, "finalizing stream");                                                                                           // 173
                                                                                                                        // 174
-      _.each(self.eventCallbacks.message, function (callback) {                                                        // 175
-        callback(message.data);                                                                                        // 176
-      });                                                                                                              // 177
-    });                                                                                                                // 178
-  }                                                                                                                    // 179
-});                                                                                                                    // 180
-                                                                                                                       // 181
+    stream.on('end', finalize);                                                                                        // 175
+    stream.on('close', finalize);                                                                                      // 176
+    client.on('close', finalize);                                                                                      // 177
+                                                                                                                       // 178
+    var onError = function (message) {                                                                                 // 179
+      if (!self.options._dontPrintErrors)                                                                              // 180
+        Meteor._debug("driver error", message);                                                                        // 181
+                                                                                                                       // 182
+      // Faye's 'error' object is not a JS error (and among other things,                                              // 183
+      // doesn't stringify well). Convert it to one.                                                                   // 184
+      self._lostConnection(new DDP.ConnectionError(message));                                                          // 185
+    };                                                                                                                 // 186
+                                                                                                                       // 187
+    clientOnIfCurrent('error', 'driver error callback', function (error) {                                             // 188
+      onError(error.message);                                                                                          // 189
+    });                                                                                                                // 190
+                                                                                                                       // 191
+    stream.on('error', Meteor.bindEnvironment(function (error) {                                                       // 192
+      if (client === self.client) {                                                                                    // 193
+        onError('Network error: ' + wsUrl + ': ' + error.message);                                                     // 194
+      }                                                                                                                // 195
+      stream.end();                                                                                                    // 196
+    }));                                                                                                               // 197
+                                                                                                                       // 198
+    clientOnIfCurrent('message', 'stream message callback', function (message) {                                       // 199
+      // Ignore binary frames, where data is a Buffer                                                                  // 200
+      if (typeof message.data !== "string")                                                                            // 201
+        return;                                                                                                        // 202
+      _.each(self.eventCallbacks.message, function (callback) {                                                        // 203
+        callback(message.data);                                                                                        // 204
+      });                                                                                                              // 205
+    });                                                                                                                // 206
+                                                                                                                       // 207
+    stream.pipe(self.client.io);                                                                                       // 208
+    self.client.io.pipe(stream);                                                                                       // 209
+  },                                                                                                                   // 210
+                                                                                                                       // 211
+  _createSocket: function (wsUrl, onConnect) {                                                                         // 212
+    var self = this;                                                                                                   // 213
+    var urlModule = Npm.require('url');                                                                                // 214
+    var parsedTargetUrl = urlModule.parse(wsUrl);                                                                      // 215
+    var targetUrlPort = +parsedTargetUrl.port;                                                                         // 216
+    if (!targetUrlPort) {                                                                                              // 217
+      targetUrlPort = parsedTargetUrl.protocol === 'wss:' ? 443 : 80;                                                  // 218
+    }                                                                                                                  // 219
+                                                                                                                       // 220
+    // Corporate proxy tunneling support.                                                                              // 221
+    var proxyUrl = self._getProxyUrl(parsedTargetUrl.protocol);                                                        // 222
+    if (proxyUrl) {                                                                                                    // 223
+      var targetProtocol =                                                                                             // 224
+            (parsedTargetUrl.protocol === 'wss:' ? 'https' : 'http');                                                  // 225
+      var parsedProxyUrl = urlModule.parse(proxyUrl);                                                                  // 226
+      var proxyProtocol =                                                                                              // 227
+            (parsedProxyUrl.protocol === 'https:' ? 'Https' : 'Http');                                                 // 228
+      var proxyUrlPort = +parsedProxyUrl.port;                                                                         // 229
+      if (!proxyUrlPort) {                                                                                             // 230
+        proxyUrlPort = parsedProxyUrl.protocol === 'https:' ? 443 : 80;                                                // 231
+      }                                                                                                                // 232
+      var tunnelFnName = targetProtocol + 'Over' + proxyProtocol;                                                      // 233
+      var tunnelAgent = Npm.require('tunnel-agent');                                                                   // 234
+      var proxyOptions = {                                                                                             // 235
+        host: parsedProxyUrl.hostname,                                                                                 // 236
+        port: proxyUrlPort,                                                                                            // 237
+        headers: {                                                                                                     // 238
+          host: parsedTargetUrl.host + ':' + targetUrlPort                                                             // 239
+        }                                                                                                              // 240
+      };                                                                                                               // 241
+      if (parsedProxyUrl.auth) {                                                                                       // 242
+        proxyOptions.proxyAuth = Npm.require('querystring').unescape(                                                  // 243
+          parsedProxyUrl.auth);                                                                                        // 244
+      }                                                                                                                // 245
+      var tunneler = tunnelAgent[tunnelFnName]({proxy: proxyOptions});                                                 // 246
+      var events = Npm.require('events');                                                                              // 247
+      var fakeRequest = new events.EventEmitter();                                                                     // 248
+      var Future = Npm.require('fibers/future');                                                                       // 249
+      var fut = new Future;                                                                                            // 250
+      fakeRequest.on('error', function (e) {                                                                           // 251
+        fut.isResolved() || fut.throw(e);                                                                              // 252
+      });                                                                                                              // 253
+      tunneler.createSocket({                                                                                          // 254
+        host: parsedTargetUrl.host,                                                                                    // 255
+        port: targetUrlPort,                                                                                           // 256
+        request: fakeRequest                                                                                           // 257
+      }, function (socket) {                                                                                           // 258
+        socket.on('close', function () {                                                                               // 259
+          tunneler.removeSocket(socket);                                                                               // 260
+        });                                                                                                            // 261
+        process.nextTick(onConnect);                                                                                   // 262
+        fut.return(socket);                                                                                            // 263
+      });                                                                                                              // 264
+      return fut.wait();                                                                                               // 265
+    }                                                                                                                  // 266
+                                                                                                                       // 267
+    if (parsedTargetUrl.protocol === 'wss:') {                                                                         // 268
+      return Npm.require('tls').connect(                                                                               // 269
+        targetUrlPort, parsedTargetUrl.hostname, onConnect);                                                           // 270
+    } else {                                                                                                           // 271
+      var stream = Npm.require('net').createConnection(                                                                // 272
+        targetUrlPort, parsedTargetUrl.hostname);                                                                      // 273
+      stream.on('connect', onConnect);                                                                                 // 274
+      return stream;                                                                                                   // 275
+    }                                                                                                                  // 276
+  },                                                                                                                   // 277
+                                                                                                                       // 278
+  _getProxyUrl: function (protocol) {                                                                                  // 279
+    var self = this;                                                                                                   // 280
+    // Similar to code in tools/http-helpers.js.                                                                       // 281
+    var proxy = process.env.HTTP_PROXY || process.env.http_proxy || null;                                              // 282
+    // if we're going to a secure url, try the https_proxy env variable first.                                         // 283
+    if (protocol === 'wss:') {                                                                                         // 284
+      proxy = process.env.HTTPS_PROXY || process.env.https_proxy || proxy;                                             // 285
+    }                                                                                                                  // 286
+    return proxy;                                                                                                      // 287
+  }                                                                                                                    // 288
+});                                                                                                                    // 289
+                                                                                                                       // 290
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -4653,3 +4762,5 @@ Package.ddp = {
 };
 
 })();
+
+//# sourceMappingURL=ddp.js.map

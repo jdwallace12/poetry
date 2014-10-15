@@ -451,3 +451,5 @@ Package['geojson-utils'] = {
 };
 
 })();
+
+//# sourceMappingURL=geojson-utils.js.map

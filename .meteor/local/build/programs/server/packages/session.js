@@ -10,3 +10,5 @@ if (typeof Package === 'undefined') Package = {};
 Package.session = {};
 
 })();
+
+//# sourceMappingURL=session.js.map

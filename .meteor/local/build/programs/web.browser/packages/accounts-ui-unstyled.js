@@ -973,7 +973,7 @@ Template.loginButtons.events({                                                  
   }                                                                                                                    // 10
 });                                                                                                                    // 11
                                                                                                                        // 12
-UI.registerHelper('loginButtons', function () {                                                                        // 13
+Template.registerHelper('loginButtons', function () {                                                                  // 13
   throw new Error("Use {{> loginButtons}} instead of {{loginButtons}}");                                               // 14
 });                                                                                                                    // 15
                                                                                                                        // 16
@@ -1070,61 +1070,69 @@ validatePassword = function (password) {                                        
 // loginButtonLoggedOut template                                                                                       // 107
 //                                                                                                                     // 108
                                                                                                                        // 109
-Template._loginButtonsLoggedOut.dropdown = dropdown;                                                                   // 110
-                                                                                                                       // 111
-Template._loginButtonsLoggedOut.services = getLoginServices;                                                           // 112
-                                                                                                                       // 113
-Template._loginButtonsLoggedOut.singleService = function () {                                                          // 114
-  var services = getLoginServices();                                                                                   // 115
-  if (services.length !== 1)                                                                                           // 116
-    throw new Error(                                                                                                   // 117
-      "Shouldn't be rendering this template with more than one configured service");                                   // 118
-  return services[0];                                                                                                  // 119
-};                                                                                                                     // 120
-                                                                                                                       // 121
-Template._loginButtonsLoggedOut.configurationLoaded = function () {                                                    // 122
-  return Accounts.loginServicesConfigured();                                                                           // 123
-};                                                                                                                     // 124
+Template._loginButtonsLoggedOut.helpers({                                                                              // 110
+  dropdown: dropdown,                                                                                                  // 111
+  services: getLoginServices,                                                                                          // 112
+  singleService: function () {                                                                                         // 113
+    var services = getLoginServices();                                                                                 // 114
+    if (services.length !== 1)                                                                                         // 115
+      throw new Error(                                                                                                 // 116
+        "Shouldn't be rendering this template with more than one configured service");                                 // 117
+    return services[0];                                                                                                // 118
+  },                                                                                                                   // 119
+  configurationLoaded: function () {                                                                                   // 120
+    return Accounts.loginServicesConfigured();                                                                         // 121
+  }                                                                                                                    // 122
+});                                                                                                                    // 123
+                                                                                                                       // 124
                                                                                                                        // 125
-                                                                                                                       // 126
-//                                                                                                                     // 127
-// loginButtonsLoggedIn template                                                                                       // 128
-//                                                                                                                     // 129
-                                                                                                                       // 130
-// decide whether we should show a dropdown rather than a row of                                                       // 131
-// buttons                                                                                                             // 132
-Template._loginButtonsLoggedIn.dropdown = dropdown;                                                                    // 133
-                                                                                                                       // 134
+//                                                                                                                     // 126
+// loginButtonsLoggedIn template                                                                                       // 127
+//                                                                                                                     // 128
+                                                                                                                       // 129
+  // decide whether we should show a dropdown rather than a row of                                                     // 130
+  // buttons                                                                                                           // 131
+Template._loginButtonsLoggedIn.helpers({                                                                               // 132
+  dropdown: dropdown                                                                                                   // 133
+});                                                                                                                    // 134
                                                                                                                        // 135
                                                                                                                        // 136
-//                                                                                                                     // 137
-// loginButtonsLoggedInSingleLogoutButton template                                                                     // 138
-//                                                                                                                     // 139
-                                                                                                                       // 140
-Template._loginButtonsLoggedInSingleLogoutButton.displayName = displayName;                                            // 141
-                                                                                                                       // 142
-                                                                                                                       // 143
-                                                                                                                       // 144
-//                                                                                                                     // 145
-// loginButtonsMessage template                                                                                        // 146
-//                                                                                                                     // 147
-                                                                                                                       // 148
-Template._loginButtonsMessages.errorMessage = function () {                                                            // 149
-  return loginButtonsSession.get('errorMessage');                                                                      // 150
-};                                                                                                                     // 151
-                                                                                                                       // 152
-Template._loginButtonsMessages.infoMessage = function () {                                                             // 153
-  return loginButtonsSession.get('infoMessage');                                                                       // 154
-};                                                                                                                     // 155
-                                                                                                                       // 156
+                                                                                                                       // 137
+//                                                                                                                     // 138
+// loginButtonsLoggedInSingleLogoutButton template                                                                     // 139
+//                                                                                                                     // 140
+                                                                                                                       // 141
+Template._loginButtonsLoggedInSingleLogoutButton.helpers({                                                             // 142
+  displayName: displayName                                                                                             // 143
+});                                                                                                                    // 144
+                                                                                                                       // 145
+                                                                                                                       // 146
+                                                                                                                       // 147
+//                                                                                                                     // 148
+// loginButtonsMessage template                                                                                        // 149
+//                                                                                                                     // 150
+                                                                                                                       // 151
+Template._loginButtonsMessages.helpers({                                                                               // 152
+  errorMessage: function () {                                                                                          // 153
+    return loginButtonsSession.get('errorMessage');                                                                    // 154
+  }                                                                                                                    // 155
+});                                                                                                                    // 156
                                                                                                                        // 157
-//                                                                                                                     // 158
-// loginButtonsLoggingInPadding template                                                                               // 159
-//                                                                                                                     // 160
-                                                                                                                       // 161
-Template._loginButtonsLoggingInPadding.dropdown = dropdown;                                                            // 162
+Template._loginButtonsMessages.helpers({                                                                               // 158
+  infoMessage: function () {                                                                                           // 159
+    return loginButtonsSession.get('infoMessage');                                                                     // 160
+  }                                                                                                                    // 161
+});                                                                                                                    // 162
                                                                                                                        // 163
                                                                                                                        // 164
+//                                                                                                                     // 165
+// loginButtonsLoggingInPadding template                                                                               // 166
+//                                                                                                                     // 167
+                                                                                                                       // 168
+Template._loginButtonsLoggingInPadding.helpers({                                                                       // 169
+  dropdown: dropdown                                                                                                   // 170
+});                                                                                                                    // 171
+                                                                                                                       // 172
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1198,26 +1206,27 @@ Template._loginButtonsLoggedOutSingleLoginButton.events({                       
   }                                                                                                                    // 54
 });                                                                                                                    // 55
                                                                                                                        // 56
-Template._loginButtonsLoggedOutSingleLoginButton.configured = function () {                                            // 57
-  return !!ServiceConfiguration.configurations.findOne({service: this.name});                                          // 58
-};                                                                                                                     // 59
-                                                                                                                       // 60
-Template._loginButtonsLoggedOutSingleLoginButton.capitalizedName = function () {                                       // 61
-  if (this.name === 'github')                                                                                          // 62
-    // XXX we should allow service packages to set their capitalized name                                              // 63
-    return 'GitHub';                                                                                                   // 64
-  else if (this.name === 'meteor-developer')                                                                           // 65
-    return 'Meteor';                                                                                                   // 66
-  else                                                                                                                 // 67
-    return capitalize(this.name);                                                                                      // 68
-};                                                                                                                     // 69
-                                                                                                                       // 70
-// XXX from http://epeli.github.com/underscore.string/lib/underscore.string.js                                         // 71
-var capitalize = function(str){                                                                                        // 72
-  str = str == null ? '' : String(str);                                                                                // 73
-  return str.charAt(0).toUpperCase() + str.slice(1);                                                                   // 74
-};                                                                                                                     // 75
-                                                                                                                       // 76
+Template._loginButtonsLoggedOutSingleLoginButton.helpers({                                                             // 57
+  configured: function () {                                                                                            // 58
+    return !!ServiceConfiguration.configurations.findOne({service: this.name});                                        // 59
+  },                                                                                                                   // 60
+  capitalizedName: function () {                                                                                       // 61
+    if (this.name === 'github')                                                                                        // 62
+      // XXX we should allow service packages to set their capitalized name                                            // 63
+      return 'GitHub';                                                                                                 // 64
+    else if (this.name === 'meteor-developer')                                                                         // 65
+      return 'Meteor';                                                                                                 // 66
+    else                                                                                                               // 67
+      return capitalize(this.name);                                                                                    // 68
+  }                                                                                                                    // 69
+});                                                                                                                    // 70
+                                                                                                                       // 71
+// XXX from http://epeli.github.com/underscore.string/lib/underscore.string.js                                         // 72
+var capitalize = function(str){                                                                                        // 73
+  str = str == null ? '' : String(str);                                                                                // 74
+  return str.charAt(0).toUpperCase() + str.slice(1);                                                                   // 75
+};                                                                                                                     // 76
+                                                                                                                       // 77
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1263,478 +1272,491 @@ Template._loginButtonsLoggedInDropdown.events({                                 
   }                                                                                                                    // 26
 });                                                                                                                    // 27
                                                                                                                        // 28
-Template._loginButtonsLoggedInDropdown.displayName = displayName;                                                      // 29
-                                                                                                                       // 30
-Template._loginButtonsLoggedInDropdown.inChangePasswordFlow = function () {                                            // 31
-  return loginButtonsSession.get('inChangePasswordFlow');                                                              // 32
-};                                                                                                                     // 33
-                                                                                                                       // 34
-Template._loginButtonsLoggedInDropdown.inMessageOnlyFlow = function () {                                               // 35
-  return loginButtonsSession.get('inMessageOnlyFlow');                                                                 // 36
-};                                                                                                                     // 37
-                                                                                                                       // 38
-Template._loginButtonsLoggedInDropdown.dropdownVisible = function () {                                                 // 39
-  return loginButtonsSession.get('dropdownVisible');                                                                   // 40
-};                                                                                                                     // 41
-                                                                                                                       // 42
-Template._loginButtonsLoggedInDropdownActions.allowChangingPassword = function () {                                    // 43
-  // it would be more correct to check whether the user has a password set,                                            // 44
-  // but in order to do that we'd have to send more data down to the client,                                           // 45
-  // and it'd be preferable not to send down the entire service.password document.                                     // 46
-  //                                                                                                                   // 47
-  // instead we use the heuristic: if the user has a username or email set.                                            // 48
-  var user = Meteor.user();                                                                                            // 49
-  return user.username || (user.emails && user.emails[0] && user.emails[0].address);                                   // 50
-};                                                                                                                     // 51
-                                                                                                                       // 52
-                                                                                                                       // 53
-//                                                                                                                     // 54
-// loginButtonsLoggedOutDropdown template and related                                                                  // 55
-//                                                                                                                     // 56
+Template._loginButtonsLoggedInDropdown.helpers({                                                                       // 29
+  displayName: displayName,                                                                                            // 30
+                                                                                                                       // 31
+  inChangePasswordFlow: function () {                                                                                  // 32
+    return loginButtonsSession.get('inChangePasswordFlow');                                                            // 33
+  },                                                                                                                   // 34
+                                                                                                                       // 35
+  inMessageOnlyFlow: function () {                                                                                     // 36
+    return loginButtonsSession.get('inMessageOnlyFlow');                                                               // 37
+  },                                                                                                                   // 38
+                                                                                                                       // 39
+  dropdownVisible: function () {                                                                                       // 40
+    return loginButtonsSession.get('dropdownVisible');                                                                 // 41
+  }                                                                                                                    // 42
+});                                                                                                                    // 43
+                                                                                                                       // 44
+Template._loginButtonsLoggedInDropdownActions.helpers({                                                                // 45
+  allowChangingPassword: function () {                                                                                 // 46
+    // it would be more correct to check whether the user has a password set,                                          // 47
+    // but in order to do that we'd have to send more data down to the client,                                         // 48
+    // and it'd be preferable not to send down the entire service.password document.                                   // 49
+    //                                                                                                                 // 50
+    // instead we use the heuristic: if the user has a username or email set.                                          // 51
+    var user = Meteor.user();                                                                                          // 52
+    return user.username || (user.emails && user.emails[0] && user.emails[0].address);                                 // 53
+  }                                                                                                                    // 54
+});                                                                                                                    // 55
+                                                                                                                       // 56
                                                                                                                        // 57
-Template._loginButtonsLoggedOutDropdown.events({                                                                       // 58
-  'click #login-buttons-password': function () {                                                                       // 59
-    loginOrSignup();                                                                                                   // 60
-  },                                                                                                                   // 61
-                                                                                                                       // 62
-  'keypress #forgot-password-email': function (event) {                                                                // 63
-    if (event.keyCode === 13)                                                                                          // 64
-      forgotPassword();                                                                                                // 65
-  },                                                                                                                   // 66
-                                                                                                                       // 67
-  'click #login-buttons-forgot-password': function () {                                                                // 68
-    forgotPassword();                                                                                                  // 69
+//                                                                                                                     // 58
+// loginButtonsLoggedOutDropdown template and related                                                                  // 59
+//                                                                                                                     // 60
+                                                                                                                       // 61
+Template._loginButtonsLoggedOutDropdown.events({                                                                       // 62
+  'click #login-buttons-password': function () {                                                                       // 63
+    loginOrSignup();                                                                                                   // 64
+  },                                                                                                                   // 65
+                                                                                                                       // 66
+  'keypress #forgot-password-email': function (event) {                                                                // 67
+    if (event.keyCode === 13)                                                                                          // 68
+      forgotPassword();                                                                                                // 69
   },                                                                                                                   // 70
                                                                                                                        // 71
-  'click #signup-link': function () {                                                                                  // 72
-    loginButtonsSession.resetMessages();                                                                               // 73
-                                                                                                                       // 74
-    // store values of fields before swtiching to the signup form                                                      // 75
-    var username = trimmedElementValueById('login-username');                                                          // 76
-    var email = trimmedElementValueById('login-email');                                                                // 77
-    var usernameOrEmail = trimmedElementValueById('login-username-or-email');                                          // 78
-    // notably not trimmed. a password could (?) start or end with a space                                             // 79
-    var password = elementValueById('login-password');                                                                 // 80
-                                                                                                                       // 81
-    loginButtonsSession.set('inSignupFlow', true);                                                                     // 82
-    loginButtonsSession.set('inForgotPasswordFlow', false);                                                            // 83
-    // force the ui to update so that we have the approprate fields to fill in                                         // 84
-    Tracker.flush();                                                                                                   // 85
-                                                                                                                       // 86
-    // update new fields with appropriate defaults                                                                     // 87
-    if (username !== null)                                                                                             // 88
-      document.getElementById('login-username').value = username;                                                      // 89
-    else if (email !== null)                                                                                           // 90
-      document.getElementById('login-email').value = email;                                                            // 91
-    else if (usernameOrEmail !== null)                                                                                 // 92
-      if (usernameOrEmail.indexOf('@') === -1)                                                                         // 93
-        document.getElementById('login-username').value = usernameOrEmail;                                             // 94
-    else                                                                                                               // 95
-      document.getElementById('login-email').value = usernameOrEmail;                                                  // 96
-                                                                                                                       // 97
-    if (password !== null)                                                                                             // 98
-      document.getElementById('login-password').value = password;                                                      // 99
-                                                                                                                       // 100
-    // Force redrawing the `login-dropdown-list` element because of                                                    // 101
-    // a bizarre Chrome bug in which part of the DIV is not redrawn                                                    // 102
-    // in case you had tried to unsuccessfully log in before                                                           // 103
-    // switching to the signup form.                                                                                   // 104
-    //                                                                                                                 // 105
-    // Found tip on how to force a redraw on                                                                           // 106
+  'click #login-buttons-forgot-password': function () {                                                                // 72
+    forgotPassword();                                                                                                  // 73
+  },                                                                                                                   // 74
+                                                                                                                       // 75
+  'click #signup-link': function () {                                                                                  // 76
+    loginButtonsSession.resetMessages();                                                                               // 77
+                                                                                                                       // 78
+    // store values of fields before swtiching to the signup form                                                      // 79
+    var username = trimmedElementValueById('login-username');                                                          // 80
+    var email = trimmedElementValueById('login-email');                                                                // 81
+    var usernameOrEmail = trimmedElementValueById('login-username-or-email');                                          // 82
+    // notably not trimmed. a password could (?) start or end with a space                                             // 83
+    var password = elementValueById('login-password');                                                                 // 84
+                                                                                                                       // 85
+    loginButtonsSession.set('inSignupFlow', true);                                                                     // 86
+    loginButtonsSession.set('inForgotPasswordFlow', false);                                                            // 87
+    // force the ui to update so that we have the approprate fields to fill in                                         // 88
+    Tracker.flush();                                                                                                   // 89
+                                                                                                                       // 90
+    // update new fields with appropriate defaults                                                                     // 91
+    if (username !== null)                                                                                             // 92
+      document.getElementById('login-username').value = username;                                                      // 93
+    else if (email !== null)                                                                                           // 94
+      document.getElementById('login-email').value = email;                                                            // 95
+    else if (usernameOrEmail !== null)                                                                                 // 96
+      if (usernameOrEmail.indexOf('@') === -1)                                                                         // 97
+        document.getElementById('login-username').value = usernameOrEmail;                                             // 98
+    else                                                                                                               // 99
+      document.getElementById('login-email').value = usernameOrEmail;                                                  // 100
+                                                                                                                       // 101
+    if (password !== null)                                                                                             // 102
+      document.getElementById('login-password').value = password;                                                      // 103
+                                                                                                                       // 104
+    // Force redrawing the `login-dropdown-list` element because of                                                    // 105
+    // a bizarre Chrome bug in which part of the DIV is not redrawn                                                    // 106
+    // in case you had tried to unsuccessfully log in before                                                           // 107
+    // switching to the signup form.                                                                                   // 108
+    //                                                                                                                 // 109
+    // Found tip on how to force a redraw on                                                                           // 110
     // http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes/3485654#3485654
-    var redraw = document.getElementById('login-dropdown-list');                                                       // 108
-    redraw.style.display = 'none';                                                                                     // 109
-    redraw.offsetHeight; // it seems that this line does nothing but is necessary for the redraw to work               // 110
-    redraw.style.display = 'block';                                                                                    // 111
-  },                                                                                                                   // 112
-  'click #forgot-password-link': function () {                                                                         // 113
-    loginButtonsSession.resetMessages();                                                                               // 114
-                                                                                                                       // 115
-    // store values of fields before swtiching to the signup form                                                      // 116
-    var email = trimmedElementValueById('login-email');                                                                // 117
-    var usernameOrEmail = trimmedElementValueById('login-username-or-email');                                          // 118
+    var redraw = document.getElementById('login-dropdown-list');                                                       // 112
+    redraw.style.display = 'none';                                                                                     // 113
+    redraw.offsetHeight; // it seems that this line does nothing but is necessary for the redraw to work               // 114
+    redraw.style.display = 'block';                                                                                    // 115
+  },                                                                                                                   // 116
+  'click #forgot-password-link': function () {                                                                         // 117
+    loginButtonsSession.resetMessages();                                                                               // 118
                                                                                                                        // 119
-    loginButtonsSession.set('inSignupFlow', false);                                                                    // 120
-    loginButtonsSession.set('inForgotPasswordFlow', true);                                                             // 121
-    // force the ui to update so that we have the approprate fields to fill in                                         // 122
-    Tracker.flush();                                                                                                   // 123
-                                                                                                                       // 124
-    // update new fields with appropriate defaults                                                                     // 125
-    if (email !== null)                                                                                                // 126
-      document.getElementById('forgot-password-email').value = email;                                                  // 127
-    else if (usernameOrEmail !== null)                                                                                 // 128
-      if (usernameOrEmail.indexOf('@') !== -1)                                                                         // 129
-        document.getElementById('forgot-password-email').value = usernameOrEmail;                                      // 130
-                                                                                                                       // 131
-  },                                                                                                                   // 132
-  'click #back-to-login-link': function () {                                                                           // 133
-    loginButtonsSession.resetMessages();                                                                               // 134
+    // store values of fields before swtiching to the signup form                                                      // 120
+    var email = trimmedElementValueById('login-email');                                                                // 121
+    var usernameOrEmail = trimmedElementValueById('login-username-or-email');                                          // 122
+                                                                                                                       // 123
+    loginButtonsSession.set('inSignupFlow', false);                                                                    // 124
+    loginButtonsSession.set('inForgotPasswordFlow', true);                                                             // 125
+    // force the ui to update so that we have the approprate fields to fill in                                         // 126
+    Tracker.flush();                                                                                                   // 127
+                                                                                                                       // 128
+    // update new fields with appropriate defaults                                                                     // 129
+    if (email !== null)                                                                                                // 130
+      document.getElementById('forgot-password-email').value = email;                                                  // 131
+    else if (usernameOrEmail !== null)                                                                                 // 132
+      if (usernameOrEmail.indexOf('@') !== -1)                                                                         // 133
+        document.getElementById('forgot-password-email').value = usernameOrEmail;                                      // 134
                                                                                                                        // 135
-    var username = trimmedElementValueById('login-username');                                                          // 136
-    var email = trimmedElementValueById('login-email')                                                                 // 137
-          || trimmedElementValueById('forgot-password-email'); // Ughh. Standardize on names?                          // 138
-    // notably not trimmed. a password could (?) start or end with a space                                             // 139
-    var password = elementValueById('login-password');                                                                 // 140
-                                                                                                                       // 141
-    loginButtonsSession.set('inSignupFlow', false);                                                                    // 142
-    loginButtonsSession.set('inForgotPasswordFlow', false);                                                            // 143
-    // force the ui to update so that we have the approprate fields to fill in                                         // 144
-    Tracker.flush();                                                                                                   // 145
-                                                                                                                       // 146
-    if (document.getElementById('login-username'))                                                                     // 147
-      document.getElementById('login-username').value = username;                                                      // 148
-    if (document.getElementById('login-email'))                                                                        // 149
-      document.getElementById('login-email').value = email;                                                            // 150
-                                                                                                                       // 151
-    if (document.getElementById('login-username-or-email'))                                                            // 152
-      document.getElementById('login-username-or-email').value = email || username;                                    // 153
-                                                                                                                       // 154
-    if (password !== null)                                                                                             // 155
-      document.getElementById('login-password').value = password;                                                      // 156
-  },                                                                                                                   // 157
+  },                                                                                                                   // 136
+  'click #back-to-login-link': function () {                                                                           // 137
+    loginButtonsSession.resetMessages();                                                                               // 138
+                                                                                                                       // 139
+    var username = trimmedElementValueById('login-username');                                                          // 140
+    var email = trimmedElementValueById('login-email')                                                                 // 141
+          || trimmedElementValueById('forgot-password-email'); // Ughh. Standardize on names?                          // 142
+    // notably not trimmed. a password could (?) start or end with a space                                             // 143
+    var password = elementValueById('login-password');                                                                 // 144
+                                                                                                                       // 145
+    loginButtonsSession.set('inSignupFlow', false);                                                                    // 146
+    loginButtonsSession.set('inForgotPasswordFlow', false);                                                            // 147
+    // force the ui to update so that we have the approprate fields to fill in                                         // 148
+    Tracker.flush();                                                                                                   // 149
+                                                                                                                       // 150
+    if (document.getElementById('login-username'))                                                                     // 151
+      document.getElementById('login-username').value = username;                                                      // 152
+    if (document.getElementById('login-email'))                                                                        // 153
+      document.getElementById('login-email').value = email;                                                            // 154
+                                                                                                                       // 155
+    if (document.getElementById('login-username-or-email'))                                                            // 156
+      document.getElementById('login-username-or-email').value = email || username;                                    // 157
+                                                                                                                       // 158
+    if (password !== null)                                                                                             // 159
+      document.getElementById('login-password').value = password;                                                      // 160
+  },                                                                                                                   // 161
   'keypress #login-username, keypress #login-email, keypress #login-username-or-email, keypress #login-password, keypress #login-password-again': function (event) {
-    if (event.keyCode === 13)                                                                                          // 159
-      loginOrSignup();                                                                                                 // 160
-  }                                                                                                                    // 161
-});                                                                                                                    // 162
-                                                                                                                       // 163
-// additional classes that can be helpful in styling the dropdown                                                      // 164
-Template._loginButtonsLoggedOutDropdown.additionalClasses = function () {                                              // 165
-  if (!hasPasswordService()) {                                                                                         // 166
-    return false;                                                                                                      // 167
-  } else {                                                                                                             // 168
-    if (loginButtonsSession.get('inSignupFlow')) {                                                                     // 169
-      return 'login-form-create-account';                                                                              // 170
-    } else if (loginButtonsSession.get('inForgotPasswordFlow')) {                                                      // 171
-      return 'login-form-forgot-password';                                                                             // 172
+    if (event.keyCode === 13)                                                                                          // 163
+      loginOrSignup();                                                                                                 // 164
+  }                                                                                                                    // 165
+});                                                                                                                    // 166
+                                                                                                                       // 167
+Template._loginButtonsLoggedOutDropdown.helpers({                                                                      // 168
+  // additional classes that can be helpful in styling the dropdown                                                    // 169
+  additionalClasses: function () {                                                                                     // 170
+    if (!hasPasswordService()) {                                                                                       // 171
+      return false;                                                                                                    // 172
     } else {                                                                                                           // 173
-      return 'login-form-sign-in';                                                                                     // 174
-    }                                                                                                                  // 175
-  }                                                                                                                    // 176
-};                                                                                                                     // 177
-                                                                                                                       // 178
-Template._loginButtonsLoggedOutDropdown.dropdownVisible = function () {                                                // 179
-  return loginButtonsSession.get('dropdownVisible');                                                                   // 180
-};                                                                                                                     // 181
-                                                                                                                       // 182
-Template._loginButtonsLoggedOutDropdown.hasPasswordService = hasPasswordService;                                       // 183
-                                                                                                                       // 184
-// return all login services, with password last                                                                       // 185
-Template._loginButtonsLoggedOutAllServices.services = getLoginServices;                                                // 186
+      if (loginButtonsSession.get('inSignupFlow')) {                                                                   // 174
+        return 'login-form-create-account';                                                                            // 175
+      } else if (loginButtonsSession.get('inForgotPasswordFlow')) {                                                    // 176
+        return 'login-form-forgot-password';                                                                           // 177
+      } else {                                                                                                         // 178
+        return 'login-form-sign-in';                                                                                   // 179
+      }                                                                                                                // 180
+    }                                                                                                                  // 181
+  },                                                                                                                   // 182
+                                                                                                                       // 183
+  dropdownVisible: function () {                                                                                       // 184
+    return loginButtonsSession.get('dropdownVisible');                                                                 // 185
+  },                                                                                                                   // 186
                                                                                                                        // 187
-Template._loginButtonsLoggedOutAllServices.isPasswordService = function () {                                           // 188
-  return this.name === 'password';                                                                                     // 189
-};                                                                                                                     // 190
-                                                                                                                       // 191
-Template._loginButtonsLoggedOutAllServices.hasOtherServices = function () {                                            // 192
-  return getLoginServices().length > 1;                                                                                // 193
-};                                                                                                                     // 194
-                                                                                                                       // 195
-Template._loginButtonsLoggedOutAllServices.hasPasswordService =                                                        // 196
-  hasPasswordService;                                                                                                  // 197
+  hasPasswordService: hasPasswordService                                                                               // 188
+});                                                                                                                    // 189
+                                                                                                                       // 190
+// return all login services, with password last                                                                       // 191
+Template._loginButtonsLoggedOutAllServices.helpers({                                                                   // 192
+  services: getLoginServices,                                                                                          // 193
+                                                                                                                       // 194
+  isPasswordService: function () {                                                                                     // 195
+    return this.name === 'password';                                                                                   // 196
+  },                                                                                                                   // 197
                                                                                                                        // 198
-Template._loginButtonsLoggedOutPasswordService.fields = function () {                                                  // 199
-  var loginFields = [                                                                                                  // 200
-    {fieldName: 'username-or-email', fieldLabel: 'Username or Email',                                                  // 201
-     visible: function () {                                                                                            // 202
-       return _.contains(                                                                                              // 203
-         ["USERNAME_AND_EMAIL", "USERNAME_AND_OPTIONAL_EMAIL"],                                                        // 204
-         passwordSignupFields());                                                                                      // 205
-     }},                                                                                                               // 206
-    {fieldName: 'username', fieldLabel: 'Username',                                                                    // 207
-     visible: function () {                                                                                            // 208
-       return passwordSignupFields() === "USERNAME_ONLY";                                                              // 209
-     }},                                                                                                               // 210
-    {fieldName: 'email', fieldLabel: 'Email', inputType: 'email',                                                      // 211
-     visible: function () {                                                                                            // 212
-       return passwordSignupFields() === "EMAIL_ONLY";                                                                 // 213
-     }},                                                                                                               // 214
-    {fieldName: 'password', fieldLabel: 'Password', inputType: 'password',                                             // 215
-     visible: function () {                                                                                            // 216
-       return true;                                                                                                    // 217
-     }}                                                                                                                // 218
-  ];                                                                                                                   // 219
-                                                                                                                       // 220
-  var signupFields = [                                                                                                 // 221
-    {fieldName: 'username', fieldLabel: 'Username',                                                                    // 222
-     visible: function () {                                                                                            // 223
-       return _.contains(                                                                                              // 224
-         ["USERNAME_AND_EMAIL", "USERNAME_AND_OPTIONAL_EMAIL", "USERNAME_ONLY"],                                       // 225
-         passwordSignupFields());                                                                                      // 226
-     }},                                                                                                               // 227
-    {fieldName: 'email', fieldLabel: 'Email', inputType: 'email',                                                      // 228
-     visible: function () {                                                                                            // 229
-       return _.contains(                                                                                              // 230
-         ["USERNAME_AND_EMAIL", "EMAIL_ONLY"],                                                                         // 231
-         passwordSignupFields());                                                                                      // 232
-     }},                                                                                                               // 233
-    {fieldName: 'email', fieldLabel: 'Email (optional)', inputType: 'email',                                           // 234
-     visible: function () {                                                                                            // 235
-       return passwordSignupFields() === "USERNAME_AND_OPTIONAL_EMAIL";                                                // 236
-     }},                                                                                                               // 237
-    {fieldName: 'password', fieldLabel: 'Password', inputType: 'password',                                             // 238
-     visible: function () {                                                                                            // 239
-       return true;                                                                                                    // 240
-     }},                                                                                                               // 241
-    {fieldName: 'password-again', fieldLabel: 'Password (again)',                                                      // 242
-     inputType: 'password',                                                                                            // 243
-     visible: function () {                                                                                            // 244
-       // No need to make users double-enter their password if                                                         // 245
-       // they'll necessarily have an email set, since they can use                                                    // 246
-       // the "forgot password" flow.                                                                                  // 247
-       return _.contains(                                                                                              // 248
-         ["USERNAME_AND_OPTIONAL_EMAIL", "USERNAME_ONLY"],                                                             // 249
-         passwordSignupFields());                                                                                      // 250
-     }}                                                                                                                // 251
-  ];                                                                                                                   // 252
-                                                                                                                       // 253
-  return loginButtonsSession.get('inSignupFlow') ? signupFields : loginFields;                                         // 254
-};                                                                                                                     // 255
-                                                                                                                       // 256
-Template._loginButtonsLoggedOutPasswordService.inForgotPasswordFlow = function () {                                    // 257
-  return loginButtonsSession.get('inForgotPasswordFlow');                                                              // 258
-};                                                                                                                     // 259
-                                                                                                                       // 260
-Template._loginButtonsLoggedOutPasswordService.inLoginFlow = function () {                                             // 261
-  return !loginButtonsSession.get('inSignupFlow') && !loginButtonsSession.get('inForgotPasswordFlow');                 // 262
-};                                                                                                                     // 263
+  hasOtherServices: function () {                                                                                      // 199
+    return getLoginServices().length > 1;                                                                              // 200
+  },                                                                                                                   // 201
+                                                                                                                       // 202
+  hasPasswordService: hasPasswordService                                                                               // 203
+});                                                                                                                    // 204
+                                                                                                                       // 205
+Template._loginButtonsLoggedOutPasswordService.helpers({                                                               // 206
+  fields: function () {                                                                                                // 207
+    var loginFields = [                                                                                                // 208
+      {fieldName: 'username-or-email', fieldLabel: 'Username or Email',                                                // 209
+       visible: function () {                                                                                          // 210
+         return _.contains(                                                                                            // 211
+           ["USERNAME_AND_EMAIL", "USERNAME_AND_OPTIONAL_EMAIL"],                                                      // 212
+           passwordSignupFields());                                                                                    // 213
+       }},                                                                                                             // 214
+      {fieldName: 'username', fieldLabel: 'Username',                                                                  // 215
+       visible: function () {                                                                                          // 216
+         return passwordSignupFields() === "USERNAME_ONLY";                                                            // 217
+       }},                                                                                                             // 218
+      {fieldName: 'email', fieldLabel: 'Email', inputType: 'email',                                                    // 219
+       visible: function () {                                                                                          // 220
+         return passwordSignupFields() === "EMAIL_ONLY";                                                               // 221
+       }},                                                                                                             // 222
+      {fieldName: 'password', fieldLabel: 'Password', inputType: 'password',                                           // 223
+       visible: function () {                                                                                          // 224
+         return true;                                                                                                  // 225
+       }}                                                                                                              // 226
+    ];                                                                                                                 // 227
+                                                                                                                       // 228
+    var signupFields = [                                                                                               // 229
+      {fieldName: 'username', fieldLabel: 'Username',                                                                  // 230
+       visible: function () {                                                                                          // 231
+         return _.contains(                                                                                            // 232
+           ["USERNAME_AND_EMAIL", "USERNAME_AND_OPTIONAL_EMAIL", "USERNAME_ONLY"],                                     // 233
+           passwordSignupFields());                                                                                    // 234
+       }},                                                                                                             // 235
+      {fieldName: 'email', fieldLabel: 'Email', inputType: 'email',                                                    // 236
+       visible: function () {                                                                                          // 237
+         return _.contains(                                                                                            // 238
+           ["USERNAME_AND_EMAIL", "EMAIL_ONLY"],                                                                       // 239
+           passwordSignupFields());                                                                                    // 240
+       }},                                                                                                             // 241
+      {fieldName: 'email', fieldLabel: 'Email (optional)', inputType: 'email',                                         // 242
+       visible: function () {                                                                                          // 243
+         return passwordSignupFields() === "USERNAME_AND_OPTIONAL_EMAIL";                                              // 244
+       }},                                                                                                             // 245
+      {fieldName: 'password', fieldLabel: 'Password', inputType: 'password',                                           // 246
+       visible: function () {                                                                                          // 247
+         return true;                                                                                                  // 248
+       }},                                                                                                             // 249
+      {fieldName: 'password-again', fieldLabel: 'Password (again)',                                                    // 250
+       inputType: 'password',                                                                                          // 251
+       visible: function () {                                                                                          // 252
+         // No need to make users double-enter their password if                                                       // 253
+         // they'll necessarily have an email set, since they can use                                                  // 254
+         // the "forgot password" flow.                                                                                // 255
+         return _.contains(                                                                                            // 256
+           ["USERNAME_AND_OPTIONAL_EMAIL", "USERNAME_ONLY"],                                                           // 257
+           passwordSignupFields());                                                                                    // 258
+       }}                                                                                                              // 259
+    ];                                                                                                                 // 260
+                                                                                                                       // 261
+    return loginButtonsSession.get('inSignupFlow') ? signupFields : loginFields;                                       // 262
+  },                                                                                                                   // 263
                                                                                                                        // 264
-Template._loginButtonsLoggedOutPasswordService.inSignupFlow = function () {                                            // 265
-  return loginButtonsSession.get('inSignupFlow');                                                                      // 266
-};                                                                                                                     // 267
+  inForgotPasswordFlow: function () {                                                                                  // 265
+    return loginButtonsSession.get('inForgotPasswordFlow');                                                            // 266
+  },                                                                                                                   // 267
                                                                                                                        // 268
-Template._loginButtonsLoggedOutPasswordService.showCreateAccountLink = function () {                                   // 269
-  return !Accounts._options.forbidClientAccountCreation;                                                               // 270
-};                                                                                                                     // 271
+  inLoginFlow: function () {                                                                                           // 269
+    return !loginButtonsSession.get('inSignupFlow') && !loginButtonsSession.get('inForgotPasswordFlow');               // 270
+  },                                                                                                                   // 271
                                                                                                                        // 272
-Template._loginButtonsLoggedOutPasswordService.showForgotPasswordLink = function () {                                  // 273
-  return _.contains(                                                                                                   // 274
-    ["USERNAME_AND_EMAIL", "USERNAME_AND_OPTIONAL_EMAIL", "EMAIL_ONLY"],                                               // 275
-    passwordSignupFields());                                                                                           // 276
-};                                                                                                                     // 277
-                                                                                                                       // 278
-Template._loginButtonsFormField.inputType = function () {                                                              // 279
-  return this.inputType || "text";                                                                                     // 280
-};                                                                                                                     // 281
-                                                                                                                       // 282
-                                                                                                                       // 283
-//                                                                                                                     // 284
-// loginButtonsChangePassword template                                                                                 // 285
-//                                                                                                                     // 286
+  inSignupFlow: function () {                                                                                          // 273
+    return loginButtonsSession.get('inSignupFlow');                                                                    // 274
+  },                                                                                                                   // 275
+                                                                                                                       // 276
+  showCreateAccountLink: function () {                                                                                 // 277
+    return !Accounts._options.forbidClientAccountCreation;                                                             // 278
+  },                                                                                                                   // 279
+                                                                                                                       // 280
+  showForgotPasswordLink: function () {                                                                                // 281
+    return _.contains(                                                                                                 // 282
+      ["USERNAME_AND_EMAIL", "USERNAME_AND_OPTIONAL_EMAIL", "EMAIL_ONLY"],                                             // 283
+      passwordSignupFields());                                                                                         // 284
+  }                                                                                                                    // 285
+});                                                                                                                    // 286
                                                                                                                        // 287
-Template._loginButtonsChangePassword.events({                                                                          // 288
-  'keypress #login-old-password, keypress #login-password, keypress #login-password-again': function (event) {         // 289
-    if (event.keyCode === 13)                                                                                          // 290
-      changePassword();                                                                                                // 291
-  },                                                                                                                   // 292
-  'click #login-buttons-do-change-password': function () {                                                             // 293
-    changePassword();                                                                                                  // 294
-  }                                                                                                                    // 295
-});                                                                                                                    // 296
-                                                                                                                       // 297
-Template._loginButtonsChangePassword.fields = function () {                                                            // 298
-  return [                                                                                                             // 299
-    {fieldName: 'old-password', fieldLabel: 'Current Password', inputType: 'password',                                 // 300
-     visible: function () {                                                                                            // 301
-       return true;                                                                                                    // 302
-     }},                                                                                                               // 303
-    {fieldName: 'password', fieldLabel: 'New Password', inputType: 'password',                                         // 304
-     visible: function () {                                                                                            // 305
-       return true;                                                                                                    // 306
-     }},                                                                                                               // 307
-    {fieldName: 'password-again', fieldLabel: 'New Password (again)',                                                  // 308
-     inputType: 'password',                                                                                            // 309
-     visible: function () {                                                                                            // 310
-       // No need to make users double-enter their password if                                                         // 311
-       // they'll necessarily have an email set, since they can use                                                    // 312
-       // the "forgot password" flow.                                                                                  // 313
-       return _.contains(                                                                                              // 314
-         ["USERNAME_AND_OPTIONAL_EMAIL", "USERNAME_ONLY"],                                                             // 315
-         passwordSignupFields());                                                                                      // 316
-     }}                                                                                                                // 317
-  ];                                                                                                                   // 318
-};                                                                                                                     // 319
-                                                                                                                       // 320
-                                                                                                                       // 321
-//                                                                                                                     // 322
-// helpers                                                                                                             // 323
-//                                                                                                                     // 324
-                                                                                                                       // 325
-var elementValueById = function(id) {                                                                                  // 326
-  var element = document.getElementById(id);                                                                           // 327
-  if (!element)                                                                                                        // 328
-    return null;                                                                                                       // 329
-  else                                                                                                                 // 330
-    return element.value;                                                                                              // 331
-};                                                                                                                     // 332
+Template._loginButtonsFormField.helpers({                                                                              // 288
+  inputType: function () {                                                                                             // 289
+    return this.inputType || "text";                                                                                   // 290
+  }                                                                                                                    // 291
+});                                                                                                                    // 292
+                                                                                                                       // 293
+                                                                                                                       // 294
+//                                                                                                                     // 295
+// loginButtonsChangePassword template                                                                                 // 296
+//                                                                                                                     // 297
+                                                                                                                       // 298
+Template._loginButtonsChangePassword.events({                                                                          // 299
+  'keypress #login-old-password, keypress #login-password, keypress #login-password-again': function (event) {         // 300
+    if (event.keyCode === 13)                                                                                          // 301
+      changePassword();                                                                                                // 302
+  },                                                                                                                   // 303
+  'click #login-buttons-do-change-password': function () {                                                             // 304
+    changePassword();                                                                                                  // 305
+  }                                                                                                                    // 306
+});                                                                                                                    // 307
+                                                                                                                       // 308
+Template._loginButtonsChangePassword.helpers({                                                                         // 309
+  fields: function () {                                                                                                // 310
+    return [                                                                                                           // 311
+      {fieldName: 'old-password', fieldLabel: 'Current Password', inputType: 'password',                               // 312
+       visible: function () {                                                                                          // 313
+         return true;                                                                                                  // 314
+       }},                                                                                                             // 315
+      {fieldName: 'password', fieldLabel: 'New Password', inputType: 'password',                                       // 316
+       visible: function () {                                                                                          // 317
+         return true;                                                                                                  // 318
+       }},                                                                                                             // 319
+      {fieldName: 'password-again', fieldLabel: 'New Password (again)',                                                // 320
+       inputType: 'password',                                                                                          // 321
+       visible: function () {                                                                                          // 322
+         // No need to make users double-enter their password if                                                       // 323
+         // they'll necessarily have an email set, since they can use                                                  // 324
+         // the "forgot password" flow.                                                                                // 325
+         return _.contains(                                                                                            // 326
+           ["USERNAME_AND_OPTIONAL_EMAIL", "USERNAME_ONLY"],                                                           // 327
+           passwordSignupFields());                                                                                    // 328
+       }}                                                                                                              // 329
+    ];                                                                                                                 // 330
+  }                                                                                                                    // 331
+});                                                                                                                    // 332
                                                                                                                        // 333
-var trimmedElementValueById = function(id) {                                                                           // 334
-  var element = document.getElementById(id);                                                                           // 335
-  if (!element)                                                                                                        // 336
-    return null;                                                                                                       // 337
-  else                                                                                                                 // 338
-    return element.value.replace(/^\s*|\s*$/g, ""); // trim() doesn't work on IE8;                                     // 339
-};                                                                                                                     // 340
-                                                                                                                       // 341
-var loginOrSignup = function () {                                                                                      // 342
-  if (loginButtonsSession.get('inSignupFlow'))                                                                         // 343
-    signup();                                                                                                          // 344
-  else                                                                                                                 // 345
-    login();                                                                                                           // 346
-};                                                                                                                     // 347
-                                                                                                                       // 348
-var login = function () {                                                                                              // 349
-  loginButtonsSession.resetMessages();                                                                                 // 350
-                                                                                                                       // 351
-  var username = trimmedElementValueById('login-username');                                                            // 352
-  var email = trimmedElementValueById('login-email');                                                                  // 353
-  var usernameOrEmail = trimmedElementValueById('login-username-or-email');                                            // 354
-  // notably not trimmed. a password could (?) start or end with a space                                               // 355
-  var password = elementValueById('login-password');                                                                   // 356
-                                                                                                                       // 357
-  var loginSelector;                                                                                                   // 358
-  if (username !== null) {                                                                                             // 359
-    if (!validateUsername(username))                                                                                   // 360
-      return;                                                                                                          // 361
-    else                                                                                                               // 362
-      loginSelector = {username: username};                                                                            // 363
-  } else if (email !== null) {                                                                                         // 364
-    if (!validateEmail(email))                                                                                         // 365
-      return;                                                                                                          // 366
-    else                                                                                                               // 367
-      loginSelector = {email: email};                                                                                  // 368
-  } else if (usernameOrEmail !== null) {                                                                               // 369
-    // XXX not sure how we should validate this. but this seems good enough (for now),                                 // 370
-    // since an email must have at least 3 characters anyways                                                          // 371
-    if (!validateUsername(usernameOrEmail))                                                                            // 372
-      return;                                                                                                          // 373
-    else                                                                                                               // 374
-      loginSelector = usernameOrEmail;                                                                                 // 375
-  } else {                                                                                                             // 376
-    throw new Error("Unexpected -- no element to use as a login user selector");                                       // 377
-  }                                                                                                                    // 378
-                                                                                                                       // 379
-  Meteor.loginWithPassword(loginSelector, password, function (error, result) {                                         // 380
-    if (error) {                                                                                                       // 381
-      loginButtonsSession.errorMessage(error.reason || "Unknown error");                                               // 382
-    } else {                                                                                                           // 383
-      loginButtonsSession.closeDropdown();                                                                             // 384
-    }                                                                                                                  // 385
-  });                                                                                                                  // 386
-};                                                                                                                     // 387
-                                                                                                                       // 388
-var signup = function () {                                                                                             // 389
-  loginButtonsSession.resetMessages();                                                                                 // 390
-                                                                                                                       // 391
-  var options = {}; // to be passed to Accounts.createUser                                                             // 392
-                                                                                                                       // 393
-  var username = trimmedElementValueById('login-username');                                                            // 394
-  if (username !== null) {                                                                                             // 395
-    if (!validateUsername(username))                                                                                   // 396
-      return;                                                                                                          // 397
-    else                                                                                                               // 398
-      options.username = username;                                                                                     // 399
-  }                                                                                                                    // 400
+                                                                                                                       // 334
+//                                                                                                                     // 335
+// helpers                                                                                                             // 336
+//                                                                                                                     // 337
+                                                                                                                       // 338
+var elementValueById = function(id) {                                                                                  // 339
+  var element = document.getElementById(id);                                                                           // 340
+  if (!element)                                                                                                        // 341
+    return null;                                                                                                       // 342
+  else                                                                                                                 // 343
+    return element.value;                                                                                              // 344
+};                                                                                                                     // 345
+                                                                                                                       // 346
+var trimmedElementValueById = function(id) {                                                                           // 347
+  var element = document.getElementById(id);                                                                           // 348
+  if (!element)                                                                                                        // 349
+    return null;                                                                                                       // 350
+  else                                                                                                                 // 351
+    return element.value.replace(/^\s*|\s*$/g, ""); // trim() doesn't work on IE8;                                     // 352
+};                                                                                                                     // 353
+                                                                                                                       // 354
+var loginOrSignup = function () {                                                                                      // 355
+  if (loginButtonsSession.get('inSignupFlow'))                                                                         // 356
+    signup();                                                                                                          // 357
+  else                                                                                                                 // 358
+    login();                                                                                                           // 359
+};                                                                                                                     // 360
+                                                                                                                       // 361
+var login = function () {                                                                                              // 362
+  loginButtonsSession.resetMessages();                                                                                 // 363
+                                                                                                                       // 364
+  var username = trimmedElementValueById('login-username');                                                            // 365
+  var email = trimmedElementValueById('login-email');                                                                  // 366
+  var usernameOrEmail = trimmedElementValueById('login-username-or-email');                                            // 367
+  // notably not trimmed. a password could (?) start or end with a space                                               // 368
+  var password = elementValueById('login-password');                                                                   // 369
+                                                                                                                       // 370
+  var loginSelector;                                                                                                   // 371
+  if (username !== null) {                                                                                             // 372
+    if (!validateUsername(username))                                                                                   // 373
+      return;                                                                                                          // 374
+    else                                                                                                               // 375
+      loginSelector = {username: username};                                                                            // 376
+  } else if (email !== null) {                                                                                         // 377
+    if (!validateEmail(email))                                                                                         // 378
+      return;                                                                                                          // 379
+    else                                                                                                               // 380
+      loginSelector = {email: email};                                                                                  // 381
+  } else if (usernameOrEmail !== null) {                                                                               // 382
+    // XXX not sure how we should validate this. but this seems good enough (for now),                                 // 383
+    // since an email must have at least 3 characters anyways                                                          // 384
+    if (!validateUsername(usernameOrEmail))                                                                            // 385
+      return;                                                                                                          // 386
+    else                                                                                                               // 387
+      loginSelector = usernameOrEmail;                                                                                 // 388
+  } else {                                                                                                             // 389
+    throw new Error("Unexpected -- no element to use as a login user selector");                                       // 390
+  }                                                                                                                    // 391
+                                                                                                                       // 392
+  Meteor.loginWithPassword(loginSelector, password, function (error, result) {                                         // 393
+    if (error) {                                                                                                       // 394
+      loginButtonsSession.errorMessage(error.reason || "Unknown error");                                               // 395
+    } else {                                                                                                           // 396
+      loginButtonsSession.closeDropdown();                                                                             // 397
+    }                                                                                                                  // 398
+  });                                                                                                                  // 399
+};                                                                                                                     // 400
                                                                                                                        // 401
-  var email = trimmedElementValueById('login-email');                                                                  // 402
-  if (email !== null) {                                                                                                // 403
-    if (!validateEmail(email))                                                                                         // 404
-      return;                                                                                                          // 405
-    else                                                                                                               // 406
-      options.email = email;                                                                                           // 407
-  }                                                                                                                    // 408
-                                                                                                                       // 409
-  // notably not trimmed. a password could (?) start or end with a space                                               // 410
-  var password = elementValueById('login-password');                                                                   // 411
-  if (!validatePassword(password))                                                                                     // 412
-    return;                                                                                                            // 413
-  else                                                                                                                 // 414
-    options.password = password;                                                                                       // 415
-                                                                                                                       // 416
-  if (!matchPasswordAgainIfPresent())                                                                                  // 417
-    return;                                                                                                            // 418
-                                                                                                                       // 419
-  Accounts.createUser(options, function (error) {                                                                      // 420
-    if (error) {                                                                                                       // 421
-      loginButtonsSession.errorMessage(error.reason || "Unknown error");                                               // 422
-    } else {                                                                                                           // 423
-      loginButtonsSession.closeDropdown();                                                                             // 424
-    }                                                                                                                  // 425
-  });                                                                                                                  // 426
-};                                                                                                                     // 427
-                                                                                                                       // 428
-var forgotPassword = function () {                                                                                     // 429
-  loginButtonsSession.resetMessages();                                                                                 // 430
-                                                                                                                       // 431
-  var email = trimmedElementValueById("forgot-password-email");                                                        // 432
-  if (email.indexOf('@') !== -1) {                                                                                     // 433
-    Accounts.forgotPassword({email: email}, function (error) {                                                         // 434
-      if (error)                                                                                                       // 435
-        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 436
-      else                                                                                                             // 437
-        loginButtonsSession.infoMessage("Email sent");                                                                 // 438
-    });                                                                                                                // 439
-  } else {                                                                                                             // 440
-    loginButtonsSession.errorMessage("Invalid email");                                                                 // 441
-  }                                                                                                                    // 442
-};                                                                                                                     // 443
+var signup = function () {                                                                                             // 402
+  loginButtonsSession.resetMessages();                                                                                 // 403
+                                                                                                                       // 404
+  var options = {}; // to be passed to Accounts.createUser                                                             // 405
+                                                                                                                       // 406
+  var username = trimmedElementValueById('login-username');                                                            // 407
+  if (username !== null) {                                                                                             // 408
+    if (!validateUsername(username))                                                                                   // 409
+      return;                                                                                                          // 410
+    else                                                                                                               // 411
+      options.username = username;                                                                                     // 412
+  }                                                                                                                    // 413
+                                                                                                                       // 414
+  var email = trimmedElementValueById('login-email');                                                                  // 415
+  if (email !== null) {                                                                                                // 416
+    if (!validateEmail(email))                                                                                         // 417
+      return;                                                                                                          // 418
+    else                                                                                                               // 419
+      options.email = email;                                                                                           // 420
+  }                                                                                                                    // 421
+                                                                                                                       // 422
+  // notably not trimmed. a password could (?) start or end with a space                                               // 423
+  var password = elementValueById('login-password');                                                                   // 424
+  if (!validatePassword(password))                                                                                     // 425
+    return;                                                                                                            // 426
+  else                                                                                                                 // 427
+    options.password = password;                                                                                       // 428
+                                                                                                                       // 429
+  if (!matchPasswordAgainIfPresent())                                                                                  // 430
+    return;                                                                                                            // 431
+                                                                                                                       // 432
+  Accounts.createUser(options, function (error) {                                                                      // 433
+    if (error) {                                                                                                       // 434
+      loginButtonsSession.errorMessage(error.reason || "Unknown error");                                               // 435
+    } else {                                                                                                           // 436
+      loginButtonsSession.closeDropdown();                                                                             // 437
+    }                                                                                                                  // 438
+  });                                                                                                                  // 439
+};                                                                                                                     // 440
+                                                                                                                       // 441
+var forgotPassword = function () {                                                                                     // 442
+  loginButtonsSession.resetMessages();                                                                                 // 443
                                                                                                                        // 444
-var changePassword = function () {                                                                                     // 445
-  loginButtonsSession.resetMessages();                                                                                 // 446
-                                                                                                                       // 447
-  // notably not trimmed. a password could (?) start or end with a space                                               // 448
-  var oldPassword = elementValueById('login-old-password');                                                            // 449
-                                                                                                                       // 450
-  // notably not trimmed. a password could (?) start or end with a space                                               // 451
-  var password = elementValueById('login-password');                                                                   // 452
-  if (!validatePassword(password))                                                                                     // 453
-    return;                                                                                                            // 454
-                                                                                                                       // 455
-  if (!matchPasswordAgainIfPresent())                                                                                  // 456
-    return;                                                                                                            // 457
-                                                                                                                       // 458
-  Accounts.changePassword(oldPassword, password, function (error) {                                                    // 459
-    if (error) {                                                                                                       // 460
-      loginButtonsSession.errorMessage(error.reason || "Unknown error");                                               // 461
-    } else {                                                                                                           // 462
-      loginButtonsSession.set('inChangePasswordFlow', false);                                                          // 463
-      loginButtonsSession.set('inMessageOnlyFlow', true);                                                              // 464
-      loginButtonsSession.infoMessage("Password changed");                                                             // 465
-    }                                                                                                                  // 466
-  });                                                                                                                  // 467
-};                                                                                                                     // 468
-                                                                                                                       // 469
-var matchPasswordAgainIfPresent = function () {                                                                        // 470
-  // notably not trimmed. a password could (?) start or end with a space                                               // 471
-  var passwordAgain = elementValueById('login-password-again');                                                        // 472
-  if (passwordAgain !== null) {                                                                                        // 473
-    // notably not trimmed. a password could (?) start or end with a space                                             // 474
-    var password = elementValueById('login-password');                                                                 // 475
-    if (password !== passwordAgain) {                                                                                  // 476
-      loginButtonsSession.errorMessage("Passwords don't match");                                                       // 477
-      return false;                                                                                                    // 478
+  var email = trimmedElementValueById("forgot-password-email");                                                        // 445
+  if (email.indexOf('@') !== -1) {                                                                                     // 446
+    Accounts.forgotPassword({email: email}, function (error) {                                                         // 447
+      if (error)                                                                                                       // 448
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 449
+      else                                                                                                             // 450
+        loginButtonsSession.infoMessage("Email sent");                                                                 // 451
+    });                                                                                                                // 452
+  } else {                                                                                                             // 453
+    loginButtonsSession.errorMessage("Invalid email");                                                                 // 454
+  }                                                                                                                    // 455
+};                                                                                                                     // 456
+                                                                                                                       // 457
+var changePassword = function () {                                                                                     // 458
+  loginButtonsSession.resetMessages();                                                                                 // 459
+                                                                                                                       // 460
+  // notably not trimmed. a password could (?) start or end with a space                                               // 461
+  var oldPassword = elementValueById('login-old-password');                                                            // 462
+                                                                                                                       // 463
+  // notably not trimmed. a password could (?) start or end with a space                                               // 464
+  var password = elementValueById('login-password');                                                                   // 465
+  if (!validatePassword(password))                                                                                     // 466
+    return;                                                                                                            // 467
+                                                                                                                       // 468
+  if (!matchPasswordAgainIfPresent())                                                                                  // 469
+    return;                                                                                                            // 470
+                                                                                                                       // 471
+  Accounts.changePassword(oldPassword, password, function (error) {                                                    // 472
+    if (error) {                                                                                                       // 473
+      loginButtonsSession.errorMessage(error.reason || "Unknown error");                                               // 474
+    } else {                                                                                                           // 475
+      loginButtonsSession.set('inChangePasswordFlow', false);                                                          // 476
+      loginButtonsSession.set('inMessageOnlyFlow', true);                                                              // 477
+      loginButtonsSession.infoMessage("Password changed");                                                             // 478
     }                                                                                                                  // 479
-  }                                                                                                                    // 480
-  return true;                                                                                                         // 481
-};                                                                                                                     // 482
-                                                                                                                       // 483
-var correctDropdownZIndexes = function () {                                                                            // 484
-  // IE <= 7 has a z-index bug that means we can't just give the                                                       // 485
-  // dropdown a z-index and expect it to stack above the rest of                                                       // 486
-  // the page even if nothing else has a z-index.  The nature of                                                       // 487
-  // the bug is that all positioned elements are considered to                                                         // 488
-  // have z-index:0 (not auto) and therefore start new stacking                                                        // 489
-  // contexts, with ties broken by page order.                                                                         // 490
-  //                                                                                                                   // 491
-  // The fix, then is to give z-index:1 to all ancestors                                                               // 492
-  // of the dropdown having z-index:0.                                                                                 // 493
-  for(var n = document.getElementById('login-dropdown-list').parentNode;                                               // 494
-      n.nodeName !== 'BODY';                                                                                           // 495
-      n = n.parentNode)                                                                                                // 496
-    if (n.style.zIndex === 0)                                                                                          // 497
-      n.style.zIndex = 1;                                                                                              // 498
-};                                                                                                                     // 499
-                                                                                                                       // 500
+  });                                                                                                                  // 480
+};                                                                                                                     // 481
+                                                                                                                       // 482
+var matchPasswordAgainIfPresent = function () {                                                                        // 483
+  // notably not trimmed. a password could (?) start or end with a space                                               // 484
+  var passwordAgain = elementValueById('login-password-again');                                                        // 485
+  if (passwordAgain !== null) {                                                                                        // 486
+    // notably not trimmed. a password could (?) start or end with a space                                             // 487
+    var password = elementValueById('login-password');                                                                 // 488
+    if (password !== passwordAgain) {                                                                                  // 489
+      loginButtonsSession.errorMessage("Passwords don't match");                                                       // 490
+      return false;                                                                                                    // 491
+    }                                                                                                                  // 492
+  }                                                                                                                    // 493
+  return true;                                                                                                         // 494
+};                                                                                                                     // 495
+                                                                                                                       // 496
+var correctDropdownZIndexes = function () {                                                                            // 497
+  // IE <= 7 has a z-index bug that means we can't just give the                                                       // 498
+  // dropdown a z-index and expect it to stack above the rest of                                                       // 499
+  // the page even if nothing else has a z-index.  The nature of                                                       // 500
+  // the bug is that all positioned elements are considered to                                                         // 501
+  // have z-index:0 (not auto) and therefore start new stacking                                                        // 502
+  // contexts, with ties broken by page order.                                                                         // 503
+  //                                                                                                                   // 504
+  // The fix, then is to give z-index:1 to all ancestors                                                               // 505
+  // of the dropdown having z-index:0.                                                                                 // 506
+  for(var n = document.getElementById('login-dropdown-list').parentNode;                                               // 507
+      n.nodeName !== 'BODY';                                                                                           // 508
+      n = n.parentNode)                                                                                                // 509
+    if (n.style.zIndex === 0)                                                                                          // 510
+      n.style.zIndex = 1;                                                                                              // 511
+};                                                                                                                     // 512
+                                                                                                                       // 513
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1755,135 +1777,135 @@ var correctDropdownZIndexes = function () {                                     
 // for convenience                                                                                                     // 1
 var loginButtonsSession = Accounts._loginButtonsSession;                                                               // 2
                                                                                                                        // 3
-                                                                                                                       // 4
-//                                                                                                                     // 5
-// populate the session so that the appropriate dialogs are                                                            // 6
-// displayed by reading variables set by accounts-base, which parses                                                   // 7
-// special URLs. since accounts-ui depends on accounts-base, we are                                                    // 8
-// guaranteed to have these set at this point.                                                                         // 9
-//                                                                                                                     // 10
-                                                                                                                       // 11
-if (Accounts._resetPasswordToken) {                                                                                    // 12
-  loginButtonsSession.set('resetPasswordToken', Accounts._resetPasswordToken);                                         // 13
-}                                                                                                                      // 14
-                                                                                                                       // 15
-if (Accounts._enrollAccountToken) {                                                                                    // 16
-  loginButtonsSession.set('enrollAccountToken', Accounts._enrollAccountToken);                                         // 17
-}                                                                                                                      // 18
-                                                                                                                       // 19
-// Needs to be in Meteor.startup because of a package loading order                                                    // 20
-// issue. We can't be sure that accounts-password is loaded earlier                                                    // 21
-// than accounts-ui so Accounts.verifyEmail might not be defined.                                                      // 22
-Meteor.startup(function () {                                                                                           // 23
-  if (Accounts._verifyEmailToken) {                                                                                    // 24
-    Accounts.verifyEmail(Accounts._verifyEmailToken, function(error) {                                                 // 25
-      Accounts._enableAutoLogin();                                                                                     // 26
-      if (!error)                                                                                                      // 27
-        loginButtonsSession.set('justVerifiedEmail', true);                                                            // 28
-      // XXX show something if there was an error.                                                                     // 29
-    });                                                                                                                // 30
-  }                                                                                                                    // 31
-});                                                                                                                    // 32
+// since we don't want to pass around the callback that we get from our event                                          // 4
+// handlers, we just make it a variable for the whole file                                                             // 5
+var doneCallback;                                                                                                      // 6
+                                                                                                                       // 7
+Accounts.onResetPasswordLink(function (token, done) {                                                                  // 8
+  loginButtonsSession.set("resetPasswordToken", token);                                                                // 9
+  doneCallback = done;                                                                                                 // 10
+});                                                                                                                    // 11
+                                                                                                                       // 12
+Accounts.onEnrollmentLink(function (token, done) {                                                                     // 13
+  loginButtonsSession.set("enrollAccountToken", token);                                                                // 14
+  doneCallback = done;                                                                                                 // 15
+});                                                                                                                    // 16
+                                                                                                                       // 17
+Accounts.onEmailVerificationLink(function (token, done) {                                                              // 18
+  Accounts.verifyEmail(token, function (error) {                                                                       // 19
+    if (! error) {                                                                                                     // 20
+      loginButtonsSession.set('justVerifiedEmail', true);                                                              // 21
+    }                                                                                                                  // 22
+                                                                                                                       // 23
+    done();                                                                                                            // 24
+    // XXX show something if there was an error.                                                                       // 25
+  });                                                                                                                  // 26
+});                                                                                                                    // 27
+                                                                                                                       // 28
+                                                                                                                       // 29
+//                                                                                                                     // 30
+// resetPasswordDialog template                                                                                        // 31
+//                                                                                                                     // 32
                                                                                                                        // 33
-                                                                                                                       // 34
-//                                                                                                                     // 35
-// resetPasswordDialog template                                                                                        // 36
-//                                                                                                                     // 37
-                                                                                                                       // 38
-Template._resetPasswordDialog.events({                                                                                 // 39
-  'click #login-buttons-reset-password-button': function () {                                                          // 40
-    resetPassword();                                                                                                   // 41
-  },                                                                                                                   // 42
-  'keypress #reset-password-new-password': function (event) {                                                          // 43
-    if (event.keyCode === 13)                                                                                          // 44
-      resetPassword();                                                                                                 // 45
-  },                                                                                                                   // 46
-  'click #login-buttons-cancel-reset-password': function () {                                                          // 47
-    loginButtonsSession.set('resetPasswordToken', null);                                                               // 48
-    Accounts._enableAutoLogin();                                                                                       // 49
-  }                                                                                                                    // 50
-});                                                                                                                    // 51
-                                                                                                                       // 52
-var resetPassword = function () {                                                                                      // 53
-  loginButtonsSession.resetMessages();                                                                                 // 54
-  var newPassword = document.getElementById('reset-password-new-password').value;                                      // 55
-  if (!validatePassword(newPassword))                                                                                  // 56
-    return;                                                                                                            // 57
-                                                                                                                       // 58
-  Accounts.resetPassword(                                                                                              // 59
-    loginButtonsSession.get('resetPasswordToken'), newPassword,                                                        // 60
-    function (error) {                                                                                                 // 61
-      if (error) {                                                                                                     // 62
-        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 63
-      } else {                                                                                                         // 64
-        loginButtonsSession.set('resetPasswordToken', null);                                                           // 65
-        loginButtonsSession.set('justResetPassword', true);                                                            // 66
-        Accounts._enableAutoLogin();                                                                                   // 67
-      }                                                                                                                // 68
-    });                                                                                                                // 69
-};                                                                                                                     // 70
-                                                                                                                       // 71
-Template._resetPasswordDialog.inResetPasswordFlow = function () {                                                      // 72
-  return loginButtonsSession.get('resetPasswordToken');                                                                // 73
-};                                                                                                                     // 74
-                                                                                                                       // 75
-//                                                                                                                     // 76
-// justResetPasswordDialog template                                                                                    // 77
-//                                                                                                                     // 78
-                                                                                                                       // 79
-Template._justResetPasswordDialog.events({                                                                             // 80
-  'click #just-verified-dismiss-button': function () {                                                                 // 81
-    loginButtonsSession.set('justResetPassword', false);                                                               // 82
-  }                                                                                                                    // 83
-});                                                                                                                    // 84
-                                                                                                                       // 85
-Template._justResetPasswordDialog.visible = function () {                                                              // 86
-  return loginButtonsSession.get('justResetPassword');                                                                 // 87
-};                                                                                                                     // 88
+Template._resetPasswordDialog.events({                                                                                 // 34
+  'click #login-buttons-reset-password-button': function () {                                                          // 35
+    resetPassword();                                                                                                   // 36
+  },                                                                                                                   // 37
+  'keypress #reset-password-new-password': function (event) {                                                          // 38
+    if (event.keyCode === 13)                                                                                          // 39
+      resetPassword();                                                                                                 // 40
+  },                                                                                                                   // 41
+  'click #login-buttons-cancel-reset-password': function () {                                                          // 42
+    loginButtonsSession.set('resetPasswordToken', null);                                                               // 43
+    doneCallback();                                                                                                    // 44
+  }                                                                                                                    // 45
+});                                                                                                                    // 46
+                                                                                                                       // 47
+var resetPassword = function () {                                                                                      // 48
+  loginButtonsSession.resetMessages();                                                                                 // 49
+  var newPassword = document.getElementById('reset-password-new-password').value;                                      // 50
+  if (!validatePassword(newPassword))                                                                                  // 51
+    return;                                                                                                            // 52
+                                                                                                                       // 53
+  Accounts.resetPassword(                                                                                              // 54
+    loginButtonsSession.get('resetPasswordToken'), newPassword,                                                        // 55
+    function (error) {                                                                                                 // 56
+      if (error) {                                                                                                     // 57
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 58
+      } else {                                                                                                         // 59
+        loginButtonsSession.set('resetPasswordToken', null);                                                           // 60
+        loginButtonsSession.set('justResetPassword', true);                                                            // 61
+        doneCallback();                                                                                                // 62
+      }                                                                                                                // 63
+    });                                                                                                                // 64
+};                                                                                                                     // 65
+                                                                                                                       // 66
+Template._resetPasswordDialog.helpers({                                                                                // 67
+  inResetPasswordFlow: function () {                                                                                   // 68
+    return loginButtonsSession.get('resetPasswordToken');                                                              // 69
+  }                                                                                                                    // 70
+});                                                                                                                    // 71
+                                                                                                                       // 72
+//                                                                                                                     // 73
+// justResetPasswordDialog template                                                                                    // 74
+//                                                                                                                     // 75
+                                                                                                                       // 76
+Template._justResetPasswordDialog.events({                                                                             // 77
+  'click #just-verified-dismiss-button': function () {                                                                 // 78
+    loginButtonsSession.set('justResetPassword', false);                                                               // 79
+  }                                                                                                                    // 80
+});                                                                                                                    // 81
+                                                                                                                       // 82
+Template._justResetPasswordDialog.helpers({                                                                            // 83
+  visible: function () {                                                                                               // 84
+    return loginButtonsSession.get('justResetPassword');                                                               // 85
+  },                                                                                                                   // 86
+  displayName: displayName                                                                                             // 87
+});                                                                                                                    // 88
                                                                                                                        // 89
-Template._justResetPasswordDialog.displayName = displayName;                                                           // 90
+                                                                                                                       // 90
                                                                                                                        // 91
-                                                                                                                       // 92
-                                                                                                                       // 93
+//                                                                                                                     // 92
+// enrollAccountDialog template                                                                                        // 93
 //                                                                                                                     // 94
-// enrollAccountDialog template                                                                                        // 95
-//                                                                                                                     // 96
-                                                                                                                       // 97
-Template._enrollAccountDialog.events({                                                                                 // 98
-  'click #login-buttons-enroll-account-button': function () {                                                          // 99
-    enrollAccount();                                                                                                   // 100
-  },                                                                                                                   // 101
-  'keypress #enroll-account-password': function (event) {                                                              // 102
-    if (event.keyCode === 13)                                                                                          // 103
-      enrollAccount();                                                                                                 // 104
-  },                                                                                                                   // 105
-  'click #login-buttons-cancel-enroll-account': function () {                                                          // 106
-    loginButtonsSession.set('enrollAccountToken', null);                                                               // 107
-    Accounts._enableAutoLogin();                                                                                       // 108
-  }                                                                                                                    // 109
-});                                                                                                                    // 110
-                                                                                                                       // 111
-var enrollAccount = function () {                                                                                      // 112
-  loginButtonsSession.resetMessages();                                                                                 // 113
-  var password = document.getElementById('enroll-account-password').value;                                             // 114
-  if (!validatePassword(password))                                                                                     // 115
-    return;                                                                                                            // 116
-                                                                                                                       // 117
-  Accounts.resetPassword(                                                                                              // 118
-    loginButtonsSession.get('enrollAccountToken'), password,                                                           // 119
-    function (error) {                                                                                                 // 120
-      if (error) {                                                                                                     // 121
-        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 122
-      } else {                                                                                                         // 123
-        loginButtonsSession.set('enrollAccountToken', null);                                                           // 124
-        Accounts._enableAutoLogin();                                                                                   // 125
-      }                                                                                                                // 126
-    });                                                                                                                // 127
-};                                                                                                                     // 128
-                                                                                                                       // 129
-Template._enrollAccountDialog.inEnrollAccountFlow = function () {                                                      // 130
-  return loginButtonsSession.get('enrollAccountToken');                                                                // 131
-};                                                                                                                     // 132
+                                                                                                                       // 95
+Template._enrollAccountDialog.events({                                                                                 // 96
+  'click #login-buttons-enroll-account-button': function () {                                                          // 97
+    enrollAccount();                                                                                                   // 98
+  },                                                                                                                   // 99
+  'keypress #enroll-account-password': function (event) {                                                              // 100
+    if (event.keyCode === 13)                                                                                          // 101
+      enrollAccount();                                                                                                 // 102
+  },                                                                                                                   // 103
+  'click #login-buttons-cancel-enroll-account': function () {                                                          // 104
+    loginButtonsSession.set('enrollAccountToken', null);                                                               // 105
+    doneCallback();                                                                                                    // 106
+  }                                                                                                                    // 107
+});                                                                                                                    // 108
+                                                                                                                       // 109
+var enrollAccount = function () {                                                                                      // 110
+  loginButtonsSession.resetMessages();                                                                                 // 111
+  var password = document.getElementById('enroll-account-password').value;                                             // 112
+  if (!validatePassword(password))                                                                                     // 113
+    return;                                                                                                            // 114
+                                                                                                                       // 115
+  Accounts.resetPassword(                                                                                              // 116
+    loginButtonsSession.get('enrollAccountToken'), password,                                                           // 117
+    function (error) {                                                                                                 // 118
+      if (error) {                                                                                                     // 119
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 120
+      } else {                                                                                                         // 121
+        loginButtonsSession.set('enrollAccountToken', null);                                                           // 122
+        doneCallback();                                                                                                // 123
+      }                                                                                                                // 124
+    });                                                                                                                // 125
+};                                                                                                                     // 126
+                                                                                                                       // 127
+Template._enrollAccountDialog.helpers({                                                                                // 128
+  inEnrollAccountFlow: function () {                                                                                   // 129
+    return loginButtonsSession.get('enrollAccountToken');                                                              // 130
+  }                                                                                                                    // 131
+});                                                                                                                    // 132
                                                                                                                        // 133
                                                                                                                        // 134
 //                                                                                                                     // 135
@@ -1896,132 +1918,134 @@ Template._justVerifiedEmailDialog.events({                                      
   }                                                                                                                    // 142
 });                                                                                                                    // 143
                                                                                                                        // 144
-Template._justVerifiedEmailDialog.visible = function () {                                                              // 145
-  return loginButtonsSession.get('justVerifiedEmail');                                                                 // 146
-};                                                                                                                     // 147
-                                                                                                                       // 148
-Template._justVerifiedEmailDialog.displayName = displayName;                                                           // 149
-                                                                                                                       // 150
+Template._justVerifiedEmailDialog.helpers({                                                                            // 145
+  visible: function () {                                                                                               // 146
+    return loginButtonsSession.get('justVerifiedEmail');                                                               // 147
+  },                                                                                                                   // 148
+  displayName: displayName                                                                                             // 149
+});                                                                                                                    // 150
                                                                                                                        // 151
-//                                                                                                                     // 152
-// loginButtonsMessagesDialog template                                                                                 // 153
-//                                                                                                                     // 154
-                                                                                                                       // 155
-Template._loginButtonsMessagesDialog.events({                                                                          // 156
-  'click #messages-dialog-dismiss-button': function () {                                                               // 157
-    loginButtonsSession.resetMessages();                                                                               // 158
-  }                                                                                                                    // 159
-});                                                                                                                    // 160
-                                                                                                                       // 161
-Template._loginButtonsMessagesDialog.visible = function () {                                                           // 162
-  var hasMessage = loginButtonsSession.get('infoMessage') || loginButtonsSession.get('errorMessage');                  // 163
-  return !dropdown() && hasMessage;                                                                                    // 164
-};                                                                                                                     // 165
-                                                                                                                       // 166
-                                                                                                                       // 167
-//                                                                                                                     // 168
-// configureLoginServiceDialog template                                                                                // 169
-//                                                                                                                     // 170
-                                                                                                                       // 171
-Template._configureLoginServiceDialog.events({                                                                         // 172
-  'click .configure-login-service-dismiss-button': function () {                                                       // 173
-    loginButtonsSession.set('configureLoginServiceDialogVisible', false);                                              // 174
-  },                                                                                                                   // 175
-  'click #configure-login-service-dialog-save-configuration': function () {                                            // 176
-    if (loginButtonsSession.get('configureLoginServiceDialogVisible') &&                                               // 177
-        ! loginButtonsSession.get('configureLoginServiceDialogSaveDisabled')) {                                        // 178
-      // Prepare the configuration document for this login service                                                     // 179
-      var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                             // 180
-      var configuration = {                                                                                            // 181
-        service: serviceName                                                                                           // 182
-      };                                                                                                               // 183
-                                                                                                                       // 184
-      // Fetch the value of each input field                                                                           // 185
-      _.each(configurationFields(), function(field) {                                                                  // 186
-        configuration[field.property] = document.getElementById(                                                       // 187
-          'configure-login-service-dialog-' + field.property).value                                                    // 188
-          .replace(/^\s*|\s*$/g, ""); // trim() doesnt work on IE8;                                                    // 189
-      });                                                                                                              // 190
-                                                                                                                       // 191
-      configuration.loginStyle =                                                                                       // 192
-        $('#configure-login-service-dialog input[name="loginStyle"]:checked')                                          // 193
-        .val();                                                                                                        // 194
-                                                                                                                       // 195
-      // Configure this login service                                                                                  // 196
-      Accounts.connection.call(                                                                                        // 197
-        "configureLoginService", configuration, function (error, result) {                                             // 198
-          if (error)                                                                                                   // 199
-            Meteor._debug("Error configuring login service " + serviceName,                                            // 200
-                          error);                                                                                      // 201
-          else                                                                                                         // 202
-            loginButtonsSession.set('configureLoginServiceDialogVisible',                                              // 203
-                                    false);                                                                            // 204
-        });                                                                                                            // 205
-    }                                                                                                                  // 206
-  },                                                                                                                   // 207
-  // IE8 doesn't support the 'input' event, so we'll run this on the keyup as                                          // 208
-  // well. (Keeping the 'input' event means that this also fires when you use                                          // 209
-  // the mouse to change the contents of the field, eg 'Cut' menu item.)                                               // 210
-  'input, keyup input': function (event) {                                                                             // 211
-    // if the event fired on one of the configuration input fields,                                                    // 212
-    // check whether we should enable the 'save configuration' button                                                  // 213
-    if (event.target.id.indexOf('configure-login-service-dialog') === 0)                                               // 214
-      updateSaveDisabled();                                                                                            // 215
-  }                                                                                                                    // 216
-});                                                                                                                    // 217
-                                                                                                                       // 218
-// check whether the 'save configuration' button should be enabled.                                                    // 219
-// this is a really strange way to implement this and a Forms                                                          // 220
-// Abstraction would make all of this reactive, and simpler.                                                           // 221
-var updateSaveDisabled = function () {                                                                                 // 222
-  var anyFieldEmpty = _.any(configurationFields(), function(field) {                                                   // 223
-    return document.getElementById(                                                                                    // 224
-      'configure-login-service-dialog-' + field.property).value === '';                                                // 225
-  });                                                                                                                  // 226
-                                                                                                                       // 227
-  loginButtonsSession.set('configureLoginServiceDialogSaveDisabled', anyFieldEmpty);                                   // 228
-};                                                                                                                     // 229
+                                                                                                                       // 152
+//                                                                                                                     // 153
+// loginButtonsMessagesDialog template                                                                                 // 154
+//                                                                                                                     // 155
+                                                                                                                       // 156
+Template._loginButtonsMessagesDialog.events({                                                                          // 157
+  'click #messages-dialog-dismiss-button': function () {                                                               // 158
+    loginButtonsSession.resetMessages();                                                                               // 159
+  }                                                                                                                    // 160
+});                                                                                                                    // 161
+                                                                                                                       // 162
+Template._loginButtonsMessagesDialog.helpers({                                                                         // 163
+  visible: function () {                                                                                               // 164
+    var hasMessage = loginButtonsSession.get('infoMessage') || loginButtonsSession.get('errorMessage');                // 165
+    return !dropdown() && hasMessage;                                                                                  // 166
+  }                                                                                                                    // 167
+});                                                                                                                    // 168
+                                                                                                                       // 169
+                                                                                                                       // 170
+//                                                                                                                     // 171
+// configureLoginServiceDialog template                                                                                // 172
+//                                                                                                                     // 173
+                                                                                                                       // 174
+Template._configureLoginServiceDialog.events({                                                                         // 175
+  'click .configure-login-service-dismiss-button': function () {                                                       // 176
+    loginButtonsSession.set('configureLoginServiceDialogVisible', false);                                              // 177
+  },                                                                                                                   // 178
+  'click #configure-login-service-dialog-save-configuration': function () {                                            // 179
+    if (loginButtonsSession.get('configureLoginServiceDialogVisible') &&                                               // 180
+        ! loginButtonsSession.get('configureLoginServiceDialogSaveDisabled')) {                                        // 181
+      // Prepare the configuration document for this login service                                                     // 182
+      var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                             // 183
+      var configuration = {                                                                                            // 184
+        service: serviceName                                                                                           // 185
+      };                                                                                                               // 186
+                                                                                                                       // 187
+      // Fetch the value of each input field                                                                           // 188
+      _.each(configurationFields(), function(field) {                                                                  // 189
+        configuration[field.property] = document.getElementById(                                                       // 190
+          'configure-login-service-dialog-' + field.property).value                                                    // 191
+          .replace(/^\s*|\s*$/g, ""); // trim() doesnt work on IE8;                                                    // 192
+      });                                                                                                              // 193
+                                                                                                                       // 194
+      configuration.loginStyle =                                                                                       // 195
+        $('#configure-login-service-dialog input[name="loginStyle"]:checked')                                          // 196
+        .val();                                                                                                        // 197
+                                                                                                                       // 198
+      // Configure this login service                                                                                  // 199
+      Accounts.connection.call(                                                                                        // 200
+        "configureLoginService", configuration, function (error, result) {                                             // 201
+          if (error)                                                                                                   // 202
+            Meteor._debug("Error configuring login service " + serviceName,                                            // 203
+                          error);                                                                                      // 204
+          else                                                                                                         // 205
+            loginButtonsSession.set('configureLoginServiceDialogVisible',                                              // 206
+                                    false);                                                                            // 207
+        });                                                                                                            // 208
+    }                                                                                                                  // 209
+  },                                                                                                                   // 210
+  // IE8 doesn't support the 'input' event, so we'll run this on the keyup as                                          // 211
+  // well. (Keeping the 'input' event means that this also fires when you use                                          // 212
+  // the mouse to change the contents of the field, eg 'Cut' menu item.)                                               // 213
+  'input, keyup input': function (event) {                                                                             // 214
+    // if the event fired on one of the configuration input fields,                                                    // 215
+    // check whether we should enable the 'save configuration' button                                                  // 216
+    if (event.target.id.indexOf('configure-login-service-dialog') === 0)                                               // 217
+      updateSaveDisabled();                                                                                            // 218
+  }                                                                                                                    // 219
+});                                                                                                                    // 220
+                                                                                                                       // 221
+// check whether the 'save configuration' button should be enabled.                                                    // 222
+// this is a really strange way to implement this and a Forms                                                          // 223
+// Abstraction would make all of this reactive, and simpler.                                                           // 224
+var updateSaveDisabled = function () {                                                                                 // 225
+  var anyFieldEmpty = _.any(configurationFields(), function(field) {                                                   // 226
+    return document.getElementById(                                                                                    // 227
+      'configure-login-service-dialog-' + field.property).value === '';                                                // 228
+  });                                                                                                                  // 229
                                                                                                                        // 230
-// Returns the appropriate template for this login service.  This                                                      // 231
-// template should be defined in the service's package                                                                 // 232
-var configureLoginServiceDialogTemplateForService = function () {                                                      // 233
-  var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                                 // 234
-  // XXX Service providers should be able to specify their configuration                                               // 235
-  // template name.                                                                                                    // 236
-  return Template['configureLoginServiceDialogFor' +                                                                   // 237
-                  (serviceName === 'meteor-developer' ?                                                                // 238
-                   'MeteorDeveloper' :                                                                                 // 239
-                   capitalize(serviceName))];                                                                          // 240
-};                                                                                                                     // 241
-                                                                                                                       // 242
-var configurationFields = function () {                                                                                // 243
-  var template = configureLoginServiceDialogTemplateForService();                                                      // 244
-  return template.fields();                                                                                            // 245
-};                                                                                                                     // 246
-                                                                                                                       // 247
-Template._configureLoginServiceDialog.configurationFields = function () {                                              // 248
-  return configurationFields();                                                                                        // 249
-};                                                                                                                     // 250
-                                                                                                                       // 251
-Template._configureLoginServiceDialog.visible = function () {                                                          // 252
-  return loginButtonsSession.get('configureLoginServiceDialogVisible');                                                // 253
-};                                                                                                                     // 254
-                                                                                                                       // 255
-Template._configureLoginServiceDialog.configurationSteps = function () {                                               // 256
-  // renders the appropriate template                                                                                  // 257
-  return configureLoginServiceDialogTemplateForService();                                                              // 258
-};                                                                                                                     // 259
-                                                                                                                       // 260
-Template._configureLoginServiceDialog.saveDisabled = function () {                                                     // 261
-  return loginButtonsSession.get('configureLoginServiceDialogSaveDisabled');                                           // 262
-};                                                                                                                     // 263
-                                                                                                                       // 264
-// XXX from http://epeli.github.com/underscore.string/lib/underscore.string.js                                         // 265
-var capitalize = function(str){                                                                                        // 266
-  str = str == null ? '' : String(str);                                                                                // 267
-  return str.charAt(0).toUpperCase() + str.slice(1);                                                                   // 268
-};                                                                                                                     // 269
-                                                                                                                       // 270
+  loginButtonsSession.set('configureLoginServiceDialogSaveDisabled', anyFieldEmpty);                                   // 231
+};                                                                                                                     // 232
+                                                                                                                       // 233
+// Returns the appropriate template for this login service.  This                                                      // 234
+// template should be defined in the service's package                                                                 // 235
+var configureLoginServiceDialogTemplateForService = function () {                                                      // 236
+  var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                                 // 237
+  // XXX Service providers should be able to specify their configuration                                               // 238
+  // template name.                                                                                                    // 239
+  return Template['configureLoginServiceDialogFor' +                                                                   // 240
+                  (serviceName === 'meteor-developer' ?                                                                // 241
+                   'MeteorDeveloper' :                                                                                 // 242
+                   capitalize(serviceName))];                                                                          // 243
+};                                                                                                                     // 244
+                                                                                                                       // 245
+var configurationFields = function () {                                                                                // 246
+  var template = configureLoginServiceDialogTemplateForService();                                                      // 247
+  return template.fields();                                                                                            // 248
+};                                                                                                                     // 249
+                                                                                                                       // 250
+Template._configureLoginServiceDialog.helpers({                                                                        // 251
+  configurationFields: function () {                                                                                   // 252
+    return configurationFields();                                                                                      // 253
+  },                                                                                                                   // 254
+  visible: function () {                                                                                               // 255
+    return loginButtonsSession.get('configureLoginServiceDialogVisible');                                              // 256
+  },                                                                                                                   // 257
+  configurationSteps: function () {                                                                                    // 258
+    // renders the appropriate template                                                                                // 259
+    return configureLoginServiceDialogTemplateForService();                                                            // 260
+  },                                                                                                                   // 261
+  saveDisabled: function () {                                                                                          // 262
+    return loginButtonsSession.get('configureLoginServiceDialogSaveDisabled');                                         // 263
+  }                                                                                                                    // 264
+});                                                                                                                    // 265
+                                                                                                                       // 266
+// XXX from http://epeli.github.com/underscore.string/lib/underscore.string.js                                         // 267
+var capitalize = function(str){                                                                                        // 268
+  str = str == null ? '' : String(str);                                                                                // 269
+  return str.charAt(0).toUpperCase() + str.slice(1);                                                                   // 270
+};                                                                                                                     // 271
+                                                                                                                       // 272
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

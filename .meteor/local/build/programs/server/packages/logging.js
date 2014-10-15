@@ -305,3 +305,5 @@ Package.logging = {
 };
 
 })();
+
+//# sourceMappingURL=logging.js.map

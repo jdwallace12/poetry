@@ -276,3 +276,5 @@ Package['follower-livedata'] = {
 };
 
 })();
+
+//# sourceMappingURL=follower-livedata.js.map

@@ -657,7 +657,7 @@ Blaze.insert = function (view, parentElement, nextNode) {                       
               "rendered content in the call to Blaze.render.");                                                        // 514
                                                                                                                        // 515
   if (! (view && (view._domrange instanceof Blaze._DOMRange)))                                                         // 516
-    throw new Error("Expected template rendered with UI.render");                                                      // 517
+    throw new Error("Expected template rendered with Blaze.render");                                                   // 517
                                                                                                                        // 518
   view._domrange.attach(parentElement, nextNode);                                                                      // 519
 };                                                                                                                     // 520
@@ -1117,10 +1117,10 @@ Blaze._TemplateWith = function (arg, contentBlock) {                            
     };                                                                                                                 // 194
   }                                                                                                                    // 195
                                                                                                                        // 196
-  // This is a little messy.  When we compile `{{> UI.contentBlock}}`, we                                              // 197
+  // This is a little messy.  When we compile `{{> Template.contentBlock}}`, we                                        // 197
   // wrap it in Blaze._InOuterTemplateScope in order to skip the intermediate                                          // 198
   // parent Views in the current template.  However, when there's an argument                                          // 199
-  // (`{{> UI.contentBlock arg}}`), the argument needs to be evaluated                                                 // 200
+  // (`{{> Template.contentBlock arg}}`), the argument needs to be evaluated                                           // 200
   // in the original scope.  There's no good order to nest                                                             // 201
   // Blaze._InOuterTemplateScope and Spacebars.TemplateWith to achieve this,                                           // 202
   // so we wrap argFunc to run it in the "original parentView" of the                                                  // 203
@@ -1151,8 +1151,8 @@ Blaze._InOuterTemplateScope = function (templateView, contentFunc) {            
                                                                                                                        // 228
   // Hack so that if you call `{{> foo bar}}` and it expands into                                                      // 229
   // `{{#with bar}}{{> foo}}{{/with}}`, and then `foo` is a template                                                   // 230
-  // that inserts `{{> UI.contentBlock}}`, the data context for                                                        // 231
-  // `UI.contentBlock` is not `bar` but the one enclosing that.                                                        // 232
+  // that inserts `{{> Template.contentBlock}}`, the data context for                                                  // 231
+  // `Template.contentBlock` is not `bar` but the one enclosing that.                                                  // 232
   if (parentView.__isTemplateWith)                                                                                     // 233
     parentView = parentView.parentView;                                                                                // 234
                                                                                                                        // 235
@@ -1214,88 +1214,122 @@ var bindDataContext = function (x) {                                            
   return x;                                                                                                            // 29
 };                                                                                                                     // 30
                                                                                                                        // 31
-var wrapHelper = function (f) {                                                                                        // 32
-  return Blaze._wrapCatchingExceptions(f, 'template helper');                                                          // 33
-};                                                                                                                     // 34
-                                                                                                                       // 35
-// Looks up a name, like "foo" or "..", as a helper of the                                                             // 36
-// current template; a global helper; the name of a template;                                                          // 37
-// or a property of the data context.  Called on the View of                                                           // 38
-// a template (i.e. a View with a `.template` property,                                                                // 39
-// where the helpers are).  Used for the first name in a                                                               // 40
-// "path" in a template tag, like "foo" in `{{foo.bar}}` or                                                            // 41
-// ".." in `{{frobulate ../blah}}`.                                                                                    // 42
-//                                                                                                                     // 43
-// Returns a function, a non-function value, or null.  If                                                              // 44
-// a function is found, it is bound appropriately.                                                                     // 45
-//                                                                                                                     // 46
-// NOTE: This function must not establish any reactive                                                                 // 47
-// dependencies itself.  If there is any reactivity in the                                                             // 48
-// value, lookup should return a function.                                                                             // 49
-Blaze.View.prototype.lookup = function (name, _options) {                                                              // 50
-  var template = this.template;                                                                                        // 51
-  var lookupTemplate = _options && _options.template;                                                                  // 52
-                                                                                                                       // 53
-  if (/^\./.test(name)) {                                                                                              // 54
-    // starts with a dot. must be a series of dots which maps to an                                                    // 55
-    // ancestor of the appropriate height.                                                                             // 56
-    if (!/^(\.)+$/.test(name))                                                                                         // 57
-      throw new Error("id starting with dot must be a series of dots");                                                // 58
-                                                                                                                       // 59
-    return Blaze._parentData(name.length - 1, true /*_functionWrapped*/);                                              // 60
-                                                                                                                       // 61
-  } else if (template && (name in template)) {                                                                         // 62
-    return wrapHelper(bindDataContext(template[name]));                                                                // 63
-  } else if (lookupTemplate && (name in Blaze.Template) &&                                                             // 64
-             (Blaze.Template[name] instanceof Blaze.Template)) {                                                       // 65
-    return Blaze.Template[name];                                                                                       // 66
-  } else if (UI._globalHelpers[name]) {                                                                                // 67
-    return wrapHelper(bindDataContext(UI._globalHelpers[name]));                                                       // 68
-  } else {                                                                                                             // 69
-    return function () {                                                                                               // 70
-      var isCalledAsFunction = (arguments.length > 0);                                                                 // 71
-      var data = Blaze.getData();                                                                                      // 72
-      if (lookupTemplate && ! (data && data[name])) {                                                                  // 73
-        throw new Error("No such template: " + name);                                                                  // 74
-      }                                                                                                                // 75
-      if (isCalledAsFunction && ! (data && data[name])) {                                                              // 76
-        throw new Error("No such function: " + name);                                                                  // 77
-      }                                                                                                                // 78
-      if (! data)                                                                                                      // 79
-        return null;                                                                                                   // 80
-      var x = data[name];                                                                                              // 81
-      if (typeof x !== 'function') {                                                                                   // 82
-        if (isCalledAsFunction) {                                                                                      // 83
-          throw new Error("Can't call non-function: " + x);                                                            // 84
-        }                                                                                                              // 85
-        return x;                                                                                                      // 86
-      }                                                                                                                // 87
-      return x.apply(data, arguments);                                                                                 // 88
-    };                                                                                                                 // 89
-  }                                                                                                                    // 90
-  return null;                                                                                                         // 91
-};                                                                                                                     // 92
-                                                                                                                       // 93
-// Implement Spacebars' {{../..}}.                                                                                     // 94
-// @param height {Number} The number of '..'s                                                                          // 95
-Blaze._parentData = function (height, _functionWrapped) {                                                              // 96
-  var theWith = Blaze.getView('with');                                                                                 // 97
-  for (var i = 0; (i < height) && theWith; i++) {                                                                      // 98
-    theWith = Blaze.getView(theWith, 'with');                                                                          // 99
-  }                                                                                                                    // 100
-                                                                                                                       // 101
-  if (! theWith)                                                                                                       // 102
-    return null;                                                                                                       // 103
-  if (_functionWrapped)                                                                                                // 104
-    return function () { return theWith.dataVar.get(); };                                                              // 105
-  return theWith.dataVar.get();                                                                                        // 106
-};                                                                                                                     // 107
-                                                                                                                       // 108
-                                                                                                                       // 109
-Blaze.View.prototype.lookupTemplate = function (name) {                                                                // 110
-  return this.lookup(name, {template:true});                                                                           // 111
-};                                                                                                                     // 112
-                                                                                                                       // 113
+Blaze._OLDSTYLE_HELPER = {};                                                                                           // 32
+                                                                                                                       // 33
+var getTemplateHelper = Blaze._getTemplateHelper = function (template, name) {                                         // 34
+  // XXX COMPAT WITH 0.9.3                                                                                             // 35
+  var isKnownOldStyleHelper = false;                                                                                   // 36
+                                                                                                                       // 37
+  if (template.__helpers.has(name)) {                                                                                  // 38
+    var helper = template.__helpers.get(name);                                                                         // 39
+    if (helper === Blaze._OLDSTYLE_HELPER) {                                                                           // 40
+      isKnownOldStyleHelper = true;                                                                                    // 41
+    } else {                                                                                                           // 42
+      return helper;                                                                                                   // 43
+    }                                                                                                                  // 44
+  }                                                                                                                    // 45
+                                                                                                                       // 46
+  // old-style helper                                                                                                  // 47
+  if (name in template) {                                                                                              // 48
+    // Only warn once per helper                                                                                       // 49
+    if (! isKnownOldStyleHelper) {                                                                                     // 50
+      template.__helpers.set(name, Blaze._OLDSTYLE_HELPER);                                                            // 51
+      if (! template._NOWARN_OLDSTYLE_HELPERS) {                                                                       // 52
+        Blaze._warn('Assigning helper with `' + template.viewName + '.' +                                              // 53
+                    name + ' = ...` is deprecated.  Use `' + template.viewName +                                       // 54
+                    '.helpers(...)` instead.');                                                                        // 55
+      }                                                                                                                // 56
+    }                                                                                                                  // 57
+    return template[name];                                                                                             // 58
+  }                                                                                                                    // 59
+                                                                                                                       // 60
+  return null;                                                                                                         // 61
+};                                                                                                                     // 62
+                                                                                                                       // 63
+var wrapHelper = function (f) {                                                                                        // 64
+  return Blaze._wrapCatchingExceptions(f, 'template helper');                                                          // 65
+};                                                                                                                     // 66
+                                                                                                                       // 67
+// Looks up a name, like "foo" or "..", as a helper of the                                                             // 68
+// current template; a global helper; the name of a template;                                                          // 69
+// or a property of the data context.  Called on the View of                                                           // 70
+// a template (i.e. a View with a `.template` property,                                                                // 71
+// where the helpers are).  Used for the first name in a                                                               // 72
+// "path" in a template tag, like "foo" in `{{foo.bar}}` or                                                            // 73
+// ".." in `{{frobulate ../blah}}`.                                                                                    // 74
+//                                                                                                                     // 75
+// Returns a function, a non-function value, or null.  If                                                              // 76
+// a function is found, it is bound appropriately.                                                                     // 77
+//                                                                                                                     // 78
+// NOTE: This function must not establish any reactive                                                                 // 79
+// dependencies itself.  If there is any reactivity in the                                                             // 80
+// value, lookup should return a function.                                                                             // 81
+Blaze.View.prototype.lookup = function (name, _options) {                                                              // 82
+  var template = this.template;                                                                                        // 83
+  var lookupTemplate = _options && _options.template;                                                                  // 84
+  var helper;                                                                                                          // 85
+                                                                                                                       // 86
+  if (/^\./.test(name)) {                                                                                              // 87
+    // starts with a dot. must be a series of dots which maps to an                                                    // 88
+    // ancestor of the appropriate height.                                                                             // 89
+    if (!/^(\.)+$/.test(name))                                                                                         // 90
+      throw new Error("id starting with dot must be a series of dots");                                                // 91
+                                                                                                                       // 92
+    return Blaze._parentData(name.length - 1, true /*_functionWrapped*/);                                              // 93
+                                                                                                                       // 94
+  } else if (template &&                                                                                               // 95
+             ((helper = getTemplateHelper(template, name)) != null)) {                                                 // 96
+    return wrapHelper(bindDataContext(helper));                                                                        // 97
+  } else if (lookupTemplate && (name in Blaze.Template) &&                                                             // 98
+             (Blaze.Template[name] instanceof Blaze.Template)) {                                                       // 99
+    return Blaze.Template[name];                                                                                       // 100
+  } else if (Blaze._globalHelpers[name] != null) {                                                                     // 101
+    return wrapHelper(bindDataContext(Blaze._globalHelpers[name]));                                                    // 102
+  } else {                                                                                                             // 103
+    return function () {                                                                                               // 104
+      var isCalledAsFunction = (arguments.length > 0);                                                                 // 105
+      var data = Blaze.getData();                                                                                      // 106
+      if (lookupTemplate && ! (data && data[name])) {                                                                  // 107
+        throw new Error("No such template: " + name);                                                                  // 108
+      }                                                                                                                // 109
+      if (isCalledAsFunction && ! (data && data[name])) {                                                              // 110
+        throw new Error("No such function: " + name);                                                                  // 111
+      }                                                                                                                // 112
+      if (! data)                                                                                                      // 113
+        return null;                                                                                                   // 114
+      var x = data[name];                                                                                              // 115
+      if (typeof x !== 'function') {                                                                                   // 116
+        if (isCalledAsFunction) {                                                                                      // 117
+          throw new Error("Can't call non-function: " + x);                                                            // 118
+        }                                                                                                              // 119
+        return x;                                                                                                      // 120
+      }                                                                                                                // 121
+      return x.apply(data, arguments);                                                                                 // 122
+    };                                                                                                                 // 123
+  }                                                                                                                    // 124
+  return null;                                                                                                         // 125
+};                                                                                                                     // 126
+                                                                                                                       // 127
+// Implement Spacebars' {{../..}}.                                                                                     // 128
+// @param height {Number} The number of '..'s                                                                          // 129
+Blaze._parentData = function (height, _functionWrapped) {                                                              // 130
+  var theWith = Blaze.getView('with');                                                                                 // 131
+  for (var i = 0; (i < height) && theWith; i++) {                                                                      // 132
+    theWith = Blaze.getView(theWith, 'with');                                                                          // 133
+  }                                                                                                                    // 134
+                                                                                                                       // 135
+  if (! theWith)                                                                                                       // 136
+    return null;                                                                                                       // 137
+  if (_functionWrapped)                                                                                                // 138
+    return function () { return theWith.dataVar.get(); };                                                              // 139
+  return theWith.dataVar.get();                                                                                        // 140
+};                                                                                                                     // 141
+                                                                                                                       // 142
+                                                                                                                       // 143
+Blaze.View.prototype.lookupTemplate = function (name) {                                                                // 144
+  return this.lookup(name, {template:true});                                                                           // 145
+};                                                                                                                     // 146
+                                                                                                                       // 147
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1346,286 +1380,298 @@ Blaze.Template = function (viewName, renderFunction) {                          
   this.viewName = viewName;                                                                                            // 31
   this.renderFunction = renderFunction;                                                                                // 32
                                                                                                                        // 33
-  this.__eventMaps = [];                                                                                               // 34
-};                                                                                                                     // 35
-var Template = Blaze.Template;                                                                                         // 36
-                                                                                                                       // 37
-/**                                                                                                                    // 38
- * @summary Returns true if `value` is a template object like `Template.myTemplate`.                                   // 39
- * @locus Client                                                                                                       // 40
- * @param {Any} value The value to test.                                                                               // 41
- */                                                                                                                    // 42
-Blaze.isTemplate = function (t) {                                                                                      // 43
-  return (t instanceof Blaze.Template);                                                                                // 44
+  this.__helpers = new HelperMap;                                                                                      // 34
+  this.__eventMaps = [];                                                                                               // 35
+};                                                                                                                     // 36
+var Template = Blaze.Template;                                                                                         // 37
+                                                                                                                       // 38
+var HelperMap = function () {};                                                                                        // 39
+HelperMap.prototype.get = function (name) {                                                                            // 40
+  return this[' '+name];                                                                                               // 41
+};                                                                                                                     // 42
+HelperMap.prototype.set = function (name, helper) {                                                                    // 43
+  this[' '+name] = helper;                                                                                             // 44
 };                                                                                                                     // 45
-                                                                                                                       // 46
-Template.prototype.constructView = function (contentFunc, elseFunc) {                                                  // 47
-  var self = this;                                                                                                     // 48
-  var view = Blaze.View(self.viewName, self.renderFunction);                                                           // 49
-  view.template = self;                                                                                                // 50
-                                                                                                                       // 51
-  view.templateContentBlock = (                                                                                        // 52
-    contentFunc ? new Template('(contentBlock)', contentFunc) : null);                                                 // 53
-  view.templateElseBlock = (                                                                                           // 54
-    elseFunc ? new Template('(elseBlock)', elseFunc) : null);                                                          // 55
-                                                                                                                       // 56
-  if (self.__eventMaps || typeof self.events === 'object') {                                                           // 57
-    view._onViewRendered(function () {                                                                                 // 58
-      if (view.renderCount !== 1)                                                                                      // 59
-        return;                                                                                                        // 60
-                                                                                                                       // 61
-      if (! self.__eventMaps.length && typeof self.events === "object") {                                              // 62
-        // Provide limited back-compat support for `.events = {...}`                                                   // 63
-        // syntax.  Pass `template.events` to the original `.events(...)`                                              // 64
-        // function.  This code must run only once per template, in                                                    // 65
-        // order to not bind the handlers more than once, which is                                                     // 66
-        // ensured by the fact that we only do this when `__eventMaps`                                                 // 67
-        // is falsy, and we cause it to be set now.                                                                    // 68
-        Template.prototype.events.call(self, self.events);                                                             // 69
-      }                                                                                                                // 70
-                                                                                                                       // 71
-      _.each(self.__eventMaps, function (m) {                                                                          // 72
-        Blaze._addEventMap(view, m, view);                                                                             // 73
-      });                                                                                                              // 74
-    });                                                                                                                // 75
-  }                                                                                                                    // 76
-                                                                                                                       // 77
-  view._templateInstance = new Blaze.TemplateInstance(view);                                                           // 78
-  view.templateInstance = function () {                                                                                // 79
-    // Update data, firstNode, and lastNode, and return the TemplateInstance                                           // 80
-    // object.                                                                                                         // 81
-    var inst = view._templateInstance;                                                                                 // 82
+HelperMap.prototype.has = function (name) {                                                                            // 46
+  return (' '+name) in this;                                                                                           // 47
+};                                                                                                                     // 48
+                                                                                                                       // 49
+/**                                                                                                                    // 50
+ * @summary Returns true if `value` is a template object like `Template.myTemplate`.                                   // 51
+ * @locus Client                                                                                                       // 52
+ * @param {Any} value The value to test.                                                                               // 53
+ */                                                                                                                    // 54
+Blaze.isTemplate = function (t) {                                                                                      // 55
+  return (t instanceof Blaze.Template);                                                                                // 56
+};                                                                                                                     // 57
+                                                                                                                       // 58
+Template.prototype.constructView = function (contentFunc, elseFunc) {                                                  // 59
+  var self = this;                                                                                                     // 60
+  var view = Blaze.View(self.viewName, self.renderFunction);                                                           // 61
+  view.template = self;                                                                                                // 62
+                                                                                                                       // 63
+  view.templateContentBlock = (                                                                                        // 64
+    contentFunc ? new Template('(contentBlock)', contentFunc) : null);                                                 // 65
+  view.templateElseBlock = (                                                                                           // 66
+    elseFunc ? new Template('(elseBlock)', elseFunc) : null);                                                          // 67
+                                                                                                                       // 68
+  if (self.__eventMaps || typeof self.events === 'object') {                                                           // 69
+    view._onViewRendered(function () {                                                                                 // 70
+      if (view.renderCount !== 1)                                                                                      // 71
+        return;                                                                                                        // 72
+                                                                                                                       // 73
+      if (! self.__eventMaps.length && typeof self.events === "object") {                                              // 74
+        // Provide limited back-compat support for `.events = {...}`                                                   // 75
+        // syntax.  Pass `template.events` to the original `.events(...)`                                              // 76
+        // function.  This code must run only once per template, in                                                    // 77
+        // order to not bind the handlers more than once, which is                                                     // 78
+        // ensured by the fact that we only do this when `__eventMaps`                                                 // 79
+        // is falsy, and we cause it to be set now.                                                                    // 80
+        Template.prototype.events.call(self, self.events);                                                             // 81
+      }                                                                                                                // 82
                                                                                                                        // 83
-    /**                                                                                                                // 84
-     * @instance                                                                                                       // 85
-     * @memberOf Blaze.TemplateInstance                                                                                // 86
-     * @name  data                                                                                                     // 87
-     * @summary The data context of this instance's latest invocation.                                                 // 88
-     * @locus Client                                                                                                   // 89
-     */                                                                                                                // 90
-    inst.data = Blaze.getData(view);                                                                                   // 91
-                                                                                                                       // 92
-    if (view._domrange && !view.isDestroyed) {                                                                         // 93
-      inst.firstNode = view._domrange.firstNode();                                                                     // 94
-      inst.lastNode = view._domrange.lastNode();                                                                       // 95
-    } else {                                                                                                           // 96
-      // on 'created' or 'destroyed' callbacks we don't have a DomRange                                                // 97
-      inst.firstNode = null;                                                                                           // 98
-      inst.lastNode = null;                                                                                            // 99
-    }                                                                                                                  // 100
-                                                                                                                       // 101
-    return inst;                                                                                                       // 102
-  };                                                                                                                   // 103
+      _.each(self.__eventMaps, function (m) {                                                                          // 84
+        Blaze._addEventMap(view, m, view);                                                                             // 85
+      });                                                                                                              // 86
+    });                                                                                                                // 87
+  }                                                                                                                    // 88
+                                                                                                                       // 89
+  view._templateInstance = new Blaze.TemplateInstance(view);                                                           // 90
+  view.templateInstance = function () {                                                                                // 91
+    // Update data, firstNode, and lastNode, and return the TemplateInstance                                           // 92
+    // object.                                                                                                         // 93
+    var inst = view._templateInstance;                                                                                 // 94
+                                                                                                                       // 95
+    /**                                                                                                                // 96
+     * @instance                                                                                                       // 97
+     * @memberOf Blaze.TemplateInstance                                                                                // 98
+     * @name  data                                                                                                     // 99
+     * @summary The data context of this instance's latest invocation.                                                 // 100
+     * @locus Client                                                                                                   // 101
+     */                                                                                                                // 102
+    inst.data = Blaze.getData(view);                                                                                   // 103
                                                                                                                        // 104
-  /**                                                                                                                  // 105
-   * @name  created                                                                                                    // 106
-   * @instance                                                                                                         // 107
-   * @memberOf Template                                                                                                // 108
-   * @summary Provide a callback when an instance of a template is created.                                            // 109
-   * @locus Client                                                                                                     // 110
-   */                                                                                                                  // 111
-  if (self.created) {                                                                                                  // 112
-    view.onViewCreated(function () {                                                                                   // 113
-      self.created.call(view.templateInstance());                                                                      // 114
-    });                                                                                                                // 115
-  }                                                                                                                    // 116
-                                                                                                                       // 117
-  /**                                                                                                                  // 118
-   * @name  rendered                                                                                                   // 119
-   * @instance                                                                                                         // 120
-   * @memberOf Template                                                                                                // 121
-   * @summary Provide a callback when an instance of a template is rendered.                                           // 122
-   * @locus Client                                                                                                     // 123
-   */                                                                                                                  // 124
-  if (self.rendered) {                                                                                                 // 125
-    view.onViewReady(function () {                                                                                     // 126
-      self.rendered.call(view.templateInstance());                                                                     // 127
-    });                                                                                                                // 128
-  }                                                                                                                    // 129
-                                                                                                                       // 130
-  /**                                                                                                                  // 131
-   * @name  destroyed                                                                                                  // 132
-   * @instance                                                                                                         // 133
-   * @memberOf Template                                                                                                // 134
-   * @summary Provide a callback when an instance of a template is destroyed.                                          // 135
-   * @locus Client                                                                                                     // 136
-   */                                                                                                                  // 137
-  if (self.destroyed) {                                                                                                // 138
-    view.onViewDestroyed(function () {                                                                                 // 139
-      self.destroyed.call(view.templateInstance());                                                                    // 140
-    });                                                                                                                // 141
-  }                                                                                                                    // 142
-                                                                                                                       // 143
-  return view;                                                                                                         // 144
-};                                                                                                                     // 145
-                                                                                                                       // 146
-/**                                                                                                                    // 147
- * @class                                                                                                              // 148
- * @summary The class for template instances                                                                           // 149
- * @param {Blaze.View} view                                                                                            // 150
- * @instanceName template                                                                                              // 151
- */                                                                                                                    // 152
-Blaze.TemplateInstance = function (view) {                                                                             // 153
-  if (! (this instanceof Blaze.TemplateInstance))                                                                      // 154
-    // called without `new`                                                                                            // 155
-    return new Blaze.TemplateInstance(view);                                                                           // 156
-                                                                                                                       // 157
-  if (! (view instanceof Blaze.View))                                                                                  // 158
-    throw new Error("View required");                                                                                  // 159
-                                                                                                                       // 160
-  view._templateInstance = this;                                                                                       // 161
-                                                                                                                       // 162
-  /**                                                                                                                  // 163
-   * @name view                                                                                                        // 164
-   * @memberOf Blaze.TemplateInstance                                                                                  // 165
-   * @instance                                                                                                         // 166
-   * @summary The [View](#blaze_view) object for this invocation of the template.                                      // 167
-   * @locus Client                                                                                                     // 168
-   */                                                                                                                  // 169
-  this.view = view;                                                                                                    // 170
-  this.data = null;                                                                                                    // 171
+    if (view._domrange && !view.isDestroyed) {                                                                         // 105
+      inst.firstNode = view._domrange.firstNode();                                                                     // 106
+      inst.lastNode = view._domrange.lastNode();                                                                       // 107
+    } else {                                                                                                           // 108
+      // on 'created' or 'destroyed' callbacks we don't have a DomRange                                                // 109
+      inst.firstNode = null;                                                                                           // 110
+      inst.lastNode = null;                                                                                            // 111
+    }                                                                                                                  // 112
+                                                                                                                       // 113
+    return inst;                                                                                                       // 114
+  };                                                                                                                   // 115
+                                                                                                                       // 116
+  /**                                                                                                                  // 117
+   * @name  created                                                                                                    // 118
+   * @instance                                                                                                         // 119
+   * @memberOf Template                                                                                                // 120
+   * @summary Provide a callback when an instance of a template is created.                                            // 121
+   * @locus Client                                                                                                     // 122
+   */                                                                                                                  // 123
+  if (self.created) {                                                                                                  // 124
+    view.onViewCreated(function () {                                                                                   // 125
+      self.created.call(view.templateInstance());                                                                      // 126
+    });                                                                                                                // 127
+  }                                                                                                                    // 128
+                                                                                                                       // 129
+  /**                                                                                                                  // 130
+   * @name  rendered                                                                                                   // 131
+   * @instance                                                                                                         // 132
+   * @memberOf Template                                                                                                // 133
+   * @summary Provide a callback when an instance of a template is rendered.                                           // 134
+   * @locus Client                                                                                                     // 135
+   */                                                                                                                  // 136
+  if (self.rendered) {                                                                                                 // 137
+    view.onViewReady(function () {                                                                                     // 138
+      self.rendered.call(view.templateInstance());                                                                     // 139
+    });                                                                                                                // 140
+  }                                                                                                                    // 141
+                                                                                                                       // 142
+  /**                                                                                                                  // 143
+   * @name  destroyed                                                                                                  // 144
+   * @instance                                                                                                         // 145
+   * @memberOf Template                                                                                                // 146
+   * @summary Provide a callback when an instance of a template is destroyed.                                          // 147
+   * @locus Client                                                                                                     // 148
+   */                                                                                                                  // 149
+  if (self.destroyed) {                                                                                                // 150
+    view.onViewDestroyed(function () {                                                                                 // 151
+      self.destroyed.call(view.templateInstance());                                                                    // 152
+    });                                                                                                                // 153
+  }                                                                                                                    // 154
+                                                                                                                       // 155
+  return view;                                                                                                         // 156
+};                                                                                                                     // 157
+                                                                                                                       // 158
+/**                                                                                                                    // 159
+ * @class                                                                                                              // 160
+ * @summary The class for template instances                                                                           // 161
+ * @param {Blaze.View} view                                                                                            // 162
+ * @instanceName template                                                                                              // 163
+ */                                                                                                                    // 164
+Blaze.TemplateInstance = function (view) {                                                                             // 165
+  if (! (this instanceof Blaze.TemplateInstance))                                                                      // 166
+    // called without `new`                                                                                            // 167
+    return new Blaze.TemplateInstance(view);                                                                           // 168
+                                                                                                                       // 169
+  if (! (view instanceof Blaze.View))                                                                                  // 170
+    throw new Error("View required");                                                                                  // 171
                                                                                                                        // 172
-  /**                                                                                                                  // 173
-   * @name firstNode                                                                                                   // 174
-   * @memberOf Blaze.TemplateInstance                                                                                  // 175
-   * @instance                                                                                                         // 176
-   * @summary The first top-level DOM node in this template instance.                                                  // 177
-   * @locus Client                                                                                                     // 178
-   */                                                                                                                  // 179
-  this.firstNode = null;                                                                                               // 180
-                                                                                                                       // 181
-  /**                                                                                                                  // 182
-   * @name lastNode                                                                                                    // 183
-   * @memberOf Blaze.TemplateInstance                                                                                  // 184
-   * @instance                                                                                                         // 185
-   * @summary The last top-level DOM node in this template instance.                                                   // 186
-   * @locus Client                                                                                                     // 187
-   */                                                                                                                  // 188
-  this.lastNode = null;                                                                                                // 189
-};                                                                                                                     // 190
-                                                                                                                       // 191
-/**                                                                                                                    // 192
- * @summary Find all elements matching `selector` in this template instance, and return them as a JQuery object.       // 193
- * @locus Client                                                                                                       // 194
- * @param {String} selector The CSS selector to match, scoped to the template contents.                                // 195
- */                                                                                                                    // 196
-Blaze.TemplateInstance.prototype.$ = function (selector) {                                                             // 197
-  var view = this.view;                                                                                                // 198
-  if (! view._domrange)                                                                                                // 199
-    throw new Error("Can't use $ on template instance with no DOM");                                                   // 200
-  return view._domrange.$(selector);                                                                                   // 201
+  view._templateInstance = this;                                                                                       // 173
+                                                                                                                       // 174
+  /**                                                                                                                  // 175
+   * @name view                                                                                                        // 176
+   * @memberOf Blaze.TemplateInstance                                                                                  // 177
+   * @instance                                                                                                         // 178
+   * @summary The [View](#blaze_view) object for this invocation of the template.                                      // 179
+   * @locus Client                                                                                                     // 180
+   */                                                                                                                  // 181
+  this.view = view;                                                                                                    // 182
+  this.data = null;                                                                                                    // 183
+                                                                                                                       // 184
+  /**                                                                                                                  // 185
+   * @name firstNode                                                                                                   // 186
+   * @memberOf Blaze.TemplateInstance                                                                                  // 187
+   * @instance                                                                                                         // 188
+   * @summary The first top-level DOM node in this template instance.                                                  // 189
+   * @locus Client                                                                                                     // 190
+   */                                                                                                                  // 191
+  this.firstNode = null;                                                                                               // 192
+                                                                                                                       // 193
+  /**                                                                                                                  // 194
+   * @name lastNode                                                                                                    // 195
+   * @memberOf Blaze.TemplateInstance                                                                                  // 196
+   * @instance                                                                                                         // 197
+   * @summary The last top-level DOM node in this template instance.                                                   // 198
+   * @locus Client                                                                                                     // 199
+   */                                                                                                                  // 200
+  this.lastNode = null;                                                                                                // 201
 };                                                                                                                     // 202
                                                                                                                        // 203
 /**                                                                                                                    // 204
- * @summary Find all elements matching `selector` in this template instance.                                           // 205
+ * @summary Find all elements matching `selector` in this template instance, and return them as a JQuery object.       // 205
  * @locus Client                                                                                                       // 206
  * @param {String} selector The CSS selector to match, scoped to the template contents.                                // 207
  */                                                                                                                    // 208
-Blaze.TemplateInstance.prototype.findAll = function (selector) {                                                       // 209
-  return Array.prototype.slice.call(this.$(selector));                                                                 // 210
-};                                                                                                                     // 211
-                                                                                                                       // 212
-/**                                                                                                                    // 213
- * @summary Find one element matching `selector` in this template instance.                                            // 214
- * @locus Client                                                                                                       // 215
- * @param {String} selector The CSS selector to match, scoped to the template contents.                                // 216
- */                                                                                                                    // 217
-Blaze.TemplateInstance.prototype.find = function (selector) {                                                          // 218
-  var result = this.$(selector);                                                                                       // 219
-  return result[0] || null;                                                                                            // 220
-};                                                                                                                     // 221
-                                                                                                                       // 222
-/**                                                                                                                    // 223
- * @summary A version of [Tracker.autorun](#tracker_autorun) that is stopped when the template is destroyed.           // 224
- * @locus Client                                                                                                       // 225
- * @param {Function} runFunc The function to run. It receives one argument: a Tracker.Computation object.              // 226
- */                                                                                                                    // 227
-Blaze.TemplateInstance.prototype.autorun = function (f) {                                                              // 228
-  return this.view.autorun(f);                                                                                         // 229
-};                                                                                                                     // 230
-                                                                                                                       // 231
-/**                                                                                                                    // 232
- * @summary Specify template helpers available to this template.                                                       // 233
- * @locus Client                                                                                                       // 234
- * @param {Object} helpers Dictionary of helper functions by name.                                                     // 235
- */                                                                                                                    // 236
-Template.prototype.helpers = function (dict) {                                                                         // 237
-  for (var k in dict)                                                                                                  // 238
-    this[k] = dict[k];                                                                                                 // 239
-};                                                                                                                     // 240
-                                                                                                                       // 241
-/**                                                                                                                    // 242
- * @summary Specify event handlers for this template.                                                                  // 243
- * @locus Client                                                                                                       // 244
- * @param {EventMap} eventMap Event handlers to associate with this template.                                          // 245
- */                                                                                                                    // 246
-Template.prototype.events = function (eventMap) {                                                                      // 247
-  var template = this;                                                                                                 // 248
-  var eventMap2 = {};                                                                                                  // 249
-  for (var k in eventMap) {                                                                                            // 250
-    eventMap2[k] = (function (k, v) {                                                                                  // 251
-      return function (event/*, ...*/) {                                                                               // 252
-        var view = this; // passed by EventAugmenter                                                                   // 253
-        var data = Blaze.getData(event.currentTarget);                                                                 // 254
-        if (data == null)                                                                                              // 255
-          data = {};                                                                                                   // 256
-        var args = Array.prototype.slice.call(arguments);                                                              // 257
-        var tmplInstance = view.templateInstance();                                                                    // 258
-        args.splice(1, 0, tmplInstance);                                                                               // 259
-        return v.apply(data, args);                                                                                    // 260
-      };                                                                                                               // 261
-    })(k, eventMap[k]);                                                                                                // 262
-  }                                                                                                                    // 263
-                                                                                                                       // 264
-  template.__eventMaps.push(eventMap2);                                                                                // 265
-};                                                                                                                     // 266
-                                                                                                                       // 267
-/**                                                                                                                    // 268
- * @function                                                                                                           // 269
- * @name instance                                                                                                      // 270
- * @memberOf Template                                                                                                  // 271
+Blaze.TemplateInstance.prototype.$ = function (selector) {                                                             // 209
+  var view = this.view;                                                                                                // 210
+  if (! view._domrange)                                                                                                // 211
+    throw new Error("Can't use $ on template instance with no DOM");                                                   // 212
+  return view._domrange.$(selector);                                                                                   // 213
+};                                                                                                                     // 214
+                                                                                                                       // 215
+/**                                                                                                                    // 216
+ * @summary Find all elements matching `selector` in this template instance.                                           // 217
+ * @locus Client                                                                                                       // 218
+ * @param {String} selector The CSS selector to match, scoped to the template contents.                                // 219
+ */                                                                                                                    // 220
+Blaze.TemplateInstance.prototype.findAll = function (selector) {                                                       // 221
+  return Array.prototype.slice.call(this.$(selector));                                                                 // 222
+};                                                                                                                     // 223
+                                                                                                                       // 224
+/**                                                                                                                    // 225
+ * @summary Find one element matching `selector` in this template instance.                                            // 226
+ * @locus Client                                                                                                       // 227
+ * @param {String} selector The CSS selector to match, scoped to the template contents.                                // 228
+ */                                                                                                                    // 229
+Blaze.TemplateInstance.prototype.find = function (selector) {                                                          // 230
+  var result = this.$(selector);                                                                                       // 231
+  return result[0] || null;                                                                                            // 232
+};                                                                                                                     // 233
+                                                                                                                       // 234
+/**                                                                                                                    // 235
+ * @summary A version of [Tracker.autorun](#tracker_autorun) that is stopped when the template is destroyed.           // 236
+ * @locus Client                                                                                                       // 237
+ * @param {Function} runFunc The function to run. It receives one argument: a Tracker.Computation object.              // 238
+ */                                                                                                                    // 239
+Blaze.TemplateInstance.prototype.autorun = function (f) {                                                              // 240
+  return this.view.autorun(f);                                                                                         // 241
+};                                                                                                                     // 242
+                                                                                                                       // 243
+/**                                                                                                                    // 244
+ * @summary Specify template helpers available to this template.                                                       // 245
+ * @locus Client                                                                                                       // 246
+ * @param {Object} helpers Dictionary of helper functions by name.                                                     // 247
+ */                                                                                                                    // 248
+Template.prototype.helpers = function (dict) {                                                                         // 249
+  for (var k in dict)                                                                                                  // 250
+    this.__helpers.set(k, dict[k]);                                                                                    // 251
+};                                                                                                                     // 252
+                                                                                                                       // 253
+/**                                                                                                                    // 254
+ * @summary Specify event handlers for this template.                                                                  // 255
+ * @locus Client                                                                                                       // 256
+ * @param {EventMap} eventMap Event handlers to associate with this template.                                          // 257
+ */                                                                                                                    // 258
+Template.prototype.events = function (eventMap) {                                                                      // 259
+  var template = this;                                                                                                 // 260
+  var eventMap2 = {};                                                                                                  // 261
+  for (var k in eventMap) {                                                                                            // 262
+    eventMap2[k] = (function (k, v) {                                                                                  // 263
+      return function (event/*, ...*/) {                                                                               // 264
+        var view = this; // passed by EventAugmenter                                                                   // 265
+        var data = Blaze.getData(event.currentTarget);                                                                 // 266
+        if (data == null)                                                                                              // 267
+          data = {};                                                                                                   // 268
+        var args = Array.prototype.slice.call(arguments);                                                              // 269
+        var tmplInstance = view.templateInstance();                                                                    // 270
+        args.splice(1, 0, tmplInstance);                                                                               // 271
+        return v.apply(data, args);                                                                                    // 272
+      };                                                                                                               // 273
+    })(k, eventMap[k]);                                                                                                // 274
+  }                                                                                                                    // 275
+                                                                                                                       // 276
+  template.__eventMaps.push(eventMap2);                                                                                // 277
+};                                                                                                                     // 278
+                                                                                                                       // 279
+/**                                                                                                                    // 280
+ * @function                                                                                                           // 281
+ * @name instance                                                                                                      // 282
+ * @memberOf Template                                                                                                  // 283
  * @summary The [template instance](#template_inst) corresponding to the current template helper, event handler, callback, or autorun.  If there isn't one, `null`.
- * @locus Client                                                                                                       // 273
- */                                                                                                                    // 274
-Template.instance = function () {                                                                                      // 275
-  var view = Blaze.currentView;                                                                                        // 276
-                                                                                                                       // 277
-  while (view && ! view.template)                                                                                      // 278
-    view = view.parentView;                                                                                            // 279
-                                                                                                                       // 280
-  if (! view)                                                                                                          // 281
-    return null;                                                                                                       // 282
-                                                                                                                       // 283
-  return view.templateInstance();                                                                                      // 284
-};                                                                                                                     // 285
-                                                                                                                       // 286
-// Note: Template.currentData() is documented to take zero arguments,                                                  // 287
-// while Blaze.getData takes up to one.                                                                                // 288
+ * @locus Client                                                                                                       // 285
+ */                                                                                                                    // 286
+Template.instance = function () {                                                                                      // 287
+  var view = Blaze.currentView;                                                                                        // 288
                                                                                                                        // 289
-/**                                                                                                                    // 290
+  while (view && ! view.template)                                                                                      // 290
+    view = view.parentView;                                                                                            // 291
+                                                                                                                       // 292
+  if (! view)                                                                                                          // 293
+    return null;                                                                                                       // 294
+                                                                                                                       // 295
+  return view.templateInstance();                                                                                      // 296
+};                                                                                                                     // 297
+                                                                                                                       // 298
+// Note: Template.currentData() is documented to take zero arguments,                                                  // 299
+// while Blaze.getData takes up to one.                                                                                // 300
+                                                                                                                       // 301
+/**                                                                                                                    // 302
  * @summary Returns the data context of the current helper, or the data context of the template that declares the current event handler or callback.  Establishes a reactive dependency on the result.
- * @locus Client                                                                                                       // 292
- * @function                                                                                                           // 293
- */                                                                                                                    // 294
-Template.currentData = Blaze.getData;                                                                                  // 295
-                                                                                                                       // 296
-/**                                                                                                                    // 297
- * @summary Accesses other data contexts that enclose the current data context.                                        // 298
- * @locus Client                                                                                                       // 299
- * @function                                                                                                           // 300
- * @param {Integer} numLevels The number of levels beyond the current data context to look.                            // 301
- */                                                                                                                    // 302
-Template.parentData = Blaze._parentData;                                                                               // 303
-                                                                                                                       // 304
-/**                                                                                                                    // 305
- * @summary Defines a [helper function](#template_helpers) which can be used from all templates.                       // 306
- * @locus Client                                                                                                       // 307
- * @function                                                                                                           // 308
- * @param {String} name The name of the helper function you are defining.                                              // 309
- * @param {Function} function The helper function itself.                                                              // 310
- */                                                                                                                    // 311
-Template.registerHelper = Blaze.registerHelper;                                                                        // 312
-                                                                                                                       // 313
+ * @locus Client                                                                                                       // 304
+ * @function                                                                                                           // 305
+ */                                                                                                                    // 306
+Template.currentData = Blaze.getData;                                                                                  // 307
+                                                                                                                       // 308
+/**                                                                                                                    // 309
+ * @summary Accesses other data contexts that enclose the current data context.                                        // 310
+ * @locus Client                                                                                                       // 311
+ * @function                                                                                                           // 312
+ * @param {Integer} numLevels The number of levels beyond the current data context to look.                            // 313
+ */                                                                                                                    // 314
+Template.parentData = Blaze._parentData;                                                                               // 315
+                                                                                                                       // 316
+/**                                                                                                                    // 317
+ * @summary Defines a [helper function](#template_helpers) which can be used from all templates.                       // 318
+ * @locus Client                                                                                                       // 319
+ * @function                                                                                                           // 320
+ * @param {String} name The name of the helper function you are defining.                                              // 321
+ * @param {Function} function The helper function itself.                                                              // 322
+ */                                                                                                                    // 323
+Template.registerHelper = Blaze.registerHelper;                                                                        // 324
+                                                                                                                       // 325
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1676,3 +1722,5 @@ Package.blaze = {
 };
 
 })();
+
+//# sourceMappingURL=blaze.js.map

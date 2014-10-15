@@ -387,7 +387,7 @@ Template["__dynamicWithDataContext"] = new Template("Template.__dynamicWithDataC
                                                                                                        //
 /**                                                                                                    // 1
  * @isTemplate true                                                                                    // 2
- * @memberOf UI                                                                                        // 3
+ * @memberOf Template                                                                                  // 3
  * @function dynamic                                                                                   // 4
  * @summary Choose a template to include dynamically, by name.                                         // 5
  * @locus Templates                                                                                    // 6
@@ -395,28 +395,31 @@ Template["__dynamicWithDataContext"] = new Template("Template.__dynamicWithDataC
  * @param {Object} [data] Optional. The data context in which to include the template.                 // 8
  */                                                                                                    // 9
                                                                                                        // 10
-Template.__dynamicWithDataContext.chooseTemplate = function (name) {                                   // 11
-  return Template[name] || null;                                                                       // 12
-};                                                                                                     // 13
-                                                                                                       // 14
-Template.__dynamic.dataContextPresent = function () {                                                  // 15
-  return _.has(this, "data");                                                                          // 16
-};                                                                                                     // 17
-                                                                                                       // 18
-Template.__dynamic.checkContext = function () {                                                        // 19
-  if (! _.has(this, "template")) {                                                                     // 20
-    throw new Error("Must specify name in the 'template' argument " +                                  // 21
-                    "to {{> UI.dynamic}}.");                                                           // 22
-  }                                                                                                    // 23
-                                                                                                       // 24
-  _.each(this, function (v, k) {                                                                       // 25
-    if (k !== "template" && k !== "data") {                                                            // 26
-      throw new Error("Invalid argument to {{> UI.dynamic}}: " +                                       // 27
-                      k);                                                                              // 28
-    }                                                                                                  // 29
-  });                                                                                                  // 30
-};                                                                                                     // 31
-                                                                                                       // 32
+Template.__dynamicWithDataContext.helpers({                                                            // 11
+  chooseTemplate: function (name) {                                                                    // 12
+    return Template[name] || null;                                                                     // 13
+  }                                                                                                    // 14
+});                                                                                                    // 15
+                                                                                                       // 16
+Template.__dynamic.helpers({                                                                           // 17
+  dataContextPresent: function () {                                                                    // 18
+    return _.has(this, "data");                                                                        // 19
+  },                                                                                                   // 20
+  checkContext: function () {                                                                          // 21
+    if (! _.has(this, "template")) {                                                                   // 22
+      throw new Error("Must specify name in the 'template' argument " +                                // 23
+                      "to {{> Template.dynamic}}.");                                                   // 24
+    }                                                                                                  // 25
+                                                                                                       // 26
+    _.each(this, function (v, k) {                                                                     // 27
+      if (k !== "template" && k !== "data") {                                                          // 28
+        throw new Error("Invalid argument to {{> Template.dynamic}}: " +                               // 29
+                        k);                                                                            // 30
+      }                                                                                                // 31
+    });                                                                                                // 32
+  }                                                                                                    // 33
+});                                                                                                    // 34
+                                                                                                       // 35
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

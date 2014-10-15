@@ -27,7 +27,7 @@ var DDP = Package.ddp.DDP;
 var Mongo = Package.mongo.Mongo;
 
 /* Package-scope variables */
-var Accounts, EXPIRE_TOKENS_INTERVAL_MS, CONNECTION_CLOSE_DELAY_MS, getTokenLifetimeMs, autoLoginEnabled, makeClientLoggedOut, makeClientLoggedIn, storeLoginToken, unstoreLoginToken, storedLoginToken, storedLoginTokenExpires;
+var Accounts, AccountsTest, EXPIRE_TOKENS_INTERVAL_MS, CONNECTION_CLOSE_DELAY_MS, getTokenLifetimeMs, autoLoginEnabled, tokenRegex, match, makeClientLoggedOut, makeClientLoggedIn, storeLoginToken, unstoreLoginToken, storedLoginToken, storedLoginTokenExpires;
 
 (function () {
 
@@ -240,51 +240,149 @@ Accounts._tokenExpiresSoon = function (when) {                                  
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
-autoLoginEnabled = true;                                                                                             // 1
-                                                                                                                     // 2
-// reads a reset password token from the url's hash fragment, if it's                                                // 3
-// there. if so prevent automatically logging in since it could be                                                   // 4
-// confusing to be logged in as user A while resetting password for                                                  // 5
-// user B                                                                                                            // 6
-//                                                                                                                   // 7
-// reset password urls use hash fragments instead of url paths/query                                                 // 8
-// strings so that the reset password token is not sent over the wire                                                // 9
-// on the http request                                                                                               // 10
-var match;                                                                                                           // 11
-match = window.location.hash.match(/^\#\/reset-password\/(.*)$/);                                                    // 12
-if (match) {                                                                                                         // 13
-  autoLoginEnabled = false;                                                                                          // 14
-  Accounts._resetPasswordToken = match[1];                                                                           // 15
-  window.location.hash = '';                                                                                         // 16
-}                                                                                                                    // 17
-                                                                                                                     // 18
-// reads a verify email token from the url's hash fragment, if                                                       // 19
-// it's there.  also don't automatically log the user is, as for                                                     // 20
-// reset password links.                                                                                             // 21
-//                                                                                                                   // 22
-// XXX we don't need to use hash fragments in this case, and having                                                  // 23
-// the token appear in the url's path would allow us to use a custom                                                 // 24
-// middleware instead of verifying the email on pageload, which                                                      // 25
-// would be faster but less DDP-ish (and more specifically, any                                                      // 26
-// non-web DDP app, such as an iOS client, would do something more                                                   // 27
-// in line with the hash fragment approach)                                                                          // 28
-match = window.location.hash.match(/^\#\/verify-email\/(.*)$/);                                                      // 29
-if (match) {                                                                                                         // 30
-  autoLoginEnabled = false;                                                                                          // 31
-  Accounts._verifyEmailToken = match[1];                                                                             // 32
-  window.location.hash = '';                                                                                         // 33
-}                                                                                                                    // 34
-                                                                                                                     // 35
-// reads an account enrollment token from the url's hash fragment, if                                                // 36
-// it's there.  also don't automatically log the user is, as for                                                     // 37
-// reset password links.                                                                                             // 38
-match = window.location.hash.match(/^\#\/enroll-account\/(.*)$/);                                                    // 39
-if (match) {                                                                                                         // 40
-  autoLoginEnabled = false;                                                                                          // 41
-  Accounts._enrollAccountToken = match[1];                                                                           // 42
-  window.location.hash = '';                                                                                         // 43
-}                                                                                                                    // 44
-                                                                                                                     // 45
+// By default, allow the autologin process to happen                                                                 // 1
+autoLoginEnabled = true;                                                                                             // 2
+                                                                                                                     // 3
+// All of the special hash URLs we support for accounts interactions                                                 // 4
+var accountsPaths = ["reset-password", "verify-email", "enroll-account"];                                            // 5
+                                                                                                                     // 6
+// Separate out this functionality for testing                                                                       // 7
+var attemptToMatchHash = function (hash, success) {                                                                  // 8
+  _.each(accountsPaths, function (urlPart) {                                                                         // 9
+    var token;                                                                                                       // 10
+                                                                                                                     // 11
+    tokenRegex = new RegExp("^\\#\\/" + urlPart + "\\/(.*)$");                                                       // 12
+    match = hash.match(tokenRegex);                                                                                  // 13
+                                                                                                                     // 14
+    if (match) {                                                                                                     // 15
+      token = match[1];                                                                                              // 16
+                                                                                                                     // 17
+      // XXX COMPAT WITH 0.9.3                                                                                       // 18
+      if (urlPart === "reset-password") {                                                                            // 19
+        Accounts._resetPasswordToken = token;                                                                        // 20
+      } else if (urlPart === "verify-email") {                                                                       // 21
+        Accounts._verifyEmailToken = token;                                                                          // 22
+      } else if (urlPart === "enroll-account") {                                                                     // 23
+        Accounts._enrollAccountToken = token;                                                                        // 24
+      }                                                                                                              // 25
+    } else {                                                                                                         // 26
+      return;                                                                                                        // 27
+    }                                                                                                                // 28
+                                                                                                                     // 29
+    // Do some stuff with the token we matched                                                                       // 30
+    success(token, urlPart);                                                                                         // 31
+  });                                                                                                                // 32
+};                                                                                                                   // 33
+                                                                                                                     // 34
+// We only support one callback per URL                                                                              // 35
+var accountsCallbacks = {};                                                                                          // 36
+                                                                                                                     // 37
+// The UI flow will call this when done to log in the existing person                                                // 38
+var enableAutoLogin = function () {                                                                                  // 39
+  Accounts._enableAutoLogin();                                                                                       // 40
+};                                                                                                                   // 41
+                                                                                                                     // 42
+// Actually call the function, has to happen in the top level so that we can                                         // 43
+// mess with autoLoginEnabled.                                                                                       // 44
+attemptToMatchHash(window.location.hash, function (token, urlPart) {                                                 // 45
+  // put login in a suspended state to wait for the interaction to finish                                            // 46
+  autoLoginEnabled = false;                                                                                          // 47
+                                                                                                                     // 48
+  // reset the URL                                                                                                   // 49
+  window.location.hash = "";                                                                                         // 50
+                                                                                                                     // 51
+  // wait for other packages to register callbacks                                                                   // 52
+  Meteor.startup(function () {                                                                                       // 53
+    // if a callback has been registered for this kind of token, call it                                             // 54
+    if (accountsCallbacks[urlPart]) {                                                                                // 55
+      accountsCallbacks[urlPart](token, enableAutoLogin);                                                            // 56
+    }                                                                                                                // 57
+  });                                                                                                                // 58
+});                                                                                                                  // 59
+                                                                                                                     // 60
+// Export for testing                                                                                                // 61
+AccountsTest = {                                                                                                     // 62
+  attemptToMatchHash: attemptToMatchHash                                                                             // 63
+};                                                                                                                   // 64
+                                                                                                                     // 65
+// XXX these should be moved to accounts-password eventually. Right now                                              // 66
+// this is prevented by the need to set autoLoginEnabled=false, but in                                               // 67
+// some bright future we won't need to do that anymore.                                                              // 68
+                                                                                                                     // 69
+/**                                                                                                                  // 70
+ * @summary Register a function to call when a reset password link is clicked                                        // 71
+ * in an email sent by                                                                                               // 72
+ * [`Accounts.sendResetPasswordEmail`](#accounts_sendresetpasswordemail).                                            // 73
+ * This function should be called in top-level code, not inside                                                      // 74
+ * `Meteor.startup()`.                                                                                               // 75
+ * @param  {Function} callback The function to call. It is given two arguments:                                      // 76
+ *                                                                                                                   // 77
+ * 1. `token`: A password reset token that can be passed to                                                          // 78
+ * [`Accounts.resetPassword`](#accounts_resetpassword).                                                              // 79
+ * 2. `done`: A function to call when the password reset UI flow is complete. The normal                             // 80
+ * login process is suspended until this function is called, so that the                                             // 81
+ * password for user A can be reset even if user B was logged in.                                                    // 82
+ * @locus Client                                                                                                     // 83
+ */                                                                                                                  // 84
+Accounts.onResetPasswordLink = function (callback) {                                                                 // 85
+  if (accountsCallbacks["reset-password"]) {                                                                         // 86
+    Meteor._debug("Accounts.onResetPasswordLink was called more than once. " +                                       // 87
+      "Only one callback added will be executed.");                                                                  // 88
+  }                                                                                                                  // 89
+                                                                                                                     // 90
+  accountsCallbacks["reset-password"] = callback;                                                                    // 91
+};                                                                                                                   // 92
+                                                                                                                     // 93
+/**                                                                                                                  // 94
+ * @summary Register a function to call when an email verification link is                                           // 95
+ * clicked in an email sent by                                                                                       // 96
+ * [`Accounts.sendVerificationEmail`](#accounts_sendverificationemail).                                              // 97
+ * This function should be called in top-level code, not inside                                                      // 98
+ * `Meteor.startup()`.                                                                                               // 99
+ * @param  {Function} callback The function to call. It is given two arguments:                                      // 100
+ *                                                                                                                   // 101
+ * 1. `token`: An email verification token that can be passed to                                                     // 102
+ * [`Accounts.verifyEmail`](#accounts_verifyemail).                                                                  // 103
+ * 2. `done`: A function to call when the email verification UI flow is complete.                                    // 104
+ * The normal login process is suspended until this function is called, so                                           // 105
+ * that the user can be notified that they are verifying their email before                                          // 106
+ * being logged in.                                                                                                  // 107
+ * @locus Client                                                                                                     // 108
+ */                                                                                                                  // 109
+Accounts.onEmailVerificationLink = function (callback) {                                                             // 110
+  if (accountsCallbacks["verify-email"]) {                                                                           // 111
+    Meteor._debug("Accounts.onEmailVerificationLink was called more than once. " +                                   // 112
+      "Only one callback added will be executed.");                                                                  // 113
+  }                                                                                                                  // 114
+                                                                                                                     // 115
+  accountsCallbacks["verify-email"] = callback;                                                                      // 116
+};                                                                                                                   // 117
+                                                                                                                     // 118
+/**                                                                                                                  // 119
+ * @summary Register a function to call when an account enrollment link is                                           // 120
+ * clicked in an email sent by                                                                                       // 121
+ * [`Accounts.sendEnrollmentEmail`](#accounts_sendenrollmentemail).                                                  // 122
+ * This function should be called in top-level code, not inside                                                      // 123
+ * `Meteor.startup()`.                                                                                               // 124
+ * @param  {Function} callback The function to call. It is given two arguments:                                      // 125
+ *                                                                                                                   // 126
+ * 1. `token`: A password reset token that can be passed to                                                          // 127
+ * [`Accounts.resetPassword`](#accounts_resetpassword) to give the newly                                             // 128
+ * enrolled account a password.                                                                                      // 129
+ * 2. `done`: A function to call when the enrollment UI flow is complete.                                            // 130
+ * The normal login process is suspended until this function is called, so that                                      // 131
+ * user A can be enrolled even if user B was logged in.                                                              // 132
+ * @locus Client                                                                                                     // 133
+ */                                                                                                                  // 134
+Accounts.onEnrollmentLink = function (callback) {                                                                    // 135
+  if (accountsCallbacks["enroll-account"]) {                                                                         // 136
+    Meteor._debug("Accounts.onEnrollmentLink was called more than once. " +                                          // 137
+      "Only one callback added will be executed.");                                                                  // 138
+  }                                                                                                                  // 139
+                                                                                                                     // 140
+  accountsCallbacks["enroll-account"] = callback;                                                                    // 141
+};                                                                                                                   // 142
+                                                                                                                     // 143
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -381,7 +479,7 @@ Meteor.user = function () {                                                     
 Accounts.callLoginMethod = function (options) {                                                                      // 77
   options = _.extend({                                                                                               // 78
     methodName: 'login',                                                                                             // 79
-    methodArguments: [],                                                                                             // 80
+    methodArguments: [{}],                                                                                           // 80
     _suppressLoggingIn: false                                                                                        // 81
   }, options);                                                                                                       // 82
   // Set defaults for callback arguments to no-op functions; make sure we                                            // 83
@@ -830,7 +928,8 @@ setInterval(pollStoredLoginToken, 3000);                                        
 /* Exports */
 if (typeof Package === 'undefined') Package = {};
 Package['accounts-base'] = {
-  Accounts: Accounts
+  Accounts: Accounts,
+  AccountsTest: AccountsTest
 };
 
 })();

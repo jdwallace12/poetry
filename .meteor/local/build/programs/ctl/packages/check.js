@@ -407,3 +407,5 @@ Package.check = {
 };
 
 })();
+
+//# sourceMappingURL=check.js.map

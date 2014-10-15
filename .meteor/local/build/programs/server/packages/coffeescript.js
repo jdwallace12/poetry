@@ -10,3 +10,5 @@ if (typeof Package === 'undefined') Package = {};
 Package.coffeescript = {};
 
 })();
+
+//# sourceMappingURL=coffeescript.js.map

@@ -73,125 +73,136 @@ ClientVersions = new Mongo.Collection("meteor_autoupdate_clientVersions",       
 Autoupdate.autoupdateVersion = null;                                             // 49
 Autoupdate.autoupdateVersionRefreshable = null;                                  // 50
 Autoupdate.autoupdateVersionCordova = null;                                      // 51
-                                                                                 // 52
-var syncQueue = new Meteor._SynchronousQueue();                                  // 53
-                                                                                 // 54
-// updateVersions can only be called after the server has fully loaded.          // 55
-var updateVersions = function (shouldReloadClientProgram) {                      // 56
-  // Step 1: load the current client program on the server and update the        // 57
-  // hash values in __meteor_runtime_config__.                                   // 58
-  if (shouldReloadClientProgram) {                                               // 59
-    WebAppInternals.reloadClientPrograms();                                      // 60
-  }                                                                              // 61
-                                                                                 // 62
-  // If we just re-read the client program, or if we don't have an autoupdate    // 63
-  // version, calculate it.                                                      // 64
-  if (shouldReloadClientProgram || Autoupdate.autoupdateVersion === null) {      // 65
-    Autoupdate.autoupdateVersion =                                               // 66
-      process.env.AUTOUPDATE_VERSION ||                                          // 67
-      WebApp.calculateClientHashNonRefreshable();                                // 68
-  }                                                                              // 69
-  // If we just recalculated it OR if it was set by (eg) test-in-browser,        // 70
-  // ensure it ends up in __meteor_runtime_config__.                             // 71
-  __meteor_runtime_config__.autoupdateVersion =                                  // 72
-    Autoupdate.autoupdateVersion;                                                // 73
-                                                                                 // 74
-  Autoupdate.autoupdateVersionRefreshable =                                      // 75
-    __meteor_runtime_config__.autoupdateVersionRefreshable =                     // 76
-      process.env.AUTOUPDATE_VERSION ||                                          // 77
-      WebApp.calculateClientHashRefreshable();                                   // 78
-                                                                                 // 79
-    Autoupdate.autoupdateVersionCordova =                                        // 80
-      __meteor_runtime_config__.autoupdateVersionCordova =                       // 81
-        process.env.AUTOUPDATE_VERSION ||                                        // 82
-        WebApp.calculateClientHashCordova();                                     // 83
-                                                                                 // 84
-  // Step 2: form the new client boilerplate which contains the updated          // 85
-  // assets and __meteor_runtime_config__.                                       // 86
-  if (shouldReloadClientProgram) {                                               // 87
-    WebAppInternals.generateBoilerplate();                                       // 88
-  }                                                                              // 89
-                                                                                 // 90
-  // XXX COMPAT WITH 0.8.3                                                       // 91
-  if (! ClientVersions.findOne({current: true})) {                               // 92
-    // To ensure apps with version of Meteor prior to 0.9.0 (in                  // 93
-    // which the structure of documents in `ClientVersions` was                  // 94
-    // different) also reload.                                                   // 95
-    ClientVersions.insert({current: true});                                      // 96
-  }                                                                              // 97
-                                                                                 // 98
-  if (! ClientVersions.findOne({_id: "version"})) {                              // 99
-    ClientVersions.insert({                                                      // 100
-      _id: "version",                                                            // 101
-      version: Autoupdate.autoupdateVersion                                      // 102
-    });                                                                          // 103
-  } else {                                                                       // 104
-    ClientVersions.update("version", { $set: {                                   // 105
-      version: Autoupdate.autoupdateVersion                                      // 106
-    }});                                                                         // 107
-  }                                                                              // 108
-                                                                                 // 109
-  if (! ClientVersions.findOne({_id: "version-refreshable"})) {                  // 110
-    ClientVersions.insert({                                                      // 111
-      _id: "version-refreshable",                                                // 112
-      version: Autoupdate.autoupdateVersionRefreshable,                          // 113
-      assets: WebAppInternals.refreshableAssets                                  // 114
-    });                                                                          // 115
-  } else {                                                                       // 116
-    ClientVersions.update("version-refreshable", { $set: {                       // 117
-      version: Autoupdate.autoupdateVersionRefreshable,                          // 118
-      assets: WebAppInternals.refreshableAssets                                  // 119
-      }});                                                                       // 120
-  }                                                                              // 121
-                                                                                 // 122
-  if (! ClientVersions.findOne({_id: "version-cordova"})) {                      // 123
-    ClientVersions.insert({                                                      // 124
-      _id: "version-cordova",                                                    // 125
-      version: Autoupdate.autoupdateVersionCordova,                              // 126
-      refreshable: false                                                         // 127
-    });                                                                          // 128
-  } else {                                                                       // 129
-    ClientVersions.update("version-cordova", { $set: {                           // 130
-      version: Autoupdate.autoupdateVersionCordova                               // 131
-    }});                                                                         // 132
-  }                                                                              // 133
-};                                                                               // 134
-                                                                                 // 135
-Meteor.publish(                                                                  // 136
-  "meteor_autoupdate_clientVersions",                                            // 137
-  function () {                                                                  // 138
-    return ClientVersions.find();                                                // 139
-  },                                                                             // 140
-  {is_auto: true}                                                                // 141
-);                                                                               // 142
-                                                                                 // 143
-Meteor.startup(function () {                                                     // 144
-  updateVersions(false);                                                         // 145
-});                                                                              // 146
-                                                                                 // 147
-var fut = new Future();                                                          // 148
+Autoupdate.appId = __meteor_runtime_config__.appId = process.env.APP_ID;         // 52
+                                                                                 // 53
+var syncQueue = new Meteor._SynchronousQueue();                                  // 54
+                                                                                 // 55
+// updateVersions can only be called after the server has fully loaded.          // 56
+var updateVersions = function (shouldReloadClientProgram) {                      // 57
+  // Step 1: load the current client program on the server and update the        // 58
+  // hash values in __meteor_runtime_config__.                                   // 59
+  if (shouldReloadClientProgram) {                                               // 60
+    WebAppInternals.reloadClientPrograms();                                      // 61
+  }                                                                              // 62
+                                                                                 // 63
+  // If we just re-read the client program, or if we don't have an autoupdate    // 64
+  // version, calculate it.                                                      // 65
+  if (shouldReloadClientProgram || Autoupdate.autoupdateVersion === null) {      // 66
+    Autoupdate.autoupdateVersion =                                               // 67
+      process.env.AUTOUPDATE_VERSION ||                                          // 68
+      WebApp.calculateClientHashNonRefreshable();                                // 69
+  }                                                                              // 70
+  // If we just recalculated it OR if it was set by (eg) test-in-browser,        // 71
+  // ensure it ends up in __meteor_runtime_config__.                             // 72
+  __meteor_runtime_config__.autoupdateVersion =                                  // 73
+    Autoupdate.autoupdateVersion;                                                // 74
+                                                                                 // 75
+  Autoupdate.autoupdateVersionRefreshable =                                      // 76
+    __meteor_runtime_config__.autoupdateVersionRefreshable =                     // 77
+      process.env.AUTOUPDATE_VERSION ||                                          // 78
+      WebApp.calculateClientHashRefreshable();                                   // 79
+                                                                                 // 80
+  Autoupdate.autoupdateVersionCordova =                                          // 81
+    __meteor_runtime_config__.autoupdateVersionCordova =                         // 82
+      process.env.AUTOUPDATE_VERSION ||                                          // 83
+      WebApp.calculateClientHashCordova();                                       // 84
+                                                                                 // 85
+  // Step 2: form the new client boilerplate which contains the updated          // 86
+  // assets and __meteor_runtime_config__.                                       // 87
+  if (shouldReloadClientProgram) {                                               // 88
+    WebAppInternals.generateBoilerplate();                                       // 89
+  }                                                                              // 90
+                                                                                 // 91
+  // XXX COMPAT WITH 0.8.3                                                       // 92
+  if (! ClientVersions.findOne({current: true})) {                               // 93
+    // To ensure apps with version of Meteor prior to 0.9.0 (in                  // 94
+    // which the structure of documents in `ClientVersions` was                  // 95
+    // different) also reload.                                                   // 96
+    ClientVersions.insert({current: true});                                      // 97
+  }                                                                              // 98
+                                                                                 // 99
+  if (! ClientVersions.findOne({_id: "version"})) {                              // 100
+    ClientVersions.insert({                                                      // 101
+      _id: "version",                                                            // 102
+      version: Autoupdate.autoupdateVersion                                      // 103
+    });                                                                          // 104
+  } else {                                                                       // 105
+    ClientVersions.update("version", { $set: {                                   // 106
+      version: Autoupdate.autoupdateVersion                                      // 107
+    }});                                                                         // 108
+  }                                                                              // 109
+                                                                                 // 110
+  if (! ClientVersions.findOne({_id: "version-refreshable"})) {                  // 111
+    ClientVersions.insert({                                                      // 112
+      _id: "version-refreshable",                                                // 113
+      version: Autoupdate.autoupdateVersionRefreshable,                          // 114
+      assets: WebAppInternals.refreshableAssets                                  // 115
+    });                                                                          // 116
+  } else {                                                                       // 117
+    ClientVersions.update("version-refreshable", { $set: {                       // 118
+      version: Autoupdate.autoupdateVersionRefreshable,                          // 119
+      assets: WebAppInternals.refreshableAssets                                  // 120
+      }});                                                                       // 121
+  }                                                                              // 122
+                                                                                 // 123
+  if (! ClientVersions.findOne({_id: "version-cordova"})) {                      // 124
+    ClientVersions.insert({                                                      // 125
+      _id: "version-cordova",                                                    // 126
+      version: Autoupdate.autoupdateVersionCordova,                              // 127
+      refreshable: false                                                         // 128
+    });                                                                          // 129
+  } else {                                                                       // 130
+    ClientVersions.update("version-cordova", { $set: {                           // 131
+      version: Autoupdate.autoupdateVersionCordova                               // 132
+    }});                                                                         // 133
+  }                                                                              // 134
+};                                                                               // 135
+                                                                                 // 136
+Meteor.publish(                                                                  // 137
+  "meteor_autoupdate_clientVersions",                                            // 138
+  function (appId) {                                                             // 139
+    // `null` happens when a client doesn't have an appId and passes             // 140
+    // `undefined` to `Meteor.subscribe`. `undefined` is translated to           // 141
+    // `null` as JSON doesn't have `undefined.                                   // 142
+    check(appId, Match.OneOf(String, undefined, null));                          // 143
+                                                                                 // 144
+    // Don't notify clients using wrong appId such as mobile apps built with a   // 145
+    // different server but pointing at the same local url                       // 146
+    if (Autoupdate.appId && appId && Autoupdate.appId !== appId)                 // 147
+      return [];                                                                 // 148
                                                                                  // 149
-// We only want SIGUSR2 to trigger 'updateVersions' AFTER onListen,              // 150
-// so we add a queued task that waits for onListen before SIGUSR2 can queue      // 151
-// tasks. Note that the `onListening` callbacks do not fire until after          // 152
-// Meteor.startup, so there is no concern that the 'updateVersions' calls        // 153
-// from SIGUSR2 will overlap with the `updateVersions` call from Meteor.startup. // 154
-                                                                                 // 155
-syncQueue.queueTask(function () {                                                // 156
-  fut.wait();                                                                    // 157
-});                                                                              // 158
-                                                                                 // 159
-WebApp.onListening(function () {                                                 // 160
-  fut.return();                                                                  // 161
-});                                                                              // 162
-                                                                                 // 163
-// Listen for SIGUSR2, which signals that a client asset has changed.            // 164
-process.on('SIGUSR2', Meteor.bindEnvironment(function () {                       // 165
-  syncQueue.queueTask(function () {                                              // 166
-    updateVersions(true);                                                        // 167
-  });                                                                            // 168
-}));                                                                             // 169
+    return ClientVersions.find();                                                // 150
+  },                                                                             // 151
+  {is_auto: true}                                                                // 152
+);                                                                               // 153
+                                                                                 // 154
+Meteor.startup(function () {                                                     // 155
+  updateVersions(false);                                                         // 156
+});                                                                              // 157
+                                                                                 // 158
+var fut = new Future();                                                          // 159
+                                                                                 // 160
+// We only want SIGUSR2 to trigger 'updateVersions' AFTER onListen,              // 161
+// so we add a queued task that waits for onListen before SIGUSR2 can queue      // 162
+// tasks. Note that the `onListening` callbacks do not fire until after          // 163
+// Meteor.startup, so there is no concern that the 'updateVersions' calls        // 164
+// from SIGUSR2 will overlap with the `updateVersions` call from Meteor.startup. // 165
+                                                                                 // 166
+syncQueue.queueTask(function () {                                                // 167
+  fut.wait();                                                                    // 168
+});                                                                              // 169
                                                                                  // 170
+WebApp.onListening(function () {                                                 // 171
+  fut.return();                                                                  // 172
+});                                                                              // 173
+                                                                                 // 174
+// Listen for SIGUSR2, which signals that a client asset has changed.            // 175
+process.on('SIGUSR2', Meteor.bindEnvironment(function () {                       // 176
+  syncQueue.queueTask(function () {                                              // 177
+    updateVersions(true);                                                        // 178
+  });                                                                            // 179
+}));                                                                             // 180
+                                                                                 // 181
 ///////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -204,3 +215,5 @@ Package.autoupdate = {
 };
 
 })();
+
+//# sourceMappingURL=autoupdate.js.map

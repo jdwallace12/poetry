@@ -14,7 +14,7 @@ var MongoInternals = Package.mongo.MongoInternals;
 var Mongo = Package.mongo.Mongo;
 
 /* Package-scope variables */
-var Accounts, EXPIRE_TOKENS_INTERVAL_MS, CONNECTION_CLOSE_DELAY_MS, getTokenLifetimeMs, maybeStopExpireTokensInterval;
+var Accounts, AccountsTest, EXPIRE_TOKENS_INTERVAL_MS, CONNECTION_CLOSE_DELAY_MS, getTokenLifetimeMs, maybeStopExpireTokensInterval;
 
 (function () {
 
@@ -1649,7 +1649,10 @@ Accounts.urls.enrollAccount = function (token) {                                
 /* Exports */
 if (typeof Package === 'undefined') Package = {};
 Package['accounts-base'] = {
-  Accounts: Accounts
+  Accounts: Accounts,
+  AccountsTest: AccountsTest
 };
 
 })();
+
+//# sourceMappingURL=accounts-base.js.map

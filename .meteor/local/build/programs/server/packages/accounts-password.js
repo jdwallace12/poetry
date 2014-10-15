@@ -862,3 +862,5 @@ if (typeof Package === 'undefined') Package = {};
 Package['accounts-password'] = {};
 
 })();
+
+//# sourceMappingURL=accounts-password.js.map
