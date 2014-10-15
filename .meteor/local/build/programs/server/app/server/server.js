@@ -11,7 +11,10 @@
   'set_position': function(magnetId, position) {
     console.log(position)
     Magnets.update(magnetId, {$set: {top: position.top, left: position.left}});
-  }
+  },
+  removeAllMessages: function () {
+                return Messages.remove({});
+            }
 
 });
 

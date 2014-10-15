@@ -24,6 +24,13 @@ if (Meteor.isClient) {
         }
     });
 
+
+       Template.input.events({
+        'click #delete_chat': function(messages) {
+          Meteor.call('removeAllMessages');
+        }
+    });
+
     Meteor.autorun(function() {
         Meteor.subscribe("Messages");
     });
