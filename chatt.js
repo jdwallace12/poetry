@@ -53,7 +53,7 @@ if (Meteor.isClient) {
             }
             if (id) {
                 $('#newMessage').val('');
-                $('.chat-room-message-wrap:first-child').effect('highlight');
+                $('.chat-room-message-wrap:first-child').effect('highlight', {color: "#f1c40f;"}, 1000);
             }
         });
     };

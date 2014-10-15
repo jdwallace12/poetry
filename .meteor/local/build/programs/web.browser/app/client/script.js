@@ -36,6 +36,7 @@
 
     $('.footer-open').on('click', function(){
         $('#footer').toggle();
+        $('#name_of_word').focus();
     });
 
     // var KEYCODE_ENTER = 13;

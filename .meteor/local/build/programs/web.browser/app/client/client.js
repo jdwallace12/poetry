@@ -32,8 +32,9 @@ Template.wordForm.events = {
         Magnets.insert({
             name: tmpl.find("#name_of_word").value,
             top: Math.floor(Random.fraction() * 100) * 7,
-            left: Math.floor(Random.fraction() * 100) * 8
+            left: Math.floor(Random.fraction() * 100) * 8           
         });
+         $('.magnet:first-child').effect('highlight', {color: "#f1c40f;"}, 2000);
         $("#name_of_word").val("");
     }
 };
