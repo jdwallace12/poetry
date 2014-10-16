@@ -27,6 +27,9 @@ if (Meteor.isClient) {
     Template.input.userCount = function () {
     return Meteor.users.find().count();
 };
+        Template.input.magnetCount = function () {
+    return Magnets.find().count();
+};
 
 
     Template.input.events({
