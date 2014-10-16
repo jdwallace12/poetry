@@ -1,6 +1,7 @@
 /* Imports for global scope */
 
 Email = Package.email.Email;
+ServiceConfiguration = Package['service-configuration'].ServiceConfiguration;
 Accounts = Package['accounts-base'].Accounts;
 Meteor = Package.meteor.Meteor;
 WebApp = Package.webapp.WebApp;

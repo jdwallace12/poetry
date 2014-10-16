@@ -274,9 +274,74 @@
       "path": "packages/accounts-password.js"
     },
     {
+      "sourceMap": "packages/service-configuration.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/service-configuration.js"
+    },
+    {
+      "sourceMap": "packages/localstorage.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/localstorage.js"
+    },
+    {
+      "sourceMap": "packages/url.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/url.js"
+    },
+    {
+      "sourceMap": "packages/oauth.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/oauth.js",
+      "assets": {
+        "end_of_popup_response.html": "assets/packages/oauth/end_of_popup_response.html",
+        "end_of_redirect_response.html": "assets/packages/oauth/end_of_redirect_response.html"
+      }
+    },
+    {
+      "sourceMap": "packages/accounts-oauth.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/accounts-oauth.js"
+    },
+    {
+      "node_modules": "npm/http/node_modules",
+      "sourceMap": "packages/http.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/http.js"
+    },
+    {
+      "sourceMap": "packages/oauth1.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/oauth1.js"
+    },
+    {
+      "sourceMap": "packages/twitter.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/twitter.js"
+    },
+    {
+      "sourceMap": "packages/accounts-twitter.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/accounts-twitter.js"
+    },
+    {
       "sourceMap": "packages/accounts-ui.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/accounts-ui.js"
+    },
+    {
+      "sourceMap": "packages/oauth2.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/oauth2.js"
+    },
+    {
+      "sourceMap": "packages/facebook.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/facebook.js"
+    },
+    {
+      "sourceMap": "packages/accounts-facebook.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/accounts-facebook.js"
     },
     {
       "sourceMap": "packages/reload.js.map",
@@ -314,11 +379,6 @@
     },
     {
       "path": "app/poetry.js"
-    },
-    {
-      "sourceMap": "packages/service-configuration.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/service-configuration.js"
     }
   ]
 }

@@ -155,3 +155,15 @@ input:focus, textarea:focus {
 .message-text {
     display: inline;
 }
+
+.break-word {
+    -ms-word-break: break-all;
+     word-break: break-all;
+
+     // Non standard for webkit
+     word-break: break-word;
+
+-webkit-hyphens: auto;
+   -moz-hyphens: auto;
+        hyphens: auto;
+}

@@ -3,6 +3,7 @@
 $ = Package.jquery.$;
 jQuery = Package.jquery.jQuery;
 d3 = Package.d3.d3;
+ServiceConfiguration = Package['service-configuration'].ServiceConfiguration;
 Accounts = Package['accounts-base'].Accounts;
 Meteor = Package.meteor.Meteor;
 WebApp = Package.webapp.WebApp;

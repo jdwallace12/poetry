@@ -69,7 +69,13 @@ Template["wordForm"] = new Template("Template.wordForm", (function() {
 Template.__checkName("input");
 Template["input"] = new Template("Template.input", (function() {
   var view = this;
-  return HTML.Raw('<div id="input" class="well" style="margin-top: -17px;">\n        <strong>Your message</strong>\n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:90%;">\n        <a class="btn btn-primary" type="button" id="send">Send</a> \n        <a class="btn btn-danger" style="margin-top: -10px;" type="button" id="delete_chat">Clear Chat</a>          \n    </div>');
+  return HTML.DIV({
+    id: "input",
+    "class": "well",
+    style: "margin-top: -17px;"
+  }, HTML.Raw('\n        <strong>Your message</strong>  \n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:90%;">\n        <a class="btn btn-primary" type="button" id="send">Send</a> \n        <a class="btn btn-danger" style="margin-top: -10px;" type="button" id="delete_chat">Clear Chat</a>   \n        '), HTML.DIV({
+    "class": "logout"
+  }, "\n        ", Spacebars.include(view.lookupTemplate("loginButtons")), " \n    "), "\n    ");
 }));
 
 Template.__checkName("messages");
@@ -77,10 +83,14 @@ Template["messages"] = new Template("Template.messages", (function() {
   var view = this;
   return HTML.DIV({
     id: "messages"
-  }, "\n        ", Blaze.Each(function() {
-    return Spacebars.call(view.lookup("messages"));
+  }, "\n          ", Blaze.If(function() {
+    return Spacebars.call(view.lookup("currentUser"));
   }, function() {
-    return [ " \n        ", Spacebars.include(view.lookupTemplate("message")), " \n        " ];
+    return [ "\n        ", Blaze.Each(function() {
+      return Spacebars.call(view.lookup("messages"));
+    }, function() {
+      return [ " \n        ", Spacebars.include(view.lookupTemplate("message")), " \n        " ];
+    }), "\n        " ];
   }), "\n    ");
 }));
 
@@ -89,15 +99,37 @@ Template["message"] = new Template("Template.message", (function() {
   var view = this;
   return HTML.DIV({
     "class": "chat-room-message-wrap"
-  }, "\n       ", HTML.P({
+  }, "\n        ", HTML.TABLE("\n         ", HTML.TR("  \n         ", HTML.TD({
+    style: "max-width: 55px; min-width: 55px;"
+  }, " \n        ", Blaze.If(function() {
+    return Spacebars.call(Spacebars.dot(view.lookup("user"), "services", "twitter"));
+  }, function() {
+    return [ "\n        ", HTML.IMG({
+      src: function() {
+        return Spacebars.mustache(Spacebars.dot(view.lookup("user"), "services", "twitter", "profile_image_url"));
+      }
+    }), "\n        " ];
+  }), " \n        ", Blaze.If(function() {
+    return Spacebars.call(Spacebars.dot(view.lookup("user"), "services", "facebook"));
+  }, function() {
+    return [ "\n        ", HTML.IMG({
+      src: function() {
+        return [ "http://graph.facebook.com/", Spacebars.mustache(Spacebars.dot(view.lookup("user"), "services", "facebook", "id")), "/picture" ];
+      }
+    }), "\n        " ];
+  }), "\n         "), "\n         ", HTML.TD({
+    "class": "break-word"
+  }, "\n        ", HTML.P({
     "class": "message-text"
-  }, " ", HTML.STRONG(Blaze.View(function() {
+  }, "\n            ", HTML.STRONG(Blaze.View(function() {
     return Spacebars.mustache(Spacebars.dot(view.lookup("user"), "username"));
-  }), ":")), " ", HTML.P({
+  }), Blaze.View(function() {
+    return Spacebars.mustache(Spacebars.dot(view.lookup("user"), "profile", "name"));
+  }), ":"), "\n        "), "\n        ", HTML.P({
     "class": "message-text"
   }, Blaze.View(function() {
     return Spacebars.mustache(view.lookup("message"));
-  })), "\n    ");
+  })), "\n        "), "\n        "), "\n    "), "\n    ");
 }));
 
 })();
