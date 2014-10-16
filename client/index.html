@@ -96,22 +96,25 @@
 <template name="message">
     <div class="chat-room-message-wrap">
         <table>
-         <tr>  
-         <td style="max-width: 55px; min-width: 55px;"> 
-        {{#if user.services.twitter}}
-        <img src="{{user.services.twitter.profile_image_url}}" />
-        {{/if}} 
-        {{#if user.services.facebook}}
-        <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" />
-        {{/if}}
-         </td>
-         <td class="break-word">
-        <p class="message-text">
-            <strong>{{user.username}}{{user.profile.name}}:</strong>
-        </p>
-        <p class="message-text">{{message}}</p>
-        </td>
-        </tr>
-    </table>
+            <tr>
+                <td style="max-width: 50px; min-width: 50px;">
+                    {{#if user.services.twitter}}
+                    <img src="{{user.services.twitter.profile_image_url}}" />
+                    {{else}} 
+                        {{#if user.services.facebook}}
+                        <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" />
+                        {{else}}
+                        <img src="http://www.gravatar.com/avatar" />
+                        {{/if}} 
+                    {{/if}}
+                </td>
+                <td class="break-word" style="padding-left:5px;">
+                    <p class="message-text">
+                        <strong>{{user.username}}{{user.profile.name}}:</strong>
+                    </p>
+                    <p class="message-text">{{message}}</p>
+                </td>
+            </tr>
+        </table>
     </div>
 </template>

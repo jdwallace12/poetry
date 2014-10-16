@@ -99,37 +99,44 @@ Template["message"] = new Template("Template.message", (function() {
   var view = this;
   return HTML.DIV({
     "class": "chat-room-message-wrap"
-  }, "\n        ", HTML.TABLE("\n         ", HTML.TR("  \n         ", HTML.TD({
-    style: "max-width: 55px; min-width: 55px;"
-  }, " \n        ", Blaze.If(function() {
+  }, "\n        ", HTML.TABLE("\n            ", HTML.TR("\n                ", HTML.TD({
+    style: "max-width: 50px; min-width: 50px;"
+  }, "\n                    ", Blaze.If(function() {
     return Spacebars.call(Spacebars.dot(view.lookup("user"), "services", "twitter"));
   }, function() {
-    return [ "\n        ", HTML.IMG({
+    return [ "\n                    ", HTML.IMG({
       src: function() {
         return Spacebars.mustache(Spacebars.dot(view.lookup("user"), "services", "twitter", "profile_image_url"));
       }
-    }), "\n        " ];
-  }), " \n        ", Blaze.If(function() {
-    return Spacebars.call(Spacebars.dot(view.lookup("user"), "services", "facebook"));
+    }), "\n                    " ];
   }, function() {
-    return [ "\n        ", HTML.IMG({
-      src: function() {
-        return [ "http://graph.facebook.com/", Spacebars.mustache(Spacebars.dot(view.lookup("user"), "services", "facebook", "id")), "/picture" ];
-      }
-    }), "\n        " ];
-  }), "\n         "), "\n         ", HTML.TD({
-    "class": "break-word"
-  }, "\n        ", HTML.P({
+    return [ " \n                        ", Blaze.If(function() {
+      return Spacebars.call(Spacebars.dot(view.lookup("user"), "services", "facebook"));
+    }, function() {
+      return [ "\n                        ", HTML.IMG({
+        src: function() {
+          return [ "http://graph.facebook.com/", Spacebars.mustache(Spacebars.dot(view.lookup("user"), "services", "facebook", "id")), "/picture" ];
+        }
+      }), "\n                        " ];
+    }, function() {
+      return [ "\n                        ", HTML.IMG({
+        src: "http://www.gravatar.com/avatar"
+      }), "\n                        " ];
+    }), " \n                    " ];
+  }), "\n                "), "\n                ", HTML.TD({
+    "class": "break-word",
+    style: "padding-left:5px;"
+  }, "\n                    ", HTML.P({
     "class": "message-text"
-  }, "\n            ", HTML.STRONG(Blaze.View(function() {
+  }, "\n                        ", HTML.STRONG(Blaze.View(function() {
     return Spacebars.mustache(Spacebars.dot(view.lookup("user"), "username"));
   }), Blaze.View(function() {
     return Spacebars.mustache(Spacebars.dot(view.lookup("user"), "profile", "name"));
-  }), ":"), "\n        "), "\n        ", HTML.P({
+  }), ":"), "\n                    "), "\n                    ", HTML.P({
     "class": "message-text"
   }, Blaze.View(function() {
     return Spacebars.mustache(view.lookup("message"));
-  })), "\n        "), "\n        "), "\n    "), "\n    ");
+  })), "\n                "), "\n            "), "\n        "), "\n    ");
 }));
 
 })();
