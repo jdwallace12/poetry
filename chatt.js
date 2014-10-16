@@ -24,6 +24,10 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.input.userCount = function () {
+    return Meteor.users.find().count();
+};
+
 
     Template.input.events({
         'click #delete_chat': function(messages) {

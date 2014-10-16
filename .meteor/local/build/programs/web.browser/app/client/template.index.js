@@ -73,7 +73,9 @@ Template["input"] = new Template("Template.input", (function() {
     id: "input",
     "class": "well",
     style: "margin-top: -17px;"
-  }, HTML.Raw('\n        <strong>Your message</strong>  \n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:90%;">\n        <a class="btn btn-primary" type="button" id="send">Send</a> \n        <a class="btn btn-danger" style="margin-top: -10px;" type="button" id="delete_chat">Clear Chat</a>   \n        '), HTML.DIV({
+  }, HTML.Raw('\n        <strong>Your message</strong>  \n        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:90%;">\n        <a class="btn btn-primary" type="button" id="send">Send</a> \n        <a class="btn btn-danger" style="margin-top: -10px;" type="button" id="delete_chat">Clear Chat</a>  \n        '), HTML.P(HTML.STRONG(Blaze.View(function() {
+    return Spacebars.mustache(view.lookup("userCount"));
+  })), " registered users"), " \n        ", HTML.DIV({
     "class": "logout"
   }, "\n        ", Spacebars.include(view.lookupTemplate("loginButtons")), " \n    "), "\n    ");
 }));

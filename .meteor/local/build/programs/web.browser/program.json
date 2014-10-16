@@ -697,9 +697,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?18404f8006dcf7a8e842c395ad0556a2a4e5d936",
-      "size": 6508,
-      "hash": "18404f8006dcf7a8e842c395ad0556a2a4e5d936"
+      "url": "/client/template.index.js?05395bb9a4d9df501beabae6ef2612bf1df9c319",
+      "size": 6651,
+      "hash": "05395bb9a4d9df501beabae6ef2612bf1df9c319"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -742,9 +742,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/chatt.js?a090023380c1dc2391c1c8add76b9312f2bbd884",
-      "size": 1890,
-      "hash": "a090023380c1dc2391c1c8add76b9312f2bbd884"
+      "url": "/chatt.js?70a5b3ff20864cb8b4845958b6a65204c01cdf7f",
+      "size": 1979,
+      "hash": "70a5b3ff20864cb8b4845958b6a65204c01cdf7f"
     },
     {
       "path": "app/poetry.js",
