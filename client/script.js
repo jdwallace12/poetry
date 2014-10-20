@@ -1,16 +1,29 @@
 $(document).ready(function() {
     $('.chat-wrap').hide();
     $('.chat-open').show();
+     $('#close_chat').hide();
+ 
+
+    $('.chat-open').on('click', function() {
+        $('.footer-open').hide();
+         $('#close_chat').show();
+        $('.chat-open').hide();
+        $('.chat-wrap').show();
+        $('#newMessage').focus();
+    });
+
+    if ($('.chat-wrap').is(':visible')){
+        $('#close_chat').show(); 
+    }
+    else {
+        $('#close_chat').hide();
+    }
+
     $('#close_chat').on('click', function() {
         $('.chat-wrap').hide();
         $('.chat-open').show();
         $('.footer-open').show();
-    });
-    $('.chat-open').on('click', function() {
-        $('.footer-open').hide();
-        $('.chat-open').hide();
-        $('.chat-wrap').show();
-        $('#newMessage').focus();
+        $('#close_chat').hide();
     });
 
     // closes modal when escape key is pressed
@@ -48,14 +61,15 @@ $(document).ready(function() {
     // });
 
 
-    // $(document).mouseup(function(e) {
-    //     var container = $(".chat-wrap");
+    $(document).mouseup(function(e) {
+        var container = $(".chat-wrap");
 
-    //     if (!container.is(e.target) // if the target of the click isn't the container...
-    //         && container.has(e.target).length === 0) // ... nor a descendant of the container
-    //     {
-    //         container.hide();
-    //         $('.chat-open').show();
-    //     }
-    // });
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            container.hide();
+            $('.chat-open').show();
+             $('.footer-open').show();
+        }
+    });
 });

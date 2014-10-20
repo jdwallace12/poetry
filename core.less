@@ -147,10 +147,19 @@ input:focus, textarea:focus {
 .signin {
     position: fixed;
     top:0;
-    left:75%;
+    left:0%;
     z-index: 9999;
-    font-size: 18px;
+    background: #9b59b6;
+    border-bottom: 5px solid #8e44ad;
+    padding:8px 10px;
+    a {
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none!important;
+    position: relative;
+    top: -10px;
 
+}
 }
 .message-text {
     display: inline;
@@ -166,4 +175,9 @@ input:focus, textarea:focus {
 -webkit-hyphens: auto;
    -moz-hyphens: auto;
         hyphens: auto;
+}
+
+#close_chat {
+    cursor: pointer;
+    display: none!important;
 }

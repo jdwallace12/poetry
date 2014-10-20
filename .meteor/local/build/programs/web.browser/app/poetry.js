@@ -4,6 +4,8 @@
 //Application.update('id', {$inc: {votes}});
 
 if (Meteor.isClient) {
+
+
     UI.body.events({
         'click #delete': function(e) {
             e.preventDefault();
@@ -11,9 +13,6 @@ if (Meteor.isClient) {
                 Meteor.call('removeAllMagnets');
             }
         }
-    });
-          $('#close_chat').on('click', function(){
-        ('.chat-wrap').hide();
     });
 }
 
