@@ -63,7 +63,7 @@ Accounts.ui._options = {                                                        
  * @param {Object} options                                                                                             // 19
  * @param {Object} options.requestPermissions Which [permissions](#requestpermissions) to request from the user for each external service.
  * @param {Object} options.requestOfflineToken To ask the user for permission to act on their behalf when offline, map the relevant external service to `true`. Currently only supported with Google. See [Meteor.loginWithExternalService](#meteor_loginwithexternalservice) for more details.
- * @param {Boolean} options.forceApprovalPrompt If true, forces the user to approve the app's permissions, even if previously approved. Currently only supported with Google.
+ * @param {Object} options.forceApprovalPrompt If true, forces the user to approve the app's permissions, even if previously approved. Currently only supported with Google.
  * @param {String} options.passwordSignupFields Which fields to display in the user creation form. One of '`USERNAME_AND_EMAIL`', '`USERNAME_AND_OPTIONAL_EMAIL`', '`USERNAME_ONLY`', or '`EMAIL_ONLY`' (default).
  */                                                                                                                    // 24
 Accounts.ui.config = function(options) {                                                                               // 25
@@ -631,7 +631,7 @@ Template["_loginButtonsChangePassword"] = new Template("Template._loginButtonsCh
                                                                                                                        // 1
 Template.body.addContent((function() {                                                                                 // 2
   var view = this;                                                                                                     // 3
-  return [ Spacebars.include(view.lookupTemplate("_resetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justResetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_enrollAccountDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justVerifiedEmailDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_configureLoginServiceDialog")), HTML.Raw("\n\n  <!-- if we're not showing a dropdown, we need some other place to show messages -->\n  "), Spacebars.include(view.lookupTemplate("_loginButtonsMessagesDialog")) ];
+  return [ Spacebars.include(view.lookupTemplate("_resetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justResetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_enrollAccountDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justVerifiedEmailDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_configureLoginServiceDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_configureLoginOnDesktopDialog")), HTML.Raw("\n\n  <!-- if we're not showing a dropdown, we need some other place to show messages -->\n  "), Spacebars.include(view.lookupTemplate("_loginButtonsMessagesDialog")) ];
 }));                                                                                                                   // 5
 Meteor.startup(Template.body.renderToDocument);                                                                        // 6
                                                                                                                        // 7
@@ -784,44 +784,63 @@ Template["_configureLoginServiceDialog"] = new Template("Template._configureLogi
       value: "redirect"                                                                                                // 154
     }), "\n        ", HTML.LABEL({                                                                                     // 155
       "for": "configure-login-service-dialog-redirectBasedLogin"                                                       // 156
-    }, "Redirect-based login (special cases such as using a UIWebView)"), "\n      "), "\n      ", HTML.DIV({          // 157
-      "class": "new-section"                                                                                           // 158
-    }, "\n        ", HTML.DIV({                                                                                        // 159
-      "class": "login-button configure-login-service-dismiss-button"                                                   // 160
-    }, "\n          I'll do this later\n        "), "\n        ", HTML.A({                                             // 161
-      "class": "accounts-close configure-login-service-dismiss-button"                                                 // 162
-    }, HTML.CharRef({                                                                                                  // 163
-      html: "&times;",                                                                                                 // 164
-      str: "×"                                                                                                         // 165
-    })), "\n\n        ", HTML.DIV({                                                                                    // 166
-      "class": function() {                                                                                            // 167
-        return [ "login-button login-button-configure ", Blaze.If(function() {                                         // 168
-          return Spacebars.call(view.lookup("saveDisabled"));                                                          // 169
-        }, function() {                                                                                                // 170
-          return "login-button-disabled";                                                                              // 171
-        }) ];                                                                                                          // 172
-      },                                                                                                               // 173
-      id: "configure-login-service-dialog-save-configuration"                                                          // 174
-    }, "\n          Save Configuration\n        "), "\n      "), "\n    "), "\n  " ];                                  // 175
-  });                                                                                                                  // 176
-}));                                                                                                                   // 177
-                                                                                                                       // 178
-Template.__checkName("_loginButtonsMessagesDialog");                                                                   // 179
-Template["_loginButtonsMessagesDialog"] = new Template("Template._loginButtonsMessagesDialog", (function() {           // 180
-  var view = this;                                                                                                     // 181
-  return Blaze.If(function() {                                                                                         // 182
-    return Spacebars.call(view.lookup("visible"));                                                                     // 183
-  }, function() {                                                                                                      // 184
-    return [ "\n    ", HTML.DIV({                                                                                      // 185
-      "class": "accounts-dialog accounts-centered-dialog",                                                             // 186
-      id: "login-buttons-message-dialog"                                                                               // 187
-    }, "\n      ", Spacebars.include(view.lookupTemplate("_loginButtonsMessages")), "\n      ", HTML.DIV({             // 188
-      "class": "login-button",                                                                                         // 189
-      id: "messages-dialog-dismiss-button"                                                                             // 190
-    }, "Dismiss"), "\n    "), "\n  " ];                                                                                // 191
-  });                                                                                                                  // 192
-}));                                                                                                                   // 193
-                                                                                                                       // 194
+    }, "\n          Redirect-based login (special cases explained\n          ", HTML.A({                               // 157
+      href: "https://github.com/meteor/meteor/wiki/OAuth-for-mobile-Meteor-clients#popup-versus-redirect-flow",        // 158
+      target: "_blank"                                                                                                 // 159
+    }, "here"), ")\n        "), "\n      "), "\n      ", HTML.DIV({                                                    // 160
+      "class": "new-section"                                                                                           // 161
+    }, "\n        ", HTML.DIV({                                                                                        // 162
+      "class": "login-button configure-login-service-dismiss-button"                                                   // 163
+    }, "\n          I'll do this later\n        "), "\n        ", HTML.A({                                             // 164
+      "class": "accounts-close configure-login-service-dismiss-button"                                                 // 165
+    }, HTML.CharRef({                                                                                                  // 166
+      html: "&times;",                                                                                                 // 167
+      str: "×"                                                                                                         // 168
+    })), "\n\n        ", HTML.DIV({                                                                                    // 169
+      "class": function() {                                                                                            // 170
+        return [ "login-button login-button-configure ", Blaze.If(function() {                                         // 171
+          return Spacebars.call(view.lookup("saveDisabled"));                                                          // 172
+        }, function() {                                                                                                // 173
+          return "login-button-disabled";                                                                              // 174
+        }) ];                                                                                                          // 175
+      },                                                                                                               // 176
+      id: "configure-login-service-dialog-save-configuration"                                                          // 177
+    }, "\n          Save Configuration\n        "), "\n      "), "\n    "), "\n  " ];                                  // 178
+  });                                                                                                                  // 179
+}));                                                                                                                   // 180
+                                                                                                                       // 181
+Template.__checkName("_loginButtonsMessagesDialog");                                                                   // 182
+Template["_loginButtonsMessagesDialog"] = new Template("Template._loginButtonsMessagesDialog", (function() {           // 183
+  var view = this;                                                                                                     // 184
+  return Blaze.If(function() {                                                                                         // 185
+    return Spacebars.call(view.lookup("visible"));                                                                     // 186
+  }, function() {                                                                                                      // 187
+    return [ "\n    ", HTML.DIV({                                                                                      // 188
+      "class": "accounts-dialog accounts-centered-dialog",                                                             // 189
+      id: "login-buttons-message-dialog"                                                                               // 190
+    }, "\n      ", Spacebars.include(view.lookupTemplate("_loginButtonsMessages")), "\n      ", HTML.DIV({             // 191
+      "class": "login-button",                                                                                         // 192
+      id: "messages-dialog-dismiss-button"                                                                             // 193
+    }, "Dismiss"), "\n    "), "\n  " ];                                                                                // 194
+  });                                                                                                                  // 195
+}));                                                                                                                   // 196
+                                                                                                                       // 197
+Template.__checkName("_configureLoginOnDesktopDialog");                                                                // 198
+Template["_configureLoginOnDesktopDialog"] = new Template("Template._configureLoginOnDesktopDialog", (function() {     // 199
+  var view = this;                                                                                                     // 200
+  return Blaze.If(function() {                                                                                         // 201
+    return Spacebars.call(view.lookup("visible"));                                                                     // 202
+  }, function() {                                                                                                      // 203
+    return [ "\n    ", HTML.DIV({                                                                                      // 204
+      "class": "accounts-dialog accounts-centered-dialog",                                                             // 205
+      id: "configure-on-desktop-dialog"                                                                                // 206
+    }, "\n      ", HTML.P("\n        Please configure login on a desktop browser.\n      "), "\n      ", HTML.DIV({    // 207
+      "class": "login-button",                                                                                         // 208
+      id: "configure-on-desktop-dismiss-button"                                                                        // 209
+    }, "Dismiss"), "\n    "), "\n  " ];                                                                                // 210
+  });                                                                                                                  // 211
+}));                                                                                                                   // 212
+                                                                                                                       // 213
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -859,91 +878,96 @@ var VALID_KEYS = [                                                              
                                                                                                                        // 18
   'configureLoginServiceDialogVisible',                                                                                // 19
   'configureLoginServiceDialogServiceName',                                                                            // 20
-  'configureLoginServiceDialogSaveDisabled'                                                                            // 21
-];                                                                                                                     // 22
-                                                                                                                       // 23
-var validateKey = function (key) {                                                                                     // 24
-  if (!_.contains(VALID_KEYS, key))                                                                                    // 25
-    throw new Error("Invalid key in loginButtonsSession: " + key);                                                     // 26
-};                                                                                                                     // 27
-                                                                                                                       // 28
-var KEY_PREFIX = "Meteor.loginButtons.";                                                                               // 29
-                                                                                                                       // 30
-// XXX This should probably be package scope rather than exported                                                      // 31
-// (there was even a comment to that effect here from before we had                                                    // 32
-// namespacing) but accounts-ui-viewer uses it, so leave it as is for                                                  // 33
-// now                                                                                                                 // 34
-Accounts._loginButtonsSession = {                                                                                      // 35
-  set: function(key, value) {                                                                                          // 36
-    validateKey(key);                                                                                                  // 37
-    if (_.contains(['errorMessage', 'infoMessage'], key))                                                              // 38
+  'configureLoginServiceDialogSaveDisabled',                                                                           // 21
+  'configureOnDesktopVisible'                                                                                          // 22
+];                                                                                                                     // 23
+                                                                                                                       // 24
+var validateKey = function (key) {                                                                                     // 25
+  if (!_.contains(VALID_KEYS, key))                                                                                    // 26
+    throw new Error("Invalid key in loginButtonsSession: " + key);                                                     // 27
+};                                                                                                                     // 28
+                                                                                                                       // 29
+var KEY_PREFIX = "Meteor.loginButtons.";                                                                               // 30
+                                                                                                                       // 31
+// XXX This should probably be package scope rather than exported                                                      // 32
+// (there was even a comment to that effect here from before we had                                                    // 33
+// namespacing) but accounts-ui-viewer uses it, so leave it as is for                                                  // 34
+// now                                                                                                                 // 35
+Accounts._loginButtonsSession = {                                                                                      // 36
+  set: function(key, value) {                                                                                          // 37
+    validateKey(key);                                                                                                  // 38
+    if (_.contains(['errorMessage', 'infoMessage'], key))                                                              // 39
       throw new Error("Don't set errorMessage or infoMessage directly. Instead, use errorMessage() or infoMessage().");
-                                                                                                                       // 40
-    this._set(key, value);                                                                                             // 41
-  },                                                                                                                   // 42
-                                                                                                                       // 43
-  _set: function(key, value) {                                                                                         // 44
-    Session.set(KEY_PREFIX + key, value);                                                                              // 45
-  },                                                                                                                   // 46
-                                                                                                                       // 47
-  get: function(key) {                                                                                                 // 48
-    validateKey(key);                                                                                                  // 49
-    return Session.get(KEY_PREFIX + key);                                                                              // 50
-  },                                                                                                                   // 51
-                                                                                                                       // 52
-  closeDropdown: function () {                                                                                         // 53
-    this.set('inSignupFlow', false);                                                                                   // 54
-    this.set('inForgotPasswordFlow', false);                                                                           // 55
-    this.set('inChangePasswordFlow', false);                                                                           // 56
-    this.set('inMessageOnlyFlow', false);                                                                              // 57
-    this.set('dropdownVisible', false);                                                                                // 58
-    this.resetMessages();                                                                                              // 59
-  },                                                                                                                   // 60
-                                                                                                                       // 61
-  infoMessage: function(message) {                                                                                     // 62
-    this._set("errorMessage", null);                                                                                   // 63
-    this._set("infoMessage", message);                                                                                 // 64
-    this.ensureMessageVisible();                                                                                       // 65
-  },                                                                                                                   // 66
-                                                                                                                       // 67
-  errorMessage: function(message) {                                                                                    // 68
-    this._set("errorMessage", message);                                                                                // 69
-    this._set("infoMessage", null);                                                                                    // 70
-    this.ensureMessageVisible();                                                                                       // 71
-  },                                                                                                                   // 72
-                                                                                                                       // 73
-  // is there a visible dialog that shows messages (info and error)                                                    // 74
-  isMessageDialogVisible: function () {                                                                                // 75
-    return this.get('resetPasswordToken') ||                                                                           // 76
-      this.get('enrollAccountToken') ||                                                                                // 77
-      this.get('justVerifiedEmail');                                                                                   // 78
-  },                                                                                                                   // 79
-                                                                                                                       // 80
-  // ensure that somethings displaying a message (info or error) is                                                    // 81
-  // visible.  if a dialog with messages is open, do nothing;                                                          // 82
-  // otherwise open the dropdown.                                                                                      // 83
-  //                                                                                                                   // 84
-  // notably this doesn't matter when only displaying a single login                                                   // 85
-  // button since then we have an explicit message dialog                                                              // 86
-  // (_loginButtonsMessageDialog), and dropdownVisible is ignored in                                                   // 87
-  // this case.                                                                                                        // 88
-  ensureMessageVisible: function () {                                                                                  // 89
-    if (!this.isMessageDialogVisible())                                                                                // 90
-      this.set("dropdownVisible", true);                                                                               // 91
-  },                                                                                                                   // 92
-                                                                                                                       // 93
-  resetMessages: function () {                                                                                         // 94
-    this._set("errorMessage", null);                                                                                   // 95
-    this._set("infoMessage", null);                                                                                    // 96
-  },                                                                                                                   // 97
-                                                                                                                       // 98
-  configureService: function (name) {                                                                                  // 99
-    this.set('configureLoginServiceDialogVisible', true);                                                              // 100
-    this.set('configureLoginServiceDialogServiceName', name);                                                          // 101
-    this.set('configureLoginServiceDialogSaveDisabled', true);                                                         // 102
-  }                                                                                                                    // 103
-};                                                                                                                     // 104
-                                                                                                                       // 105
+                                                                                                                       // 41
+    this._set(key, value);                                                                                             // 42
+  },                                                                                                                   // 43
+                                                                                                                       // 44
+  _set: function(key, value) {                                                                                         // 45
+    Session.set(KEY_PREFIX + key, value);                                                                              // 46
+  },                                                                                                                   // 47
+                                                                                                                       // 48
+  get: function(key) {                                                                                                 // 49
+    validateKey(key);                                                                                                  // 50
+    return Session.get(KEY_PREFIX + key);                                                                              // 51
+  },                                                                                                                   // 52
+                                                                                                                       // 53
+  closeDropdown: function () {                                                                                         // 54
+    this.set('inSignupFlow', false);                                                                                   // 55
+    this.set('inForgotPasswordFlow', false);                                                                           // 56
+    this.set('inChangePasswordFlow', false);                                                                           // 57
+    this.set('inMessageOnlyFlow', false);                                                                              // 58
+    this.set('dropdownVisible', false);                                                                                // 59
+    this.resetMessages();                                                                                              // 60
+  },                                                                                                                   // 61
+                                                                                                                       // 62
+  infoMessage: function(message) {                                                                                     // 63
+    this._set("errorMessage", null);                                                                                   // 64
+    this._set("infoMessage", message);                                                                                 // 65
+    this.ensureMessageVisible();                                                                                       // 66
+  },                                                                                                                   // 67
+                                                                                                                       // 68
+  errorMessage: function(message) {                                                                                    // 69
+    this._set("errorMessage", message);                                                                                // 70
+    this._set("infoMessage", null);                                                                                    // 71
+    this.ensureMessageVisible();                                                                                       // 72
+  },                                                                                                                   // 73
+                                                                                                                       // 74
+  // is there a visible dialog that shows messages (info and error)                                                    // 75
+  isMessageDialogVisible: function () {                                                                                // 76
+    return this.get('resetPasswordToken') ||                                                                           // 77
+      this.get('enrollAccountToken') ||                                                                                // 78
+      this.get('justVerifiedEmail');                                                                                   // 79
+  },                                                                                                                   // 80
+                                                                                                                       // 81
+  // ensure that somethings displaying a message (info or error) is                                                    // 82
+  // visible.  if a dialog with messages is open, do nothing;                                                          // 83
+  // otherwise open the dropdown.                                                                                      // 84
+  //                                                                                                                   // 85
+  // notably this doesn't matter when only displaying a single login                                                   // 86
+  // button since then we have an explicit message dialog                                                              // 87
+  // (_loginButtonsMessageDialog), and dropdownVisible is ignored in                                                   // 88
+  // this case.                                                                                                        // 89
+  ensureMessageVisible: function () {                                                                                  // 90
+    if (!this.isMessageDialogVisible())                                                                                // 91
+      this.set("dropdownVisible", true);                                                                               // 92
+  },                                                                                                                   // 93
+                                                                                                                       // 94
+  resetMessages: function () {                                                                                         // 95
+    this._set("errorMessage", null);                                                                                   // 96
+    this._set("infoMessage", null);                                                                                    // 97
+  },                                                                                                                   // 98
+                                                                                                                       // 99
+  configureService: function (name) {                                                                                  // 100
+    if (Meteor.isCordova) {                                                                                            // 101
+      this.set('configureOnDesktopVisible', true);                                                                     // 102
+    } else {                                                                                                           // 103
+      this.set('configureLoginServiceDialogVisible', true);                                                            // 104
+      this.set('configureLoginServiceDialogServiceName', name);                                                        // 105
+      this.set('configureLoginServiceDialogSaveDisabled', true);                                                       // 106
+    }                                                                                                                  // 107
+  }                                                                                                                    // 108
+};                                                                                                                     // 109
+                                                                                                                       // 110
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -2046,6 +2070,18 @@ var capitalize = function(str){                                                 
   return str.charAt(0).toUpperCase() + str.slice(1);                                                                   // 270
 };                                                                                                                     // 271
                                                                                                                        // 272
+Template._configureLoginOnDesktopDialog.helpers({                                                                      // 273
+  visible: function () {                                                                                               // 274
+    return loginButtonsSession.get('configureOnDesktopVisible');                                                       // 275
+  }                                                                                                                    // 276
+});                                                                                                                    // 277
+                                                                                                                       // 278
+Template._configureLoginOnDesktopDialog.events({                                                                       // 279
+  'click #configure-on-desktop-dismiss-button': function () {                                                          // 280
+    loginButtonsSession.set('configureOnDesktopVisible', false);                                                       // 281
+  }                                                                                                                    // 282
+});                                                                                                                    // 283
+                                                                                                                       // 284
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

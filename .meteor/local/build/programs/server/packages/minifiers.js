@@ -193,7 +193,7 @@ CssTools = {                                                                    
   minifyCssAst: function (cssAst) {                                                                                  // 14
     return MinifyAst(cssAst);                                                                                        // 15
   },                                                                                                                 // 16
-  mergeCssAsts: function (cssAsts, warnCb, shouldKeepRelPaths) {                                                     // 17
+  mergeCssAsts: function (cssAsts, warnCb) {                                                                         // 17
     var rulesPredicate = function (rules) {                                                                          // 18
       if (! _.isArray(rules))                                                                                        // 19
         rules = [rules];                                                                                             // 20
@@ -233,88 +233,86 @@ CssTools = {                                                                    
           break;                                                                                                     // 54
         }                                                                                                            // 55
                                                                                                                      // 56
-      if (! shouldKeepRelPaths) {                                                                                    // 57
-        CssTools.rewriteCssUrls(ast);                                                                                // 58
-      }                                                                                                              // 59
-                                                                                                                     // 60
-      var imports = ast.stylesheet.rules.splice(0, importCount);                                                     // 61
-      newAst.stylesheet.rules = newAst.stylesheet.rules.concat(imports);                                             // 62
-                                                                                                                     // 63
-      // if there are imports left in the middle of file, warn user as it might                                      // 64
-      // be a potential bug (imports are valid only in the beginning of file).                                       // 65
-      if (_.any(ast.stylesheet.rules, rulesPredicate("import"))) {                                                   // 66
-        // XXX make this an error?                                                                                   // 67
+      CssTools.rewriteCssUrls(ast);                                                                                  // 57
+                                                                                                                     // 58
+      var imports = ast.stylesheet.rules.splice(0, importCount);                                                     // 59
+      newAst.stylesheet.rules = newAst.stylesheet.rules.concat(imports);                                             // 60
+                                                                                                                     // 61
+      // if there are imports left in the middle of file, warn user as it might                                      // 62
+      // be a potential bug (imports are valid only in the beginning of file).                                       // 63
+      if (_.any(ast.stylesheet.rules, rulesPredicate("import"))) {                                                   // 64
+        // XXX make this an error?                                                                                   // 65
         warnCb(ast.filename, "there are some @import rules those are not taking effect as they are required to be in the beginning of the file");
-      }                                                                                                              // 69
+      }                                                                                                              // 67
+                                                                                                                     // 68
+    });                                                                                                              // 69
                                                                                                                      // 70
-    });                                                                                                              // 71
-                                                                                                                     // 72
-    // Now we can put the rest of CSS rules into new AST                                                             // 73
-    _.each(cssAsts, function (ast) {                                                                                 // 74
-      newAst.stylesheet.rules =                                                                                      // 75
-        newAst.stylesheet.rules.concat(ast.stylesheet.rules);                                                        // 76
-    });                                                                                                              // 77
-                                                                                                                     // 78
-    return newAst;                                                                                                   // 79
-  },                                                                                                                 // 80
-                                                                                                                     // 81
-  // We are looking for all relative urls defined with the `url()` functional                                        // 82
-  // notation and rewriting them to the equivalent absolute url using the                                            // 83
-  // `position.source` path provided by css-parse                                                                    // 84
-  // For performance reasons this function acts by side effect by modifying the                                      // 85
-  // given AST without doing a deep copy.                                                                            // 86
-  rewriteCssUrls: function (ast) {                                                                                   // 87
-                                                                                                                     // 88
-    var isRelative = function(path) {                                                                                // 89
-      return path && path.charAt(0) !== '/';                                                                         // 90
-    };                                                                                                               // 91
-                                                                                                                     // 92
-    _.each(ast.stylesheet.rules, function(rule, ruleIndex) {                                                         // 93
-      var basePath = path.dirname(rule.position.source);                                                             // 94
-                                                                                                                     // 95
-      // Set the correct basePath based on how the linked asset will be served.                                      // 96
-      // XXX This is wrong. We are coupling the information about how files will                                     // 97
-      // be served by the web server to the information how they were stored                                         // 98
-      // originally on the filesystem in the project structure. Ideally, there                                       // 99
-      // should be some module that tells us precisely how each asset will be                                        // 100
-      // served but for now we are just assuming that everything that comes from                                     // 101
-      // a folder starting with "/packages/" is served on the same path as                                           // 102
-      // it was on the filesystem and everything else is served on root "/".                                         // 103
-      if (! basePath.match(/^\/?packages\//i))                                                                       // 104
-          basePath = "/";                                                                                            // 105
-                                                                                                                     // 106
-      _.each(rule.declarations, function(declaration, declarationIndex) {                                            // 107
-        var parts, resource, absolutePath, quotes, oldCssUrl, newCssUrl;                                             // 108
-        var value = declaration.value;                                                                               // 109
-                                                                                                                     // 110
-        // Match css values containing some functional calls to `url(URI)` where                                     // 111
-        // URI is optionally quoted.                                                                                 // 112
-        // Note that a css value can contains other elements, for instance:                                          // 113
-        //   background: top center url("background.png") black;                                                     // 114
-        // or even multiple url(), for instance for multiple backgrounds.                                            // 115
-        var cssUrlRegex = /url\s*\(\s*(['"]?)(.+?)\1\s*\)/gi;                                                        // 116
-        while (parts = cssUrlRegex.exec(value)) {                                                                    // 117
-          oldCssUrl = parts[0];                                                                                      // 118
-          quotes = parts[1];                                                                                         // 119
-          resource = url.parse(parts[2]);                                                                            // 120
-                                                                                                                     // 121
-          // Rewrite relative paths to absolute paths.                                                               // 122
-          // We don't rewrite urls starting with a protocol definition such as                                       // 123
-          // http, https, or data.                                                                                   // 124
-          if (isRelative(resource.path) && resource.protocol === null) {                                             // 125
-            absolutePath = path.join(basePath, resource.path);                                                       // 126
-            newCssUrl = "url(" + quotes + absolutePath + quotes + ")";                                               // 127
-            value = value.replace(oldCssUrl, newCssUrl);                                                             // 128
-          }                                                                                                          // 129
-        }                                                                                                            // 130
-                                                                                                                     // 131
-        declaration.value = value;                                                                                   // 132
-      });                                                                                                            // 133
-    });                                                                                                              // 134
-  }                                                                                                                  // 135
-};                                                                                                                   // 136
-                                                                                                                     // 137
-                                                                                                                     // 138
+    // Now we can put the rest of CSS rules into new AST                                                             // 71
+    _.each(cssAsts, function (ast) {                                                                                 // 72
+      newAst.stylesheet.rules =                                                                                      // 73
+        newAst.stylesheet.rules.concat(ast.stylesheet.rules);                                                        // 74
+    });                                                                                                              // 75
+                                                                                                                     // 76
+    return newAst;                                                                                                   // 77
+  },                                                                                                                 // 78
+                                                                                                                     // 79
+  // We are looking for all relative urls defined with the `url()` functional                                        // 80
+  // notation and rewriting them to the equivalent absolute url using the                                            // 81
+  // `position.source` path provided by css-parse                                                                    // 82
+  // For performance reasons this function acts by side effect by modifying the                                      // 83
+  // given AST without doing a deep copy.                                                                            // 84
+  rewriteCssUrls: function (ast) {                                                                                   // 85
+                                                                                                                     // 86
+    var isRelative = function(path) {                                                                                // 87
+      return path && path.charAt(0) !== '/';                                                                         // 88
+    };                                                                                                               // 89
+                                                                                                                     // 90
+    _.each(ast.stylesheet.rules, function(rule, ruleIndex) {                                                         // 91
+      var basePath = path.dirname(rule.position.source);                                                             // 92
+                                                                                                                     // 93
+      // Set the correct basePath based on how the linked asset will be served.                                      // 94
+      // XXX This is wrong. We are coupling the information about how files will                                     // 95
+      // be served by the web server to the information how they were stored                                         // 96
+      // originally on the filesystem in the project structure. Ideally, there                                       // 97
+      // should be some module that tells us precisely how each asset will be                                        // 98
+      // served but for now we are just assuming that everything that comes from                                     // 99
+      // a folder starting with "/packages/" is served on the same path as                                           // 100
+      // it was on the filesystem and everything else is served on root "/".                                         // 101
+      if (! basePath.match(/^\/?packages\//i))                                                                       // 102
+          basePath = "/";                                                                                            // 103
+                                                                                                                     // 104
+      _.each(rule.declarations, function(declaration, declarationIndex) {                                            // 105
+        var parts, resource, absolutePath, quotes, oldCssUrl, newCssUrl;                                             // 106
+        var value = declaration.value;                                                                               // 107
+                                                                                                                     // 108
+        // Match css values containing some functional calls to `url(URI)` where                                     // 109
+        // URI is optionally quoted.                                                                                 // 110
+        // Note that a css value can contains other elements, for instance:                                          // 111
+        //   background: top center url("background.png") black;                                                     // 112
+        // or even multiple url(), for instance for multiple backgrounds.                                            // 113
+        var cssUrlRegex = /url\s*\(\s*(['"]?)(.+?)\1\s*\)/gi;                                                        // 114
+        while (parts = cssUrlRegex.exec(value)) {                                                                    // 115
+          oldCssUrl = parts[0];                                                                                      // 116
+          quotes = parts[1];                                                                                         // 117
+          resource = url.parse(parts[2]);                                                                            // 118
+                                                                                                                     // 119
+          // Rewrite relative paths to absolute paths.                                                               // 120
+          // We don't rewrite urls starting with a protocol definition such as                                       // 121
+          // http, https, or data.                                                                                   // 122
+          if (isRelative(resource.path) && resource.protocol === null) {                                             // 123
+            absolutePath = path.join(basePath, resource.path);                                                       // 124
+            newCssUrl = "url(" + quotes + absolutePath + quotes + ")";                                               // 125
+            value = value.replace(oldCssUrl, newCssUrl);                                                             // 126
+          }                                                                                                          // 127
+        }                                                                                                            // 128
+                                                                                                                     // 129
+        declaration.value = value;                                                                                   // 130
+      });                                                                                                            // 131
+    });                                                                                                              // 132
+  }                                                                                                                  // 133
+};                                                                                                                   // 134
+                                                                                                                     // 135
+                                                                                                                     // 136
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

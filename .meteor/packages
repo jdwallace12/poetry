@@ -11,7 +11,6 @@ backbone
 less
 coffeescript
 jquery-waypoints
-bootstrap
 email
 standard-app-packages
 accounts-password
@@ -19,4 +18,5 @@ accounts-twitter
 accounts-ui
 accounts-facebook
 service-configuration
+bootstrap
 

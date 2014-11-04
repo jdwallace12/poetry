@@ -63,9 +63,9 @@ Blaze._escape = (function() {                                                   
 Blaze._warn = function (msg) {                                                                                         // 22
   msg = 'Warning: ' + msg;                                                                                             // 23
                                                                                                                        // 24
-  if ((typeof 'Log' !== 'undefined') && Log && Log.warn)                                                               // 25
+  if ((typeof Log !== 'undefined') && Log && Log.warn)                                                                 // 25
     Log.warn(msg); // use Meteor's "logging" package                                                                   // 26
-  else if ((typeof 'console' !== 'undefined') && console.log)                                                          // 27
+  else if ((typeof console !== 'undefined') && console.log)                                                            // 27
     console.log(msg);                                                                                                  // 28
 };                                                                                                                     // 29
                                                                                                                        // 30

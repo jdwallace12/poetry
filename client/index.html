@@ -7,116 +7,46 @@
 </head>
 
 <body>
-    <div class="chat-wrap">
-           {{#if currentUser}}
-           {{else}}
-        <div class="signin">
-          {{> loginButtons}}
-      </div>
-      {{/if}}
-        <a href="#" id="close_chat"><p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p></a>
-        {{#if currentUser}}
-        {{> input}}
-        {{/if}}
+    <div class="container" style="position:relative;">
+        <div class="navbar navbar-fixed-top" style="background:#ccc;">
 
-        <div class="message-wrap">
-            {{> messages}}
+
+   <ul class="nav">
+  <li class="active">
+    <a href="#">Home</a>
+  </li>
+  <li><a href="#">Link</a></li>
+  <li><a href="#">Link</a></li>
+</ul>
+</div>
+<!--     <div class="chat-wrap">
+        {{> header }}
+        {{#if currentUser}} 
+        {{else}}
+        <div class="signin">
+            {{> loginButtons}}
         </div>
-    </div>
-    <div class="chat-open">
+        {{/if}} 
+        {{#if currentUser}} 
+        {{> input}} 
+        {{/if}} 
+        {{> messages}}
+    </div> -->
+ <!--    <div class="chat-open">
         <p>Chat</p>
     </div>
     <div class="footer-open">
         <p>Add Words</p>
+    </div> -->
+
+    {{> list}}
+    <div class="fridge">
     </div>
-    <div id="wrap">
-        {{> list}}
-        <div id="footer" style="display:none;">
-            {{>wordForm}}
-        </div>
-    </div>
+
+  <!--    {{>wordForm}} -->
+</div>
 </body>
 
-<template name="list">
-    <div id="outer">
-        <!--  <input type="button" value="init draggables for touch" class="init btn"/>
-    <br>
-    <br> -->
-        <!-- <h1 id="header">Magnetic Poetry</h1> -->
-        {{#each magnets}} {{> magnet}} {{else}} {{/each}}
-    </div>
-</template>
-
-<template name="magnet">
-    <div class="magnet {{selected}} ui-draggable" id="{{magnetId}}" style="top: {{top}}px; left: {{left}}px;">
-        <div class="name">{{name}}</div>
-    </div>
-</template>
-
-
-<template name="wordForm">
-    <fieldset>
-        <form>
-            <div>
-                <label>
-                    <input id="name_of_word" placeholder="Enter a word and press enter" />
-                </label>
-            </div>
-        </form>
-    </fieldset>
-    <div class="clear-form">
-        <p id="delete">Clear Board</p>
-    </div>
-</template>
 
 
 
-<template name="input">
-    <div id="input" class="well" style="margin-top: -17px;">
-        <strong>Your message</strong>  
-        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:90%;" />
-        <a class="btn btn-primary" type="button" style= "display:none;" id="send">Send</a> 
-        <a class="btn btn-danger" style="margin-bottom: 10px;" type="button" id="delete_chat">Clear Chat</a>  
-        <p><strong>{{userCount}}</strong> registered users</p> 
-            <p><strong>{{magnetCount}}</strong> magnets in play</p> 
-        <div class="logout">
-        {{> loginButtons}} 
-    </div>
-    </div>
-</template>
-
-<template name="messages">
-    <div id="messages">
-          {{#if currentUser}}
-        {{#each messages}} 
-        {{> message}} 
-        {{/each}}
-        {{/if}}
-    </div>
-</template>
-
-<template name="message">
-    <div class="chat-room-message-wrap">
-        <table>
-            <tr>
-                <td style="max-width: 50px; min-width: 50px;">
-                    {{#if user.services.twitter}}
-                    <img src="{{user.services.twitter.profile_image_url}}" />
-                    {{else}} 
-                        {{#if user.services.facebook}}
-                        <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" />
-                        {{else}}
-                        <img src="http://www.gravatar.com/avatar" />
-                        {{/if}} 
-                    {{/if}}
-                </td>
-                <td class="break-word" style="padding-left:5px;">
-                    <p class="message-text">
-                        <strong>{{user.username}}{{user.profile.name}}:</strong>
-                    </p>
-                    <p class="message-text">{{message}}</p>
-                </td>
-            </tr>
-        </table>
-    </div>
-</template>

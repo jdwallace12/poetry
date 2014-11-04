@@ -23,5 +23,6 @@ Match = Package.check.Match;
 _ = Package.underscore._;
 Random = Package.random.Random;
 EJSON = Package.ejson.EJSON;
+LaunchScreen = Package['launch-screen'].LaunchScreen;
 HTML = Package.htmljs.HTML;
 

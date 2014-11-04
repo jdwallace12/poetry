@@ -24,7 +24,7 @@ var DDPServer = Package.ddp.DDPServer;
                                                                                            //
 /**                                                                                        // 1
  * @summary Options to customize emails sent from the Accounts system.                     // 2
- * @locus Anywhere                                                                         // 3
+ * @locus Server                                                                           // 3
  */                                                                                        // 4
 Accounts.emailTemplates = {                                                                // 5
   from: "Meteor Accounts <no-reply@meteor.com>",                                           // 6

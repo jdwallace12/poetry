@@ -58,11 +58,6 @@
       "path": "packages/jquery-waypoints.js"
     },
     {
-      "sourceMap": "packages/bootstrap.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/bootstrap.js"
-    },
-    {
       "sourceMap": "packages/base64.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/base64.js"
@@ -344,6 +339,11 @@
       "path": "packages/accounts-facebook.js"
     },
     {
+      "sourceMap": "packages/bootstrap.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/bootstrap.js"
+    },
+    {
       "sourceMap": "packages/reload.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/reload.js"
@@ -372,13 +372,13 @@
       "path": "packages/global-imports.js"
     },
     {
+      "path": "app/lib/collections/chat.js"
+    },
+    {
+      "path": "app/lib/collections/magnets.js"
+    },
+    {
       "path": "app/server/server.js"
-    },
-    {
-      "path": "app/chatt.js"
-    },
-    {
-      "path": "app/poetry.js"
     }
   ]
 }

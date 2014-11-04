@@ -132,77 +132,82 @@ var updateVersions = function (shouldReloadClientProgram) {                     
     }});                                                                         // 108
   }                                                                              // 109
                                                                                  // 110
-  if (! ClientVersions.findOne({_id: "version-refreshable"})) {                  // 111
+  if (! ClientVersions.findOne({_id: "version-cordova"})) {                      // 111
     ClientVersions.insert({                                                      // 112
-      _id: "version-refreshable",                                                // 113
-      version: Autoupdate.autoupdateVersionRefreshable,                          // 114
-      assets: WebAppInternals.refreshableAssets                                  // 115
+      _id: "version-cordova",                                                    // 113
+      version: Autoupdate.autoupdateVersionCordova,                              // 114
+      refreshable: false                                                         // 115
     });                                                                          // 116
   } else {                                                                       // 117
-    ClientVersions.update("version-refreshable", { $set: {                       // 118
-      version: Autoupdate.autoupdateVersionRefreshable,                          // 119
-      assets: WebAppInternals.refreshableAssets                                  // 120
-      }});                                                                       // 121
-  }                                                                              // 122
-                                                                                 // 123
-  if (! ClientVersions.findOne({_id: "version-cordova"})) {                      // 124
-    ClientVersions.insert({                                                      // 125
-      _id: "version-cordova",                                                    // 126
-      version: Autoupdate.autoupdateVersionCordova,                              // 127
-      refreshable: false                                                         // 128
-    });                                                                          // 129
-  } else {                                                                       // 130
-    ClientVersions.update("version-cordova", { $set: {                           // 131
-      version: Autoupdate.autoupdateVersionCordova                               // 132
-    }});                                                                         // 133
-  }                                                                              // 134
-};                                                                               // 135
-                                                                                 // 136
-Meteor.publish(                                                                  // 137
-  "meteor_autoupdate_clientVersions",                                            // 138
-  function (appId) {                                                             // 139
-    // `null` happens when a client doesn't have an appId and passes             // 140
-    // `undefined` to `Meteor.subscribe`. `undefined` is translated to           // 141
-    // `null` as JSON doesn't have `undefined.                                   // 142
-    check(appId, Match.OneOf(String, undefined, null));                          // 143
-                                                                                 // 144
-    // Don't notify clients using wrong appId such as mobile apps built with a   // 145
-    // different server but pointing at the same local url                       // 146
-    if (Autoupdate.appId && appId && Autoupdate.appId !== appId)                 // 147
-      return [];                                                                 // 148
+    ClientVersions.update("version-cordova", { $set: {                           // 118
+      version: Autoupdate.autoupdateVersionCordova                               // 119
+    }});                                                                         // 120
+  }                                                                              // 121
+                                                                                 // 122
+  // Use `onListening` here because we need to use                               // 123
+  // `WebAppInternals.refreshableAssets`, which is only set after                // 124
+  // `WebApp.generateBoilerplate` is called by `main` in webapp.                 // 125
+  WebApp.onListening(function () {                                               // 126
+    if (! ClientVersions.findOne({_id: "version-refreshable"})) {                // 127
+      ClientVersions.insert({                                                    // 128
+        _id: "version-refreshable",                                              // 129
+        version: Autoupdate.autoupdateVersionRefreshable,                        // 130
+        assets: WebAppInternals.refreshableAssets                                // 131
+      });                                                                        // 132
+    } else {                                                                     // 133
+      ClientVersions.update("version-refreshable", { $set: {                     // 134
+        version: Autoupdate.autoupdateVersionRefreshable,                        // 135
+        assets: WebAppInternals.refreshableAssets                                // 136
+      }});                                                                       // 137
+    }                                                                            // 138
+  });                                                                            // 139
+};                                                                               // 140
+                                                                                 // 141
+Meteor.publish(                                                                  // 142
+  "meteor_autoupdate_clientVersions",                                            // 143
+  function (appId) {                                                             // 144
+    // `null` happens when a client doesn't have an appId and passes             // 145
+    // `undefined` to `Meteor.subscribe`. `undefined` is translated to           // 146
+    // `null` as JSON doesn't have `undefined.                                   // 147
+    check(appId, Match.OneOf(String, undefined, null));                          // 148
                                                                                  // 149
-    return ClientVersions.find();                                                // 150
-  },                                                                             // 151
-  {is_auto: true}                                                                // 152
-);                                                                               // 153
+    // Don't notify clients using wrong appId such as mobile apps built with a   // 150
+    // different server but pointing at the same local url                       // 151
+    if (Autoupdate.appId && appId && Autoupdate.appId !== appId)                 // 152
+      return [];                                                                 // 153
                                                                                  // 154
-Meteor.startup(function () {                                                     // 155
-  updateVersions(false);                                                         // 156
-});                                                                              // 157
-                                                                                 // 158
-var fut = new Future();                                                          // 159
-                                                                                 // 160
-// We only want SIGUSR2 to trigger 'updateVersions' AFTER onListen,              // 161
-// so we add a queued task that waits for onListen before SIGUSR2 can queue      // 162
-// tasks. Note that the `onListening` callbacks do not fire until after          // 163
-// Meteor.startup, so there is no concern that the 'updateVersions' calls        // 164
-// from SIGUSR2 will overlap with the `updateVersions` call from Meteor.startup. // 165
-                                                                                 // 166
-syncQueue.queueTask(function () {                                                // 167
-  fut.wait();                                                                    // 168
-});                                                                              // 169
-                                                                                 // 170
-WebApp.onListening(function () {                                                 // 171
-  fut.return();                                                                  // 172
-});                                                                              // 173
-                                                                                 // 174
-// Listen for SIGUSR2, which signals that a client asset has changed.            // 175
-process.on('SIGUSR2', Meteor.bindEnvironment(function () {                       // 176
-  syncQueue.queueTask(function () {                                              // 177
-    updateVersions(true);                                                        // 178
-  });                                                                            // 179
-}));                                                                             // 180
-                                                                                 // 181
+    return ClientVersions.find();                                                // 155
+  },                                                                             // 156
+  {is_auto: true}                                                                // 157
+);                                                                               // 158
+                                                                                 // 159
+Meteor.startup(function () {                                                     // 160
+  updateVersions(false);                                                         // 161
+});                                                                              // 162
+                                                                                 // 163
+var fut = new Future();                                                          // 164
+                                                                                 // 165
+// We only want SIGUSR2 to trigger 'updateVersions' AFTER onListen,              // 166
+// so we add a queued task that waits for onListen before SIGUSR2 can queue      // 167
+// tasks. Note that the `onListening` callbacks do not fire until after          // 168
+// Meteor.startup, so there is no concern that the 'updateVersions' calls        // 169
+// from SIGUSR2 will overlap with the `updateVersions` call from Meteor.startup. // 170
+                                                                                 // 171
+syncQueue.queueTask(function () {                                                // 172
+  fut.wait();                                                                    // 173
+});                                                                              // 174
+                                                                                 // 175
+WebApp.onListening(function () {                                                 // 176
+  fut.return();                                                                  // 177
+});                                                                              // 178
+                                                                                 // 179
+// Listen for SIGUSR2, which signals that a client asset has changed.            // 180
+process.on('SIGUSR2', Meteor.bindEnvironment(function () {                       // 181
+  syncQueue.queueTask(function () {                                              // 182
+    updateVersions(true);                                                        // 183
+  });                                                                            // 184
+}));                                                                             // 185
+                                                                                 // 186
 ///////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

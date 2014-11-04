@@ -758,57 +758,71 @@ var ready = function() {                                                        
   if (awaitingEventsCount > 0)                                                                            // 8
     return;                                                                                               // 9
                                                                                                           // 10
-  // XXX hide the splash screen if such exists, only on mobile                                            // 11
-  if (Meteor.isCordova) {                                                                                 // 12
-    navigator.splashscreen && navigator.splashscreen.hide();                                              // 13
-  }                                                                                                       // 14
-                                                                                                          // 15
-  loaded = true;                                                                                          // 16
-  while (queue.length)                                                                                    // 17
-    (queue.shift())();                                                                                    // 18
-};                                                                                                        // 19
-                                                                                                          // 20
-if (document.addEventListener) {                                                                          // 21
-  document.addEventListener('DOMContentLoaded', ready, false);                                            // 22
-                                                                                                          // 23
-  if (Meteor.isCordova) {                                                                                 // 24
-    awaitingEventsCount++;                                                                                // 25
-    document.addEventListener('deviceready', ready, false);                                               // 26
-  }                                                                                                       // 27
+  loaded = true;                                                                                          // 11
+  var runStartupCallbacks = function () {                                                                 // 12
+    if (Meteor.isCordova) {                                                                               // 13
+      if (! cordova.plugins || ! cordova.plugins.CordovaUpdate) {                                         // 14
+        // XXX This timeout should not be necessary.                                                      // 15
+        // Cordova indicates that all the cordova plugins files have been loaded                          // 16
+        // and plugins are ready to be used when the "deviceready" callback                               // 17
+        // fires. Even though we wait for the "deviceready" event, plugins                                // 18
+        // have been observed to still not be not ready (likely a Cordova bug).                           // 19
+        // We check the availability of the Cordova-Update plugin (the only                               // 20
+        // plugin that we always include for sure) and retry a bit later if it                            // 21
+        // is nowhere to be found. Experiments have found that either all                                 // 22
+        // plugins are attached or none.                                                                  // 23
+        Meteor.setTimeout(runStartupCallbacks, 20);                                                       // 24
+        return;                                                                                           // 25
+      }                                                                                                   // 26
+    }                                                                                                     // 27
                                                                                                           // 28
-  window.addEventListener('load', ready, false);                                                          // 29
-} else {                                                                                                  // 30
-  document.attachEvent('onreadystatechange', function () {                                                // 31
-    if (document.readyState === "complete")                                                               // 32
-      ready();                                                                                            // 33
-  });                                                                                                     // 34
-  window.attachEvent('load', ready);                                                                      // 35
-}                                                                                                         // 36
+    while (queue.length)                                                                                  // 29
+      (queue.shift())();                                                                                  // 30
+  };                                                                                                      // 31
+  runStartupCallbacks();                                                                                  // 32
+};                                                                                                        // 33
+                                                                                                          // 34
+if (document.addEventListener) {                                                                          // 35
+  document.addEventListener('DOMContentLoaded', ready, false);                                            // 36
                                                                                                           // 37
-/**                                                                                                       // 38
- * @summary Run code when a client or a server starts.                                                    // 39
- * @locus Anywhere                                                                                        // 40
- * @param {Function} func A function to run on startup.                                                   // 41
- */                                                                                                       // 42
-Meteor.startup = function (cb) {                                                                          // 43
-  var doScroll = !document.addEventListener &&                                                            // 44
-    document.documentElement.doScroll;                                                                    // 45
-                                                                                                          // 46
-  if (!doScroll || window !== top) {                                                                      // 47
-    if (loaded)                                                                                           // 48
-      cb();                                                                                               // 49
-    else                                                                                                  // 50
-      queue.push(cb);                                                                                     // 51
-  } else {                                                                                                // 52
-    try { doScroll('left'); }                                                                             // 53
-    catch (e) {                                                                                           // 54
-      setTimeout(function() { Meteor.startup(cb); }, 50);                                                 // 55
-      return;                                                                                             // 56
-    };                                                                                                    // 57
-    cb();                                                                                                 // 58
-  }                                                                                                       // 59
-};                                                                                                        // 60
-                                                                                                          // 61
+  if (Meteor.isCordova) {                                                                                 // 38
+    awaitingEventsCount++;                                                                                // 39
+    document.addEventListener('deviceready', ready, false);                                               // 40
+  }                                                                                                       // 41
+                                                                                                          // 42
+  window.addEventListener('load', ready, false);                                                          // 43
+} else {                                                                                                  // 44
+  document.attachEvent('onreadystatechange', function () {                                                // 45
+    if (document.readyState === "complete")                                                               // 46
+      ready();                                                                                            // 47
+  });                                                                                                     // 48
+  window.attachEvent('load', ready);                                                                      // 49
+}                                                                                                         // 50
+                                                                                                          // 51
+/**                                                                                                       // 52
+ * @summary Run code when a client or a server starts.                                                    // 53
+ * @locus Anywhere                                                                                        // 54
+ * @param {Function} func A function to run on startup.                                                   // 55
+ */                                                                                                       // 56
+Meteor.startup = function (cb) {                                                                          // 57
+  var doScroll = !document.addEventListener &&                                                            // 58
+    document.documentElement.doScroll;                                                                    // 59
+                                                                                                          // 60
+  if (!doScroll || window !== top) {                                                                      // 61
+    if (loaded)                                                                                           // 62
+      cb();                                                                                               // 63
+    else                                                                                                  // 64
+      queue.push(cb);                                                                                     // 65
+  } else {                                                                                                // 66
+    try { doScroll('left'); }                                                                             // 67
+    catch (e) {                                                                                           // 68
+      setTimeout(function() { Meteor.startup(cb); }, 50);                                                 // 69
+      return;                                                                                             // 70
+    };                                                                                                    // 71
+    cb();                                                                                                 // 72
+  }                                                                                                       // 73
+};                                                                                                        // 74
+                                                                                                          // 75
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

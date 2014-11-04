@@ -593,635 +593,645 @@ var runWebAppServer = function () {                                             
     var defaultOptionsForArch = {                                                        // 567
       'web.cordova': {                                                                   // 568
         runtimeConfigOverrides: {                                                        // 569
-          DDP_DEFAULT_CONNECTION_URL: process.env.MOBILE_DDP_URL ||                      // 570
-            __meteor_runtime_config__.ROOT_URL,                                          // 571
-          ROOT_URL: process.env.MOBILE_ROOT_URL ||                                       // 572
-            __meteor_runtime_config__.ROOT_URL                                           // 573
-        }                                                                                // 574
-      }                                                                                  // 575
-    };                                                                                   // 576
-                                                                                         // 577
-    syncQueue.runTask(function() {                                                       // 578
-      _.each(WebApp.clientPrograms, function (program, archName) {                       // 579
-        boilerplateByArch[archName] =                                                    // 580
-          WebAppInternals.generateBoilerplateInstance(                                   // 581
-            archName, program.manifest,                                                  // 582
-            defaultOptionsForArch[archName]);                                            // 583
-      });                                                                                // 584
-                                                                                         // 585
-      // Clear the memoized boilerplate cache.                                           // 586
-      memoizedBoilerplate = {};                                                          // 587
-                                                                                         // 588
-      // Configure CSS injection for the default arch                                    // 589
-      // XXX implement the CSS injection for all archs?                                  // 590
-      WebAppInternals.refreshableAssets = {                                              // 591
-        allCss: boilerplateByArch[WebApp.defaultArch].baseData.css                       // 592
-      };                                                                                 // 593
-    });                                                                                  // 594
-  };                                                                                     // 595
-                                                                                         // 596
-  WebAppInternals.reloadClientPrograms();                                                // 597
+          // XXX We use absoluteUrl() here so that we serve https://                     // 570
+          // URLs to cordova clients if force-ssl is in use. If we were                  // 571
+          // to use __meteor_runtime_config__.ROOT_URL instead of                        // 572
+          // absoluteUrl(), then Cordova clients would immediately get a                 // 573
+          // HCP setting their DDP_DEFAULT_CONNECTION_URL to                             // 574
+          // http://example.meteor.com. This breaks the app, because                     // 575
+          // force-ssl doesn't serve CORS headers on 302                                 // 576
+          // redirects. (Plus it's undesirable to have clients                           // 577
+          // connecting to http://example.meteor.com when force-ssl is                   // 578
+          // in use.)                                                                    // 579
+          DDP_DEFAULT_CONNECTION_URL: process.env.MOBILE_DDP_URL ||                      // 580
+            Meteor.absoluteUrl(),                                                        // 581
+          ROOT_URL: process.env.MOBILE_ROOT_URL ||                                       // 582
+            Meteor.absoluteUrl()                                                         // 583
+        }                                                                                // 584
+      }                                                                                  // 585
+    };                                                                                   // 586
+                                                                                         // 587
+    syncQueue.runTask(function() {                                                       // 588
+      _.each(WebApp.clientPrograms, function (program, archName) {                       // 589
+        boilerplateByArch[archName] =                                                    // 590
+          WebAppInternals.generateBoilerplateInstance(                                   // 591
+            archName, program.manifest,                                                  // 592
+            defaultOptionsForArch[archName]);                                            // 593
+      });                                                                                // 594
+                                                                                         // 595
+      // Clear the memoized boilerplate cache.                                           // 596
+      memoizedBoilerplate = {};                                                          // 597
                                                                                          // 598
-  // webserver                                                                           // 599
-  var app = connect();                                                                   // 600
-                                                                                         // 601
-  // Auto-compress any json, javascript, or text.                                        // 602
-  app.use(connect.compress());                                                           // 603
-                                                                                         // 604
-  // Packages and apps can add handlers that run before any other Meteor                 // 605
-  // handlers via WebApp.rawConnectHandlers.                                             // 606
-  var rawConnectHandlers = connect();                                                    // 607
-  app.use(rawConnectHandlers);                                                           // 608
-                                                                                         // 609
-  // Strip off the path prefix, if it exists.                                            // 610
-  app.use(function (request, response, next) {                                           // 611
-    var pathPrefix = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;                     // 612
-    var url = Npm.require('url').parse(request.url);                                     // 613
-    var pathname = url.pathname;                                                         // 614
-    // check if the path in the url starts with the path prefix (and the part            // 615
-    // after the path prefix must start with a / if it exists.)                          // 616
-    if (pathPrefix && pathname.substring(0, pathPrefix.length) === pathPrefix &&         // 617
-       (pathname.length == pathPrefix.length                                             // 618
-        || pathname.substring(pathPrefix.length, pathPrefix.length + 1) === "/")) {      // 619
-      request.url = request.url.substring(pathPrefix.length);                            // 620
-      next();                                                                            // 621
-    } else if (pathname === "/favicon.ico" || pathname === "/robots.txt") {              // 622
-      next();                                                                            // 623
-    } else if (pathPrefix) {                                                             // 624
-      response.writeHead(404);                                                           // 625
-      response.write("Unknown path");                                                    // 626
-      response.end();                                                                    // 627
-    } else {                                                                             // 628
-      next();                                                                            // 629
-    }                                                                                    // 630
-  });                                                                                    // 631
-                                                                                         // 632
-  // Parse the query string into res.query. Used by oauth_server, but it's               // 633
-  // generally pretty handy..                                                            // 634
-  app.use(connect.query());                                                              // 635
-                                                                                         // 636
-  // Serve static files from the manifest.                                               // 637
-  // This is inspired by the 'static' middleware.                                        // 638
-  app.use(function (req, res, next) {                                                    // 639
-    Fiber(function () {                                                                  // 640
-     WebAppInternals.staticFilesMiddleware(staticFiles, req, res, next);                 // 641
-    }).run();                                                                            // 642
-  });                                                                                    // 643
-                                                                                         // 644
-  // Packages and apps can add handlers to this via WebApp.connectHandlers.              // 645
-  // They are inserted before our default handler.                                       // 646
-  var packageAndAppHandlers = connect();                                                 // 647
-  app.use(packageAndAppHandlers);                                                        // 648
-                                                                                         // 649
-  var suppressConnectErrors = false;                                                     // 650
-  // connect knows it is an error handler because it has 4 arguments instead of          // 651
-  // 3. go figure.  (It is not smart enough to find such a thing if it's hidden          // 652
-  // inside packageAndAppHandlers.)                                                      // 653
-  app.use(function (err, req, res, next) {                                               // 654
-    if (!err || !suppressConnectErrors || !req.headers['x-suppress-error']) {            // 655
-      next(err);                                                                         // 656
-      return;                                                                            // 657
-    }                                                                                    // 658
-    res.writeHead(err.status, { 'Content-Type': 'text/plain' });                         // 659
-    res.end("An error message");                                                         // 660
-  });                                                                                    // 661
-                                                                                         // 662
-  app.use(function (req, res, next) {                                                    // 663
-    if (! appUrl(req.url))                                                               // 664
-      return next();                                                                     // 665
-                                                                                         // 666
-    var headers = {                                                                      // 667
-      'Content-Type':  'text/html; charset=utf-8'                                        // 668
-    };                                                                                   // 669
-    if (shuttingDown)                                                                    // 670
-      headers['Connection'] = 'Close';                                                   // 671
+      // Configure CSS injection for the default arch                                    // 599
+      // XXX implement the CSS injection for all archs?                                  // 600
+      WebAppInternals.refreshableAssets = {                                              // 601
+        allCss: boilerplateByArch[WebApp.defaultArch].baseData.css                       // 602
+      };                                                                                 // 603
+    });                                                                                  // 604
+  };                                                                                     // 605
+                                                                                         // 606
+  WebAppInternals.reloadClientPrograms();                                                // 607
+                                                                                         // 608
+  // webserver                                                                           // 609
+  var app = connect();                                                                   // 610
+                                                                                         // 611
+  // Auto-compress any json, javascript, or text.                                        // 612
+  app.use(connect.compress());                                                           // 613
+                                                                                         // 614
+  // Packages and apps can add handlers that run before any other Meteor                 // 615
+  // handlers via WebApp.rawConnectHandlers.                                             // 616
+  var rawConnectHandlers = connect();                                                    // 617
+  app.use(rawConnectHandlers);                                                           // 618
+                                                                                         // 619
+  // Strip off the path prefix, if it exists.                                            // 620
+  app.use(function (request, response, next) {                                           // 621
+    var pathPrefix = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;                     // 622
+    var url = Npm.require('url').parse(request.url);                                     // 623
+    var pathname = url.pathname;                                                         // 624
+    // check if the path in the url starts with the path prefix (and the part            // 625
+    // after the path prefix must start with a / if it exists.)                          // 626
+    if (pathPrefix && pathname.substring(0, pathPrefix.length) === pathPrefix &&         // 627
+       (pathname.length == pathPrefix.length                                             // 628
+        || pathname.substring(pathPrefix.length, pathPrefix.length + 1) === "/")) {      // 629
+      request.url = request.url.substring(pathPrefix.length);                            // 630
+      next();                                                                            // 631
+    } else if (pathname === "/favicon.ico" || pathname === "/robots.txt") {              // 632
+      next();                                                                            // 633
+    } else if (pathPrefix) {                                                             // 634
+      response.writeHead(404);                                                           // 635
+      response.write("Unknown path");                                                    // 636
+      response.end();                                                                    // 637
+    } else {                                                                             // 638
+      next();                                                                            // 639
+    }                                                                                    // 640
+  });                                                                                    // 641
+                                                                                         // 642
+  // Parse the query string into res.query. Used by oauth_server, but it's               // 643
+  // generally pretty handy..                                                            // 644
+  app.use(connect.query());                                                              // 645
+                                                                                         // 646
+  // Serve static files from the manifest.                                               // 647
+  // This is inspired by the 'static' middleware.                                        // 648
+  app.use(function (req, res, next) {                                                    // 649
+    Fiber(function () {                                                                  // 650
+     WebAppInternals.staticFilesMiddleware(staticFiles, req, res, next);                 // 651
+    }).run();                                                                            // 652
+  });                                                                                    // 653
+                                                                                         // 654
+  // Packages and apps can add handlers to this via WebApp.connectHandlers.              // 655
+  // They are inserted before our default handler.                                       // 656
+  var packageAndAppHandlers = connect();                                                 // 657
+  app.use(packageAndAppHandlers);                                                        // 658
+                                                                                         // 659
+  var suppressConnectErrors = false;                                                     // 660
+  // connect knows it is an error handler because it has 4 arguments instead of          // 661
+  // 3. go figure.  (It is not smart enough to find such a thing if it's hidden          // 662
+  // inside packageAndAppHandlers.)                                                      // 663
+  app.use(function (err, req, res, next) {                                               // 664
+    if (!err || !suppressConnectErrors || !req.headers['x-suppress-error']) {            // 665
+      next(err);                                                                         // 666
+      return;                                                                            // 667
+    }                                                                                    // 668
+    res.writeHead(err.status, { 'Content-Type': 'text/plain' });                         // 669
+    res.end("An error message");                                                         // 670
+  });                                                                                    // 671
                                                                                          // 672
-    var request = WebApp.categorizeRequest(req);                                         // 673
-                                                                                         // 674
-    if (request.url.query && request.url.query['meteor_css_resource']) {                 // 675
-      // In this case, we're requesting a CSS resource in the meteor-specific            // 676
-      // way, but we don't have it.  Serve a static css file that indicates that         // 677
-      // we didn't have it, so we can detect that and refresh.                           // 678
-      headers['Content-Type'] = 'text/css; charset=utf-8';                               // 679
-      res.writeHead(200, headers);                                                       // 680
-      res.write(".meteor-css-not-found-error { width: 0px;}");                           // 681
-      res.end();                                                                         // 682
-      return undefined;                                                                  // 683
-    }                                                                                    // 684
-                                                                                         // 685
-    // /packages/asdfsad ... /__cordova/dafsdf.js                                        // 686
-    var pathname = connect.utils.parseUrl(req).pathname;                                 // 687
-    var archKey = pathname.split('/')[1];                                                // 688
-    var archKeyCleaned = 'web.' + archKey.replace(/^__/, '');                            // 689
-                                                                                         // 690
-    if (! /^__/.test(archKey) || ! _.has(archPath, archKeyCleaned)) {                    // 691
-      archKey = WebApp.defaultArch;                                                      // 692
-    } else {                                                                             // 693
-      archKey = archKeyCleaned;                                                          // 694
-    }                                                                                    // 695
-                                                                                         // 696
-    var boilerplate;                                                                     // 697
-    try {                                                                                // 698
-      boilerplate = getBoilerplate(request, archKey);                                    // 699
-    } catch (e) {                                                                        // 700
-      Log.error("Error running template: " + e);                                         // 701
-      res.writeHead(500, headers);                                                       // 702
-      res.end();                                                                         // 703
-      return undefined;                                                                  // 704
+  app.use(function (req, res, next) {                                                    // 673
+    if (! appUrl(req.url))                                                               // 674
+      return next();                                                                     // 675
+                                                                                         // 676
+    var headers = {                                                                      // 677
+      'Content-Type':  'text/html; charset=utf-8'                                        // 678
+    };                                                                                   // 679
+    if (shuttingDown)                                                                    // 680
+      headers['Connection'] = 'Close';                                                   // 681
+                                                                                         // 682
+    var request = WebApp.categorizeRequest(req);                                         // 683
+                                                                                         // 684
+    if (request.url.query && request.url.query['meteor_css_resource']) {                 // 685
+      // In this case, we're requesting a CSS resource in the meteor-specific            // 686
+      // way, but we don't have it.  Serve a static css file that indicates that         // 687
+      // we didn't have it, so we can detect that and refresh.                           // 688
+      headers['Content-Type'] = 'text/css; charset=utf-8';                               // 689
+      res.writeHead(200, headers);                                                       // 690
+      res.write(".meteor-css-not-found-error { width: 0px;}");                           // 691
+      res.end();                                                                         // 692
+      return undefined;                                                                  // 693
+    }                                                                                    // 694
+                                                                                         // 695
+    // /packages/asdfsad ... /__cordova/dafsdf.js                                        // 696
+    var pathname = connect.utils.parseUrl(req).pathname;                                 // 697
+    var archKey = pathname.split('/')[1];                                                // 698
+    var archKeyCleaned = 'web.' + archKey.replace(/^__/, '');                            // 699
+                                                                                         // 700
+    if (! /^__/.test(archKey) || ! _.has(archPath, archKeyCleaned)) {                    // 701
+      archKey = WebApp.defaultArch;                                                      // 702
+    } else {                                                                             // 703
+      archKey = archKeyCleaned;                                                          // 704
     }                                                                                    // 705
                                                                                          // 706
-    res.writeHead(200, headers);                                                         // 707
-    res.write(boilerplate);                                                              // 708
-    res.end();                                                                           // 709
-    return undefined;                                                                    // 710
-  });                                                                                    // 711
-                                                                                         // 712
-  // Return 404 by default, if no other handlers serve this URL.                         // 713
-  app.use(function (req, res) {                                                          // 714
-    res.writeHead(404);                                                                  // 715
-    res.end();                                                                           // 716
-  });                                                                                    // 717
-                                                                                         // 718
-                                                                                         // 719
-  var httpServer = http.createServer(app);                                               // 720
-  var onListeningCallbacks = [];                                                         // 721
+    var boilerplate;                                                                     // 707
+    try {                                                                                // 708
+      boilerplate = getBoilerplate(request, archKey);                                    // 709
+    } catch (e) {                                                                        // 710
+      Log.error("Error running template: " + e);                                         // 711
+      res.writeHead(500, headers);                                                       // 712
+      res.end();                                                                         // 713
+      return undefined;                                                                  // 714
+    }                                                                                    // 715
+                                                                                         // 716
+    res.writeHead(200, headers);                                                         // 717
+    res.write(boilerplate);                                                              // 718
+    res.end();                                                                           // 719
+    return undefined;                                                                    // 720
+  });                                                                                    // 721
                                                                                          // 722
-  // After 5 seconds w/o data on a socket, kill it.  On the other hand, if               // 723
-  // there's an outstanding request, give it a higher timeout instead (to avoid          // 724
-  // killing long-polling requests)                                                      // 725
-  httpServer.setTimeout(SHORT_SOCKET_TIMEOUT);                                           // 726
-                                                                                         // 727
-  // Do this here, and then also in livedata/stream_server.js, because                   // 728
-  // stream_server.js kills all the current request handlers when installing its         // 729
-  // own.                                                                                // 730
-  httpServer.on('request', WebApp._timeoutAdjustmentRequestCallback);                    // 731
+  // Return 404 by default, if no other handlers serve this URL.                         // 723
+  app.use(function (req, res) {                                                          // 724
+    res.writeHead(404);                                                                  // 725
+    res.end();                                                                           // 726
+  });                                                                                    // 727
+                                                                                         // 728
+                                                                                         // 729
+  var httpServer = http.createServer(app);                                               // 730
+  var onListeningCallbacks = [];                                                         // 731
                                                                                          // 732
-                                                                                         // 733
-  // For now, handle SIGHUP here.  Later, this should be in some centralized             // 734
-  // Meteor shutdown code.                                                               // 735
-  process.on('SIGHUP', Meteor.bindEnvironment(function () {                              // 736
-    shuttingDown = true;                                                                 // 737
-    // tell others with websockets open that we plan to close this.                      // 738
-    // XXX: Eventually, this should be done with a standard meteor shut-down             // 739
-    // logic path.                                                                       // 740
-    httpServer.emit('meteor-closing');                                                   // 741
+  // After 5 seconds w/o data on a socket, kill it.  On the other hand, if               // 733
+  // there's an outstanding request, give it a higher timeout instead (to avoid          // 734
+  // killing long-polling requests)                                                      // 735
+  httpServer.setTimeout(SHORT_SOCKET_TIMEOUT);                                           // 736
+                                                                                         // 737
+  // Do this here, and then also in livedata/stream_server.js, because                   // 738
+  // stream_server.js kills all the current request handlers when installing its         // 739
+  // own.                                                                                // 740
+  httpServer.on('request', WebApp._timeoutAdjustmentRequestCallback);                    // 741
                                                                                          // 742
-    httpServer.close(Meteor.bindEnvironment(function () {                                // 743
-      if (proxy) {                                                                       // 744
-        try {                                                                            // 745
-          proxy.call('removeBindingsForJob', process.env.GALAXY_JOB);                    // 746
-        } catch (e) {                                                                    // 747
-          Log.error("Error removing bindings: " + e.message);                            // 748
-          process.exit(1);                                                               // 749
-        }                                                                                // 750
-      }                                                                                  // 751
-      process.exit(0);                                                                   // 752
-                                                                                         // 753
-    }, "On http server close failed"));                                                  // 754
-                                                                                         // 755
-    // Ideally we will close before this hits.                                           // 756
-    Meteor.setTimeout(function () {                                                      // 757
-      Log.warn("Closed by SIGHUP but one or more HTTP requests may not have finished."); // 758
-      process.exit(1);                                                                   // 759
-    }, 5000);                                                                            // 760
-                                                                                         // 761
-  }, function (err) {                                                                    // 762
-    console.log(err);                                                                    // 763
-    process.exit(1);                                                                     // 764
-  }));                                                                                   // 765
-                                                                                         // 766
-  // start up app                                                                        // 767
-  _.extend(WebApp, {                                                                     // 768
-    connectHandlers: packageAndAppHandlers,                                              // 769
-    rawConnectHandlers: rawConnectHandlers,                                              // 770
-    httpServer: httpServer,                                                              // 771
-    // For testing.                                                                      // 772
-    suppressConnectErrors: function () {                                                 // 773
-      suppressConnectErrors = true;                                                      // 774
-    },                                                                                   // 775
-    onListening: function (f) {                                                          // 776
-      if (onListeningCallbacks)                                                          // 777
-        onListeningCallbacks.push(f);                                                    // 778
-      else                                                                               // 779
-        f();                                                                             // 780
-    },                                                                                   // 781
-    // Hack: allow http tests to call connect.basicAuth without making them              // 782
-    // Npm.depends on another copy of connect. (That would be fine if we could           // 783
-    // have test-only NPM dependencies but is overkill here.)                            // 784
-    __basicAuth__: connect.basicAuth                                                     // 785
-  });                                                                                    // 786
-                                                                                         // 787
-  // Let the rest of the packages (and Meteor.startup hooks) insert connect              // 788
-  // middlewares and update __meteor_runtime_config__, then keep going to set up         // 789
-  // actually serving HTML.                                                              // 790
-  main = function (argv) {                                                               // 791
-    // main happens post startup hooks, so we don't need a Meteor.startup() to           // 792
-    // ensure this happens after the galaxy package is loaded.                           // 793
-    var AppConfig = Package["application-configuration"].AppConfig;                      // 794
-    // We used to use the optimist npm package to parse argv here, but it's              // 795
-    // overkill (and no longer in the dev bundle). Just assume any instance of           // 796
-    // '--keepalive' is a use of the option.                                             // 797
-    // XXX COMPAT WITH 0.9.2.2                                                           // 798
-    // We used to expect keepalives to be written to stdin every few                     // 799
-    // seconds; now we just check if the parent process is still alive                   // 800
-    // every few seconds.                                                                // 801
-    var expectKeepalives = _.contains(argv, '--keepalive');                              // 802
-    // XXX Saddest argument parsing ever, should we add optimist back to                 // 803
-    // the dev bundle?                                                                   // 804
-    var parentPid = null;                                                                // 805
-    var parentPidIndex = _.indexOf(argv, "--parent-pid");                                // 806
-    if (parentPidIndex !== -1) {                                                         // 807
-      parentPid = argv[parentPidIndex + 1];                                              // 808
-    }                                                                                    // 809
-    WebAppInternals.generateBoilerplate();                                               // 810
-                                                                                         // 811
-    // only start listening after all the startup code has run.                          // 812
-    var localPort = parseInt(process.env.PORT) || 0;                                     // 813
-    var host = process.env.BIND_IP;                                                      // 814
-    var localIp = host || '0.0.0.0';                                                     // 815
-    httpServer.listen(localPort, localIp, Meteor.bindEnvironment(function() {            // 816
-      if (expectKeepalives || parentPid)                                                 // 817
-        console.log("LISTENING"); // must match run-app.js                               // 818
-      var proxyBinding;                                                                  // 819
-                                                                                         // 820
-      AppConfig.configurePackage('webapp', function (configuration) {                    // 821
-        if (proxyBinding)                                                                // 822
-          proxyBinding.stop();                                                           // 823
-        if (configuration && configuration.proxy) {                                      // 824
-          // TODO: We got rid of the place where this checks the app's                   // 825
-          // configuration, because this wants to be configured for some things          // 826
-          // on a per-job basis.  Discuss w/ teammates.                                  // 827
-          proxyBinding = AppConfig.configureService(                                     // 828
-            "proxy",                                                                     // 829
-            "pre0",                                                                      // 830
-            function (proxyService) {                                                    // 831
-              if (proxyService && ! _.isEmpty(proxyService)) {                           // 832
-                var proxyConf;                                                           // 833
-                // XXX Figure out a per-job way to specify bind location                 // 834
-                // (besides hardcoding the location for ADMIN_APP jobs).                 // 835
-                if (process.env.ADMIN_APP) {                                             // 836
-                  var bindPathPrefix = "";                                               // 837
-                  if (process.env.GALAXY_APP !== "panel") {                              // 838
-                    bindPathPrefix = "/" + bindPathPrefix +                              // 839
-                      encodeURIComponent(                                                // 840
-                        process.env.GALAXY_APP                                           // 841
-                      ).replace(/\./g, '_');                                             // 842
-                  }                                                                      // 843
-                  proxyConf = {                                                          // 844
-                    bindHost: process.env.GALAXY_NAME,                                   // 845
-                    bindPathPrefix: bindPathPrefix,                                      // 846
-                    requiresAuth: true                                                   // 847
-                  };                                                                     // 848
-                } else {                                                                 // 849
-                  proxyConf = configuration.proxy;                                       // 850
-                }                                                                        // 851
-                Log("Attempting to bind to proxy at " +                                  // 852
-                    proxyService);                                                       // 853
-                WebAppInternals.bindToProxy(_.extend({                                   // 854
-                  proxyEndpoint: proxyService                                            // 855
-                }, proxyConf));                                                          // 856
-              }                                                                          // 857
-            }                                                                            // 858
-          );                                                                             // 859
-        }                                                                                // 860
-      });                                                                                // 861
-                                                                                         // 862
-      var callbacks = onListeningCallbacks;                                              // 863
-      onListeningCallbacks = null;                                                       // 864
-      _.each(callbacks, function (x) { x(); });                                          // 865
-                                                                                         // 866
-    }, function (e) {                                                                    // 867
-      console.error("Error listening:", e);                                              // 868
-      console.error(e && e.stack);                                                       // 869
-    }));                                                                                 // 870
-                                                                                         // 871
-    if (expectKeepalives) {                                                              // 872
-      initKeepalive();                                                                   // 873
-    }                                                                                    // 874
-    if (parentPid) {                                                                     // 875
-      startCheckForLiveParent(parentPid);                                                // 876
-    }                                                                                    // 877
-    return 'DAEMON';                                                                     // 878
-  };                                                                                     // 879
-};                                                                                       // 880
+                                                                                         // 743
+  // For now, handle SIGHUP here.  Later, this should be in some centralized             // 744
+  // Meteor shutdown code.                                                               // 745
+  process.on('SIGHUP', Meteor.bindEnvironment(function () {                              // 746
+    shuttingDown = true;                                                                 // 747
+    // tell others with websockets open that we plan to close this.                      // 748
+    // XXX: Eventually, this should be done with a standard meteor shut-down             // 749
+    // logic path.                                                                       // 750
+    httpServer.emit('meteor-closing');                                                   // 751
+                                                                                         // 752
+    httpServer.close(Meteor.bindEnvironment(function () {                                // 753
+      if (proxy) {                                                                       // 754
+        try {                                                                            // 755
+          proxy.call('removeBindingsForJob', process.env.GALAXY_JOB);                    // 756
+        } catch (e) {                                                                    // 757
+          Log.error("Error removing bindings: " + e.message);                            // 758
+          process.exit(1);                                                               // 759
+        }                                                                                // 760
+      }                                                                                  // 761
+      process.exit(0);                                                                   // 762
+                                                                                         // 763
+    }, "On http server close failed"));                                                  // 764
+                                                                                         // 765
+    // Ideally we will close before this hits.                                           // 766
+    Meteor.setTimeout(function () {                                                      // 767
+      Log.warn("Closed by SIGHUP but one or more HTTP requests may not have finished."); // 768
+      process.exit(1);                                                                   // 769
+    }, 5000);                                                                            // 770
+                                                                                         // 771
+  }, function (err) {                                                                    // 772
+    console.log(err);                                                                    // 773
+    process.exit(1);                                                                     // 774
+  }));                                                                                   // 775
+                                                                                         // 776
+  // start up app                                                                        // 777
+  _.extend(WebApp, {                                                                     // 778
+    connectHandlers: packageAndAppHandlers,                                              // 779
+    rawConnectHandlers: rawConnectHandlers,                                              // 780
+    httpServer: httpServer,                                                              // 781
+    // For testing.                                                                      // 782
+    suppressConnectErrors: function () {                                                 // 783
+      suppressConnectErrors = true;                                                      // 784
+    },                                                                                   // 785
+    onListening: function (f) {                                                          // 786
+      if (onListeningCallbacks)                                                          // 787
+        onListeningCallbacks.push(f);                                                    // 788
+      else                                                                               // 789
+        f();                                                                             // 790
+    },                                                                                   // 791
+    // Hack: allow http tests to call connect.basicAuth without making them              // 792
+    // Npm.depends on another copy of connect. (That would be fine if we could           // 793
+    // have test-only NPM dependencies but is overkill here.)                            // 794
+    __basicAuth__: connect.basicAuth                                                     // 795
+  });                                                                                    // 796
+                                                                                         // 797
+  // Let the rest of the packages (and Meteor.startup hooks) insert connect              // 798
+  // middlewares and update __meteor_runtime_config__, then keep going to set up         // 799
+  // actually serving HTML.                                                              // 800
+  main = function (argv) {                                                               // 801
+    // main happens post startup hooks, so we don't need a Meteor.startup() to           // 802
+    // ensure this happens after the galaxy package is loaded.                           // 803
+    var AppConfig = Package["application-configuration"].AppConfig;                      // 804
+    // We used to use the optimist npm package to parse argv here, but it's              // 805
+    // overkill (and no longer in the dev bundle). Just assume any instance of           // 806
+    // '--keepalive' is a use of the option.                                             // 807
+    // XXX COMPAT WITH 0.9.2.2                                                           // 808
+    // We used to expect keepalives to be written to stdin every few                     // 809
+    // seconds; now we just check if the parent process is still alive                   // 810
+    // every few seconds.                                                                // 811
+    var expectKeepalives = _.contains(argv, '--keepalive');                              // 812
+    // XXX Saddest argument parsing ever, should we add optimist back to                 // 813
+    // the dev bundle?                                                                   // 814
+    var parentPid = null;                                                                // 815
+    var parentPidIndex = _.indexOf(argv, "--parent-pid");                                // 816
+    if (parentPidIndex !== -1) {                                                         // 817
+      parentPid = argv[parentPidIndex + 1];                                              // 818
+    }                                                                                    // 819
+    WebAppInternals.generateBoilerplate();                                               // 820
+                                                                                         // 821
+    // only start listening after all the startup code has run.                          // 822
+    var localPort = parseInt(process.env.PORT) || 0;                                     // 823
+    var host = process.env.BIND_IP;                                                      // 824
+    var localIp = host || '0.0.0.0';                                                     // 825
+    httpServer.listen(localPort, localIp, Meteor.bindEnvironment(function() {            // 826
+      if (expectKeepalives || parentPid)                                                 // 827
+        console.log("LISTENING"); // must match run-app.js                               // 828
+      var proxyBinding;                                                                  // 829
+                                                                                         // 830
+      AppConfig.configurePackage('webapp', function (configuration) {                    // 831
+        if (proxyBinding)                                                                // 832
+          proxyBinding.stop();                                                           // 833
+        if (configuration && configuration.proxy) {                                      // 834
+          // TODO: We got rid of the place where this checks the app's                   // 835
+          // configuration, because this wants to be configured for some things          // 836
+          // on a per-job basis.  Discuss w/ teammates.                                  // 837
+          proxyBinding = AppConfig.configureService(                                     // 838
+            "proxy",                                                                     // 839
+            "pre0",                                                                      // 840
+            function (proxyService) {                                                    // 841
+              if (proxyService && ! _.isEmpty(proxyService)) {                           // 842
+                var proxyConf;                                                           // 843
+                // XXX Figure out a per-job way to specify bind location                 // 844
+                // (besides hardcoding the location for ADMIN_APP jobs).                 // 845
+                if (process.env.ADMIN_APP) {                                             // 846
+                  var bindPathPrefix = "";                                               // 847
+                  if (process.env.GALAXY_APP !== "panel") {                              // 848
+                    bindPathPrefix = "/" + bindPathPrefix +                              // 849
+                      encodeURIComponent(                                                // 850
+                        process.env.GALAXY_APP                                           // 851
+                      ).replace(/\./g, '_');                                             // 852
+                  }                                                                      // 853
+                  proxyConf = {                                                          // 854
+                    bindHost: process.env.GALAXY_NAME,                                   // 855
+                    bindPathPrefix: bindPathPrefix,                                      // 856
+                    requiresAuth: true                                                   // 857
+                  };                                                                     // 858
+                } else {                                                                 // 859
+                  proxyConf = configuration.proxy;                                       // 860
+                }                                                                        // 861
+                Log("Attempting to bind to proxy at " +                                  // 862
+                    proxyService);                                                       // 863
+                WebAppInternals.bindToProxy(_.extend({                                   // 864
+                  proxyEndpoint: proxyService                                            // 865
+                }, proxyConf));                                                          // 866
+              }                                                                          // 867
+            }                                                                            // 868
+          );                                                                             // 869
+        }                                                                                // 870
+      });                                                                                // 871
+                                                                                         // 872
+      var callbacks = onListeningCallbacks;                                              // 873
+      onListeningCallbacks = null;                                                       // 874
+      _.each(callbacks, function (x) { x(); });                                          // 875
+                                                                                         // 876
+    }, function (e) {                                                                    // 877
+      console.error("Error listening:", e);                                              // 878
+      console.error(e && e.stack);                                                       // 879
+    }));                                                                                 // 880
                                                                                          // 881
-                                                                                         // 882
-var proxy;                                                                               // 883
-WebAppInternals.bindToProxy = function (proxyConfig) {                                   // 884
-  var securePort = proxyConfig.securePort || 4433;                                       // 885
-  var insecurePort = proxyConfig.insecurePort || 8080;                                   // 886
-  var bindPathPrefix = proxyConfig.bindPathPrefix || "";                                 // 887
-  // XXX also support galaxy-based lookup                                                // 888
-  if (!proxyConfig.proxyEndpoint)                                                        // 889
-    throw new Error("missing proxyEndpoint");                                            // 890
-  if (!proxyConfig.bindHost)                                                             // 891
-    throw new Error("missing bindHost");                                                 // 892
-  if (!process.env.GALAXY_JOB)                                                           // 893
-    throw new Error("missing $GALAXY_JOB");                                              // 894
-  if (!process.env.GALAXY_APP)                                                           // 895
-    throw new Error("missing $GALAXY_APP");                                              // 896
-  if (!process.env.LAST_START)                                                           // 897
-    throw new Error("missing $LAST_START");                                              // 898
-                                                                                         // 899
-  // XXX rename pid argument to bindTo.                                                  // 900
-  // XXX factor out into a 'getPid' function in a 'galaxy' package?                      // 901
-  var pid = {                                                                            // 902
-    job: process.env.GALAXY_JOB,                                                         // 903
-    lastStarted: +(process.env.LAST_START),                                              // 904
-    app: process.env.GALAXY_APP                                                          // 905
-  };                                                                                     // 906
-  var myHost = os.hostname();                                                            // 907
-                                                                                         // 908
-  WebAppInternals.usingDdpProxy = true;                                                  // 909
-                                                                                         // 910
-  // This is run after packages are loaded (in main) so we can use                       // 911
-  // Follower.connect.                                                                   // 912
-  if (proxy) {                                                                           // 913
-    // XXX the concept here is that our configuration has changed and                    // 914
-    // we have connected to an entirely new follower set, which does                     // 915
-    // not have the state that we set up on the follower set that we                     // 916
-    // were previously connected to, and so we need to recreate all of                   // 917
-    // our bindings -- analogous to getting a SIGHUP and rereading                       // 918
-    // your configuration file. so probably this should actually tear                    // 919
-    // down the connection and make a whole new one, rather than                         // 920
-    // hot-reconnecting to a different URL.                                              // 921
-    proxy.reconnect({                                                                    // 922
-      url: proxyConfig.proxyEndpoint                                                     // 923
-    });                                                                                  // 924
-  } else {                                                                               // 925
-    proxy = Package["follower-livedata"].Follower.connect(                               // 926
-      proxyConfig.proxyEndpoint, {                                                       // 927
-        group: "proxy"                                                                   // 928
-      }                                                                                  // 929
-    );                                                                                   // 930
-  }                                                                                      // 931
-                                                                                         // 932
-  var route = process.env.ROUTE;                                                         // 933
-  var ourHost = route.split(":")[0];                                                     // 934
-  var ourPort = +route.split(":")[1];                                                    // 935
-                                                                                         // 936
-  var outstanding = 0;                                                                   // 937
-  var startedAll = false;                                                                // 938
-  var checkComplete = function () {                                                      // 939
-    if (startedAll && ! outstanding)                                                     // 940
-      Log("Bound to proxy.");                                                            // 941
-  };                                                                                     // 942
-  var makeCallback = function () {                                                       // 943
-    outstanding++;                                                                       // 944
-    return function (err) {                                                              // 945
-      if (err)                                                                           // 946
-        throw err;                                                                       // 947
-      outstanding--;                                                                     // 948
-      checkComplete();                                                                   // 949
-    };                                                                                   // 950
-  };                                                                                     // 951
-                                                                                         // 952
-  // for now, have our (temporary) requiresAuth flag apply to all                        // 953
-  // routes created by this process.                                                     // 954
-  var requiresDdpAuth = !! proxyConfig.requiresAuth;                                     // 955
-  var requiresHttpAuth = (!! proxyConfig.requiresAuth) &&                                // 956
-        (pid.app !== "panel" && pid.app !== "auth");                                     // 957
-                                                                                         // 958
-  // XXX a current limitation is that we treat securePort and                            // 959
-  // insecurePort as a global configuration parameter -- we assume                       // 960
-  // that if the proxy wants us to ask for 8080 to get port 80 traffic                   // 961
-  // on our default hostname, that's the same port that we would use                     // 962
-  // to get traffic on some other hostname that our proxy listens                        // 963
-  // for. Likewise, we assume that if the proxy can receive secure                       // 964
-  // traffic for our domain, it can assume secure traffic for any                        // 965
-  // domain! Hopefully this will get cleaned up before too long by                       // 966
-  // pushing that logic into the proxy service, so we can just ask for                   // 967
-  // port 80.                                                                            // 968
-                                                                                         // 969
-  // XXX BUG: if our configuration changes, and bindPathPrefix                           // 970
-  // changes, it appears that we will not remove the routes derived                      // 971
-  // from the old bindPathPrefix from the proxy (until the process                       // 972
-  // exits). It is not actually normal for bindPathPrefix to change,                     // 973
-  // certainly not without a process restart for other reasons, but                      // 974
-  // it'd be nice to fix.                                                                // 975
-                                                                                         // 976
-  _.each(routes, function (route) {                                                      // 977
-    var parsedUrl = url.parse(route.url, /* parseQueryString */ false,                   // 978
-                              /* slashesDenoteHost aka workRight */ true);               // 979
-    if (parsedUrl.protocol || parsedUrl.port || parsedUrl.search)                        // 980
-      throw new Error("Bad url");                                                        // 981
-    parsedUrl.host = null;                                                               // 982
-    parsedUrl.path = null;                                                               // 983
-    if (! parsedUrl.hostname) {                                                          // 984
-      parsedUrl.hostname = proxyConfig.bindHost;                                         // 985
-      if (! parsedUrl.pathname)                                                          // 986
-        parsedUrl.pathname = "";                                                         // 987
-      if (! parsedUrl.pathname.indexOf("/") !== 0) {                                     // 988
-        // Relative path                                                                 // 989
-        parsedUrl.pathname = bindPathPrefix + parsedUrl.pathname;                        // 990
-      }                                                                                  // 991
-    }                                                                                    // 992
-    var version = "";                                                                    // 993
-                                                                                         // 994
-    var AppConfig = Package["application-configuration"].AppConfig;                      // 995
-    version = AppConfig.getStarForThisJob() || "";                                       // 996
-                                                                                         // 997
-                                                                                         // 998
-    var parsedDdpUrl = _.clone(parsedUrl);                                               // 999
-    parsedDdpUrl.protocol = "ddp";                                                       // 1000
-    // Node has a hardcoded list of protocols that get '://' instead                     // 1001
-    // of ':'. ddp needs to be added to that whitelist. Until then, we                   // 1002
-    // can set the undocumented attribute 'slashes' to get the right                     // 1003
-    // behavior. It's not clear whether than is by design or accident.                   // 1004
-    parsedDdpUrl.slashes = true;                                                         // 1005
-    parsedDdpUrl.port = '' + securePort;                                                 // 1006
-    var ddpUrl = url.format(parsedDdpUrl);                                               // 1007
+    if (expectKeepalives) {                                                              // 882
+      initKeepalive();                                                                   // 883
+    }                                                                                    // 884
+    if (parentPid) {                                                                     // 885
+      startCheckForLiveParent(parentPid);                                                // 886
+    }                                                                                    // 887
+    return 'DAEMON';                                                                     // 888
+  };                                                                                     // 889
+};                                                                                       // 890
+                                                                                         // 891
+                                                                                         // 892
+var proxy;                                                                               // 893
+WebAppInternals.bindToProxy = function (proxyConfig) {                                   // 894
+  var securePort = proxyConfig.securePort || 4433;                                       // 895
+  var insecurePort = proxyConfig.insecurePort || 8080;                                   // 896
+  var bindPathPrefix = proxyConfig.bindPathPrefix || "";                                 // 897
+  // XXX also support galaxy-based lookup                                                // 898
+  if (!proxyConfig.proxyEndpoint)                                                        // 899
+    throw new Error("missing proxyEndpoint");                                            // 900
+  if (!proxyConfig.bindHost)                                                             // 901
+    throw new Error("missing bindHost");                                                 // 902
+  if (!process.env.GALAXY_JOB)                                                           // 903
+    throw new Error("missing $GALAXY_JOB");                                              // 904
+  if (!process.env.GALAXY_APP)                                                           // 905
+    throw new Error("missing $GALAXY_APP");                                              // 906
+  if (!process.env.LAST_START)                                                           // 907
+    throw new Error("missing $LAST_START");                                              // 908
+                                                                                         // 909
+  // XXX rename pid argument to bindTo.                                                  // 910
+  // XXX factor out into a 'getPid' function in a 'galaxy' package?                      // 911
+  var pid = {                                                                            // 912
+    job: process.env.GALAXY_JOB,                                                         // 913
+    lastStarted: +(process.env.LAST_START),                                              // 914
+    app: process.env.GALAXY_APP                                                          // 915
+  };                                                                                     // 916
+  var myHost = os.hostname();                                                            // 917
+                                                                                         // 918
+  WebAppInternals.usingDdpProxy = true;                                                  // 919
+                                                                                         // 920
+  // This is run after packages are loaded (in main) so we can use                       // 921
+  // Follower.connect.                                                                   // 922
+  if (proxy) {                                                                           // 923
+    // XXX the concept here is that our configuration has changed and                    // 924
+    // we have connected to an entirely new follower set, which does                     // 925
+    // not have the state that we set up on the follower set that we                     // 926
+    // were previously connected to, and so we need to recreate all of                   // 927
+    // our bindings -- analogous to getting a SIGHUP and rereading                       // 928
+    // your configuration file. so probably this should actually tear                    // 929
+    // down the connection and make a whole new one, rather than                         // 930
+    // hot-reconnecting to a different URL.                                              // 931
+    proxy.reconnect({                                                                    // 932
+      url: proxyConfig.proxyEndpoint                                                     // 933
+    });                                                                                  // 934
+  } else {                                                                               // 935
+    proxy = Package["follower-livedata"].Follower.connect(                               // 936
+      proxyConfig.proxyEndpoint, {                                                       // 937
+        group: "proxy"                                                                   // 938
+      }                                                                                  // 939
+    );                                                                                   // 940
+  }                                                                                      // 941
+                                                                                         // 942
+  var route = process.env.ROUTE;                                                         // 943
+  var ourHost = route.split(":")[0];                                                     // 944
+  var ourPort = +route.split(":")[1];                                                    // 945
+                                                                                         // 946
+  var outstanding = 0;                                                                   // 947
+  var startedAll = false;                                                                // 948
+  var checkComplete = function () {                                                      // 949
+    if (startedAll && ! outstanding)                                                     // 950
+      Log("Bound to proxy.");                                                            // 951
+  };                                                                                     // 952
+  var makeCallback = function () {                                                       // 953
+    outstanding++;                                                                       // 954
+    return function (err) {                                                              // 955
+      if (err)                                                                           // 956
+        throw err;                                                                       // 957
+      outstanding--;                                                                     // 958
+      checkComplete();                                                                   // 959
+    };                                                                                   // 960
+  };                                                                                     // 961
+                                                                                         // 962
+  // for now, have our (temporary) requiresAuth flag apply to all                        // 963
+  // routes created by this process.                                                     // 964
+  var requiresDdpAuth = !! proxyConfig.requiresAuth;                                     // 965
+  var requiresHttpAuth = (!! proxyConfig.requiresAuth) &&                                // 966
+        (pid.app !== "panel" && pid.app !== "auth");                                     // 967
+                                                                                         // 968
+  // XXX a current limitation is that we treat securePort and                            // 969
+  // insecurePort as a global configuration parameter -- we assume                       // 970
+  // that if the proxy wants us to ask for 8080 to get port 80 traffic                   // 971
+  // on our default hostname, that's the same port that we would use                     // 972
+  // to get traffic on some other hostname that our proxy listens                        // 973
+  // for. Likewise, we assume that if the proxy can receive secure                       // 974
+  // traffic for our domain, it can assume secure traffic for any                        // 975
+  // domain! Hopefully this will get cleaned up before too long by                       // 976
+  // pushing that logic into the proxy service, so we can just ask for                   // 977
+  // port 80.                                                                            // 978
+                                                                                         // 979
+  // XXX BUG: if our configuration changes, and bindPathPrefix                           // 980
+  // changes, it appears that we will not remove the routes derived                      // 981
+  // from the old bindPathPrefix from the proxy (until the process                       // 982
+  // exits). It is not actually normal for bindPathPrefix to change,                     // 983
+  // certainly not without a process restart for other reasons, but                      // 984
+  // it'd be nice to fix.                                                                // 985
+                                                                                         // 986
+  _.each(routes, function (route) {                                                      // 987
+    var parsedUrl = url.parse(route.url, /* parseQueryString */ false,                   // 988
+                              /* slashesDenoteHost aka workRight */ true);               // 989
+    if (parsedUrl.protocol || parsedUrl.port || parsedUrl.search)                        // 990
+      throw new Error("Bad url");                                                        // 991
+    parsedUrl.host = null;                                                               // 992
+    parsedUrl.path = null;                                                               // 993
+    if (! parsedUrl.hostname) {                                                          // 994
+      parsedUrl.hostname = proxyConfig.bindHost;                                         // 995
+      if (! parsedUrl.pathname)                                                          // 996
+        parsedUrl.pathname = "";                                                         // 997
+      if (! parsedUrl.pathname.indexOf("/") !== 0) {                                     // 998
+        // Relative path                                                                 // 999
+        parsedUrl.pathname = bindPathPrefix + parsedUrl.pathname;                        // 1000
+      }                                                                                  // 1001
+    }                                                                                    // 1002
+    var version = "";                                                                    // 1003
+                                                                                         // 1004
+    var AppConfig = Package["application-configuration"].AppConfig;                      // 1005
+    version = AppConfig.getStarForThisJob() || "";                                       // 1006
+                                                                                         // 1007
                                                                                          // 1008
-    var proxyToHost, proxyToPort, proxyToPathPrefix;                                     // 1009
-    if (! _.has(route, 'forwardTo')) {                                                   // 1010
-      proxyToHost = ourHost;                                                             // 1011
-      proxyToPort = ourPort;                                                             // 1012
-      proxyToPathPrefix = parsedUrl.pathname;                                            // 1013
-    } else {                                                                             // 1014
-      var parsedFwdUrl = url.parse(route.forwardTo, false, true);                        // 1015
-      if (! parsedFwdUrl.hostname || parsedFwdUrl.protocol)                              // 1016
-        throw new Error("Bad forward url");                                              // 1017
-      proxyToHost = parsedFwdUrl.hostname;                                               // 1018
-      proxyToPort = parseInt(parsedFwdUrl.port || "80");                                 // 1019
-      proxyToPathPrefix = parsedFwdUrl.pathname || "";                                   // 1020
-    }                                                                                    // 1021
-                                                                                         // 1022
-    if (route.ddp) {                                                                     // 1023
-      proxy.call('bindDdp', {                                                            // 1024
-        pid: pid,                                                                        // 1025
-        bindTo: {                                                                        // 1026
-          ddpUrl: ddpUrl,                                                                // 1027
-          insecurePort: insecurePort                                                     // 1028
-        },                                                                               // 1029
-        proxyTo: {                                                                       // 1030
-          tags: [version],                                                               // 1031
-          host: proxyToHost,                                                             // 1032
-          port: proxyToPort,                                                             // 1033
-          pathPrefix: proxyToPathPrefix + '/websocket'                                   // 1034
-        },                                                                               // 1035
-        requiresAuth: requiresDdpAuth                                                    // 1036
-      }, makeCallback());                                                                // 1037
-    }                                                                                    // 1038
-                                                                                         // 1039
-    if (route.http) {                                                                    // 1040
-      proxy.call('bindHttp', {                                                           // 1041
-        pid: pid,                                                                        // 1042
-        bindTo: {                                                                        // 1043
-          host: parsedUrl.hostname,                                                      // 1044
-          port: insecurePort,                                                            // 1045
-          pathPrefix: parsedUrl.pathname                                                 // 1046
-        },                                                                               // 1047
-        proxyTo: {                                                                       // 1048
-          tags: [version],                                                               // 1049
-          host: proxyToHost,                                                             // 1050
-          port: proxyToPort,                                                             // 1051
-          pathPrefix: proxyToPathPrefix                                                  // 1052
-        },                                                                               // 1053
-        requiresAuth: requiresHttpAuth                                                   // 1054
-      }, makeCallback());                                                                // 1055
-                                                                                         // 1056
-      // Only make the secure binding if we've been told that the                        // 1057
-      // proxy knows how terminate secure connections for us (has an                     // 1058
-      // appropriate cert, can bind the necessary port..)                                // 1059
-      if (proxyConfig.securePort !== null) {                                             // 1060
-        proxy.call('bindHttp', {                                                         // 1061
-          pid: pid,                                                                      // 1062
-          bindTo: {                                                                      // 1063
-            host: parsedUrl.hostname,                                                    // 1064
-            port: securePort,                                                            // 1065
-            pathPrefix: parsedUrl.pathname,                                              // 1066
-            ssl: true                                                                    // 1067
-          },                                                                             // 1068
-          proxyTo: {                                                                     // 1069
-            tags: [version],                                                             // 1070
-            host: proxyToHost,                                                           // 1071
-            port: proxyToPort,                                                           // 1072
-            pathPrefix: proxyToPathPrefix                                                // 1073
-          },                                                                             // 1074
-          requiresAuth: requiresHttpAuth                                                 // 1075
-        }, makeCallback());                                                              // 1076
-      }                                                                                  // 1077
-    }                                                                                    // 1078
-  });                                                                                    // 1079
-                                                                                         // 1080
-  startedAll = true;                                                                     // 1081
-  checkComplete();                                                                       // 1082
-};                                                                                       // 1083
-                                                                                         // 1084
-// (Internal, unsupported interface -- subject to change)                                // 1085
-//                                                                                       // 1086
-// Listen for HTTP and/or DDP traffic and route it somewhere. Only                       // 1087
-// takes effect when using a proxy service.                                              // 1088
-//                                                                                       // 1089
-// 'url' is the traffic that we want to route, interpreted relative to                   // 1090
-// the default URL where this app has been told to serve itself. It                      // 1091
-// may not have a scheme or port, but it may have a host and a path,                     // 1092
-// and if no host is provided the path need not be absolute. The                         // 1093
-// following cases are possible:                                                         // 1094
-//                                                                                       // 1095
-//   //somehost.com                                                                      // 1096
-//     All incoming traffic for 'somehost.com'                                           // 1097
-//   //somehost.com/foo/bar                                                              // 1098
-//     All incoming traffic for 'somehost.com', but only when                            // 1099
-//     the first two path components are 'foo' and 'bar'.                                // 1100
-//   /foo/bar                                                                            // 1101
-//     Incoming traffic on our default host, but only when the                           // 1102
-//     first two path components are 'foo' and 'bar'.                                    // 1103
-//   foo/bar                                                                             // 1104
-//     Incoming traffic on our default host, but only when the path                      // 1105
-//     starts with our default path prefix, followed by 'foo' and                        // 1106
-//     'bar'.                                                                            // 1107
-//                                                                                       // 1108
-// (Yes, these scheme-less URLs that start with '//' are legal URLs.)                    // 1109
-//                                                                                       // 1110
-// You can select either DDP traffic, HTTP traffic, or both. Both                        // 1111
-// secure and insecure traffic will be gathered (assuming the proxy                      // 1112
-// service is capable, eg, has appropriate certs and port mappings).                     // 1113
-//                                                                                       // 1114
-// With no 'forwardTo' option, the traffic is received by this process                   // 1115
-// for service by the hooks in this 'webapp' package. The original URL                   // 1116
-// is preserved (that is, if you bind "/a", and a user visits "/a/b",                    // 1117
-// the app receives a request with a path of "/a/b", not a path of                       // 1118
-// "/b").                                                                                // 1119
+    var parsedDdpUrl = _.clone(parsedUrl);                                               // 1009
+    parsedDdpUrl.protocol = "ddp";                                                       // 1010
+    // Node has a hardcoded list of protocols that get '://' instead                     // 1011
+    // of ':'. ddp needs to be added to that whitelist. Until then, we                   // 1012
+    // can set the undocumented attribute 'slashes' to get the right                     // 1013
+    // behavior. It's not clear whether than is by design or accident.                   // 1014
+    parsedDdpUrl.slashes = true;                                                         // 1015
+    parsedDdpUrl.port = '' + securePort;                                                 // 1016
+    var ddpUrl = url.format(parsedDdpUrl);                                               // 1017
+                                                                                         // 1018
+    var proxyToHost, proxyToPort, proxyToPathPrefix;                                     // 1019
+    if (! _.has(route, 'forwardTo')) {                                                   // 1020
+      proxyToHost = ourHost;                                                             // 1021
+      proxyToPort = ourPort;                                                             // 1022
+      proxyToPathPrefix = parsedUrl.pathname;                                            // 1023
+    } else {                                                                             // 1024
+      var parsedFwdUrl = url.parse(route.forwardTo, false, true);                        // 1025
+      if (! parsedFwdUrl.hostname || parsedFwdUrl.protocol)                              // 1026
+        throw new Error("Bad forward url");                                              // 1027
+      proxyToHost = parsedFwdUrl.hostname;                                               // 1028
+      proxyToPort = parseInt(parsedFwdUrl.port || "80");                                 // 1029
+      proxyToPathPrefix = parsedFwdUrl.pathname || "";                                   // 1030
+    }                                                                                    // 1031
+                                                                                         // 1032
+    if (route.ddp) {                                                                     // 1033
+      proxy.call('bindDdp', {                                                            // 1034
+        pid: pid,                                                                        // 1035
+        bindTo: {                                                                        // 1036
+          ddpUrl: ddpUrl,                                                                // 1037
+          insecurePort: insecurePort                                                     // 1038
+        },                                                                               // 1039
+        proxyTo: {                                                                       // 1040
+          tags: [version],                                                               // 1041
+          host: proxyToHost,                                                             // 1042
+          port: proxyToPort,                                                             // 1043
+          pathPrefix: proxyToPathPrefix + '/websocket'                                   // 1044
+        },                                                                               // 1045
+        requiresAuth: requiresDdpAuth                                                    // 1046
+      }, makeCallback());                                                                // 1047
+    }                                                                                    // 1048
+                                                                                         // 1049
+    if (route.http) {                                                                    // 1050
+      proxy.call('bindHttp', {                                                           // 1051
+        pid: pid,                                                                        // 1052
+        bindTo: {                                                                        // 1053
+          host: parsedUrl.hostname,                                                      // 1054
+          port: insecurePort,                                                            // 1055
+          pathPrefix: parsedUrl.pathname                                                 // 1056
+        },                                                                               // 1057
+        proxyTo: {                                                                       // 1058
+          tags: [version],                                                               // 1059
+          host: proxyToHost,                                                             // 1060
+          port: proxyToPort,                                                             // 1061
+          pathPrefix: proxyToPathPrefix                                                  // 1062
+        },                                                                               // 1063
+        requiresAuth: requiresHttpAuth                                                   // 1064
+      }, makeCallback());                                                                // 1065
+                                                                                         // 1066
+      // Only make the secure binding if we've been told that the                        // 1067
+      // proxy knows how terminate secure connections for us (has an                     // 1068
+      // appropriate cert, can bind the necessary port..)                                // 1069
+      if (proxyConfig.securePort !== null) {                                             // 1070
+        proxy.call('bindHttp', {                                                         // 1071
+          pid: pid,                                                                      // 1072
+          bindTo: {                                                                      // 1073
+            host: parsedUrl.hostname,                                                    // 1074
+            port: securePort,                                                            // 1075
+            pathPrefix: parsedUrl.pathname,                                              // 1076
+            ssl: true                                                                    // 1077
+          },                                                                             // 1078
+          proxyTo: {                                                                     // 1079
+            tags: [version],                                                             // 1080
+            host: proxyToHost,                                                           // 1081
+            port: proxyToPort,                                                           // 1082
+            pathPrefix: proxyToPathPrefix                                                // 1083
+          },                                                                             // 1084
+          requiresAuth: requiresHttpAuth                                                 // 1085
+        }, makeCallback());                                                              // 1086
+      }                                                                                  // 1087
+    }                                                                                    // 1088
+  });                                                                                    // 1089
+                                                                                         // 1090
+  startedAll = true;                                                                     // 1091
+  checkComplete();                                                                       // 1092
+};                                                                                       // 1093
+                                                                                         // 1094
+// (Internal, unsupported interface -- subject to change)                                // 1095
+//                                                                                       // 1096
+// Listen for HTTP and/or DDP traffic and route it somewhere. Only                       // 1097
+// takes effect when using a proxy service.                                              // 1098
+//                                                                                       // 1099
+// 'url' is the traffic that we want to route, interpreted relative to                   // 1100
+// the default URL where this app has been told to serve itself. It                      // 1101
+// may not have a scheme or port, but it may have a host and a path,                     // 1102
+// and if no host is provided the path need not be absolute. The                         // 1103
+// following cases are possible:                                                         // 1104
+//                                                                                       // 1105
+//   //somehost.com                                                                      // 1106
+//     All incoming traffic for 'somehost.com'                                           // 1107
+//   //somehost.com/foo/bar                                                              // 1108
+//     All incoming traffic for 'somehost.com', but only when                            // 1109
+//     the first two path components are 'foo' and 'bar'.                                // 1110
+//   /foo/bar                                                                            // 1111
+//     Incoming traffic on our default host, but only when the                           // 1112
+//     first two path components are 'foo' and 'bar'.                                    // 1113
+//   foo/bar                                                                             // 1114
+//     Incoming traffic on our default host, but only when the path                      // 1115
+//     starts with our default path prefix, followed by 'foo' and                        // 1116
+//     'bar'.                                                                            // 1117
+//                                                                                       // 1118
+// (Yes, these scheme-less URLs that start with '//' are legal URLs.)                    // 1119
 //                                                                                       // 1120
-// With 'forwardTo', the process is instead sent to some other remote                    // 1121
-// host. The URL is adjusted by stripping the path components in 'url'                   // 1122
-// and putting the path components in the 'forwardTo' URL in their                       // 1123
-// place. For example, if you forward "//somehost/a" to                                  // 1124
-// "//otherhost/x", and the user types "//somehost/a/b" into their                       // 1125
-// browser, then otherhost will receive a request with a Host header                     // 1126
-// of "somehost" and a path of "/x/b".                                                   // 1127
-//                                                                                       // 1128
-// The routing continues until this process exits. For now, all of the                   // 1129
-// routes must be set up ahead of time, before the initial                               // 1130
-// registration with the proxy. Calling addRoute from the top level of                   // 1131
-// your JS should do the trick.                                                          // 1132
-//                                                                                       // 1133
-// When multiple routes are present that match a given request, the                      // 1134
-// most specific route wins. When routes with equal specificity are                      // 1135
-// present, the proxy service will distribute the traffic between                        // 1136
-// them.                                                                                 // 1137
+// You can select either DDP traffic, HTTP traffic, or both. Both                        // 1121
+// secure and insecure traffic will be gathered (assuming the proxy                      // 1122
+// service is capable, eg, has appropriate certs and port mappings).                     // 1123
+//                                                                                       // 1124
+// With no 'forwardTo' option, the traffic is received by this process                   // 1125
+// for service by the hooks in this 'webapp' package. The original URL                   // 1126
+// is preserved (that is, if you bind "/a", and a user visits "/a/b",                    // 1127
+// the app receives a request with a path of "/a/b", not a path of                       // 1128
+// "/b").                                                                                // 1129
+//                                                                                       // 1130
+// With 'forwardTo', the process is instead sent to some other remote                    // 1131
+// host. The URL is adjusted by stripping the path components in 'url'                   // 1132
+// and putting the path components in the 'forwardTo' URL in their                       // 1133
+// place. For example, if you forward "//somehost/a" to                                  // 1134
+// "//otherhost/x", and the user types "//somehost/a/b" into their                       // 1135
+// browser, then otherhost will receive a request with a Host header                     // 1136
+// of "somehost" and a path of "/x/b".                                                   // 1137
 //                                                                                       // 1138
-// options may be:                                                                       // 1139
-// - ddp: if true, the default, include DDP traffic. This includes                       // 1140
-//   both secure and insecure traffic, and both websocket and sockjs                     // 1141
-//   transports.                                                                         // 1142
-// - http: if true, the default, include HTTP/HTTPS traffic.                             // 1143
-// - forwardTo: if provided, should be a URL with a host, optional                       // 1144
-//   path and port, and no scheme (the scheme will be derived from the                   // 1145
-//   traffic type; for now it will always be a http or ws connection,                    // 1146
-//   never https or wss, but we could add a forwardSecure flag to                        // 1147
-//   re-encrypt).                                                                        // 1148
-var routes = [];                                                                         // 1149
-WebAppInternals.addRoute = function (url, options) {                                     // 1150
-  options = _.extend({                                                                   // 1151
-    ddp: true,                                                                           // 1152
-    http: true                                                                           // 1153
-  }, options || {});                                                                     // 1154
-                                                                                         // 1155
-  if (proxy)                                                                             // 1156
-    // In the future, lift this restriction                                              // 1157
-    throw new Error("Too late to add routes");                                           // 1158
-                                                                                         // 1159
-  routes.push(_.extend({ url: url }, options));                                          // 1160
-};                                                                                       // 1161
-                                                                                         // 1162
-// Receive traffic on our default URL.                                                   // 1163
-WebAppInternals.addRoute("");                                                            // 1164
+// The routing continues until this process exits. For now, all of the                   // 1139
+// routes must be set up ahead of time, before the initial                               // 1140
+// registration with the proxy. Calling addRoute from the top level of                   // 1141
+// your JS should do the trick.                                                          // 1142
+//                                                                                       // 1143
+// When multiple routes are present that match a given request, the                      // 1144
+// most specific route wins. When routes with equal specificity are                      // 1145
+// present, the proxy service will distribute the traffic between                        // 1146
+// them.                                                                                 // 1147
+//                                                                                       // 1148
+// options may be:                                                                       // 1149
+// - ddp: if true, the default, include DDP traffic. This includes                       // 1150
+//   both secure and insecure traffic, and both websocket and sockjs                     // 1151
+//   transports.                                                                         // 1152
+// - http: if true, the default, include HTTP/HTTPS traffic.                             // 1153
+// - forwardTo: if provided, should be a URL with a host, optional                       // 1154
+//   path and port, and no scheme (the scheme will be derived from the                   // 1155
+//   traffic type; for now it will always be a http or ws connection,                    // 1156
+//   never https or wss, but we could add a forwardSecure flag to                        // 1157
+//   re-encrypt).                                                                        // 1158
+var routes = [];                                                                         // 1159
+WebAppInternals.addRoute = function (url, options) {                                     // 1160
+  options = _.extend({                                                                   // 1161
+    ddp: true,                                                                           // 1162
+    http: true                                                                           // 1163
+  }, options || {});                                                                     // 1164
                                                                                          // 1165
-runWebAppServer();                                                                       // 1166
-                                                                                         // 1167
-                                                                                         // 1168
-var inlineScriptsAllowed = true;                                                         // 1169
-                                                                                         // 1170
-WebAppInternals.inlineScriptsAllowed = function () {                                     // 1171
-  return inlineScriptsAllowed;                                                           // 1172
-};                                                                                       // 1173
-                                                                                         // 1174
-WebAppInternals.setInlineScriptsAllowed = function (value) {                             // 1175
-  inlineScriptsAllowed = value;                                                          // 1176
-  WebAppInternals.generateBoilerplate();                                                 // 1177
-};                                                                                       // 1178
-                                                                                         // 1179
-WebAppInternals.setBundledJsCssPrefix = function (prefix) {                              // 1180
-  bundledJsCssPrefix = prefix;                                                           // 1181
-  WebAppInternals.generateBoilerplate();                                                 // 1182
+  if (proxy)                                                                             // 1166
+    // In the future, lift this restriction                                              // 1167
+    throw new Error("Too late to add routes");                                           // 1168
+                                                                                         // 1169
+  routes.push(_.extend({ url: url }, options));                                          // 1170
+};                                                                                       // 1171
+                                                                                         // 1172
+// Receive traffic on our default URL.                                                   // 1173
+WebAppInternals.addRoute("");                                                            // 1174
+                                                                                         // 1175
+runWebAppServer();                                                                       // 1176
+                                                                                         // 1177
+                                                                                         // 1178
+var inlineScriptsAllowed = true;                                                         // 1179
+                                                                                         // 1180
+WebAppInternals.inlineScriptsAllowed = function () {                                     // 1181
+  return inlineScriptsAllowed;                                                           // 1182
 };                                                                                       // 1183
                                                                                          // 1184
-// Packages can call `WebAppInternals.addStaticJs` to specify static                     // 1185
-// JavaScript to be included in the app. This static JS will be inlined,                 // 1186
-// unless inline scripts have been disabled, in which case it will be                    // 1187
-// served under `/<sha1 of contents>`.                                                   // 1188
-var additionalStaticJs = {};                                                             // 1189
-WebAppInternals.addStaticJs = function (contents) {                                      // 1190
-  additionalStaticJs["/" + sha1(contents) + ".js"] = contents;                           // 1191
-};                                                                                       // 1192
-                                                                                         // 1193
-// Exported for tests                                                                    // 1194
-WebAppInternals.getBoilerplate = getBoilerplate;                                         // 1195
-WebAppInternals.additionalStaticJs = additionalStaticJs;                                 // 1196
-WebAppInternals.validPid = validPid;                                                     // 1197
-                                                                                         // 1198
+WebAppInternals.setInlineScriptsAllowed = function (value) {                             // 1185
+  inlineScriptsAllowed = value;                                                          // 1186
+  WebAppInternals.generateBoilerplate();                                                 // 1187
+};                                                                                       // 1188
+                                                                                         // 1189
+WebAppInternals.setBundledJsCssPrefix = function (prefix) {                              // 1190
+  bundledJsCssPrefix = prefix;                                                           // 1191
+  WebAppInternals.generateBoilerplate();                                                 // 1192
+};                                                                                       // 1193
+                                                                                         // 1194
+// Packages can call `WebAppInternals.addStaticJs` to specify static                     // 1195
+// JavaScript to be included in the app. This static JS will be inlined,                 // 1196
+// unless inline scripts have been disabled, in which case it will be                    // 1197
+// served under `/<sha1 of contents>`.                                                   // 1198
+var additionalStaticJs = {};                                                             // 1199
+WebAppInternals.addStaticJs = function (contents) {                                      // 1200
+  additionalStaticJs["/" + sha1(contents) + ".js"] = contents;                           // 1201
+};                                                                                       // 1202
+                                                                                         // 1203
+// Exported for tests                                                                    // 1204
+WebAppInternals.getBoilerplate = getBoilerplate;                                         // 1205
+WebAppInternals.additionalStaticJs = additionalStaticJs;                                 // 1206
+WebAppInternals.validPid = validPid;                                                     // 1207
+                                                                                         // 1208
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

@@ -51,7 +51,7 @@ Session = new ReactiveDict('session');                                          
 /**                                                                                      // 15
  * @memberOf Session                                                                     // 16
  * @method setDefault                                                                    // 17
- * @summary Set a variable in the session if it is undefined. Otherwise works exactly the same as [`Session.set`](#session_set).
+ * @summary Set a variable in the session if it hasn't been set before. Otherwise works exactly the same as [`Session.set`](#session_set).
  * @locus Client                                                                         // 19
  * @param {String} key The key to set, eg, `selectedItem`                                // 20
  * @param {EJSONable | undefined} value The new value for `key`                          // 21

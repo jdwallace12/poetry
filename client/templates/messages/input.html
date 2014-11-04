@@ -1,0 +1,13 @@
+<template name="input">
+    <div id="input" class="well" style="margin-top: -17px;">
+        <strong>Your message</strong>  
+        <input type="text" class="input-xlarge" rows="3" id="newMessage" style="width:90%;" />
+        <a class="btn btn-primary" type="button" style= "display:none;" id="send">Send</a> 
+        <a class="btn btn-danger" style="margin-bottom: 10px;" type="button" id="delete_chat">Clear Chat</a>  
+        <p><strong>{{userCount}}</strong> registered users</p> 
+            <p><strong>{{magnetCount}}</strong> magnets in play</p> 
+        <div class="logout">
+        {{> loginButtons}} 
+    </div>
+    </div>
+</template>

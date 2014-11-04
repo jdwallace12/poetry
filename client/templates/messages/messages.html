@@ -1,0 +1,11 @@
+<template name="messages">
+	<div class="message-wrap">
+    <div id="messages">
+          {{#if currentUser}}
+        {{#each messages}} 
+        {{> message}} 
+        {{/each}}
+        {{/if}}
+    </div>
+</div>
+</template>
