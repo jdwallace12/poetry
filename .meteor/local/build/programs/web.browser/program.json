@@ -780,9 +780,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?7dab9a979a9c504c8a9d0fe86a208b0b8a817e4a",
-      "size": 1057,
-      "hash": "7dab9a979a9c504c8a9d0fe86a208b0b8a817e4a"
+      "url": "/client/template.index.js?374304f634ef33096b33b5c5f494051dac4ee737",
+      "size": 1524,
+      "hash": "374304f634ef33096b33b5c5f494051dac4ee737"
     },
     {
       "path": "app/lib/collections/chat.js",
@@ -898,7 +898,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "bb7ff7de4a6af60a9037518683ab37408061838b"
+      "hash": "f11e6e6db175c4d9644212a93793677880925e42"
     }
   ]
 }
