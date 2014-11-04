@@ -4,11 +4,17 @@
             <div class="span12">
                 <div class="navbar navbar-fixed-top navbar-inverse" style="background: #000;">
                     <ul class="nav">
+                        
                         <li class="active">
                             <a href="{{pathFor 'home'}}">Home</a>
+
                         </li>
+                        
+                        {{#if currentUser}}
                         <li><a href="{{pathFor 'private'}}">Create My Own</a>
                         </li>
+                        {{else}}
+                        {{/if}}
                         <li> 
                             {{> loginButtons}}
                         </li>

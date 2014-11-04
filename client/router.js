@@ -1,8 +1,8 @@
 Router.map(function(){
 
-  user = Meteor.userId();
-    this.route('home', {path: '/'} );
 
-    this.route('private', {path:'/' + user});
+    this.route('home', {path: '/'} );
+  user = Meteor.userId();
+    this.route('private', {path:'/' + user });
   
 });
