@@ -3,7 +3,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-autopublish
 insecure
 jquery
 d3
@@ -20,4 +19,3 @@ accounts-facebook
 service-configuration
 bootstrap
 iron:router
-

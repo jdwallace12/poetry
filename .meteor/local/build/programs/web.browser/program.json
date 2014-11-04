@@ -24,17 +24,6 @@
       "hash": "61916b1060b33931a21f104fbffb67c2f3d493c5"
     },
     {
-      "path": "packages/autopublish.js",
-      "where": "client",
-      "type": "js",
-      "cacheable": true,
-      "url": "/packages/autopublish.js?c3059a78bb200b171099fc4fa1a9345101790ddb",
-      "sourceMap": "packages/autopublish.js.map",
-      "sourceMapUrl": "/packages/c3059a78bb200b171099fc4fa1a9345101790ddb.map",
-      "size": 1293,
-      "hash": "c3059a78bb200b171099fc4fa1a9345101790ddb"
-    },
-    {
       "path": "packages/insecure.js",
       "where": "client",
       "type": "js",
@@ -904,9 +893,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?d2f61f69b02c19f67fe84f51c0b073f62178ce4e",
-      "size": 682,
-      "hash": "d2f61f69b02c19f67fe84f51c0b073f62178ce4e"
+      "url": "/lib/collections/magnets.js?033249a56e363af85114e0dd0dc08c0e8ef076a2",
+      "size": 831,
+      "hash": "033249a56e363af85114e0dd0dc08c0e8ef076a2"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -967,9 +956,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?f530ac38e3cb80fc724d367e8f5fc45fbd141d4c",
-      "size": 159,
-      "hash": "f530ac38e3cb80fc724d367e8f5fc45fbd141d4c"
+      "url": "/client/router.js?dad2f66bc8e849fc5a1106626d6900103ea04526",
+      "size": 189,
+      "hash": "dad2f66bc8e849fc5a1106626d6900103ea04526"
     },
     {
       "path": "app/client/script.js",
