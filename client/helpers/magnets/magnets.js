@@ -35,9 +35,8 @@ Template.magnet.events = {
                 accept: '.magnet',
 
                 drop: function(event, ui) {
-                    $('.fridge').effect('highlight', {
-                        color: "#f1c40f;"
-                    }, 200);
+                   var slap = $('#slap')[0]
+                    slap.play();
 
                 }
             });
@@ -45,7 +44,6 @@ Template.magnet.events = {
         }
     }
 };
-
 
 
 
