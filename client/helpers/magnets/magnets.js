@@ -31,14 +31,25 @@ Template.magnet.events = {
                 snap: true,
                 snapTolerance: 25
             });
+            $(".fridge").droppable({
+                accept: '.magnet',
+
+                drop: function(event, ui) {
+                    $('.fridge').effect('highlight', {
+                        color: "#f1c40f;"
+                    }, 200);
+
+                }
+            });
+
         }
     }
 };
 
 
 
-Meteor.startup(function() {
-});
+
+Meteor.startup(function() {});
 $(function() {
 
 
