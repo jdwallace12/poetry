@@ -6,7 +6,7 @@
                     <ul class="nav">
                         
                         <li class="active">
-                            <a href="{{pathFor 'home'}}">Home</a>
+                            <a href="{{pathFor 'home'}}">Office Fridge</a>
 
                         </li>
                         
@@ -58,5 +58,15 @@
     <span class='st_fblike_large' displayText='Facebook Like'></span>
     <span class='st_pinterest_large' displayText='Pinterest'></span>
     <span class='st_email_large' displayText='Email'></span>
+   <script>
+    $(document).ready(function() {
+        stButtons.locateElements();
 
+// or if you want to be a bit defensive about whether the lib has been
+// loaded or not:
+if (window.stButtons){stButtons.locateElements();} // Parse ShareThis markup
+
+    });
+
+    </script>
 </template>

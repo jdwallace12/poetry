@@ -805,9 +805,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?9e9fb6c08a3806cd86b459a1353734bbfc4a7405",
-      "size": 2736,
-      "hash": "9e9fb6c08a3806cd86b459a1353734bbfc4a7405"
+      "url": "/client/templates/home/template.home.js?6125d64ac70ce493429f120161c068b624c76403",
+      "size": 3030,
+      "hash": "6125d64ac70ce493429f120161c068b624c76403"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -868,9 +868,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?ce428725f07078588d02b139388b861aada4cf96",
-      "size": 2284,
-      "hash": "ce428725f07078588d02b139388b861aada4cf96"
+      "url": "/client/templates/my-board/template.private.js?23c1b3b93f711b0cbdc41eee5a39fecee38a10b3",
+      "size": 2406,
+      "hash": "23c1b3b93f711b0cbdc41eee5a39fecee38a10b3"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -886,9 +886,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/template.index.js?702eb0b67f2a7fe67f3ed93d3f70d1535fede05a",
-      "size": 144,
-      "hash": "702eb0b67f2a7fe67f3ed93d3f70d1535fede05a"
+      "url": "/client/template.index.js?865ea212fdb40c768ea5f076fbea133804af1f6c",
+      "size": 288,
+      "hash": "865ea212fdb40c768ea5f076fbea133804af1f6c"
     },
     {
       "path": "app/lib/collections/chat.js",
@@ -967,9 +967,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?b3aa3925f2541f9b23fd108810a1b24fe2547e6b",
-      "size": 162,
-      "hash": "b3aa3925f2541f9b23fd108810a1b24fe2547e6b"
+      "url": "/client/router.js?f530ac38e3cb80fc724d367e8f5fc45fbd141d4c",
+      "size": 159,
+      "hash": "f530ac38e3cb80fc724d367e8f5fc45fbd141d4c"
     },
     {
       "path": "app/client/script.js",
@@ -1015,8 +1015,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/slap.wav",
-      "size": 138368,
-      "hash": "a2c675a6cee3c66d02432ba2e0003edfe9d8663e"
+      "size": 26122,
+      "hash": "cb842bff4395f42559f8cff2ca7d12417685e4d6"
     },
     {
       "path": "head.html",
