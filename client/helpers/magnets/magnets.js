@@ -28,6 +28,7 @@ Template.magnet.events = {
                 distance: 3,
                 handle: '.name',
                 cursor: 'move',
+                // containment: ".board-wrapper",
                 snap: true,
                 snapTolerance: 25
             });
