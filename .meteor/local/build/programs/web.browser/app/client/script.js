@@ -1,18 +1,21 @@
 (function(){$(document).ready(function() {
 
-    $('.chat-open').on('click', function() {
+    $(".chat-wrap").draggable();
+
+    $('.chat-open').on('click', function() {         
         $('.chat-wrap').show();
 
-        $(".chat-wrap").draggable();
+    });
 
-    });
+
+
     // closes modal when escape key is pressed
-    var KEYCODE_ESC = 27;
-    $(document).keyup(function(e) {
-        if (e.keyCode == KEYCODE_ESC) {
-            $('#close_chat').click();
-        }
-    });
+    // var KEYCODE_ESC = 27;
+    // $(document).keyup(function(e) {
+    //     if (e.keyCode == KEYCODE_ESC) {
+    //         $('#close_chat').click();
+    //     }
+    // });
 
 
     $('#send').keydown(function(e) {
@@ -27,10 +30,10 @@
         }
     });
 
-    $('.footer-open').on('click', function() {
-        $('#footer').toggle();
-        $('#name_of_word').focus();
-    });
+    // $('.footer-open').on('click', function() {
+    //     $('#footer').toggle();
+    //     $('#name_of_word').focus();
+    // });
 
     // var KEYCODE_ENTER = 13;
     // $(document).keyup(function(e) {
@@ -48,8 +51,7 @@
             && container.has(e.target).length === 0) // ... nor a descendant of the container
         {
             container.hide();
-            $('.chat-open').show();
-            $('.footer-open').show();
+ 
         }
     });
 });

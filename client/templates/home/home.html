@@ -78,13 +78,15 @@
 // loaded or not:
 if (window.stButtons){stButtons.locateElements();} // Parse ShareThis markup
 
-    });
-
-
-        $(".chat-wrap").draggable();
-    $('.chat-open').on('click', function() {
+    $('.chat-open').bind('click', function() {         
         $('.chat-wrap').show();
+
     });
+
+
+    });
+
+
 
     </script>
 </template>
