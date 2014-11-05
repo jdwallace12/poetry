@@ -81,17 +81,18 @@ if (window.stButtons){stButtons.locateElements();} // Parse ShareThis markup
 
     });
 
-     $(function() {
+    
+ $(function() {
     $( ".chat-wrap" ).draggable();
+
+$('.chat-open').on('click', function() {
+    $('.chat-wrap').show();
+});
 
   });
   
 
 
-
-$('.chat-open').on('click', function() {
-    $('.chat-wrap').show();
-});
 
 
     </script>
