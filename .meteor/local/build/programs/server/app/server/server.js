@@ -20,13 +20,10 @@
 
 Meteor.startup(function () {
   if (Magnets.find().count() < 3) {
-    var words = ["hey", "time", "let's",
-                 "love", "can", "awesome", "has", "not", "is", "a", "hubby", "in", "a", "is", "the", "us", "forever", "has", "had", "have", "s", "s", "ed", "the", "the", "was", "there", "their", "bunt", "a", "the", "as", "many", "much",
-                 "poetry", "random", "best", "bidet", "Paulie D", "belly", "chubby", "moist", "wierdo", "dancing", "top shelf", "Mel Gibson", "Kati", "Hi", "love", "likes", "eating", "eats", "vomit", "I", "it", "funky", "grandma", "chicken", "got", "comeuppance", 
-                 "beer", "farts", "shark", "is", "are", "we", "you", "i", "they", "ing", "crack pipe", "shart", "wine", "and", "a", "as", "uncle", "malfunction", "wardrobe","spray", "ed", "gas"];
+    var words = ["things", "deploy", "minor", "down", "build", "disk", "read", "stack", "Google", "tl;dr", "is", "right", "my", "release", "!", "are", "of", "I", "have", "will", "problem", "memory", "made", "dev", "to", "kill", "work", "major", "internet", "write", "engineer", "we", "bees", "your", "brogrammer", "crash", "angry", "docs", "call", "fix", "broken", "how", "issue", "fire", "up", "agile", "code", "no", "did", "io", "oh", "production", "bug", "all", "to", "s", "?", "on", "staging", "the", "error", ":", "or", "their", "site", "beer", "a", "and", "full", "our", "ops"];
     for (var i = 0; i < words.length; i++) {
       console.log(words[i]);
-      Magnets.insert({name: words[i], top: Math.floor(Random.fraction()*100)*5, left: Math.floor(Random.fraction()*100)*4});
+      Magnets.insert({name: words[i], top: Math.floor(Random.fraction()*100)*5, left: Math.floor(Random.fraction()*100)*6});
     }
   } else {
     var magnets = Magnets.find({}).fetch();

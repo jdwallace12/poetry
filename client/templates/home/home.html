@@ -1,5 +1,5 @@
 <template name="home">
-    <div class="container" style="position:relative;">
+    <div class="container" style="position:relative; padding-top:1%;">
         <div class="row">
             <div class="span12">
                 <div class="navbar navbar-fixed-top" style="background: #ffffff;">
@@ -52,6 +52,9 @@
         <p>Add Words</p>
     </div> -->
         {{> list}}
+           <div id="logo_magnet" class="magnet" style="position:absolute; min-width:190px;">
+            <img src="/logo_magnet.jpg" />
+        </div>
       
         <div class="fridge">
         </div>
@@ -59,9 +62,7 @@
         <audio id="slap" preload="metadata">
             <source src="/slap.wav">
         </audio>
-          <div id="logo_magnet" class="magnet" stye="position:absolute; min-width:190px;">
-            <img style="min-width:190px;" src="/logo_magnet.jpg" />
-        </div>
+       
         <!--    {{>wordForm}} -->
     </div>
     <div class="social-wrap">
