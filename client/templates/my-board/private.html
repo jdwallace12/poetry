@@ -5,7 +5,7 @@
                 <div class="navbar navbar-fixed-top" style="background: #ffffff;">
                     <ul class="nav">
 
-                        <li class="active">
+                        <li>
                             <a href="{{pathFor 'home'}}">Office Fridge</a>
 
                         </li>
@@ -40,13 +40,14 @@
     <div class="footer-open">
         <p>Add Words</p>
     </div> -->
+    <div class="board-wrapper">
         {{> list}}
             <div id="logo_magnet" class="magnet" style="position:absolute; top: 7%; left: 7%; min-width:190px;">
             <img style="min-width:190px;" src="/logo_magnet.jpg" />
         </div>
         <div class="fridge">
         </div>
-
+</div>
         <audio id="slap" preload="metadata">
             <source src="/slap.wav">
         </audio>
