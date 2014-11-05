@@ -805,9 +805,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?db5d1bc1d67faba35f8415642fa05ff214c7efd2",
-      "size": 3996,
-      "hash": "db5d1bc1d67faba35f8415642fa05ff214c7efd2"
+      "url": "/client/templates/home/template.home.js?b13af0dbe6a85c899c620b56439a973d423a031a",
+      "size": 4237,
+      "hash": "b13af0dbe6a85c899c620b56439a973d423a031a"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -868,9 +868,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?23c1b3b93f711b0cbdc41eee5a39fecee38a10b3",
-      "size": 2406,
-      "hash": "23c1b3b93f711b0cbdc41eee5a39fecee38a10b3"
+      "url": "/client/templates/my-board/template.private.js?064cd8d3d4d1ce36f889d01b36fea263938c2fc6",
+      "size": 3472,
+      "hash": "064cd8d3d4d1ce36f889d01b36fea263938c2fc6"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -981,15 +981,15 @@
       "hash": "c4762c059b56cb49c8cdd5911a0723a3c3d342f9"
     },
     {
-      "path": "2669058c54de11d27e3917df46c9ec82f1ed12aa.css",
+      "path": "e9db3d97e34392a4f4aaedb4e6fc2eab3eec6d51.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/2669058c54de11d27e3917df46c9ec82f1ed12aa.css",
-      "sourceMap": "2669058c54de11d27e3917df46c9ec82f1ed12aa.css.map",
-      "sourceMapUrl": "/2669058c54de11d27e3917df46c9ec82f1ed12aa.map",
-      "size": 161823,
-      "hash": "2669058c54de11d27e3917df46c9ec82f1ed12aa"
+      "url": "/e9db3d97e34392a4f4aaedb4e6fc2eab3eec6d51.css",
+      "sourceMap": "e9db3d97e34392a4f4aaedb4e6fc2eab3eec6d51.css.map",
+      "sourceMapUrl": "/e9db3d97e34392a4f4aaedb4e6fc2eab3eec6d51.map",
+      "size": 161830,
+      "hash": "e9db3d97e34392a4f4aaedb4e6fc2eab3eec6d51"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -1008,6 +1008,42 @@
       "url": "/packages/bootstrap/img/glyphicons-halflings-white.png",
       "size": 8777,
       "hash": "a25c4705320fd63c33790e666872910e702b9bf6"
+    },
+    {
+      "path": "app/fridge-trans.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fridge-trans.png",
+      "size": 460353,
+      "hash": "3a868629e48600df3ab7b882faf74b60e89080e6"
+    },
+    {
+      "path": "app/fridge.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fridge.png",
+      "size": 724517,
+      "hash": "db309e41d58c6edd667f7e403edaccae7a20c599"
+    },
+    {
+      "path": "app/fridge2.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fridge2.jpg",
+      "size": 67982,
+      "hash": "c2e8bcc15c7245315cc2ccb85fd6bbf77ba81a3d"
+    },
+    {
+      "path": "app/logo_magnet.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/logo_magnet.jpg",
+      "size": 7780,
+      "hash": "39d7224df4d63a578cd4c40653c9011267dc36ce"
     },
     {
       "path": "app/metal.jpg",

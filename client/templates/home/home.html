@@ -52,13 +52,16 @@
         <p>Add Words</p>
     </div> -->
         {{> list}}
+      
         <div class="fridge">
         </div>
 
         <audio id="slap" preload="metadata">
             <source src="/slap.wav">
         </audio>
-
+          <div id="logo_magnet" class="magnet" stye="position:absolute; min-width:190px;">
+            <img style="min-width:190px;" src="/logo_magnet.jpg" />
+        </div>
         <!--    {{>wordForm}} -->
     </div>
     <div class="social-wrap">
@@ -79,7 +82,7 @@
                 stButtons.locateElements();
             } // Parse ShareThis markup
 
-
+            $("#logo_magnet").draggable();
             $(".chat-wrap").draggable();
             $(document).on("click", ".chat-open", function() {
                 $('.chat-wrap').show();
