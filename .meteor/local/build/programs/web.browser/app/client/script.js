@@ -1,6 +1,11 @@
 (function(){$(document).ready(function() {
 
+    $('.chat-open').on('click', function() {
+        $('.chat-wrap').show();
 
+        $(".chat-wrap").draggable();
+
+    });
     // closes modal when escape key is pressed
     var KEYCODE_ESC = 27;
     $(document).keyup(function(e) {
@@ -10,19 +15,19 @@
     });
 
 
-    $('#send').keydown(function(e){
-        if(e.keyCode==13) e.preventDefault();
-    }); 
+    $('#send').keydown(function(e) {
+        if (e.keyCode == 13) e.preventDefault();
+    });
 
     $('#send').keyup(function(e) {
         e.preventDefault();
         var $textbox = $(this);
-        if($textbox.val().length > 0 && e.keyCode == 13) {
+        if ($textbox.val().length > 0 && e.keyCode == 13) {
             $('#send').click();
         }
-     });
+    });
 
-    $('.footer-open').on('click', function(){
+    $('.footer-open').on('click', function() {
         $('#footer').toggle();
         $('#name_of_word').focus();
     });
@@ -44,10 +49,9 @@
         {
             container.hide();
             $('.chat-open').show();
-             $('.footer-open').show();
+            $('.footer-open').show();
         }
     });
 });
-
 
 })();

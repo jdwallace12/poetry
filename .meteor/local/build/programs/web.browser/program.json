@@ -794,9 +794,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?664f93ccfa670048a090a0d5213ff43879c96b05",
-      "size": 3928,
-      "hash": "664f93ccfa670048a090a0d5213ff43879c96b05"
+      "url": "/client/templates/home/template.home.js?6962c18bae82c050273c5ed54d5844f2e33c8af4",
+      "size": 3890,
+      "hash": "6962c18bae82c050273c5ed54d5844f2e33c8af4"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -920,9 +920,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/users/user.js?e937c9dbf27e7de99ffef761d122a53132ed90b5",
-      "size": 260,
-      "hash": "e937c9dbf27e7de99ffef761d122a53132ed90b5"
+      "url": "/client/helpers/users/user.js?bfb26b68d3874ed0d491279759f9434071781fa4",
+      "size": 281,
+      "hash": "bfb26b68d3874ed0d491279759f9434071781fa4"
     },
     {
       "path": "app/client/helpers/wordform/wordform.js",
@@ -965,9 +965,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?c1e3350aeee18bcacea15fbabb680ec7aac76249",
-      "size": 1282,
-      "hash": "c1e3350aeee18bcacea15fbabb680ec7aac76249"
+      "url": "/client/script.js?b12d7bf37a9ba98e7d37de0b22183faea88ad142",
+      "size": 1407,
+      "hash": "b12d7bf37a9ba98e7d37de0b22183faea88ad142"
     },
     {
       "path": "a1c7b6e1cb7701972893cc246fb1c2dbfd8ed95c.css",

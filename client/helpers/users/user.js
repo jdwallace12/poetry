@@ -4,10 +4,10 @@ Accounts.ui.config({
 
 
 
-Deps.autorun(function(){
-  if(Meteor.userId()){
-  if (window.location.href.indexOf('reload')==-1) {
-     window.location.replace(window.location.href+'?reload');
-}
-  }
-});
+// Deps.autorun(function(){
+//   if(Meteor.userId()){
+//   if (window.location.href.indexOf('reload')==-1) {
+//      window.location.replace(window.location.href+'?reload');
+// }
+//   }
+// });

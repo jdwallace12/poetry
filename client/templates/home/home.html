@@ -12,8 +12,7 @@
                            {{#if currentUser}}
                          <li class="chat-open">
                             <a href="#">Chat with fellow poets</a>
-                        </li>
-                     
+                        </li>             
                         <li><a href="{{pathFor 'private'}}">Create My Own</a>
                         </li>
                         {{else}}
@@ -81,19 +80,11 @@ if (window.stButtons){stButtons.locateElements();} // Parse ShareThis markup
 
     });
 
-    
- $(function() {
-    $( ".chat-wrap" ).draggable();
 
-$('.chat-open').on('click', function() {
-    $('.chat-wrap').show();
-});
-
-  });
-  
-
-
-
+        $(".chat-wrap").draggable();
+    $('.chat-open').on('click', function() {
+        $('.chat-wrap').show();
+    });
 
     </script>
 </template>
