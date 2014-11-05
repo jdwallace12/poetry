@@ -920,9 +920,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/users/user.js?bfb26b68d3874ed0d491279759f9434071781fa4",
-      "size": 281,
-      "hash": "bfb26b68d3874ed0d491279759f9434071781fa4"
+      "url": "/client/helpers/users/user.js?e937c9dbf27e7de99ffef761d122a53132ed90b5",
+      "size": 260,
+      "hash": "e937c9dbf27e7de99ffef761d122a53132ed90b5"
     },
     {
       "path": "app/client/helpers/wordform/wordform.js",
