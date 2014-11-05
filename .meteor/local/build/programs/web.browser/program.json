@@ -805,9 +805,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?7c60dc9df670df208edf4f9c25ac9a5877b2a34c",
-      "size": 3876,
-      "hash": "7c60dc9df670df208edf4f9c25ac9a5877b2a34c"
+      "url": "/client/templates/home/template.home.js?811c06b0bae55a7b9c18b6b0e425ad482dd21dc0",
+      "size": 3906,
+      "hash": "811c06b0bae55a7b9c18b6b0e425ad482dd21dc0"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
