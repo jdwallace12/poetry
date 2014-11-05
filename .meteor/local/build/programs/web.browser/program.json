@@ -706,6 +706,17 @@
       "hash": "3fb4caf61f2b332b14dabb884ba512baa2663af2"
     },
     {
+      "path": "packages/autopublish.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/autopublish.js?c3059a78bb200b171099fc4fa1a9345101790ddb",
+      "sourceMap": "packages/autopublish.js.map",
+      "sourceMapUrl": "/packages/c3059a78bb200b171099fc4fa1a9345101790ddb.map",
+      "size": 1293,
+      "hash": "c3059a78bb200b171099fc4fa1a9345101790ddb"
+    },
+    {
       "path": "packages/autoupdate.js",
       "where": "client",
       "type": "js",

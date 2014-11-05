@@ -19,3 +19,5 @@ accounts-facebook
 service-configuration
 bootstrap
 iron:router
+autopublish
+
