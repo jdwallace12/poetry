@@ -9,10 +9,11 @@
                             <a href="{{pathFor 'home'}}">Office Fridge</a>
 
                         </li>
+                           {{#if currentUser}}
                          <li class="chat-open">
                             <a href="#">Chat with fellow poets</a>
                         </li>
-                        {{#if currentUser}}
+                     
                         <li><a href="{{pathFor 'private'}}">Create My Own</a>
                         </li>
                         {{else}}
