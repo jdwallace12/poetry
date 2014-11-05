@@ -1015,8 +1015,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/fridge-trans.png",
-      "size": 460353,
-      "hash": "3a868629e48600df3ab7b882faf74b60e89080e6"
+      "size": 442971,
+      "hash": "eeb3a89e39ac4e31611b2f8a2ac657f035ee98c9"
     },
     {
       "path": "app/fridge.png",
