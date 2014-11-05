@@ -2,7 +2,7 @@
 @light-blue: (@nice-blue + #111);
 body {
     padding-top: 50px;
-    background: #34495e;
+    background: #3D3D3D;
     max-width: 100%;
     height: 100%;
 }
@@ -34,9 +34,8 @@ body {
     color: #7f8c8d;
 }
 .name {
-    font-size: 20px;
-    min-width: 30px;
-    min-height: 30px;
+    font-size: 14px;
+    min-height: 25px;
     vertical-align: middle;
     margin: 5px 5px 0px;
 }
@@ -80,8 +79,9 @@ input:focus, textarea:focus {
 .chat-wrap {
     position: fixed;
     z-index: 9999;
-    top: 0%;
-    left: 75%;
+    top: 56px;
+    left: 0%;
+    width: 25%;
     width: 25%;
    display: none;
    cursor: move;
@@ -171,10 +171,15 @@ input:focus, textarea:focus {
 
 .fridge {
     height: 600px;
-    width: 45%;
+    width: 50%;
     margin-left: 50%;
-    background-color: #ccc;
+    background-image: url(/metal.jpg);
 }
-.fridge-hover {
-    background-color: #fff;
+
+
+.social-wrap {
+position: fixed;
+top: 4px;
+right: 2%;
+z-index: 9999;
 }
