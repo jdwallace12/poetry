@@ -981,15 +981,15 @@
       "hash": "c4762c059b56cb49c8cdd5911a0723a3c3d342f9"
     },
     {
-      "path": "a1c7b6e1cb7701972893cc246fb1c2dbfd8ed95c.css",
+      "path": "a5311987d958c2cc381eac3001f15fd75e518bdc.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/a1c7b6e1cb7701972893cc246fb1c2dbfd8ed95c.css",
-      "sourceMap": "a1c7b6e1cb7701972893cc246fb1c2dbfd8ed95c.css.map",
-      "sourceMapUrl": "/a1c7b6e1cb7701972893cc246fb1c2dbfd8ed95c.map",
-      "size": 161780,
-      "hash": "a1c7b6e1cb7701972893cc246fb1c2dbfd8ed95c"
+      "url": "/a5311987d958c2cc381eac3001f15fd75e518bdc.css",
+      "sourceMap": "a5311987d958c2cc381eac3001f15fd75e518bdc.css.map",
+      "sourceMapUrl": "/a5311987d958c2cc381eac3001f15fd75e518bdc.map",
+      "size": 161796,
+      "hash": "a5311987d958c2cc381eac3001f15fd75e518bdc"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
