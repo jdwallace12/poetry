@@ -78,7 +78,9 @@
 // loaded or not:
 if (window.stButtons){stButtons.locateElements();} // Parse ShareThis markup
 
-    $('.chat-open').bind('click', function() {         
+
+
+$(document).on("click", ".chat-open", function() {        
         $('.chat-wrap').show();
 
     });
