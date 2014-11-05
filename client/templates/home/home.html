@@ -9,7 +9,9 @@
                             <a href="{{pathFor 'home'}}">Office Fridge</a>
 
                         </li>
-                        
+                         <li class="chat-open">
+                            <a href="#">Chat with fellow poets</a>
+                        </li>
                         {{#if currentUser}}
                         <li><a href="{{pathFor 'private'}}">Create My Own</a>
                         </li>
@@ -18,10 +20,20 @@
                         <li> 
                             {{> loginButtons}}
                         </li>
+                        
                     </ul>
                 </div>
             </div>
         </div>
+
+ <div class="chat-wrap">
+        <a href="#" id="close_chat"><p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p></a>
+        {{#if currentUser}}
+        {{> input}}
+        {{/if}}
+            {{> messages}}
+    </div>
+  
         <!--     <div class="chat-wrap">
         {{> header }}
         {{#if currentUser}} 
@@ -67,6 +79,19 @@
 if (window.stButtons){stButtons.locateElements();} // Parse ShareThis markup
 
     });
+
+     $(function() {
+    $( ".chat-wrap" ).draggable();
+
+  });
+  
+
+
+
+$('.chat-open').on('click', function() {
+    $('.chat-wrap').show();
+});
+
 
     </script>
 </template>
