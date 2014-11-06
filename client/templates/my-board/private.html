@@ -3,13 +3,28 @@
         <div class="row">
             <div class="span12">
                 <div class="navbar navbar-fixed-top" style="background: #ffffff;">
-                    <ul class="nav">
-
+                   <ul class="nav">
                         <li>
                             <a href="{{pathFor 'home'}}">Office Fridge</a>
-
+                        </li>
+                        </ul>
+                        <ul class="nav pull-right" style="left: -40px;"> 
+                        <li>
+                            {{> loginButtons}}
+                        </li>
+                            <li style="position: relative; left: 40px;">
+                            {{#if user.services.twitter}}
+                            <img src="{{user.services.twitter.profile_image_url}}" style="height:40px; width:auto;" />
+                            {{else}} 
+                            {{#if user.services.facebook}}
+                            <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:40px; width:auto;" />
+                            {{else}}
+                            <img src="http://www.gravatar.com/avatar" style="height:40px; width:auto;" />
+                            {{/if}} 
+                        {{/if}}
                         </li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -42,7 +57,7 @@
     </div> -->
     <div class="board-wrapper">
         {{> list}}
-            <div id="logo_magnet" class="magnet" style="position:absolute; top: 7%; left: 7%; min-width:190px;">
+            <div id="logo_magnet" class="magnet" style="position:absolute; top: 7%; left: 7%;">
             <img style="min-width:190px;" src="/logo_magnet.jpg" />
         </div>
         <div class="fridge">
@@ -54,13 +69,14 @@
     
         <!--    {{>wordForm}} -->
     </div>
-    <div class="social-wrap">
+      <div class="social-wrap">       
         <span class='st_facebook_large' displayText='Facebook'></span>
         <span class='st_twitter_large' displayText='Tweet'></span>
         <span class='st_linkedin_large' displayText='LinkedIn'></span>
         <span class='st_fblike_large' displayText='Facebook Like'></span>
         <span class='st_pinterest_large' displayText='Pinterest'></span>
         <span class='st_email_large' displayText='Email'></span>
+        <span style="top: -11px; position: relative;"><strong>Share Your Creation</strong></span>
     </div>
         <script>
         $(document).ready(function() {
