@@ -868,9 +868,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?f8a1045160d19f73280a3a5a4a6c19a18915d6fa",
-      "size": 5180,
-      "hash": "f8a1045160d19f73280a3a5a4a6c19a18915d6fa"
+      "url": "/client/templates/my-board/template.private.js?a05bec64f175f6355b43f9e19e67d1947576ed73",
+      "size": 5105,
+      "hash": "a05bec64f175f6355b43f9e19e67d1947576ed73"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -895,9 +895,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?3c00d847b750ee0f1ccea18507e10bfc689f3288",
-      "size": 2168,
-      "hash": "3c00d847b750ee0f1ccea18507e10bfc689f3288"
+      "url": "/lib/collections/chat.js?e643b266cb688feb644ee02ecea0eb8ff58847fa",
+      "size": 2268,
+      "hash": "e643b266cb688feb644ee02ecea0eb8ff58847fa"
     },
     {
       "path": "app/lib/collections/magnets.js",
