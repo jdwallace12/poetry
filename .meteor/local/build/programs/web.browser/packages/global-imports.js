@@ -6,6 +6,7 @@ d3 = Package.d3.d3;
 ServiceConfiguration = Package['service-configuration'].ServiceConfiguration;
 Router = Package['iron:router'].Router;
 RouteController = Package['iron:router'].RouteController;
+UserStatus = Package['mizzao:user-status'].UserStatus;
 Accounts = Package['accounts-base'].Accounts;
 Iron = Package['iron:core'].Iron;
 Meteor = Package.meteor.Meteor;

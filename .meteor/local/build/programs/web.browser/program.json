@@ -717,6 +717,28 @@
       "hash": "c3059a78bb200b171099fc4fa1a9345101790ddb"
     },
     {
+      "path": "packages/mizzao_timesync.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/mizzao_timesync.js?5a43263edb7fbd90577914e55e100c05617b5a9c",
+      "sourceMap": "packages/mizzao_timesync.js.map",
+      "sourceMapUrl": "/packages/5a43263edb7fbd90577914e55e100c05617b5a9c.map",
+      "size": 16964,
+      "hash": "5a43263edb7fbd90577914e55e100c05617b5a9c"
+    },
+    {
+      "path": "packages/mizzao_user-status.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/mizzao_user-status.js?d3a61f9cd24e1ef7dcaaf4923767bc704b14b8e3",
+      "sourceMap": "packages/mizzao_user-status.js.map",
+      "sourceMapUrl": "/packages/d3a61f9cd24e1ef7dcaaf4923767bc704b14b8e3.map",
+      "size": 6998,
+      "hash": "d3a61f9cd24e1ef7dcaaf4923767bc704b14b8e3"
+    },
+    {
       "path": "packages/autoupdate.js",
       "where": "client",
       "type": "js",
@@ -787,9 +809,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/global-imports.js?e2347ed2c9366c7749955236924e5ab06113b360",
-      "size": 994,
-      "hash": "e2347ed2c9366c7749955236924e5ab06113b360"
+      "url": "/packages/global-imports.js?ad9ed19b6c6b9746b11280fc89b3afecb5771ea8",
+      "size": 1049,
+      "hash": "ad9ed19b6c6b9746b11280fc89b3afecb5771ea8"
     },
     {
       "path": "app/client/templates/application/template.layout.js",
@@ -805,9 +827,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?03f95e44739a5d60ee1073d8dfcbd840b189d5e1",
-      "size": 5750,
-      "hash": "03f95e44739a5d60ee1073d8dfcbd840b189d5e1"
+      "url": "/client/templates/home/template.home.js?d69f3acd63266d8a9886e88d243b3b33fb95f267",
+      "size": 5863,
+      "hash": "d69f3acd63266d8a9886e88d243b3b33fb95f267"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -904,9 +926,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?033249a56e363af85114e0dd0dc08c0e8ef076a2",
-      "size": 831,
-      "hash": "033249a56e363af85114e0dd0dc08c0e8ef076a2"
+      "url": "/lib/collections/magnets.js?bad2672ab9dd89da2fc1230a7524b725224ee083",
+      "size": 937,
+      "hash": "bad2672ab9dd89da2fc1230a7524b725224ee083"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -931,9 +953,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/users/user.js?e937c9dbf27e7de99ffef761d122a53132ed90b5",
-      "size": 260,
-      "hash": "e937c9dbf27e7de99ffef761d122a53132ed90b5"
+      "url": "/client/helpers/users/user.js?aea8db039be41c0c066a1d3670ff3c59612a5b47",
+      "size": 369,
+      "hash": "aea8db039be41c0c066a1d3670ff3c59612a5b47"
     },
     {
       "path": "app/client/helpers/wordform/wordform.js",
