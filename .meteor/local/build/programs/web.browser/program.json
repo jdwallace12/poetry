@@ -827,9 +827,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?d69f3acd63266d8a9886e88d243b3b33fb95f267",
-      "size": 5863,
-      "hash": "d69f3acd63266d8a9886e88d243b3b33fb95f267"
+      "url": "/client/templates/home/template.home.js?85928bade0ff35b45c377e72594ca2c3853aed2e",
+      "size": 6021,
+      "hash": "85928bade0ff35b45c377e72594ca2c3853aed2e"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -845,9 +845,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/list/template.list.js?02bd217d91d5739371c8d7a02784be1cb43c052d",
-      "size": 882,
-      "hash": "02bd217d91d5739371c8d7a02784be1cb43c052d"
+      "url": "/client/templates/list/template.list.js?0fe16186edb8b0e70acf604c6c29a414862483de",
+      "size": 440,
+      "hash": "0fe16186edb8b0e70acf604c6c29a414862483de"
     },
     {
       "path": "app/client/templates/magnets/template.magnets.js",
@@ -863,9 +863,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.input.js?217f7d283e0d148e004dc5f6d46a6f3efe6b7a51",
-      "size": 570,
-      "hash": "217f7d283e0d148e004dc5f6d46a6f3efe6b7a51"
+      "url": "/client/templates/messages/template.input.js?7885f2e52a794141971e6f3c76c176f5678ee7e3",
+      "size": 699,
+      "hash": "7885f2e52a794141971e6f3c76c176f5678ee7e3"
     },
     {
       "path": "app/client/templates/messages/template.message.js",
@@ -917,18 +917,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?e643b266cb688feb644ee02ecea0eb8ff58847fa",
-      "size": 2268,
-      "hash": "e643b266cb688feb644ee02ecea0eb8ff58847fa"
+      "url": "/lib/collections/chat.js?4d7c8cb27cad195bdd55031a0d33233cd2603790",
+      "size": 2220,
+      "hash": "4d7c8cb27cad195bdd55031a0d33233cd2603790"
     },
     {
       "path": "app/lib/collections/magnets.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?bad2672ab9dd89da2fc1230a7524b725224ee083",
-      "size": 937,
-      "hash": "bad2672ab9dd89da2fc1230a7524b725224ee083"
+      "url": "/lib/collections/magnets.js?040d3021aab07f9fde6c668b24581739424bc7fd",
+      "size": 832,
+      "hash": "040d3021aab07f9fde6c668b24581739424bc7fd"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -953,9 +953,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/users/user.js?aea8db039be41c0c066a1d3670ff3c59612a5b47",
-      "size": 369,
-      "hash": "aea8db039be41c0c066a1d3670ff3c59612a5b47"
+      "url": "/client/helpers/users/user.js?c7d2ad332b1c0b7329c63bea933efda4da67722e",
+      "size": 360,
+      "hash": "c7d2ad332b1c0b7329c63bea933efda4da67722e"
     },
     {
       "path": "app/client/helpers/wordform/wordform.js",
