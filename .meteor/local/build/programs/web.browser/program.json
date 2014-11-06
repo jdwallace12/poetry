@@ -895,9 +895,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?ee0d2fbbde1241ee4a74e23cba70501e1b217e60",
+      "url": "/lib/collections/chat.js?94f54b8bf55a0dd383b2e93dea88617ad768ba6c",
       "size": 2166,
-      "hash": "ee0d2fbbde1241ee4a74e23cba70501e1b217e60"
+      "hash": "94f54b8bf55a0dd383b2e93dea88617ad768ba6c"
     },
     {
       "path": "app/lib/collections/magnets.js",
