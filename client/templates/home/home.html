@@ -4,15 +4,15 @@
                 <div class="navbar navbar-fixed-top" style="background: #ffffff;">
                     <ul class="nav">
 
-                        <li>
+                        <li class="nav-links">
                             <a href="{{pathFor 'home'}}">Office Fridge</a>
 
                         </li>
                         {{#if currentUser}}
-                        <li class="chat-open">
+                        <li class="chat-open nav-links">
                             <a href="#">Chat with fellow poets</a>
                         </li>
-                        <li><a href="{{pathFor 'private'}}">Create My Own</a>
+                        <li class="nav-links"><a href="{{pathFor 'private'}}">Create My Own</a>
                         </li>
                         {{else}}
                          {{/if}}
@@ -23,12 +23,12 @@
                         </li>
                             <li style="position: relative; left: 40px;">
                             {{#if user.services.twitter}}
-                            <img src="{{user.services.twitter.profile_image_url}}" style="height:40px; width:auto;" />
+                            <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />
                             {{else}} 
                             {{#if user.services.facebook}}
-                            <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:40px; width:auto;" />
+                            <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:43px; width:auto;" />
                             {{else}}
-                            <img src="http://www.gravatar.com/avatar" style="height:40px; width:auto;" />
+                            <img src="http://www.gravatar.com/avatar" style="height:43px; width:auto;" />
                             {{/if}} 
                         {{/if}}
                         </li>

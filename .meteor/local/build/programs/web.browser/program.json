@@ -805,9 +805,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?93aee58b79127be3c2cd717328534a47079130f5",
-      "size": 5739,
-      "hash": "93aee58b79127be3c2cd717328534a47079130f5"
+      "url": "/client/templates/home/template.home.js?67b60fc754042077173c56d0c4b6ee505d5d72eb",
+      "size": 5817,
+      "hash": "67b60fc754042077173c56d0c4b6ee505d5d72eb"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -868,9 +868,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?e24b184e474b73eff8853cd699014369129869a6",
-      "size": 5148,
-      "hash": "e24b184e474b73eff8853cd699014369129869a6"
+      "url": "/client/templates/my-board/template.private.js?f8a1045160d19f73280a3a5a4a6c19a18915d6fa",
+      "size": 5180,
+      "hash": "f8a1045160d19f73280a3a5a4a6c19a18915d6fa"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -981,15 +981,15 @@
       "hash": "c4762c059b56cb49c8cdd5911a0723a3c3d342f9"
     },
     {
-      "path": "8c6c9541fb6b520f7b4e1203eaff594dab6baa81.css",
+      "path": "dd25b1a3a33832abb2ac06bb5052bfab5cf82ce3.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/8c6c9541fb6b520f7b4e1203eaff594dab6baa81.css",
-      "sourceMap": "8c6c9541fb6b520f7b4e1203eaff594dab6baa81.css.map",
-      "sourceMapUrl": "/8c6c9541fb6b520f7b4e1203eaff594dab6baa81.map",
-      "size": 162322,
-      "hash": "8c6c9541fb6b520f7b4e1203eaff594dab6baa81"
+      "url": "/dd25b1a3a33832abb2ac06bb5052bfab5cf82ce3.css",
+      "sourceMap": "dd25b1a3a33832abb2ac06bb5052bfab5cf82ce3.css.map",
+      "sourceMapUrl": "/dd25b1a3a33832abb2ac06bb5052bfab5cf82ce3.map",
+      "size": 162345,
+      "hash": "dd25b1a3a33832abb2ac06bb5052bfab5cf82ce3"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
