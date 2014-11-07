@@ -24,17 +24,6 @@
       "hash": "61916b1060b33931a21f104fbffb67c2f3d493c5"
     },
     {
-      "path": "packages/insecure.js",
-      "where": "client",
-      "type": "js",
-      "cacheable": true,
-      "url": "/packages/insecure.js?3dc9d4a2dad55999b5b15a447d57f3d5fb66b290",
-      "sourceMap": "packages/insecure.js.map",
-      "sourceMapUrl": "/packages/3dc9d4a2dad55999b5b15a447d57f3d5fb66b290.map",
-      "size": 1290,
-      "hash": "3dc9d4a2dad55999b5b15a447d57f3d5fb66b290"
-    },
-    {
       "path": "packages/jquery.js",
       "where": "client",
       "type": "js",
@@ -879,9 +868,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?91a983b771c6e2d0bd8b8a90fbb3c3a1a53edf0a",
-      "size": 5154,
-      "hash": "91a983b771c6e2d0bd8b8a90fbb3c3a1a53edf0a"
+      "url": "/client/templates/my-board/template.private.js?6b1ed79b45c5167caab386c360e866bb8b9c0766",
+      "size": 5147,
+      "hash": "6b1ed79b45c5167caab386c360e866bb8b9c0766"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -915,9 +904,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?040d3021aab07f9fde6c668b24581739424bc7fd",
-      "size": 832,
-      "hash": "040d3021aab07f9fde6c668b24581739424bc7fd"
+      "url": "/lib/collections/magnets.js?7146ca574a04c70cf8610f56b742fe7db51084f2",
+      "size": 943,
+      "hash": "7146ca574a04c70cf8610f56b742fe7db51084f2"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -978,9 +967,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?dad2f66bc8e849fc5a1106626d6900103ea04526",
-      "size": 189,
-      "hash": "dad2f66bc8e849fc5a1106626d6900103ea04526"
+      "url": "/client/router.js?fd921d0ac1dbdcd4ebca4ae2c688d19f51763c17",
+      "size": 192,
+      "hash": "fd921d0ac1dbdcd4ebca4ae2c688d19f51763c17"
     },
     {
       "path": "app/client/script.js",

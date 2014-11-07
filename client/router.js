@@ -6,6 +6,6 @@ Router.map(function() {
     });
     user = Meteor.userId();
     this.route('private', {
-        path: '/' + user
+        path: '/' + user   
     });
 });
