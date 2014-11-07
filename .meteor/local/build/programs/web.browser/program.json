@@ -706,17 +706,6 @@
       "hash": "3fb4caf61f2b332b14dabb884ba512baa2663af2"
     },
     {
-      "path": "packages/autopublish.js",
-      "where": "client",
-      "type": "js",
-      "cacheable": true,
-      "url": "/packages/autopublish.js?c3059a78bb200b171099fc4fa1a9345101790ddb",
-      "sourceMap": "packages/autopublish.js.map",
-      "sourceMapUrl": "/packages/c3059a78bb200b171099fc4fa1a9345101790ddb.map",
-      "size": 1293,
-      "hash": "c3059a78bb200b171099fc4fa1a9345101790ddb"
-    },
-    {
       "path": "packages/mizzao_timesync.js",
       "where": "client",
       "type": "js",
@@ -917,9 +906,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?4d7c8cb27cad195bdd55031a0d33233cd2603790",
-      "size": 2220,
-      "hash": "4d7c8cb27cad195bdd55031a0d33233cd2603790"
+      "url": "/lib/collections/chat.js?a77f9995b4e529e15a46dd26874b4370ce9f69f6",
+      "size": 2409,
+      "hash": "a77f9995b4e529e15a46dd26874b4370ce9f69f6"
     },
     {
       "path": "app/lib/collections/magnets.js",

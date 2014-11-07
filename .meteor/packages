@@ -19,6 +19,4 @@ accounts-facebook
 service-configuration
 bootstrap
 iron:router
-autopublish
 mizzao:user-status
-
