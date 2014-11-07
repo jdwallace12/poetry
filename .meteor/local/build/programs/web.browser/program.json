@@ -816,9 +816,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?85928bade0ff35b45c377e72594ca2c3853aed2e",
-      "size": 6021,
-      "hash": "85928bade0ff35b45c377e72594ca2c3853aed2e"
+      "url": "/client/templates/home/template.home.js?c0a5c941eadaf77923fe6ed4e7584d8c65651044",
+      "size": 5750,
+      "hash": "c0a5c941eadaf77923fe6ed4e7584d8c65651044"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -852,9 +852,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.input.js?7885f2e52a794141971e6f3c76c176f5678ee7e3",
-      "size": 699,
-      "hash": "7885f2e52a794141971e6f3c76c176f5678ee7e3"
+      "url": "/client/templates/messages/template.input.js?8f2d7037dd48f8d12ac285bc9005e1e695581b17",
+      "size": 723,
+      "hash": "8f2d7037dd48f8d12ac285bc9005e1e695581b17"
     },
     {
       "path": "app/client/templates/messages/template.message.js",
@@ -906,9 +906,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?a77f9995b4e529e15a46dd26874b4370ce9f69f6",
-      "size": 2409,
-      "hash": "a77f9995b4e529e15a46dd26874b4370ce9f69f6"
+      "url": "/lib/collections/chat.js?690559ea5f7365d0cd7436d49b6320c1265cb61f",
+      "size": 2231,
+      "hash": "690559ea5f7365d0cd7436d49b6320c1265cb61f"
     },
     {
       "path": "app/lib/collections/magnets.js",
