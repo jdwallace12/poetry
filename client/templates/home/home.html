@@ -19,6 +19,7 @@
                         <li>
                             {{> loginButtons}}
                         </li>
+                        {{#if currentUser}}
                             <li style="position: relative; left: 40px;">
                             {{#if user.services.twitter}}
                             <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />
@@ -30,6 +31,8 @@
                             {{/if}} 
                         {{/if}}
                         </li>
+                         {{else}}
+                         {{/if}} 
                     </ul>
                 </div>
 
