@@ -19,3 +19,5 @@ service-configuration
 bootstrap
 iron:router
 mizzao:user-status
+dburles:collection-helpers
+

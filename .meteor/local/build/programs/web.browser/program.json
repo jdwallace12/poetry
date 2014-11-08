@@ -717,6 +717,17 @@
       "hash": "d3a61f9cd24e1ef7dcaaf4923767bc704b14b8e3"
     },
     {
+      "path": "packages/dburles_collection-helpers.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/dburles_collection-helpers.js?10b8845e36a7fe0526609cd1095b7dae30b9ed8e",
+      "sourceMap": "packages/dburles_collection-helpers.js.map",
+      "sourceMapUrl": "/packages/10b8845e36a7fe0526609cd1095b7dae30b9ed8e.map",
+      "size": 3586,
+      "hash": "10b8845e36a7fe0526609cd1095b7dae30b9ed8e"
+    },
+    {
       "path": "packages/autoupdate.js",
       "where": "client",
       "type": "js",
@@ -805,9 +816,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?ee7686060136e8870ccc092c11f7a45392fc27a0",
+      "url": "/client/templates/home/template.home.js?e1e6925326bab87e0075a27db3a8a1afe3ed8c62",
       "size": 6181,
-      "hash": "ee7686060136e8870ccc092c11f7a45392fc27a0"
+      "hash": "e1e6925326bab87e0075a27db3a8a1afe3ed8c62"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -904,9 +915,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?7146ca574a04c70cf8610f56b742fe7db51084f2",
-      "size": 943,
-      "hash": "7146ca574a04c70cf8610f56b742fe7db51084f2"
+      "url": "/lib/collections/magnets.js?22e74b8f57729f24570d7a6087884c056ec752bb",
+      "size": 1064,
+      "hash": "22e74b8f57729f24570d7a6087884c056ec752bb"
     },
     {
       "path": "app/client/helpers/lists/list.js",
