@@ -435,6 +435,9 @@
       "path": "app/lib/collections/chat.js"
     },
     {
+      "path": "app/lib/collections/fridge.js"
+    },
+    {
       "path": "app/lib/collections/magnets.js"
     },
     {

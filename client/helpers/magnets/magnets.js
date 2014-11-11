@@ -19,6 +19,7 @@ Template.magnet.magnetId = function() {
 };
 
 
+
 Template.magnet.events = {
     'mouseover div.magnet': function(e, template) {
         var $magnet = $(e.currentTarget);

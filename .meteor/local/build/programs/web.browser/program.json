@@ -911,13 +911,22 @@
       "hash": "73ccc21b11b0b3e9b3e4a5c37f4d948ba17aea40"
     },
     {
+      "path": "app/lib/collections/fridge.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/lib/collections/fridge.js?89ce0ed0cc2944b72fcae54d444c78022c1d2d68",
+      "size": 134,
+      "hash": "89ce0ed0cc2944b72fcae54d444c78022c1d2d68"
+    },
+    {
       "path": "app/lib/collections/magnets.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?22e74b8f57729f24570d7a6087884c056ec752bb",
-      "size": 1064,
-      "hash": "22e74b8f57729f24570d7a6087884c056ec752bb"
+      "url": "/lib/collections/magnets.js?1aa9f622af571e445795e1eae60e2fd7cbcedad4",
+      "size": 987,
+      "hash": "1aa9f622af571e445795e1eae60e2fd7cbcedad4"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -933,9 +942,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?7646879de82ffc23e7c1bc9fef79764588d7bfa2",
-      "size": 2793,
-      "hash": "7646879de82ffc23e7c1bc9fef79764588d7bfa2"
+      "url": "/client/helpers/magnets/magnets.js?b284a00452e34aa882a8b4410ac2d98a326ae5bd",
+      "size": 2794,
+      "hash": "b284a00452e34aa882a8b4410ac2d98a326ae5bd"
     },
     {
       "path": "app/client/helpers/users/user.js",
@@ -978,9 +987,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?dad2f66bc8e849fc5a1106626d6900103ea04526",
-      "size": 189,
-      "hash": "dad2f66bc8e849fc5a1106626d6900103ea04526"
+      "url": "/client/router.js?cf9bf25389173485716cb706444f8d7f039b5a51",
+      "size": 214,
+      "hash": "cf9bf25389173485716cb706444f8d7f039b5a51"
     },
     {
       "path": "app/client/script.js",
