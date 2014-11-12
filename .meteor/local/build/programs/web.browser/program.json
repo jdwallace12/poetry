@@ -816,9 +816,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?1ab5fc183ea12e3bcccb1d8cc6c7f0637d51c364",
-      "size": 6388,
-      "hash": "1ab5fc183ea12e3bcccb1d8cc6c7f0637d51c364"
+      "url": "/client/templates/home/template.home.js?d91058f8337d9c539eba25bc841a997b73172083",
+      "size": 6725,
+      "hash": "d91058f8337d9c539eba25bc841a997b73172083"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -906,9 +906,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?572e605f50cce9de348c2c6ec11fe28566b50c90",
-      "size": 2419,
-      "hash": "572e605f50cce9de348c2c6ec11fe28566b50c90"
+      "url": "/lib/collections/chat.js?12b8e0b790a400749f057e3ae4b8af0c8fbb4b00",
+      "size": 2499,
+      "hash": "12b8e0b790a400749f057e3ae4b8af0c8fbb4b00"
     },
     {
       "path": "app/lib/collections/magnets.js",
@@ -987,20 +987,20 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?8519d8ddea9d86ca550a46d39c13ac83d1b140f1",
-      "size": 1359,
-      "hash": "8519d8ddea9d86ca550a46d39c13ac83d1b140f1"
+      "url": "/client/script.js?577a6c99e1fb01090368db651d5ef14d79696c20",
+      "size": 1304,
+      "hash": "577a6c99e1fb01090368db651d5ef14d79696c20"
     },
     {
-      "path": "871c47e27f08b447cc54ee6015753c6f5e768206.css",
+      "path": "4c36026a6b256e85e1e089cbe115bf9c206c4e9e.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/871c47e27f08b447cc54ee6015753c6f5e768206.css",
-      "sourceMap": "871c47e27f08b447cc54ee6015753c6f5e768206.css.map",
-      "sourceMapUrl": "/871c47e27f08b447cc54ee6015753c6f5e768206.map",
+      "url": "/4c36026a6b256e85e1e089cbe115bf9c206c4e9e.css",
+      "sourceMap": "4c36026a6b256e85e1e089cbe115bf9c206c4e9e.css.map",
+      "sourceMapUrl": "/4c36026a6b256e85e1e089cbe115bf9c206c4e9e.map",
       "size": 162346,
-      "hash": "871c47e27f08b447cc54ee6015753c6f5e768206"
+      "hash": "4c36026a6b256e85e1e089cbe115bf9c206c4e9e"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -1019,6 +1019,24 @@
       "url": "/packages/bootstrap/img/glyphicons-halflings-white.png",
       "size": 8777,
       "hash": "a25c4705320fd63c33790e666872910e702b9bf6"
+    },
+    {
+      "path": "app/ding.wav",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/ding.wav",
+      "size": 334646,
+      "hash": "15c6edf8570a051d3e3d357454de896fd43277c8"
+    },
+    {
+      "path": "app/drum.wav",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/drum.wav",
+      "size": 66392,
+      "hash": "56f658260708816f8aa26798c6297416c304e546"
     },
     {
       "path": "app/fridge-trans.png",
@@ -1064,6 +1082,15 @@
       "url": "/metal.jpg",
       "size": 1016112,
       "hash": "3a1067013bce55c1f27ac18bc1c2ddc04051bd64"
+    },
+    {
+      "path": "app/pop.wav",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/pop.wav",
+      "size": 71540,
+      "hash": "52da994c09921af68094a404babdbf5e75ec5c65"
     },
     {
       "path": "app/slap.wav",

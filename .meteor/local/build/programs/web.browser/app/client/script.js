@@ -2,7 +2,9 @@
 
     $(".chat-wrap").draggable();
 
-    $('.chat-open').on('click', function() {         
+    $('.chat-open').on('click', function() {    
+        var drum = $('#drum')[0]
+                    drum.play();     
         $('.chat-wrap').show();
 
     });
@@ -28,11 +30,6 @@
         if ($textbox.val().length > 0 && e.keyCode == 13) {
             $('#send').click();
         }
-    });
-
-    $('#add-words').on('click', function() {
-        $('#footer').toggle();
-        $('#name_of_word').focus();
     });
 
     // var KEYCODE_ENTER = 13;

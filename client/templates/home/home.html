@@ -76,6 +76,14 @@
             <source src="/slap.wav">
         </audio>
      
+            
+          <audio id="ding" preload="metadata">
+            <source src="/ding.wav">
+        </audio>
+
+          <audio id="pop" preload="metadata">
+            <source src="/pop.wav">
+        </audio>
 
      <div id="footer" style="display:none;">
 {{>wordForm}}
@@ -95,7 +103,9 @@
 
 
     $('#add_words').on('click', function() {
-        $('#footer').slideToggle(150);
+           var pop = $('#pop')[0]
+                    pop.play();
+        $('#footer').slideToggle(150);        
         $('#name_of_word').focus();
     });
   
@@ -110,7 +120,7 @@
 
         $("#logo_magnet").draggable();
         $(".chat-wrap").draggable();
-        $(document).on("click", ".chat-open", function() {
+        $(document).on("click", ".chat-open", function() {   
             $('.chat-wrap').show();
 
         });
