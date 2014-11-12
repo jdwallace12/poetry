@@ -30,10 +30,10 @@
         }
     });
 
-    // $('.footer-open').on('click', function() {
-    //     $('#footer').toggle();
-    //     $('#name_of_word').focus();
-    // });
+    $('#add-words').on('click', function() {
+        $('#footer').toggle();
+        $('#name_of_word').focus();
+    });
 
     // var KEYCODE_ENTER = 13;
     // $(document).keyup(function(e) {

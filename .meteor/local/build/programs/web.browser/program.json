@@ -816,9 +816,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?9a6b0b623160c48c1f8df8b81b6542955c1082c6",
-      "size": 6208,
-      "hash": "9a6b0b623160c48c1f8df8b81b6542955c1082c6"
+      "url": "/client/templates/home/template.home.js?f62cb811d4a4bda5f94337f236c9aa874c12ac84",
+      "size": 6385,
+      "hash": "f62cb811d4a4bda5f94337f236c9aa874c12ac84"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -888,9 +888,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/new-word-form/template.wordForm.js?8fcaf6c8a5a38930af405960d4cadd0a02668e1b",
-      "size": 547,
-      "hash": "8fcaf6c8a5a38930af405960d4cadd0a02668e1b"
+      "url": "/client/templates/new-word-form/template.wordForm.js?5951a22351ff11d029d45ce9fa034a536e4b9387",
+      "size": 494,
+      "hash": "5951a22351ff11d029d45ce9fa034a536e4b9387"
     },
     {
       "path": "app/client/template.index.js",
@@ -924,9 +924,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/lists/list.js?f2bf71de0a89c0ba2b55d6ff00638ec683cd8967",
-      "size": 809,
-      "hash": "f2bf71de0a89c0ba2b55d6ff00638ec683cd8967"
+      "url": "/client/helpers/lists/list.js?d3886998eab63591cd19cc742ba3efe565079e7c",
+      "size": 726,
+      "hash": "d3886998eab63591cd19cc742ba3efe565079e7c"
     },
     {
       "path": "app/client/helpers/magnets/magnets.js",
@@ -942,9 +942,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/users/user.js?c7d2ad332b1c0b7329c63bea933efda4da67722e",
-      "size": 360,
-      "hash": "c7d2ad332b1c0b7329c63bea933efda4da67722e"
+      "url": "/client/helpers/users/user.js?6c06657fa55c1c31d2c709c130cf34b8fc306807",
+      "size": 381,
+      "hash": "6c06657fa55c1c31d2c709c130cf34b8fc306807"
     },
     {
       "path": "app/client/helpers/wordform/wordform.js",
@@ -978,18 +978,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?63943c469f9b41e2ef90dd9d6c0b090f3989ed72",
-      "size": 203,
-      "hash": "63943c469f9b41e2ef90dd9d6c0b090f3989ed72"
+      "url": "/client/router.js?33b3cc0f49167b0918370fe28d9a5d8eedb87038",
+      "size": 194,
+      "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
     },
     {
       "path": "app/client/script.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?c4762c059b56cb49c8cdd5911a0723a3c3d342f9",
-      "size": 1373,
-      "hash": "c4762c059b56cb49c8cdd5911a0723a3c3d342f9"
+      "url": "/client/script.js?8519d8ddea9d86ca550a46d39c13ac83d1b140f1",
+      "size": 1359,
+      "hash": "8519d8ddea9d86ca550a46d39c13ac83d1b140f1"
     },
     {
       "path": "2b75dd1fe3a6e559cf55f394c40c2c1dc299b80b.css",
