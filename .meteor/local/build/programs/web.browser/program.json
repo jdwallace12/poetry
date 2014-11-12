@@ -915,18 +915,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?9b050416ee944c213d5e0964f22b7c843af51e35",
-      "size": 1139,
-      "hash": "9b050416ee944c213d5e0964f22b7c843af51e35"
+      "url": "/lib/collections/magnets.js?4c944dafb9f876b433549ea4a8b23fad65d08b37",
+      "size": 1128,
+      "hash": "4c944dafb9f876b433549ea4a8b23fad65d08b37"
     },
     {
       "path": "app/client/helpers/lists/list.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/lists/list.js?ca0e07817c673723ed2d884c0201ce27d962ebb3",
-      "size": 685,
-      "hash": "ca0e07817c673723ed2d884c0201ce27d962ebb3"
+      "url": "/client/helpers/lists/list.js?f2bf71de0a89c0ba2b55d6ff00638ec683cd8967",
+      "size": 809,
+      "hash": "f2bf71de0a89c0ba2b55d6ff00638ec683cd8967"
     },
     {
       "path": "app/client/helpers/magnets/magnets.js",

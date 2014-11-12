@@ -17,6 +17,7 @@ Template.home.events = {
         var user = Meteor.userId();
         var magnet = Magnets.findOne();
         Magnets.update({_id: magnet._id}, {$set: {fridgeId: user}});
+        return Magnets.find({fridgeId: 1});
     }
 };
 
@@ -24,5 +25,13 @@ Template.private.events = {
     'click #group-fridge': function() {
         var magnet = Magnets.findOne();
         Magnets.update({_id: magnet._id}, {$set: {fridgeId: 1}});
+        return Magnets.frind({fridgeId: _id});
     }
 };
+
+
+Template.home.helpers({
+
+
+});
+
