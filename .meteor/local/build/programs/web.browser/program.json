@@ -852,9 +852,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.input.js?8f2d7037dd48f8d12ac285bc9005e1e695581b17",
-      "size": 723,
-      "hash": "8f2d7037dd48f8d12ac285bc9005e1e695581b17"
+      "url": "/client/templates/messages/template.input.js?8608a02801e22bfa8c64bd9f0b5df069bb44095d",
+      "size": 828,
+      "hash": "8608a02801e22bfa8c64bd9f0b5df069bb44095d"
     },
     {
       "path": "app/client/templates/messages/template.message.js",
