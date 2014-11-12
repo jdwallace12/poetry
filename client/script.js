@@ -1,13 +1,12 @@
 $(document).ready(function() {
 
-    $(".chat-wrap").draggable();
+    // $(".chat-wrap").draggable();
 
-    $('.chat-open').on('click', function() {    
-        var drum = $('#drum')[0]
-                    drum.play();     
-        $('.chat-wrap').show();
+    // $('.chat-open').on('click', function() {    
+   
+    //     $('.chat-wrap').show();
 
-    });
+    // });
 
 
 
