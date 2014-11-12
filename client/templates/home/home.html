@@ -10,7 +10,7 @@
                         <li class="chat-open nav-links">
                             <a href="#"><i class="fa fa-comments"></i> Chat with fellow poets</a>
                         </li>
-                        <li class="nav-links"><a href="{{pathFor 'private'}}"><i class="fa fa-magic"></i> Create My Own</a>
+                        <li id="new-board" class="nav-links"><a href="{{pathFor 'private'}}"><i class="fa fa-magic"></i> Create My Own</a>
                         </li>
                         {{else}}
                          {{/if}}                
@@ -102,5 +102,7 @@
 
         });
     });
+
+
     </script>
 </template>

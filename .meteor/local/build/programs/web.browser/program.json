@@ -816,9 +816,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?e1e6925326bab87e0075a27db3a8a1afe3ed8c62",
-      "size": 6181,
-      "hash": "e1e6925326bab87e0075a27db3a8a1afe3ed8c62"
+      "url": "/client/templates/home/template.home.js?9a6b0b623160c48c1f8df8b81b6542955c1082c6",
+      "size": 6208,
+      "hash": "9a6b0b623160c48c1f8df8b81b6542955c1082c6"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -879,9 +879,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?9680db324d0c4c24a594e3fd019d93ad0753bbf7",
-      "size": 5185,
-      "hash": "9680db324d0c4c24a594e3fd019d93ad0753bbf7"
+      "url": "/client/templates/my-board/template.private.js?c9719bb345c3df7ccb3fa6ac66380cc24607bb59",
+      "size": 5213,
+      "hash": "c9719bb345c3df7ccb3fa6ac66380cc24607bb59"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -906,45 +906,36 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?73ccc21b11b0b3e9b3e4a5c37f4d948ba17aea40",
-      "size": 2389,
-      "hash": "73ccc21b11b0b3e9b3e4a5c37f4d948ba17aea40"
-    },
-    {
-      "path": "app/lib/collections/fridge.js",
-      "where": "client",
-      "type": "js",
-      "cacheable": true,
-      "url": "/lib/collections/fridge.js?89ce0ed0cc2944b72fcae54d444c78022c1d2d68",
-      "size": 134,
-      "hash": "89ce0ed0cc2944b72fcae54d444c78022c1d2d68"
+      "url": "/lib/collections/chat.js?292059ebbb23f920c3ea0034fa642df02e893112",
+      "size": 2308,
+      "hash": "292059ebbb23f920c3ea0034fa642df02e893112"
     },
     {
       "path": "app/lib/collections/magnets.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?1aa9f622af571e445795e1eae60e2fd7cbcedad4",
-      "size": 987,
-      "hash": "1aa9f622af571e445795e1eae60e2fd7cbcedad4"
+      "url": "/lib/collections/magnets.js?9b050416ee944c213d5e0964f22b7c843af51e35",
+      "size": 1139,
+      "hash": "9b050416ee944c213d5e0964f22b7c843af51e35"
     },
     {
       "path": "app/client/helpers/lists/list.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/lists/list.js?ed28dddd0597e60859f3b392bd319d75b6015f49",
-      "size": 282,
-      "hash": "ed28dddd0597e60859f3b392bd319d75b6015f49"
+      "url": "/client/helpers/lists/list.js?ca0e07817c673723ed2d884c0201ce27d962ebb3",
+      "size": 685,
+      "hash": "ca0e07817c673723ed2d884c0201ce27d962ebb3"
     },
     {
       "path": "app/client/helpers/magnets/magnets.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?b284a00452e34aa882a8b4410ac2d98a326ae5bd",
-      "size": 2794,
-      "hash": "b284a00452e34aa882a8b4410ac2d98a326ae5bd"
+      "url": "/client/helpers/magnets/magnets.js?14752fa418d519904479a8362a7be375d9b5f113",
+      "size": 2795,
+      "hash": "14752fa418d519904479a8362a7be375d9b5f113"
     },
     {
       "path": "app/client/helpers/users/user.js",
@@ -987,9 +978,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?cf9bf25389173485716cb706444f8d7f039b5a51",
-      "size": 214,
-      "hash": "cf9bf25389173485716cb706444f8d7f039b5a51"
+      "url": "/client/router.js?63943c469f9b41e2ef90dd9d6c0b090f3989ed72",
+      "size": 203,
+      "hash": "63943c469f9b41e2ef90dd9d6c0b090f3989ed72"
     },
     {
       "path": "app/client/script.js",
@@ -1001,15 +992,15 @@
       "hash": "c4762c059b56cb49c8cdd5911a0723a3c3d342f9"
     },
     {
-      "path": "266cda74a49f09355e41ed68eb03298d09f14e72.css",
+      "path": "2b75dd1fe3a6e559cf55f394c40c2c1dc299b80b.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/266cda74a49f09355e41ed68eb03298d09f14e72.css",
-      "sourceMap": "266cda74a49f09355e41ed68eb03298d09f14e72.css.map",
-      "sourceMapUrl": "/266cda74a49f09355e41ed68eb03298d09f14e72.map",
+      "url": "/2b75dd1fe3a6e559cf55f394c40c2c1dc299b80b.css",
+      "sourceMap": "2b75dd1fe3a6e559cf55f394c40c2c1dc299b80b.css.map",
+      "sourceMapUrl": "/2b75dd1fe3a6e559cf55f394c40c2c1dc299b80b.map",
       "size": 162345,
-      "hash": "266cda74a49f09355e41ed68eb03298d09f14e72"
+      "hash": "2b75dd1fe3a6e559cf55f394c40c2c1dc299b80b"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
