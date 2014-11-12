@@ -816,9 +816,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?80eb188cd3b7d96070f4fc9fef079c376699d3f7",
-      "size": 6879,
-      "hash": "80eb188cd3b7d96070f4fc9fef079c376699d3f7"
+      "url": "/client/templates/home/template.home.js?1375c0e4ec3d3e2937bfa74a13d246ce77a0c784",
+      "size": 6734,
+      "hash": "1375c0e4ec3d3e2937bfa74a13d246ce77a0c784"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -960,9 +960,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?96484fe25869501dccbb573d6fe7866799dd555d",
-      "size": 739,
-      "hash": "96484fe25869501dccbb573d6fe7866799dd555d"
+      "url": "/client/helpers/wordform/wordform.js?470ae4b5839108fcc6b12f6d0cf0f1459ce532b8",
+      "size": 798,
+      "hash": "470ae4b5839108fcc6b12f6d0cf0f1459ce532b8"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
