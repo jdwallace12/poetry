@@ -10,6 +10,8 @@ Template.wordForm.events = {
             left: Math.floor(Random.fraction() * 100) * 8           
         });
          $('.magnet:last').effect('highlight', {color: "#f1c40f;"}, 2000);
+           var slap = $('#slap')[0]
+                    slap.play();
         $("#name_of_word").val("");
     }
 };
