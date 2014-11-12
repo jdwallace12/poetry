@@ -99,8 +99,9 @@
         <span style="top: -11px; position: relative;"><strong>Share This Creation</strong></span>
     </div>
     <script>
-    $(document).ready(function() {
 
+
+    $(document).ready(function() {
 
     $('#add_words').on('click', function() {
            var pop = $('#pop')[0]
@@ -125,6 +126,12 @@
             $('#newMessage').focus();
 
         });
+
+            $('.magnet').profanityFilter({
+    customSwears: ['shit', 'fuck'],
+    replaceWith: ['fiddle', 'fun', 'stupendous']
+    });   
+
     });
 
 

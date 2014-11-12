@@ -816,9 +816,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?59d41c76c30f3c2339d3a9eb64d1c364890b2c62",
-      "size": 6730,
-      "hash": "59d41c76c30f3c2339d3a9eb64d1c364890b2c62"
+      "url": "/client/templates/home/template.home.js?80eb188cd3b7d96070f4fc9fef079c376699d3f7",
+      "size": 6879,
+      "hash": "80eb188cd3b7d96070f4fc9fef079c376699d3f7"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -947,13 +947,22 @@
       "hash": "6c06657fa55c1c31d2c709c130cf34b8fc306807"
     },
     {
+      "path": "app/client/helpers/wordform/profanityFilter.min.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/client/helpers/wordform/profanityFilter.min.js?9e0131e42eff9ca0dc77069323af463bab8d5599",
+      "size": 1811,
+      "hash": "9e0131e42eff9ca0dc77069323af463bab8d5599"
+    },
+    {
       "path": "app/client/helpers/wordform/wordform.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?385c107038687768a45765ee91adc765c3d97670",
-      "size": 612,
-      "hash": "385c107038687768a45765ee91adc765c3d97670"
+      "url": "/client/helpers/wordform/wordform.js?96484fe25869501dccbb573d6fe7866799dd555d",
+      "size": 739,
+      "hash": "96484fe25869501dccbb573d6fe7866799dd555d"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
