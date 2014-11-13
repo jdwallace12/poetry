@@ -937,9 +937,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?3aaffd628bd7960e01282413b4ef11924f82017f",
-      "size": 1212,
-      "hash": "3aaffd628bd7960e01282413b4ef11924f82017f"
+      "url": "/lib/collections/magnets.js?f91de7162439c40bb2282e4a27ac56f843839316",
+      "size": 1216,
+      "hash": "f91de7162439c40bb2282e4a27ac56f843839316"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -964,9 +964,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/users/user.js?6c06657fa55c1c31d2c709c130cf34b8fc306807",
-      "size": 381,
-      "hash": "6c06657fa55c1c31d2c709c130cf34b8fc306807"
+      "url": "/client/helpers/users/user.js?baaa139ce05b1dc9e04c86b676ee37960c9e703c",
+      "size": 488,
+      "hash": "baaa139ce05b1dc9e04c86b676ee37960c9e703c"
     },
     {
       "path": "app/client/helpers/wordform/profanityFilter.min.js",

@@ -17,3 +17,11 @@ Template.home.usersOnline = function() {
 return Meteor.users.find({ "status.online": true });
 
 };
+
+
+Houston.menu({
+  'type': 'link',
+  'use': '#',
+  'title': 'Delete all Magnets',
+  'target': 'blank',
+});
