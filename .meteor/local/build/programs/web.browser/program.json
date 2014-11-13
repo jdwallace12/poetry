@@ -928,18 +928,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?12b8e0b790a400749f057e3ae4b8af0c8fbb4b00",
-      "size": 2499,
-      "hash": "12b8e0b790a400749f057e3ae4b8af0c8fbb4b00"
+      "url": "/lib/collections/chat.js?eda73fb37019ce1ba07973b1872aff4b3586af5d",
+      "size": 2536,
+      "hash": "eda73fb37019ce1ba07973b1872aff4b3586af5d"
     },
     {
       "path": "app/lib/collections/magnets.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?ac693dc985d4cf6256d33af48d5ac2ab0c67986d",
-      "size": 5178,
-      "hash": "ac693dc985d4cf6256d33af48d5ac2ab0c67986d"
+      "url": "/lib/collections/magnets.js?9e3fb3f16ee166886678145dd4c76e879ee4864e",
+      "size": 5250,
+      "hash": "9e3fb3f16ee166886678145dd4c76e879ee4864e"
     },
     {
       "path": "app/client/helpers/lists/list.js",
