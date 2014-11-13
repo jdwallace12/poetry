@@ -17,16 +17,12 @@ Template.wordForm.events = {
     replaceWith: ['fiddle', 'fun', 'stupendous', 'puppies', 'happy', 'kittens', 'silly', 'coffee', 'IE', 'dancing', 'a', 'the', 'at', 'was', 'there', 'tired', 'sleepy', 'hungry', 'full', 'editor', 'pancakes', 'butter', 'syrup', 'source', 'open', 'clouds', 'sunshine', 'rainbows', 'unicorns', 'love', 'kind', 'censor', 'fragrant']
     });   
             
-        Magnets.update ({
-     
-        });
 
-
+            $("#name_of_word").val("");
          $('.magnet:last-child').effect('highlight', {color: "#f1c40f;"}, 1300);
            var slap = $('#slap')[0]
                     slap.play();
-        $("#name_of_word").val("");
-
+    
 
     }
 
