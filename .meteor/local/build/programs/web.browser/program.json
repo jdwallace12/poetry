@@ -838,9 +838,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?5fa9cb1d71a3b25758f3a27ad6d2feda32d9e88b",
-      "size": 6772,
-      "hash": "5fa9cb1d71a3b25758f3a27ad6d2feda32d9e88b"
+      "url": "/client/templates/home/template.home.js?2a3b453b2c76128f1fec7c2fb02306a36797a898",
+      "size": 6886,
+      "hash": "2a3b453b2c76128f1fec7c2fb02306a36797a898"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -865,9 +865,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/magnets/template.magnets.js?f235d1ff4463a5fac6513545deb3090c706705ae",
-      "size": 679,
-      "hash": "f235d1ff4463a5fac6513545deb3090c706705ae"
+      "url": "/client/templates/magnets/template.magnets.js?ae19f6ab1510887f88cb33c6414a377240eb400d",
+      "size": 4785,
+      "hash": "ae19f6ab1510887f88cb33c6414a377240eb400d"
     },
     {
       "path": "app/client/templates/messages/template.input.js",
@@ -937,9 +937,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?9e3fb3f16ee166886678145dd4c76e879ee4864e",
-      "size": 5250,
-      "hash": "9e3fb3f16ee166886678145dd4c76e879ee4864e"
+      "url": "/lib/collections/magnets.js?16c1db91e2e6782214be6bd382f251ddeea24d72",
+      "size": 5252,
+      "hash": "16c1db91e2e6782214be6bd382f251ddeea24d72"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -955,9 +955,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?14752fa418d519904479a8362a7be375d9b5f113",
-      "size": 2795,
-      "hash": "14752fa418d519904479a8362a7be375d9b5f113"
+      "url": "/client/helpers/magnets/magnets.js?37fceb38028bc995450b4d8ec7fb3cd5abbae60b",
+      "size": 3169,
+      "hash": "37fceb38028bc995450b4d8ec7fb3cd5abbae60b"
     },
     {
       "path": "app/client/helpers/users/user.js",
@@ -967,15 +967,6 @@
       "url": "/client/helpers/users/user.js?baaa139ce05b1dc9e04c86b676ee37960c9e703c",
       "size": 488,
       "hash": "baaa139ce05b1dc9e04c86b676ee37960c9e703c"
-    },
-    {
-      "path": "app/client/helpers/wordform/profanityFilter.min.js",
-      "where": "client",
-      "type": "js",
-      "cacheable": true,
-      "url": "/client/helpers/wordform/profanityFilter.min.js?9e0131e42eff9ca0dc77069323af463bab8d5599",
-      "size": 1811,
-      "hash": "9e0131e42eff9ca0dc77069323af463bab8d5599"
     },
     {
       "path": "app/client/helpers/wordform/wordform.js",
@@ -1003,6 +994,15 @@
       "url": "/client/vendor/jquery.ui.touch-punch.min.js?ff619efbce821e061b5555c32241eaf27221a61d",
       "size": 1210,
       "hash": "ff619efbce821e061b5555c32241eaf27221a61d"
+    },
+    {
+      "path": "app/client/profanityFilter.min.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/client/profanityFilter.min.js?9e0131e42eff9ca0dc77069323af463bab8d5599",
+      "size": 1811,
+      "hash": "9e0131e42eff9ca0dc77069323af463bab8d5599"
     },
     {
       "path": "app/client/router.js",

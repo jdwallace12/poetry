@@ -19,6 +19,24 @@ Template.magnet.magnetId = function() {
     return this._id;
 };
 
+//random plaement in db
+Template.home.events = {
+ 'click #make_room': function() {
+
+var magnetId = Magnets.findOne({'magnetId':this._id});
+   Magnets.update({
+         _id:magnetId._id  
+        }, {
+            $set: {
+                top: Math.floor(Random.fraction()*100)*8,
+                left: Math.floor(Random.fraction()*100)*3
+            }
+        });
+ }   
+};
+
+
+
 
 
 Template.magnet.events = {
