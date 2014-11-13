@@ -39,12 +39,34 @@ body {
     width: 100%;
     height: 55px;
     font-size: 24px;
-    color: #7f8c8d;
+    color: #ffffff;
 }
 
 #name_of_word:invalid {
-background: red;
+background: #FF0000;
+color: #ffffff;
 }
+
+#name_of_word:valid {
+background: #3DA059;
+color: #ffffff;
+}
+#name_of_word::-webkit-input-placeholder {
+   color: #ffffff;
+}
+
+#name_of_word:-moz-placeholder { /* Firefox 18- */
+   color: #ffffff; 
+}
+
+#name_of_word::-moz-placeholder {  /* Firefox 19+ */
+   color: #ffffff; 
+}
+
+#name_of_word:-ms-input-placeholder {  
+   color: #ffffff;  
+}
+
 .name {
     font-size: 16px;
     min-height: 25px;
