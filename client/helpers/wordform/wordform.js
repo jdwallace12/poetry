@@ -9,7 +9,7 @@ Template.wordForm.events = {
             top: Math.floor(Random.fraction() * 100) * 7,
             left: Math.floor(Random.fraction() * 100) * 8           
         });
-        
+     //filter out dirty words here   
     $('.magnet').profanityFilter({
     customSwears: ['shit', 'fuck', 'ass', 'cunt', 'niggers'],
     replaceWith: ['fiddle', 'fun', 'stupendous', 'puppies', 'happy']
