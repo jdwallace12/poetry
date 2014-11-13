@@ -838,9 +838,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?2a3b453b2c76128f1fec7c2fb02306a36797a898",
-      "size": 6886,
-      "hash": "2a3b453b2c76128f1fec7c2fb02306a36797a898"
+      "url": "/client/templates/home/template.home.js?bd5b4619800a9f5a582b45aa8b7b59d751c8382b",
+      "size": 7197,
+      "hash": "bd5b4619800a9f5a582b45aa8b7b59d751c8382b"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -865,9 +865,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/magnets/template.magnets.js?ae19f6ab1510887f88cb33c6414a377240eb400d",
-      "size": 4785,
-      "hash": "ae19f6ab1510887f88cb33c6414a377240eb400d"
+      "url": "/client/templates/magnets/template.magnets.js?18bef9a19665dc1e974c50cdbb545dd53b280847",
+      "size": 4786,
+      "hash": "18bef9a19665dc1e974c50cdbb545dd53b280847"
     },
     {
       "path": "app/client/templates/messages/template.input.js",
@@ -937,9 +937,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?f0cb4d22e455112ad955a74536298a6031bb98dc",
-      "size": 1218,
-      "hash": "f0cb4d22e455112ad955a74536298a6031bb98dc"
+      "url": "/lib/collections/magnets.js?b088011b5d680b283b3aece305b6e8e094204436",
+      "size": 1936,
+      "hash": "b088011b5d680b283b3aece305b6e8e094204436"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -955,9 +955,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?37fceb38028bc995450b4d8ec7fb3cd5abbae60b",
-      "size": 3169,
-      "hash": "37fceb38028bc995450b4d8ec7fb3cd5abbae60b"
+      "url": "/client/helpers/magnets/magnets.js?f4f5668dffedcfe798abe63c29057b4029fda446",
+      "size": 3058,
+      "hash": "f4f5668dffedcfe798abe63c29057b4029fda446"
     },
     {
       "path": "app/client/helpers/users/user.js",
@@ -973,9 +973,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?b283692cea34f3c387eba5d90d14d91d4fb7754d",
-      "size": 4587,
-      "hash": "b283692cea34f3c387eba5d90d14d91d4fb7754d"
+      "url": "/client/helpers/wordform/wordform.js?7e04336c07f61a4b4d7fbf6e46bcadba72e040d1",
+      "size": 4599,
+      "hash": "7e04336c07f61a4b4d7fbf6e46bcadba72e040d1"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -1050,6 +1050,15 @@
       "url": "/packages/bootstrap/img/glyphicons-halflings-white.png",
       "size": 8777,
       "hash": "a25c4705320fd63c33790e666872910e702b9bf6"
+    },
+    {
+      "path": "app/crumple.wav",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/crumple.wav",
+      "size": 560068,
+      "hash": "243f7cba1802b8f729455b93be93beee458e2d7a"
     },
     {
       "path": "app/ding.wav",

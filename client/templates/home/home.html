@@ -4,7 +4,7 @@
                 <div class="navbar navbar-fixed-top" style="background: #ffffff;">
                     <ul class="nav">
                         <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a></li>
-                        <li id="make_room" class="nav-links"><a><i class="fa fa-refresh"></i> Make Room</a></li>
+                        <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Delete Magnets</a></li>
                   <!--       <li class="nav-links">
                             <a href="{{pathFor 'home'}}"><i class="fa fa-users"></i> Office Fridge</a>
                         </li> -->
@@ -86,6 +86,11 @@
             <source src="/pop.wav">
         </audio>
 
+
+          <audio id="crumple" preload="metadata">
+            <source src="/crumple.wav">
+        </audio>
+
      <div id="footer" style="display:none;">
 {{>wordForm}}
 </div>
@@ -111,7 +116,13 @@
         $('#footer').slideToggle(150);        
         $('#name_of_word').focus();
     });
-  
+   
+
+    $('#delete').on('click', function(){
+            var crumple = $('#crumple')[0]
+                    crumple.play();
+                    crumple.volume = .3;
+    });
 
         stButtons.locateElements();
 
