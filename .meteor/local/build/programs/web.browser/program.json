@@ -910,9 +910,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/new-word-form/template.wordForm.js?6a1aad5f1270672f85b6fe26b14ea66ab72a9161",
-      "size": 528,
-      "hash": "6a1aad5f1270672f85b6fe26b14ea66ab72a9161"
+      "url": "/client/templates/new-word-form/template.wordForm.js?3ea2f740bf523ff5f5bdbd9d8c9b8977a5928f13",
+      "size": 540,
+      "hash": "3ea2f740bf523ff5f5bdbd9d8c9b8977a5928f13"
     },
     {
       "path": "app/client/template.index.js",
@@ -982,9 +982,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?48c5ddf57bd2da3df33202978e1bd2d2cac8e1b5",
-      "size": 827,
-      "hash": "48c5ddf57bd2da3df33202978e1bd2d2cac8e1b5"
+      "url": "/client/helpers/wordform/wordform.js?2a3453bba5b8f7e5a39caf4f0fb6016f1b588104",
+      "size": 19,
+      "hash": "2a3453bba5b8f7e5a39caf4f0fb6016f1b588104"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
