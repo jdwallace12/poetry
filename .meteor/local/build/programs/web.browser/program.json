@@ -937,9 +937,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?f91de7162439c40bb2282e4a27ac56f843839316",
-      "size": 1216,
-      "hash": "f91de7162439c40bb2282e4a27ac56f843839316"
+      "url": "/lib/collections/magnets.js?c5d4f03e7fcc1570014d26436ffe791d909162c2",
+      "size": 5187,
+      "hash": "c5d4f03e7fcc1570014d26436ffe791d909162c2"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -982,9 +982,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?d783d943bfc60036bdaeeb7b99216025fe920dd8",
-      "size": 4564,
-      "hash": "d783d943bfc60036bdaeeb7b99216025fe920dd8"
+      "url": "/client/helpers/wordform/wordform.js?08c7fa0d8c61671df3b6b32a98323f01c17a16e3",
+      "size": 4624,
+      "hash": "08c7fa0d8c61671df3b6b32a98323f01c17a16e3"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
@@ -1136,7 +1136,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "bd7ecc6ed27116f6324ba27e2aa1603f368b31ad"
+      "hash": "2f9ffdeeaf14440c0daa2e129b44b3322aebdade"
     }
   ]
 }
