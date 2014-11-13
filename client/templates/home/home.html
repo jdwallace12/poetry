@@ -4,12 +4,12 @@
                 <div class="navbar navbar-fixed-top" style="background: #ffffff;">
                     <ul class="nav">
                         <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a></li>
-                        <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Delete Magnets</a></li>
+                        <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Clear Fridge</a></li>
                   <!--       <li class="nav-links">
                             <a href="{{pathFor 'home'}}"><i class="fa fa-users"></i> Office Fridge</a>
                         </li> -->
                         {{#if currentUser}}
-                        <li class="chat-open nav-links">
+                        <li id="chat-open" class="nav-links">
                             <a><i class="fa fa-comments"></i> Chat</a>
                         </li>
                     <!--     <li id="new-board" class="nav-links"><a href="{{pathFor 'private'}}"><i class="fa fa-magic"></i> Create My Own</a>
@@ -110,6 +110,9 @@
     $(document).ready(function() {
 
     $('#add_words').on('click', function() {
+        $('#add_words').toggleClass('active'); 
+        $("#chat-open, #delete").removeClass('active');
+
            var pop = $('#pop')[0]
                     pop.play();
                     pop.volume = .3;
@@ -119,6 +122,7 @@
    
 
     $('#delete').on('click', function(){
+        $("#chat-open, #add_words").removeClass('active');
             var crumple = $('#crumple')[0]
                     crumple.play();
                     crumple.volume = .3;
@@ -133,8 +137,11 @@
         } // Parse ShareThis markup
 
         $("#logo_magnet").draggable();
-        $(".chat-wrap").draggable();
-        $(document).on("click", ".chat-open", function() {   
+        $("#chat-wrap").draggable();
+        $(document).on("click", "#chat-open", function() {  
+        $('#chat-open').toggleClass('active'); 
+        $("#add_words, #delete").removeClass('active');
+
             $('.chat-wrap').show();
             $('#newMessage').focus();
 

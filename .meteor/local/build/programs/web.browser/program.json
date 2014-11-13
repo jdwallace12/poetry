@@ -838,9 +838,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?bd5b4619800a9f5a582b45aa8b7b59d751c8382b",
-      "size": 7197,
-      "hash": "bd5b4619800a9f5a582b45aa8b7b59d751c8382b"
+      "url": "/client/templates/home/template.home.js?1c4aee852574baeba3a43a17c19b28fcf245eada",
+      "size": 7489,
+      "hash": "1c4aee852574baeba3a43a17c19b28fcf245eada"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -865,9 +865,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/magnets/template.magnets.js?18bef9a19665dc1e974c50cdbb545dd53b280847",
-      "size": 4786,
-      "hash": "18bef9a19665dc1e974c50cdbb545dd53b280847"
+      "url": "/client/templates/magnets/template.magnets.js?3af8a8082a0379c56c32ca44be44302cc3233223",
+      "size": 4797,
+      "hash": "3af8a8082a0379c56c32ca44be44302cc3233223"
     },
     {
       "path": "app/client/templates/messages/template.input.js",
@@ -910,9 +910,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/new-word-form/template.wordForm.js?3ea2f740bf523ff5f5bdbd9d8c9b8977a5928f13",
-      "size": 540,
-      "hash": "3ea2f740bf523ff5f5bdbd9d8c9b8977a5928f13"
+      "url": "/client/templates/new-word-form/template.wordForm.js?6fbe45ab20602cbaa7ca201422970a459a0fb178",
+      "size": 449,
+      "hash": "6fbe45ab20602cbaa7ca201422970a459a0fb178"
     },
     {
       "path": "app/client/template.index.js",
@@ -1018,20 +1018,20 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?f327d61181da368aac49385b20964775c30f6396",
-      "size": 1249,
-      "hash": "f327d61181da368aac49385b20964775c30f6396"
+      "url": "/client/script.js?81fa59cfe95f8a6b60576b518263a9f263960b9d",
+      "size": 1298,
+      "hash": "81fa59cfe95f8a6b60576b518263a9f263960b9d"
     },
     {
-      "path": "0fbdcd5cb32f462f025a0aeb86adb5d8ad1fd329.css",
+      "path": "951b67c4d0503fbd28f244321a08b25ce0fa03e3.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/0fbdcd5cb32f462f025a0aeb86adb5d8ad1fd329.css",
-      "sourceMap": "0fbdcd5cb32f462f025a0aeb86adb5d8ad1fd329.css.map",
-      "sourceMapUrl": "/0fbdcd5cb32f462f025a0aeb86adb5d8ad1fd329.map",
-      "size": 162853,
-      "hash": "0fbdcd5cb32f462f025a0aeb86adb5d8ad1fd329"
+      "url": "/951b67c4d0503fbd28f244321a08b25ce0fa03e3.css",
+      "sourceMap": "951b67c4d0503fbd28f244321a08b25ce0fa03e3.css.map",
+      "sourceMapUrl": "/951b67c4d0503fbd28f244321a08b25ce0fa03e3.map",
+      "size": 162899,
+      "hash": "951b67c4d0503fbd28f244321a08b25ce0fa03e3"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
