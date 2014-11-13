@@ -20,3 +20,5 @@ bootstrap
 iron:router
 mizzao:user-status
 dburles:collection-helpers
+houston:admin
+

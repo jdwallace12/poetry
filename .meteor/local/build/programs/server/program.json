@@ -404,6 +404,11 @@
       "path": "packages/dburles_collection-helpers.js"
     },
     {
+      "sourceMap": "packages/houston_admin.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/houston_admin.js"
+    },
+    {
       "sourceMap": "packages/reload.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/reload.js"
