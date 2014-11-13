@@ -982,9 +982,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?2a3453bba5b8f7e5a39caf4f0fb6016f1b588104",
-      "size": 19,
-      "hash": "2a3453bba5b8f7e5a39caf4f0fb6016f1b588104"
+      "url": "/client/helpers/wordform/wordform.js?c43b971cdb3014a73a9cadd21ed10ac7926e0061",
+      "size": 4462,
+      "hash": "c43b971cdb3014a73a9cadd21ed10ac7926e0061"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
