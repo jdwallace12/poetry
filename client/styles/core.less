@@ -14,6 +14,11 @@ body {
     @media (max-width: 980px) {
         padding-top: 0px;   
     }
+  @media (max-width: 1200px) {
+         background-image: url(/metal-texture.jpg); 
+         padding: 50px;
+    }
+
 }
 #header {
     color: white;
@@ -200,9 +205,12 @@ input:focus, textarea:focus {
 }
 .fridge {
     height: 855px;
-    width: 97%;
+    width: 1140px;
     margin: 0 auto;
     background-image: url(/fridge-trans.png);
+     @media (max-width: 1200px) {
+        display: none;
+     }
 }
 .social-wrap {
     position: fixed;

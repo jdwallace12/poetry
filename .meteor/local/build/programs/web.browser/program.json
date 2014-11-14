@@ -838,9 +838,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?620ee6e776de90f6b0b93589bede4cdf78cb51a5",
+      "url": "/client/templates/home/template.home.js?6f87c9ce036edbea4202707ac8614547b250be38",
       "size": 9330,
-      "hash": "620ee6e776de90f6b0b93589bede4cdf78cb51a5"
+      "hash": "6f87c9ce036edbea4202707ac8614547b250be38"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -1023,15 +1023,15 @@
       "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
     },
     {
-      "path": "f2a60f8ae85e260ec8c089d6bf72edfd7e1dd5fc.css",
+      "path": "f8e9c00ecc4d430a1c496a03de0da1d918746b7b.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/f2a60f8ae85e260ec8c089d6bf72edfd7e1dd5fc.css",
-      "sourceMap": "f2a60f8ae85e260ec8c089d6bf72edfd7e1dd5fc.css.map",
-      "sourceMapUrl": "/f2a60f8ae85e260ec8c089d6bf72edfd7e1dd5fc.map",
-      "size": 164042,
-      "hash": "f2a60f8ae85e260ec8c089d6bf72edfd7e1dd5fc"
+      "url": "/f8e9c00ecc4d430a1c496a03de0da1d918746b7b.css",
+      "sourceMap": "f8e9c00ecc4d430a1c496a03de0da1d918746b7b.css.map",
+      "sourceMapUrl": "/f8e9c00ecc4d430a1c496a03de0da1d918746b7b.map",
+      "size": 164223,
+      "hash": "f8e9c00ecc4d430a1c496a03de0da1d918746b7b"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -1113,6 +1113,24 @@
       "url": "/logo_magnet.jpg",
       "size": 7780,
       "hash": "39d7224df4d63a578cd4c40653c9011267dc36ce"
+    },
+    {
+      "path": "app/metal-texture-smooth.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/metal-texture-smooth.jpg",
+      "size": 578566,
+      "hash": "ef3289dc4620bba7466dd93601461bdfdcdff1cd"
+    },
+    {
+      "path": "app/metal-texture.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/metal-texture.jpg",
+      "size": 601009,
+      "hash": "1ea8bdf80f06238c3ce176c82676e6627b0734af"
     },
     {
       "path": "app/metal.jpg",
