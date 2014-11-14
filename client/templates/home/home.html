@@ -17,12 +17,13 @@
                     <a><i class="fa fa-comments"></i> Chat</a>
                 </li>
                 {{else}}
+                <li id="login-mobile" class="nav-links hidden-desktop"><a data-toggle="modal" href="#loginModal"><i class="fa fa-power-off"></i> Login</a>
+                </li>
                  {{/if}}
             </ul>
+
+       
             <ul class="nav pull-right hidden-desktop" style="left: -40px; margin-bottom: 0px;">
-                <li>
-                    {{> loginButtons}}
-                </li>
                 {{#if currentUser}}
                 <li style="position: relative; left: 55px;">
                     {{#if user.services.twitter}}
@@ -36,9 +37,12 @@
                     {{/if}}
                 </li>
                 {{else}} 
+             
                 {{/if}}
             </ul>
         </div>
+
+       
             <ul class="nav pull-right visible-desktop" style="left: -40px;">
                 <li>
                     {{> loginButtons}}
@@ -111,6 +115,20 @@
             <span class="visible-desktop"><strong>Share This Creation</strong></span>
         </span>
     </div>
+
+
+<!-- login modal -->
+<div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Mobile Login</h3>
+  </div>
+  <div class="modal-body" style="height:350px;">
+  <p>{{> loginButtons}}</p>
+  </div>
+</div>
+
+
     <script>
     $(document).ready(function() {
 
