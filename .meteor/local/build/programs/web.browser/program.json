@@ -1023,15 +1023,15 @@
       "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
     },
     {
-      "path": "f8e9c00ecc4d430a1c496a03de0da1d918746b7b.css",
+      "path": "03e5a77a6d2d42d267d43cc6395a17432d2ab8a6.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/f8e9c00ecc4d430a1c496a03de0da1d918746b7b.css",
-      "sourceMap": "f8e9c00ecc4d430a1c496a03de0da1d918746b7b.css.map",
-      "sourceMapUrl": "/f8e9c00ecc4d430a1c496a03de0da1d918746b7b.map",
-      "size": 164223,
-      "hash": "f8e9c00ecc4d430a1c496a03de0da1d918746b7b"
+      "url": "/03e5a77a6d2d42d267d43cc6395a17432d2ab8a6.css",
+      "sourceMap": "03e5a77a6d2d42d267d43cc6395a17432d2ab8a6.css.map",
+      "sourceMapUrl": "/03e5a77a6d2d42d267d43cc6395a17432d2ab8a6.map",
+      "size": 164233,
+      "hash": "03e5a77a6d2d42d267d43cc6395a17432d2ab8a6"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -1120,8 +1120,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/metal-texture-smooth.jpg",
-      "size": 578566,
-      "hash": "ef3289dc4620bba7466dd93601461bdfdcdff1cd"
+      "size": 243896,
+      "hash": "8fc06f220ac5d7a0c59f99b08f9e624c4a4bce31"
     },
     {
       "path": "app/metal-texture.jpg",
@@ -1149,6 +1149,15 @@
       "url": "/pop.wav",
       "size": 71540,
       "hash": "52da994c09921af68094a404babdbf5e75ec5c65"
+    },
+    {
+      "path": "app/scratched-metal-texture.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/scratched-metal-texture.jpg",
+      "size": 466698,
+      "hash": "cdc5026821afbf6d3defd1cc74da809805b67a11"
     },
     {
       "path": "app/slap.wav",
