@@ -1,42 +1,37 @@
 <template name="home">
     <div class="container" style="position:relative; padding-top:1%;">
-        
-                <div class="navbar navbar-fixed-top" style="background: #ffffff;">
-                    <ul class="nav">
-                        <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a></li>
-                        <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Clear Fridge</a></li>
-                  <!--       <li class="nav-links">
+
+        <div class="navbar navbar-fixed-top" style="background: #ffffff;">
+            <ul class="nav">
+                <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a>
+                </li>
+                <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Clear Fridge</a>
+                </li>
+                <!--       <li class="nav-links">
                             <a href="{{pathFor 'home'}}"><i class="fa fa-users"></i> Office Fridge</a>
                         </li> -->
-                        {{#if currentUser}}
-                        <li id="chat-open" class="nav-links">
-                            <a><i class="fa fa-comments"></i> Chat</a>
-                        </li>
-                    <!--     <li id="new-board" class="nav-links"><a href="{{pathFor 'private'}}"><i class="fa fa-magic"></i> Create My Own</a>
+                {{#if currentUser}}
+                <li id="chat-open" class="nav-links">
+                    <a><i class="fa fa-comments"></i> Chat</a>
+                </li>
+                <!--     <li id="new-board" class="nav-links"><a href="{{pathFor 'private'}}"><i class="fa fa-magic"></i> Create My Own</a>
                         </li> -->
-                        {{else}}
-                         {{/if}}                
-                        </ul>
-                        <ul class="nav pull-right" style="left: -40px;"> 
-                        <li>
-                            {{> loginButtons}}
-                        </li>
-                        {{#if currentUser}}
-                            <li style="position: relative; left: 40px;">
-                            {{#if user.services.twitter}}
-                            <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />
-                            {{else}} 
-                            {{#if user.services.facebook}}
-                            <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:43px; width:auto;" />
-                            {{else}}
-                            <img src="http://www.gravatar.com/avatar" style="height:43px; width:auto;" />
-                            {{/if}} 
-                        {{/if}}
-                        </li>
-                         {{else}}
-                         {{/if}} 
-                    </ul>
-                </div>
+                {{else}} {{/if}}
+            </ul>
+            <ul class="nav pull-right" style="left: -40px;">
+                <li>
+                    {{> loginButtons}}
+                </li>
+                {{#if currentUser}}
+                <li style="position: relative; left: 40px;">
+                    {{#if user.services.twitter}}
+                    <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />{{else}} {{#if user.services.facebook}}
+                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:43px; width:auto;" />{{else}}
+                    <img src="http://www.gravatar.com/avatar" style="height:43px; width:auto;" />{{/if}} {{/if}}
+                </li>
+                {{else}} {{/if}}
+            </ul>
+        </div>
 
         <div class="chat-wrap">
             <a href="#" id="close_chat">
@@ -76,57 +71,54 @@
         <audio id="slap" preload="metadata">
             <source src="/slap.wav">
         </audio>
-     
-            
-          <audio id="ding" preload="metadata">
+
+
+        <audio id="ding" preload="metadata">
             <source src="/ding.wav">
         </audio>
 
-          <audio id="pop" preload="metadata">
+        <audio id="pop" preload="metadata">
             <source src="/pop.wav">
         </audio>
 
 
-          <audio id="crumple" preload="metadata">
+        <audio id="crumple" preload="metadata">
             <source src="/crumple.wav">
         </audio>
 
-     <div id="footer" style="display:none;">
-{{>wordForm}}
-</div>
+        <div id="footer" style="display:none;">
+            {{>wordForm}}
+        </div>
 
     </div>
-    <div class="social-wrap">       
+    <div class="social-wrap">
         <span class='st_facebook_large' displayText='Facebook'></span>
         <span class='st_twitter_large' displayText='Tweet'></span>
         <span class='st_linkedin_large' displayText='LinkedIn'></span>
         <span class='st_pinterest_large' displayText='Pinterest'></span>
         <span class='st_email_large' displayText='Email'></span>
-        <span style="top: -11px; position: relative;"><strong>Share This Creation</strong></span>
+        <span style="top: -11px; position: relative;">
+            <strong>Share This Creation</strong>
+        </span>
     </div>
     <script>
-
-
     $(document).ready(function() {
 
-    $('#add_words').on('click', function() {
-        $('#add_words').toggleClass('active'); 
-        $("#chat-open, #delete").removeClass('active');
+        $('#add_words').on('click', function() {
+            $('#add_words').toggleClass('active');
+            var pop = $('#pop')[0]
+            pop.play();
+            pop.volume = .3;
+            $('#footer').slideToggle(150);
+            $('#name_of_word').focus();
+        });
 
-           var pop = $('#pop')[0]
-                    pop.play();
-                    pop.volume = .3;
-        $('#footer').slideToggle(150);        
-        $('#name_of_word').focus();
-    });
-   
 
-    $('#delete').on('click', function(){
-        $("#chat-open, #add_words").removeClass('active');
+        $('#delete').on('click', function() {
             var crumple = $('#crumple')[0]
-                    crumple.play();
-                    crumple.volume = .3;
-    });
+            crumple.play();
+            crumple.volume = .3;
+        });
 
         stButtons.locateElements();
 
@@ -137,18 +129,18 @@
         } // Parse ShareThis markup
 
         $("#logo_magnet").draggable();
-        $("#chat-wrap").draggable();
-        $(document).on("click", "#chat-open", function() {  
-        $('#chat-open').toggleClass('active'); 
-        $("#add_words, #delete").removeClass('active');
 
-            $('.chat-wrap').show();
+        $(document).on("click", "#chat-open", function() {
+            $('#chat-open').toggleClass('active');
+            var pop = $('#pop')[0]
+            pop.play();
+            pop.volume = .3;
+            $('.chat-wrap').toggle('slide', {
+                direction: 'left'
+            }, 200);
             $('#newMessage').focus();
-
         });
 
     });
-
-
     </script>
 </template>

@@ -838,9 +838,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?1c4aee852574baeba3a43a17c19b28fcf245eada",
-      "size": 7489,
-      "hash": "1c4aee852574baeba3a43a17c19b28fcf245eada"
+      "url": "/client/templates/home/template.home.js?200f138e0c8e76db7f62f1f841408391bd057ca5",
+      "size": 7008,
+      "hash": "200f138e0c8e76db7f62f1f841408391bd057ca5"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -928,9 +928,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?eda73fb37019ce1ba07973b1872aff4b3586af5d",
+      "url": "/lib/collections/chat.js?035a0d5c18240f1d3aae6d73b6595b3b934a697a",
       "size": 2536,
-      "hash": "eda73fb37019ce1ba07973b1872aff4b3586af5d"
+      "hash": "035a0d5c18240f1d3aae6d73b6595b3b934a697a"
     },
     {
       "path": "app/lib/collections/magnets.js",
@@ -1018,20 +1018,20 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/script.js?81fa59cfe95f8a6b60576b518263a9f263960b9d",
-      "size": 1298,
-      "hash": "81fa59cfe95f8a6b60576b518263a9f263960b9d"
+      "url": "/client/script.js?1f8d325c6befb8bfddb00a856af24f8421eeeaa3",
+      "size": 1325,
+      "hash": "1f8d325c6befb8bfddb00a856af24f8421eeeaa3"
     },
     {
-      "path": "951b67c4d0503fbd28f244321a08b25ce0fa03e3.css",
+      "path": "d00a0f9f277374209ee1ab2214cde24de60e828a.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/951b67c4d0503fbd28f244321a08b25ce0fa03e3.css",
-      "sourceMap": "951b67c4d0503fbd28f244321a08b25ce0fa03e3.css.map",
-      "sourceMapUrl": "/951b67c4d0503fbd28f244321a08b25ce0fa03e3.map",
-      "size": 162899,
-      "hash": "951b67c4d0503fbd28f244321a08b25ce0fa03e3"
+      "url": "/d00a0f9f277374209ee1ab2214cde24de60e828a.css",
+      "sourceMap": "d00a0f9f277374209ee1ab2214cde24de60e828a.css.map",
+      "sourceMapUrl": "/d00a0f9f277374209ee1ab2214cde24de60e828a.map",
+      "size": 162959,
+      "hash": "d00a0f9f277374209ee1ab2214cde24de60e828a"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
