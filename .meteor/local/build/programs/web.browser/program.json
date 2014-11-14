@@ -838,9 +838,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?200f138e0c8e76db7f62f1f841408391bd057ca5",
-      "size": 7008,
-      "hash": "200f138e0c8e76db7f62f1f841408391bd057ca5"
+      "url": "/client/templates/home/template.home.js?d7df38c8cf2b8de7635cf9f4287965b614d9f6d9",
+      "size": 7010,
+      "hash": "d7df38c8cf2b8de7635cf9f4287965b614d9f6d9"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -937,9 +937,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?b088011b5d680b283b3aece305b6e8e094204436",
-      "size": 1936,
-      "hash": "b088011b5d680b283b3aece305b6e8e094204436"
+      "url": "/lib/collections/magnets.js?cc43a0fb9bb1edb2bd624244f5f3dbc48e1667b4",
+      "size": 2578,
+      "hash": "cc43a0fb9bb1edb2bd624244f5f3dbc48e1667b4"
     },
     {
       "path": "app/client/helpers/lists/list.js",
