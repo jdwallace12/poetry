@@ -11,6 +11,9 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    @media (max-width: 980px) {
+        padding-top: 0px;   
+    }
 }
 #header {
     color: white;
@@ -118,6 +121,10 @@ input:focus, textarea:focus {
     left: 0%;
     width: 25%;
     display: none;
+    min-width: 300px;
+      @media (max-width: 980px) {
+       top: 18%;   
+    }
     
 }
 .message-wrap {
@@ -203,6 +210,10 @@ input:focus, textarea:focus {
     top: 5px;
     margin: 0 0 0 -37.5%;
     z-index: 9999;
+      @media (max-width: 980px) {
+        left: 38%;
+        top: 1px;  
+    }
 }
 .nav-links {
     border-top: 3px solid #ffffff;
@@ -229,4 +240,25 @@ input:focus, textarea:focus {
 
 #login-dropdown-list {
     left: -168px!important;
+        @media (max-width: 980px) {
+            position: absolute;
+            top: -50px;
+            left: 86px!important;
+        }
+}
+
+#login-buttons {
+    @media (max-width: 980px) {
+        position: relative;
+        top: 30px;
+        left: 90px;
+        z-index: 9999;
+    }
+}
+.gravatar {
+    height:43px; 
+    width:auto;
+    @media (max-width: 980px) {
+        height: 60px;
+    }
 }

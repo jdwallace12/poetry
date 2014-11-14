@@ -1,6 +1,12 @@
 <template name="home">
-    <div class="container" style="position:relative; padding-top:1%;">
-        <div class="navbar navbar-fixed-top" style="background: #ffffff;">
+<div class="container" style="position:relative;">
+    <div class="navbar navbar-fixed-top" style="background: #ffffff;">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <div class="nav-collapse collapse">
             <ul class="nav">
                 <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a>
                 </li>
@@ -10,30 +16,49 @@
                 <li id="chat-open" class="nav-links">
                     <a><i class="fa fa-comments"></i> Chat</a>
                 </li>
-                {{else}} 
-                {{/if}}
+                {{else}}
+                 {{/if}}
             </ul>
-            <ul class="nav pull-right" style="left: -40px;">
+            <ul class="nav pull-right hidden-desktop" style="left: -40px; margin-bottom: 0px;">
                 <li>
                     {{> loginButtons}}
                 </li>
                 {{#if currentUser}}
                 <li style="position: relative; left: 40px;">
                     {{#if user.services.twitter}}
-                    <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />
-                    {{else}} 
-                    {{#if user.services.facebook}}
-                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:43px; width:auto;" />
+                    <img src="{{user.services.twitter.profile_image_url}}" class="gravatar" />
                     {{else}}
-                    <img src="http://www.gravatar.com/avatar" style="height:43px; width:auto;" />
-                    {{/if}} 
+                        {{#if user.services.facebook}}
+                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
+                        {{else}}
+                    <img src="http://www.gravatar.com/avatar" class="gravatar" />
+                        {{/if}} 
                     {{/if}}
                 </li>
                 {{else}} 
                 {{/if}}
             </ul>
         </div>
-
+            <ul class="nav pull-right visible-desktop" style="left: -40px;">
+                <li>
+                    {{> loginButtons}}
+                </li>
+                {{#if currentUser}}
+                <li style="position: relative; left: 40px;">
+                    {{#if user.services.twitter}}
+                    <img src="{{user.services.twitter.profile_image_url}}" class="gravatar" />
+                    {{else}}
+                        {{#if user.services.facebook}}
+                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
+                        {{else}}
+                    <img src="http://www.gravatar.com/avatar" class="gravatar" />
+                        {{/if}} 
+                    {{/if}}
+                </li>
+                {{else}} 
+                {{/if}}
+            </ul>
+        </div>
         <div class="chat-wrap">
             <a href="#" id="close_chat">
                 <p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p>
@@ -46,7 +71,7 @@
 
         <div class="board-wrapper">
             {{> list}}
-            <div id="logo_magnet" class="magnet" style="position:absolute; top: 7%; left: 7%;">
+            <div id="logo_magnet" class="magnet">
                 <img src="/logo_magnet.jpg" />
             </div>
 
@@ -83,7 +108,7 @@
         <span class='st_pinterest_large' displayText='Pinterest'></span>
         <span class='st_email_large' displayText='Email'></span>
         <span style="top: -11px; position: relative;">
-            <strong>Share This Creation</strong>
+            <span class="visible-desktop"><strong>Share This Creation</strong></span>
         </span>
     </div>
     <script>
