@@ -1,22 +1,17 @@
 <template name="home">
     <div class="container" style="position:relative; padding-top:1%;">
-
         <div class="navbar navbar-fixed-top" style="background: #ffffff;">
             <ul class="nav">
                 <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a>
                 </li>
                 <li id="delete" class="nav-links"><a><i class="fa fa-refresh"></i> Refresh Fridge</a>
                 </li>
-                <!--       <li class="nav-links">
-                            <a href="{{pathFor 'home'}}"><i class="fa fa-users"></i> Office Fridge</a>
-                        </li> -->
                 {{#if currentUser}}
                 <li id="chat-open" class="nav-links">
                     <a><i class="fa fa-comments"></i> Chat</a>
                 </li>
-                <!--     <li id="new-board" class="nav-links"><a href="{{pathFor 'private'}}"><i class="fa fa-magic"></i> Create My Own</a>
-                        </li> -->
-                {{else}} {{/if}}
+                {{else}} 
+                {{/if}}
             </ul>
             <ul class="nav pull-right" style="left: -40px;">
                 <li>
@@ -25,11 +20,17 @@
                 {{#if currentUser}}
                 <li style="position: relative; left: 40px;">
                     {{#if user.services.twitter}}
-                    <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />{{else}} {{#if user.services.facebook}}
-                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:43px; width:auto;" />{{else}}
-                    <img src="http://www.gravatar.com/avatar" style="height:43px; width:auto;" />{{/if}} {{/if}}
+                    <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />
+                    {{else}} 
+                    {{#if user.services.facebook}}
+                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:43px; width:auto;" />
+                    {{else}}
+                    <img src="http://www.gravatar.com/avatar" style="height:43px; width:auto;" />
+                    {{/if}} 
+                    {{/if}}
                 </li>
-                {{else}} {{/if}}
+                {{else}} 
+                {{/if}}
             </ul>
         </div>
 
@@ -37,28 +38,12 @@
             <a href="#" id="close_chat">
                 <p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p>
             </a>
-            {{#if currentUser}} {{> input}} {{/if}} {{> messages}}
+            {{#if currentUser}}
+             {{> input}} 
+             {{/if}} 
+             {{> messages}}
         </div>
 
-        <!--     <div class="chat-wrap">
-        {{> header }}
-        {{#if currentUser}} 
-        {{else}}
-        <div class="signin">
-            {{> loginButtons}}
-        </div>
-        {{/if}} 
-        {{#if currentUser}} 
-        {{> input}} 
-        {{/if}} 
-        {{> messages}}
-    </div> -->
-        <!--    <div class="chat-open">
-        <p>Chat</p>
-    </div>
-    <div class="footer-open">
-        <p>Add Words</p>
-    </div> -->
         <div class="board-wrapper">
             {{> list}}
             <div id="logo_magnet" class="magnet" style="position:absolute; top: 7%; left: 7%;">
