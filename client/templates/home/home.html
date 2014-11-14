@@ -25,7 +25,7 @@
        
             <ul class="nav pull-right hidden-desktop" style="left: -40px; margin-bottom: 0px;">
                 {{#if currentUser}}
-                <li style="position: relative; left: 55px;">
+                <li style="position: relative; left: 55px;" data-toggle="modal" href="#loginModal">
                     {{#if user.services.twitter}}
                     <img src="{{user.services.twitter.profile_image_url}}" class="gravatar" />
                     {{else}}
