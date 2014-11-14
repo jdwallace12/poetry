@@ -212,7 +212,7 @@ input:focus, textarea:focus {
     z-index: 9999;
       @media (max-width: 980px) {
         left: 38%;
-        top: 1px;  
+        top: 4px;  
     }
 }
 .nav-links {
@@ -238,6 +238,16 @@ input:focus, textarea:focus {
      }
 }
 
+.navbar-fixed-top, .navbar-fixed-bottom {
+    position: fixed!important;
+    padding: 0px 15px;
+}
+
+.navbar .btn-navbar {
+    margin-right: 15px!important;
+    margin-bottom: 5px;
+}
+
 #login-dropdown-list {
     left: -168px!important;
         @media (max-width: 980px) {
@@ -261,4 +271,10 @@ input:focus, textarea:focus {
     @media (max-width: 980px) {
         height: 60px;
     }
+}
+
+#logo_magnet {
+    position:absolute; 
+    top: 7%; 
+    left: 7%;
 }

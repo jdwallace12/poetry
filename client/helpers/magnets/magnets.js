@@ -23,7 +23,7 @@ Template.magnet.magnetId = function() {
 Template.home.events = {
      'click #delete': function(e) {
             e.preventDefault();
-            if (confirm('Are you sure you want to delete everything?')) {
+            if (confirm('Are you sure you want clean up the fridge?')) {
                 Meteor.call('removeAllMagnets');
             }
         }
