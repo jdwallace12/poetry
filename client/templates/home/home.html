@@ -1,6 +1,6 @@
 <template name="home">
 <div class="container" style="position:relative;">
-    <div class="navbar navbar-fixed-top" style="background: #ffffff;">
+    <div class="navbar navbar-fixed-top" style="background: #ffffff; min-height:44px;">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -8,11 +8,12 @@
         </a>
         <div class="nav-collapse collapse">
             <ul class="nav">
+                  {{#if currentUser}}
                 <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a>
                 </li>
                 <li id="delete" class="nav-links"><a><i class="fa fa-refresh"></i> Refresh Fridge</a>
                 </li>
-                {{#if currentUser}}
+              
                 <li id="chat-open" class="nav-links">
                     <a><i class="fa fa-comments"></i> Chat</a>
                 </li>
