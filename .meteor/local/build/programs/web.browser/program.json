@@ -838,9 +838,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?7bd00fed4e7a03da600c1c4f821b7cec91b59bde",
-      "size": 9369,
-      "hash": "7bd00fed4e7a03da600c1c4f821b7cec91b59bde"
+      "url": "/client/templates/home/template.home.js?16a36022c31e74d93db8e16df34599aa0fe536e6",
+      "size": 9565,
+      "hash": "16a36022c31e74d93db8e16df34599aa0fe536e6"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -1104,6 +1104,15 @@
       "url": "/fridge2.jpg",
       "size": 67982,
       "hash": "c2e8bcc15c7245315cc2ccb85fd6bbf77ba81a3d"
+    },
+    {
+      "path": "app/logo-emblem.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/logo-emblem.png",
+      "size": 1344,
+      "hash": "64db66d540a670660fd742602226dd5bcdf766a7"
     },
     {
       "path": "app/logo_magnet.jpg",
