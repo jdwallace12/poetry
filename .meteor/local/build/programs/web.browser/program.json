@@ -937,9 +937,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?84a714f037b9bf983a6f8df259f93609fee3c3de",
-      "size": 1799,
-      "hash": "84a714f037b9bf983a6f8df259f93609fee3c3de"
+      "url": "/lib/collections/magnets.js?5e7a7cbeccef213e92f27f68356be5d35fe161e1",
+      "size": 15139,
+      "hash": "5e7a7cbeccef213e92f27f68356be5d35fe161e1"
     },
     {
       "path": "app/client/helpers/lists/list.js",
