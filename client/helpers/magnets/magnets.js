@@ -44,12 +44,12 @@ Template.magnet.events = {
                 cursor: 'move',
                 // containment: ".board-wrapper",
                 snap: true,
-                snapTolerance: 25
+                snapTolerance: 30      
             });
             $(".fridge").droppable({
                 accept: '.magnet',
 
-                drop: function(event, ui) {
+                drop: function(event, ui) { 
                    var slap = $('#slap')[0]
                     slap.play();
 
