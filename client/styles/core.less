@@ -2,7 +2,7 @@
 @light-blue: (@nice-blue + #111);
 body {
     padding-top: 50px;
-    background: #3D3D3D;
+    background: #7f8c8d;
     max-width: 100%;
     height: 100%;
     -webkit-touch-callout: none;
@@ -19,6 +19,11 @@ body {
          padding-top: 50px;
     }
 
+}
+
+.well {
+    background: #ecf0f1!important;
+    border: none!important;
 }
 
 .board-wrapper {
@@ -63,7 +68,7 @@ body {
 }
 
 #name_of_word:invalid {
-background: #FF6138;
+background: #e74c3c;
 color: #ffffff;
 }
 
@@ -149,6 +154,11 @@ input:focus, textarea:focus {
     max-height: 550px;
     position: relative;
     top: -30px;
+}
+
+.btn-danger {
+    background: #c0392b!important;
+    background-image: none!important;
 }
 .chat-room-message-wrap {
     padding: 5px;
@@ -257,7 +267,7 @@ input:focus, textarea:focus {
 }
 .nav-links:hover {
     border-top: 3px solid #3498db;
-    background: #F7F7F7;
+    background: #ecf0f1;
 }
 .nav-links.active {
     border-top: 3px solid #3498db;
@@ -306,6 +316,12 @@ input:focus, textarea:focus {
     position:absolute; 
     top: 10%; 
     left: 78%;
+     @media (max-width: 980px) {
+        left: 60%;
+    }
+      @media (max-width: 980px) {
+        left: 4 0%;
+    }
 }
 
 
