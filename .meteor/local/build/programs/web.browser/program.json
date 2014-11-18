@@ -905,9 +905,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.message.js?94de66e8d4ed2a94f7a1f4e81b9f3a0d65828f31",
-      "size": 2298,
-      "hash": "94de66e8d4ed2a94f7a1f4e81b9f3a0d65828f31"
+      "url": "/client/templates/messages/template.message.js?130c3280f87c24df40eb99abf277ac0edc603658",
+      "size": 2292,
+      "hash": "130c3280f87c24df40eb99abf277ac0edc603658"
     },
     {
       "path": "app/client/templates/messages/template.messages.js",
@@ -950,9 +950,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?035a0d5c18240f1d3aae6d73b6595b3b934a697a",
-      "size": 2536,
-      "hash": "035a0d5c18240f1d3aae6d73b6595b3b934a697a"
+      "url": "/lib/collections/chat.js?4fe1a1a5fbaf2b0505fb02f048a7e2886cddbd13",
+      "size": 2553,
+      "hash": "4fe1a1a5fbaf2b0505fb02f048a7e2886cddbd13"
     },
     {
       "path": "app/lib/collections/magnets.js",
