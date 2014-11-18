@@ -761,6 +761,28 @@
       "hash": "b8363f09f51ab0584e7779e7797f71fb34d3ed30"
     },
     {
+      "path": "packages/mrt_moment.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/mrt_moment.js?d7e4a40c3c8d0a0bbca78591d0b5385f3271212c",
+      "sourceMap": "packages/mrt_moment.js.map",
+      "sourceMapUrl": "/packages/d7e4a40c3c8d0a0bbca78591d0b5385f3271212c.map",
+      "size": 359656,
+      "hash": "d7e4a40c3c8d0a0bbca78591d0b5385f3271212c"
+    },
+    {
+      "path": "packages/copleykj_livestamp.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/copleykj_livestamp.js?9e5f671e50449bdff0e4f73d4caa6a0ebdb743cb",
+      "sourceMap": "packages/copleykj_livestamp.js.map",
+      "sourceMapUrl": "/packages/9e5f671e50449bdff0e4f73d4caa6a0ebdb743cb.map",
+      "size": 23378,
+      "hash": "9e5f671e50449bdff0e4f73d4caa6a0ebdb743cb"
+    },
+    {
       "path": "packages/autoupdate.js",
       "where": "client",
       "type": "js",
@@ -820,9 +842,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/global-imports.js?ad9ed19b6c6b9746b11280fc89b3afecb5771ea8",
-      "size": 1049,
-      "hash": "ad9ed19b6c6b9746b11280fc89b3afecb5771ea8"
+      "url": "/packages/global-imports.js?79a920447b1e1fa69ec29af12bdccefd1f50686e",
+      "size": 1102,
+      "hash": "79a920447b1e1fa69ec29af12bdccefd1f50686e"
     },
     {
       "path": "app/client/templates/application/template.layout.js",
@@ -883,9 +905,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.message.js?03c799bc971d4c1aa15c5fab563d4fedae83fafb",
-      "size": 2120,
-      "hash": "03c799bc971d4c1aa15c5fab563d4fedae83fafb"
+      "url": "/client/templates/messages/template.message.js?ba81dffca0620b6fc9304223ee2a0607e2baf660",
+      "size": 2272,
+      "hash": "ba81dffca0620b6fc9304223ee2a0607e2baf660"
     },
     {
       "path": "app/client/templates/messages/template.messages.js",
@@ -1023,15 +1045,15 @@
       "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
     },
     {
-      "path": "ac1746bf89ed1999433466d2b2e5a8a0b5cd4b55.css",
+      "path": "2e6e3ca5c10a0899ac68a8fe73ddd9bed93d89ba.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/ac1746bf89ed1999433466d2b2e5a8a0b5cd4b55.css",
-      "sourceMap": "ac1746bf89ed1999433466d2b2e5a8a0b5cd4b55.css.map",
-      "sourceMapUrl": "/ac1746bf89ed1999433466d2b2e5a8a0b5cd4b55.map",
-      "size": 164802,
-      "hash": "ac1746bf89ed1999433466d2b2e5a8a0b5cd4b55"
+      "url": "/2e6e3ca5c10a0899ac68a8fe73ddd9bed93d89ba.css",
+      "sourceMap": "2e6e3ca5c10a0899ac68a8fe73ddd9bed93d89ba.css.map",
+      "sourceMapUrl": "/2e6e3ca5c10a0899ac68a8fe73ddd9bed93d89ba.map",
+      "size": 164878,
+      "hash": "2e6e3ca5c10a0899ac68a8fe73ddd9bed93d89ba"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",

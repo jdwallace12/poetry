@@ -409,6 +409,11 @@
       "path": "packages/houston_admin.js"
     },
     {
+      "sourceMap": "packages/copleykj_livestamp.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/copleykj_livestamp.js"
+    },
+    {
       "sourceMap": "packages/reload.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/reload.js"
