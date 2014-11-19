@@ -53,7 +53,7 @@ body {
 }
 .magnet {
     position: absolute;
-    background: #ecf0f1;
+    background: #F7F7F7;
     border: 1px solid #bdc3c7;
 }
 .magnet:hover {
@@ -144,17 +144,16 @@ input:focus, textarea:focus {
     width: 25%;
     display: none;
     min-width: 300px;
-      @media (max-width: 980px) {
-       top: 18%;   
-    }
-    
 }
 .message-wrap {
     background: #ffffff;
     overflow-y: scroll;
-    max-height: 550px;
+    max-height: 565px;
     position: relative;
     top: -30px;
+    @media (max-width 600px) {
+        max-height: 250px;
+    }
 }
 
 .btn-danger {
