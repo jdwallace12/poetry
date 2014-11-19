@@ -21,12 +21,17 @@ Template.magnet.magnetId = function() {
 
 //delete magnets
 Template.home.events = {
-     'click #delete': function(e) {
-            e.preventDefault();
-            if (confirm('Are you sure you want clean up the fridge?')) {
+    'click #delete': function(e) {
+        e.preventDefault();
+        if (confirm('Are you sure you want clean up the fridge?')) {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
+                Meteor.call('removeAllMagnetsMobile');
+            } else {
                 Meteor.call('removeAllMagnets');
             }
         }
+    }
 };
 
 
@@ -44,13 +49,13 @@ Template.magnet.events = {
                 cursor: 'move',
                 // containment: ".board-wrapper",
                 snap: true,
-                snapTolerance: 30      
+                snapTolerance: 30
             });
             $(".fridge").droppable({
                 accept: '.magnet',
 
-                drop: function(event, ui) { 
-                   var slap = $('#slap')[0]
+                drop: function(event, ui) {
+                    var slap = $('#slap')[0]
                     slap.play();
 
                 }
