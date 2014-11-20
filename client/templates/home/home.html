@@ -1,5 +1,5 @@
 <template name="home">
-<div class="container" style="position:relative;">
+<div style="position:relative;">
     <div class="navbar navbar-fixed-top" style="background: #ffffff; min-height:43px;">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
@@ -9,7 +9,7 @@
         <div class="nav-collapse collapse">
             <ul class="nav"> 
                 
-                <li><a class="brand" style="padding:0px 15px; margin-top:2px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" />Appnetic Poetry  </a></li>                 
+                <li style="border-right: 1px dotted #ccc;"><a class="brand" style="padding:0px 15px; margin-top:2px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" /><span style="position:realative; top:2px;"><span style="font-weight: 800;">App</span>netic Poetry</span></a></li>                 
                   {{#if currentUser}}
                 
                 <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Delete Fridge</a>
@@ -128,9 +128,9 @@
         <span class='st_linkedin_large' displayText='LinkedIn'></span>
         <span class='st_pinterest_large' displayText='Pinterest'></span>
         <span class='st_email_large' displayText='Email'></span>
-        <span style="top: -11px; position: relative;">
+      <!--   <span style="top: -11px; position: relative;">
             <span class="visible-desktop social-text"><strong>Share This Creation</strong></span>
-        </span>
+        </span> -->
     </div>
 
 
