@@ -10,14 +10,25 @@
             <ul class="nav"> 
             <li><a class="brand" style="padding:0px 15px; margin-top:1px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" /></a></li>                 
                   {{#if currentUser}}
+                
                 <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a>
                 </li>
-                <li id="delete" class="nav-links"><a><i class="fa fa-refresh"></i> Refresh Fridge</a>
-                </li>
-              
+
                 <li id="chat-open" class="nav-links">
                     <a><i class="fa fa-comments"></i> Chat</a>
                 </li>
+                
+                <li id="word-sets" class="dropdown nav-links">
+                    <a class="dropdown-toggle" id="word-sets-trigger" data-toggle="dropdown" href="#"><i class="fa fa-puzzle-piece"></i> Magnets Sets <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a>DevOps</a></li>
+                      <li><a>Developer</a></li>
+                    </ul>
+                </li>
+
+                <li id="delete" class="nav-links"><a><i class="fa fa-refresh"></i> Refresh Fridge</a>
+                </li>
+                
                 {{else}}
                 <li id="login-mobile" class="nav-links hidden-desktop"><a data-toggle="modal" href="#loginModal"><i class="fa fa-power-off"></i> Login</a>
                 </li>
@@ -83,6 +94,7 @@
 
             <div class="fridge">
             </div>
+
         </div>
         <audio id="slap" preload="metadata">
             <source src="/slap.wav">
@@ -130,52 +142,4 @@
   </div>
 </div>
 
-
-    <script>
-    $(document).ready(function() {
-
-            $(document).on("click", "#add_words", function() {
-            $('#add_words').toggleClass('active');
-            var pop = $('#pop')[0]
-            pop.play();
-            pop.volume = .3;
-            $('#footer').slideToggle(150);
-            $('#name_of_word').focus();
-        });
-
-
-        $(document).on("click", "#delete", function() {
-            var crumple = $('#crumple')[0]
-            crumple.play();
-            crumple.volume = .3;
-        });
-
-        stButtons.locateElements();
-
-        // or if you want to be a bit defensive about whether the lib has been
-        // loaded or not:
-        if (window.stButtons) {
-            stButtons.locateElements();
-        } // Parse ShareThis markup
-
-        $("#logo_magnet").draggable();
-
-        $(document).on("click", "#chat-open", function() {
-            $('#chat-open').toggleClass('active');
-            var pop = $('#pop')[0]
-            pop.play();
-            pop.volume = .3;
-            $('.chat-wrap').toggle('slide', {
-                direction: 'left'
-            }, 200);
-            $('#newMessage').focus();
-        });
-
-
-     $(document).on("click", "login-buttons-logout", function() {
-        $('#loginModal').modal('hide');
-     });    
-
-    });
-    </script>
 </template>
