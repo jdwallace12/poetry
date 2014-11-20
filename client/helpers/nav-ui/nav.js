@@ -24,7 +24,6 @@
             stButtons.locateElements();
         } // Parse ShareThis markup
 
-        $("#logo_magnet").draggable();
 
         $(document).on("click", "#chat-open", function() {
             $('#chat-open').toggleClass('active');
@@ -44,6 +43,25 @@
             pop.play();
             pop.volume = .3;
         });
+
+        $(document).on("click", "#devops-magnets", function() {
+            var crumple = $('#crumple')[0]
+            crumple.play();
+            crumple.volume = .3;
+        });
+
+        $(document).on("click", "#developer-magnets", function() {
+            var crumple = $('#crumple')[0]
+            crumple.play();
+            crumple.volume = .3;
+        });
+
+         $(document).on("click", "#all-magnets", function() {
+            var crumple = $('#crumple')[0]
+            crumple.play();
+            crumple.volume = .3;
+        });
+
 
 
      $(document).on("click", "login-buttons-logout", function() {

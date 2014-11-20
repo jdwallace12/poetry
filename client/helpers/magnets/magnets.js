@@ -23,15 +23,48 @@ Template.magnet.magnetId = function() {
 Template.home.events = {
     'click #delete': function(e) {
         e.preventDefault();
-        if (confirm('Are you sure you want clean up the fridge?')) {
+        if (confirm('Are you sure you want delete all the Magnets?')) {
+            Meteor.call('removeAllMagnets');         
+        }
+    },
+    //devop magnets
+
+    'click #devops-magnets': function(e) {
+        e.preventDefault();
+        if (confirm('Switch to DevOps Magnets?')) {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 
-                Meteor.call('removeAllMagnetsMobile');
+                Meteor.call('devopsMagnetsMobile');
             } else {
-                Meteor.call('removeAllMagnets');
+                Meteor.call('devopsMagnets');
+            }
+        }
+    },
+    //developer magnets
+    'click #developer-magnets': function(e) {
+        e.preventDefault();
+        if (confirm('Switch to Developer Magnets?')) {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
+                Meteor.call('developerMagnetsMobile');
+            } else {
+                Meteor.call('developerMagnets');
+            }
+        }
+    },
+       //both sets of  magnets
+    'click #all-magnets': function(e) {
+        e.preventDefault();
+        if (confirm('Use all the Magnets?')) {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
+                Meteor.call('allMagnetsMobile');
+            } else {
+                Meteor.call('allMagnets');
             }
         }
     }
+
 };
 
 
