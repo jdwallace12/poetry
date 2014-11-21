@@ -15,7 +15,7 @@ Template.wordForm.events = {
         slap.play();
         $("#name_of_word").val("");
         $('.magnet:last-of-type').effect('highlight', {color: "#f1c40f;"}, 1300);
-
+          
     }
 
 };

@@ -887,9 +887,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/magnets/template.magnets.js?3af8a8082a0379c56c32ca44be44302cc3233223",
-      "size": 4797,
-      "hash": "3af8a8082a0379c56c32ca44be44302cc3233223"
+      "url": "/client/templates/magnets/template.magnets.js?246edb261ea4871aff85bdd04ae5288934182cea",
+      "size": 4798,
+      "hash": "246edb261ea4871aff85bdd04ae5288934182cea"
     },
     {
       "path": "app/client/templates/messages/template.input.js",
@@ -959,9 +959,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?5c312159b1423597435baaf8071a257166284a2a",
-      "size": 81953,
-      "hash": "5c312159b1423597435baaf8071a257166284a2a"
+      "url": "/lib/collections/magnets.js?e119fc0b6bb174c1999331c6009c94011e126d9f",
+      "size": 55159,
+      "hash": "e119fc0b6bb174c1999331c6009c94011e126d9f"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -977,9 +977,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?67d295748c9a031a8c04f4670ef0d2ca3eb39893",
-      "size": 4390,
-      "hash": "67d295748c9a031a8c04f4670ef0d2ca3eb39893"
+      "url": "/client/helpers/magnets/magnets.js?e42c85c9cefeae27c86661dafdcac8a1f1b16864",
+      "size": 3909,
+      "hash": "e42c85c9cefeae27c86661dafdcac8a1f1b16864"
     },
     {
       "path": "app/client/helpers/nav-ui/nav.js",
@@ -1004,9 +1004,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?68352fe1a4d9d7f645da62e78eff072e198d7fdd",
-      "size": 609,
-      "hash": "68352fe1a4d9d7f645da62e78eff072e198d7fdd"
+      "url": "/client/helpers/wordform/wordform.js?6ef77743ace2e31375d15ff67586ded647388df9",
+      "size": 619,
+      "hash": "6ef77743ace2e31375d15ff67586ded647388df9"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",

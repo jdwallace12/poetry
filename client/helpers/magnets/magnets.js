@@ -32,36 +32,27 @@ Template.home.events = {
     'click #devops-magnets': function(e) {
         e.preventDefault();
         if (confirm('Switch to DevOps Magnets?')) {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-
-                Meteor.call('devopsMagnetsMobile');
-            } else {
-                Meteor.call('devopsMagnets');
-            }
+           
+                Meteor.call('devopsMagnets');                
+            
         }
     },
     //developer magnets
     'click #developer-magnets': function(e) {
         e.preventDefault();
         if (confirm('Switch to Developer Magnets?')) {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-
-                Meteor.call('developerMagnetsMobile');
-            } else {
-                Meteor.call('developerMagnets');
-            }
+         
+                Meteor.call('developerMagnets');               
+            
         }
     },
        //both sets of  magnets
     'click #all-magnets': function(e) {
         e.preventDefault();
         if (confirm('Use all the Magnets?')) {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-
-                Meteor.call('allMagnetsMobile');
-            } else {
+        
                 Meteor.call('allMagnets');
-            }
+            
         }
     }
 
@@ -94,6 +85,7 @@ Template.magnet.events = {
 
                 }
             });
+            $('.magnet').addClass('not-in-play'); 
 
         }
     }
@@ -102,7 +94,7 @@ Template.magnet.events = {
 
 
 Meteor.startup(function() {
-    $('.magnets').addClass('not-in-play');
+   
 });
 $(function() {
 
