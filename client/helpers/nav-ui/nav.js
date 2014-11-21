@@ -5,6 +5,7 @@
             var pop = $('#pop')[0]
             pop.play();
             pop.volume = .3;
+            $('.social-wrap').toggle();
             $('#footer').slideToggle(150);
             $('#name_of_word').focus();
         });
