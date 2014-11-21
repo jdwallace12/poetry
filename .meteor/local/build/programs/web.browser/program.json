@@ -860,9 +860,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?56a54e4450ec089ebaab31b25d3cff606790c5dc",
-      "size": 9508,
-      "hash": "56a54e4450ec089ebaab31b25d3cff606790c5dc"
+      "url": "/client/templates/home/template.home.js?e3732b5576476e09c90b5740807d2bf5044208e6",
+      "size": 9468,
+      "hash": "e3732b5576476e09c90b5740807d2bf5044208e6"
     },
     {
       "path": "app/client/templates/includes/template.header.js",
@@ -887,9 +887,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/magnets/template.magnets.js?246edb261ea4871aff85bdd04ae5288934182cea",
-      "size": 4798,
-      "hash": "246edb261ea4871aff85bdd04ae5288934182cea"
+      "url": "/client/templates/magnets/template.magnets.js?3af8a8082a0379c56c32ca44be44302cc3233223",
+      "size": 4797,
+      "hash": "3af8a8082a0379c56c32ca44be44302cc3233223"
     },
     {
       "path": "app/client/templates/messages/template.input.js",
@@ -977,18 +977,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?e42c85c9cefeae27c86661dafdcac8a1f1b16864",
-      "size": 3909,
-      "hash": "e42c85c9cefeae27c86661dafdcac8a1f1b16864"
+      "url": "/client/helpers/magnets/magnets.js?508bb33ce98f69d4b22e0be0f40eafb27a8bbeb2",
+      "size": 3908,
+      "hash": "508bb33ce98f69d4b22e0be0f40eafb27a8bbeb2"
     },
     {
       "path": "app/client/helpers/nav-ui/nav.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/nav-ui/nav.js?1e0823a5838f01d9daae59b55b81c2b6d4e0a38e",
-      "size": 2061,
-      "hash": "1e0823a5838f01d9daae59b55b81c2b6d4e0a38e"
+      "url": "/client/helpers/nav-ui/nav.js?4562844248571dcd313cb9dc0e88ce5e78152ab5",
+      "size": 2343,
+      "hash": "4562844248571dcd313cb9dc0e88ce5e78152ab5"
     },
     {
       "path": "app/client/helpers/users/user.js",
@@ -1031,9 +1031,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/messages.js?3a6ddafa51962e4738220da3b98d6faee08bc546",
-      "size": 360,
-      "hash": "3a6ddafa51962e4738220da3b98d6faee08bc546"
+      "url": "/client/messages.js?ffadb0078afb5203f00a29233176794b18f3d64d",
+      "size": 358,
+      "hash": "ffadb0078afb5203f00a29233176794b18f3d64d"
     },
     {
       "path": "app/client/profanityFilter.min.js",

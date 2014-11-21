@@ -98,7 +98,6 @@ Meteor.startup(function() {
 });
 $(function() {
 
-
     var prevDraggedId = '';
     var prevDraggedTime = 0;
 

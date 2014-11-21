@@ -1,6 +1,14 @@
   $(document).ready(function() {
 
-            $(document).on("click", "#add_words", function() {
+        // var screenwidth = $(window).width()
+        // if (screenwidth <= 800) {
+        //     $('.magnet').each(function() {
+        //         var currentPosLeft = parseInt($(this).css('left'));
+        //         $(this).css('left', (currentPosLeft - 800) + 'px!important');              
+        //     });
+        // }
+
+        $(document).on("click", "#add_words", function() {
             $('#add_words').toggleClass('active');
             var pop = $('#pop')[0]
             pop.play();
@@ -37,12 +45,11 @@
             $('#newMessage').focus();
         });
 
-
         $(document).on("click", "#word-sets-trigger", function() {
-            $('#word-sets').toggleClass('active');
             var pop = $('#pop')[0]
             pop.play();
             pop.volume = .3;
+      
         });
 
         $(document).on("click", "#devops-magnets", function() {
@@ -69,4 +76,6 @@
         $('#loginModal').modal('hide');
      });    
 
+
     });
+
