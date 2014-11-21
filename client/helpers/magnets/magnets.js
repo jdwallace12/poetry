@@ -88,6 +88,7 @@ Template.magnet.events = {
                 accept: '.magnet',
 
                 drop: function(event, ui) {
+                    $('.magnet.selected').removeClass('not-in-play');
                     var slap = $('#slap')[0]
                     slap.play();
 
@@ -100,7 +101,9 @@ Template.magnet.events = {
 
 
 
-Meteor.startup(function() {});
+Meteor.startup(function() {
+    $('.magnets').addClass('not-in-play');
+});
 $(function() {
 
 
