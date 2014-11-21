@@ -149,18 +149,6 @@
     $("#logo_magnet").draggable();
 
 
-    $(document).on("click", "#chat-open", function() {
-            $('#chat-open').toggleClass('active');
-            var pop = $('#pop')[0]
-            pop.play();
-            pop.volume = .3;
-            $('.chat-wrap').toggle('slide', {
-                direction: 'left'
-            }, 200);
-            $('#newMessage').focus();
-        });
-
-    
 </script>
 
 
