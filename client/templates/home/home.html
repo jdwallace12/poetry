@@ -9,7 +9,7 @@
         <div class="nav-collapse collapse">
             <ul class="nav"> 
                 
-                <li style="border-right: 1px dotted #ccc;"><a class="brand" style="padding:0px 15px; margin-top:2px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" /><span style="position:realative; top:2px;"><span style="font-weight: 800;">App</span>netic Poetry</span></a></li>                 
+                <li class="brand-area"><a class="brand" style="padding:0px 15px; margin-top:2px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" /><span style="position:realative; top:2px;"><span style="font-weight: 800;">App</span>netic Poetry</span></a></li>                 
                   {{#if currentUser}}
                 
                 <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Delete Fridge</a>
@@ -32,9 +32,8 @@
                 </li>
                 
                 
-                {{else}}
-                <li id="login-mobile" class="nav-links hidden-desktop"><a data-toggle="modal" href="#loginModal"><i class="fa fa-power-off"></i> Login</a>
-                </li>
+            {{else}}
+                <li class="nav-links visible-tablet visible-phone mobile-login"><a><i class="fa fa-power-off"></i> {{> loginButtons}}</a></li>
                  {{/if}}
             </ul>
 
@@ -135,7 +134,7 @@
 
 
 <!-- login modal -->
-<div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Mobile Login</h3>
@@ -143,7 +142,7 @@
   <div class="modal-body" style="height:350px;">
   <p>{{> loginButtons}}</p>
   </div>
-</div>
+</div> -->
 
 <script>
     $("#logo_magnet").draggable();    

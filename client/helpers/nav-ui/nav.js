@@ -72,9 +72,26 @@
 
 
 
-     $(document).on("click", "login-buttons-logout", function() {
-        $('#loginModal').modal('hide');
-     });    
+     // $(document).on("click", "login-buttons-logout", function() {
+     //    $('#loginModal').modal('hide');
+     // });    
+
+       $(document).on('click', "#login-sign-in-link, .login-buttons", function (){
+        $('.nav-collapse').css('height', '405px');
+       }); 
+
+
+     $(document).on('click', "#signup-link", function (){
+        $('.nav-collapse').css('height', '475px');
+       }); 
+
+     $(document).on('click', "#back-to-login-link", function (){
+        $('.nav-collapse').css('height', '405px');
+       }); 
+
+  $(document).on('click', "#login-buttons .login-close-text", function (){
+        $('.nav-collapse').css('height', 'auto');
+       }); 
 
 
     });
