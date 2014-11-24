@@ -38,18 +38,22 @@
             </ul>
 
        
-            <ul class="nav pull-right hidden-desktop" style="left: -40px; margin-bottom: 0px;">
+            <ul class="nav pull-right hidden-desktop">
                 {{#if currentUser}}
-                <li style="position: relative; left: 55px;" data-toggle="modal" href="#loginModal">
+                <li class="nav-links"><a>
                     {{#if user.services.twitter}}
                     <img src="{{user.services.twitter.profile_image_url}}" class="gravatar" />
+                     {{> loginButtons}}
                     {{else}}
                         {{#if user.services.facebook}}
                     <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
+                     {{> loginButtons}}
                         {{else}}
                     <img src="http://www.gravatar.com/avatar" class="gravatar" />
+                     {{> loginButtons}}
                         {{/if}} 
                     {{/if}}
+                </a>
                 </li>
                 {{else}} 
              
