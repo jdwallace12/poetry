@@ -1,7 +1,7 @@
 // Handle wordForm events
 Template.wordForm.events = {
     'submit': function(e, tmpl) {
-        // Don't postback
+        // Don't do normal submit
         e.preventDefault();
         var user = Meteor.user();
         Magnets.insert({

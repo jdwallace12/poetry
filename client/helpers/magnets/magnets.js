@@ -1,6 +1,4 @@
 Template.list.magnets = function() {
-    //mongo syntax for finding everythign in Appliaations
-
     return Magnets.find({}, {
         sort: {
             votes: -1
@@ -24,7 +22,7 @@ Template.home.events = {
     'click #delete': function(e) {
         e.preventDefault();
         if (confirm('Are you sure you want delete all the Magnets?')) {
-            Meteor.call('removeAllMagnets');         
+            Meteor.call('removeAllMagnets');
         }
     },
     //devop magnets
@@ -32,36 +30,27 @@ Template.home.events = {
     'click #devops-magnets': function(e) {
         e.preventDefault();
         if (confirm('Switch to DevOps Magnets?')) {
-           
-                Meteor.call('devopsMagnets');                
-            
+            Meteor.call('devopsMagnets');
         }
     },
     //developer magnets
     'click #developer-magnets': function(e) {
         e.preventDefault();
         if (confirm('Switch to Developer Magnets?')) {
-         
-                Meteor.call('developerMagnets');               
-            
+
+            Meteor.call('developerMagnets');
+
         }
     },
-       //both sets of  magnets
+    //both sets of  magnets
     'click #all-magnets': function(e) {
         e.preventDefault();
         if (confirm('Use all the Magnets?')) {
-        
-                Meteor.call('allMagnets');
-            
+            Meteor.call('allMagnets');
         }
     }
 
 };
-
-
-
-
-
 Template.magnet.events = {
     'mouseover div.magnet': function(e, template) {
         var $magnet = $(e.currentTarget);
@@ -85,22 +74,19 @@ Template.magnet.events = {
 
                 }
             });
-            $('.magnet').addClass('not-in-play'); 
+            $('.magnet').addClass('not-in-play');
 
         }
     }
 };
 
-
-
 Meteor.startup(function() {
-   
+
 });
 $(function() {
 
     var prevDraggedId = '';
     var prevDraggedTime = 0;
-
 
     $('body').on('drag', '.magnet', function(e) {
         var now = new Date().getTime();
@@ -159,10 +145,10 @@ $(function() {
     }
 
     $(document).keypress(function(event) {
-
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $('#send').click();
         }
     });
+    
 });
