@@ -895,9 +895,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?12dd675b2f6ec59dc1d9eba9375c04a7c35046d7",
-      "size": 9441,
-      "hash": "12dd675b2f6ec59dc1d9eba9375c04a7c35046d7"
+      "url": "/client/templates/home/template.home.js?3ab8c820576d51309ebdde4ab0d91009e818cbe9",
+      "size": 9496,
+      "hash": "3ab8c820576d51309ebdde4ab0d91009e818cbe9"
     },
     {
       "path": "app/client/templates/list/template.list.js",
@@ -988,6 +988,15 @@
       "url": "/lib/collections/magnets.js?e119fc0b6bb174c1999331c6009c94011e126d9f",
       "size": 55159,
       "hash": "e119fc0b6bb174c1999331c6009c94011e126d9f"
+    },
+    {
+      "path": "app/client/helpers/home/gravatar.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/client/helpers/home/gravatar.js?2a3453bba5b8f7e5a39caf4f0fb6016f1b588104",
+      "size": 19,
+      "hash": "2a3453bba5b8f7e5a39caf4f0fb6016f1b588104"
     },
     {
       "path": "app/client/helpers/lists/list.js",
