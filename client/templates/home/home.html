@@ -74,7 +74,7 @@
                         {{#if user.services.facebook}}
                     <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
                         {{else}}
-                    <img src="http://www.gravatar.com/avatar" class="gravatar" />
+                    <img src="{{ currentUser.profile.avatar_url }}" class="gravatar" />
                         {{/if}} 
                     {{/if}}
                 </li>
