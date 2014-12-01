@@ -961,9 +961,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?58d99b67ee3cc68016155718a9a16d0cbf4c3491",
-      "size": 9688,
-      "hash": "58d99b67ee3cc68016155718a9a16d0cbf4c3491"
+      "url": "/client/templates/home/template.home.js?8fe3426cb7e3342780dd231c5a037f7d9af60704",
+      "size": 9562,
+      "hash": "8fe3426cb7e3342780dd231c5a037f7d9af60704"
     },
     {
       "path": "app/client/templates/list/template.list.js",
@@ -1060,9 +1060,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/home/gravatar.js?980d6ac19de1a61b9680778186ab134847e1f86b",
-      "size": 147,
-      "hash": "980d6ac19de1a61b9680778186ab134847e1f86b"
+      "url": "/client/helpers/home/gravatar.js?c29a9d4880a30b099994891f4b3f1932915151d9",
+      "size": 120,
+      "hash": "c29a9d4880a30b099994891f4b3f1932915151d9"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -1155,15 +1155,15 @@
       "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
     },
     {
-      "path": "727b6abaed01243e63258588aa70c05bc8ca6ce0.css",
+      "path": "d27b81beeece8132fbf8278fbf0215f2cd9b907b.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/727b6abaed01243e63258588aa70c05bc8ca6ce0.css",
-      "sourceMap": "727b6abaed01243e63258588aa70c05bc8ca6ce0.css.map",
-      "sourceMapUrl": "/727b6abaed01243e63258588aa70c05bc8ca6ce0.map",
-      "size": 168782,
-      "hash": "727b6abaed01243e63258588aa70c05bc8ca6ce0"
+      "url": "/d27b81beeece8132fbf8278fbf0215f2cd9b907b.css",
+      "sourceMap": "d27b81beeece8132fbf8278fbf0215f2cd9b907b.css.map",
+      "sourceMapUrl": "/d27b81beeece8132fbf8278fbf0215f2cd9b907b.map",
+      "size": 168802,
+      "hash": "d27b81beeece8132fbf8278fbf0215f2cd9b907b"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",

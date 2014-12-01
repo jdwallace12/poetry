@@ -49,7 +49,7 @@
                     <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
                      {{> loginButtons}}
                         {{else}}
-                         {{> avatar userId=this}}
+                    <img src="http://www.gravatar.com/avatar" class="gravatar" />
                      {{> loginButtons}}
                         {{/if}} 
                     {{/if}}
@@ -74,7 +74,7 @@
                         {{#if user.services.facebook}}
                     <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
                         {{else}}
-                        {{> avatar userId=this}}
+                        {{> avatar user=this }}
                         {{/if}} 
                     {{/if}}
                 </li>
