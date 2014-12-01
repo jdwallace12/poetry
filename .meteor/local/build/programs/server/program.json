@@ -414,6 +414,26 @@
       "path": "packages/copleykj_livestamp.js"
     },
     {
+      "sourceMap": "packages/github.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/github.js"
+    },
+    {
+      "sourceMap": "packages/accounts-github.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/accounts-github.js"
+    },
+    {
+      "sourceMap": "packages/google.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/google.js"
+    },
+    {
+      "sourceMap": "packages/accounts-google.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/accounts-google.js"
+    },
+    {
       "sourceMap": "packages/reload.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/reload.js"

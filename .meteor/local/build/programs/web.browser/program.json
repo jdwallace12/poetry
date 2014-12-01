@@ -783,6 +783,50 @@
       "hash": "9e5f671e50449bdff0e4f73d4caa6a0ebdb743cb"
     },
     {
+      "path": "packages/github.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/github.js?13e6c39c5434433a9743552cd4fcce322f030f80",
+      "sourceMap": "packages/github.js.map",
+      "sourceMapUrl": "/packages/13e6c39c5434433a9743552cd4fcce322f030f80.map",
+      "size": 11433,
+      "hash": "13e6c39c5434433a9743552cd4fcce322f030f80"
+    },
+    {
+      "path": "packages/accounts-github.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/accounts-github.js?cd8e0996c426b07b63ab8131432e3cbb1bf3f6b9",
+      "sourceMap": "packages/accounts-github.js.map",
+      "sourceMapUrl": "/packages/cd8e0996c426b07b63ab8131432e3cbb1bf3f6b9.map",
+      "size": 4658,
+      "hash": "cd8e0996c426b07b63ab8131432e3cbb1bf3f6b9"
+    },
+    {
+      "path": "packages/google.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/google.js?d1b8f60ce85379a336803315e8b421587be72475",
+      "sourceMap": "packages/google.js.map",
+      "sourceMapUrl": "/packages/d1b8f60ce85379a336803315e8b421587be72475.map",
+      "size": 14244,
+      "hash": "d1b8f60ce85379a336803315e8b421587be72475"
+    },
+    {
+      "path": "packages/accounts-google.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/accounts-google.js?9ef9953d728cd324cfd7280e7b31c1b89ce5eed5",
+      "sourceMap": "packages/accounts-google.js.map",
+      "sourceMapUrl": "/packages/9ef9953d728cd324cfd7280e7b31c1b89ce5eed5.map",
+      "size": 5596,
+      "hash": "9ef9953d728cd324cfd7280e7b31c1b89ce5eed5"
+    },
+    {
       "path": "packages/autoupdate.js",
       "where": "client",
       "type": "js",
@@ -1036,15 +1080,15 @@
       "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
     },
     {
-      "path": "5c90d6e0ca6aea0db7ce90e356bd7e541ed48135.css",
+      "path": "791a1acfad0013ab7e797c26abdc656bb0e7b8a0.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/5c90d6e0ca6aea0db7ce90e356bd7e541ed48135.css",
-      "sourceMap": "5c90d6e0ca6aea0db7ce90e356bd7e541ed48135.css.map",
-      "sourceMapUrl": "/5c90d6e0ca6aea0db7ce90e356bd7e541ed48135.map",
-      "size": 165328,
-      "hash": "5c90d6e0ca6aea0db7ce90e356bd7e541ed48135"
+      "url": "/791a1acfad0013ab7e797c26abdc656bb0e7b8a0.css",
+      "sourceMap": "791a1acfad0013ab7e797c26abdc656bb0e7b8a0.css.map",
+      "sourceMapUrl": "/791a1acfad0013ab7e797c26abdc656bb0e7b8a0.map",
+      "size": 167520,
+      "hash": "791a1acfad0013ab7e797c26abdc656bb0e7b8a0"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",

@@ -1,5 +1,7 @@
 accounts-base@1.1.2
 accounts-facebook@1.0.2
+accounts-github@1.0.2
+accounts-google@1.0.2
 accounts-oauth@1.1.2
 accounts-password@1.0.4
 accounts-twitter@1.0.2
@@ -30,6 +32,8 @@ facebook@1.1.2
 fastclick@1.0.1
 follower-livedata@1.0.2
 geojson-utils@1.0.1
+github@1.1.1
+google@1.1.2
 houston:admin@1.2.0
 html-tools@1.0.2
 htmljs@1.0.2
