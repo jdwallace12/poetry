@@ -319,6 +319,10 @@ input:focus, textarea:focus {
             top: -50px;
             left: 86px!important;
         }
+        @media (max-width: 979px) {
+        top: 45px;
+        left: 30px!important
+        }
 }
 
 #login-buttons {
@@ -328,7 +332,14 @@ input:focus, textarea:focus {
         left: 90px;
         z-index: 9999;
     }
+       @media (max-width: 979px) {
+        position: relative;
+        top: -12px;
+        left: 0px;
+        z-index: 9999;
+    }
 }
+
 .gravatar {
     height:43px; 
     width:auto;
@@ -366,4 +377,11 @@ input:focus, textarea:focus {
     left: 100%;
     top: -775px;
     width: 40%;
+}
+
+.brand-area {
+border-right: 1px dotted #ccc;
+@media (max-width:979px) {
+    border: none;
+    }
 }
