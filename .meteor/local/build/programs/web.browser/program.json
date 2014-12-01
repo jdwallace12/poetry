@@ -988,9 +988,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.input.js?1acca76685058db0871754a845d22f9b75af962c",
-      "size": 850,
-      "hash": "1acca76685058db0871754a845d22f9b75af962c"
+      "url": "/client/templates/messages/template.input.js?9c33a92c2e141b83fa41e8944c17e97c1a64dd4a",
+      "size": 848,
+      "hash": "9c33a92c2e141b83fa41e8944c17e97c1a64dd4a"
     },
     {
       "path": "app/client/templates/messages/template.message.js",
