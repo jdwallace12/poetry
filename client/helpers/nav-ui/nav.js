@@ -73,7 +73,7 @@
 
     //mobile signin and create account css adjustments
     $(document).on('click', "#login-sign-in-link, .login-buttons", function() {
-        $('.nav-collapse').css('height', '405px');
+        $('.nav-collapse').css('height', '305px');
     });
 
     $(document).on('click', "#signup-link", function() {
