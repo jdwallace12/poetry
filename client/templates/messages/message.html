@@ -9,7 +9,7 @@
                         {{#if user.services.facebook}}
                         <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" />
                         {{else}}
-                        <img src="http://www.gravatar.com/avatar" />
+                             {{> avatar user=this class="chat-avatar"}}
                         {{/if}} 
                     {{/if}}
                 </td>

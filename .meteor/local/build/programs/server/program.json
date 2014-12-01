@@ -434,6 +434,37 @@
       "path": "packages/accounts-google.js"
     },
     {
+      "sourceMap": "packages/spiderable.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/spiderable.js",
+      "assets": {
+        "phantom_script.js": "assets/packages/spiderable/phantom_script.js"
+      }
+    },
+    {
+      "sourceMap": "packages/jparker_crypto-core.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/jparker_crypto-core.js"
+    },
+    {
+      "sourceMap": "packages/jparker_crypto-md5.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/jparker_crypto-md5.js"
+    },
+    {
+      "sourceMap": "packages/jparker_gravatar.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/jparker_gravatar.js"
+    },
+    {
+      "sourceMap": "packages/bengott_avatar.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/bengott_avatar.js",
+      "assets": {
+        "default.png": "assets/packages/bengott_avatar/default.png"
+      }
+    },
+    {
       "sourceMap": "packages/reload.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/reload.js"

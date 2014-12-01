@@ -827,6 +827,72 @@
       "hash": "9ef9953d728cd324cfd7280e7b31c1b89ce5eed5"
     },
     {
+      "path": "packages/spiderable.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/spiderable.js?15e83f35886e22f2be2943f973bc7bb284bf8153",
+      "sourceMap": "packages/spiderable.js.map",
+      "sourceMapUrl": "/packages/15e83f35886e22f2be2943f973bc7bb284bf8153.map",
+      "size": 6294,
+      "hash": "15e83f35886e22f2be2943f973bc7bb284bf8153"
+    },
+    {
+      "path": "packages/stylus.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/stylus.js?48b7e3e0953c004a73211d7489462e73ed11be2c",
+      "sourceMap": "packages/stylus.js.map",
+      "sourceMapUrl": "/packages/48b7e3e0953c004a73211d7489462e73ed11be2c.map",
+      "size": 1288,
+      "hash": "48b7e3e0953c004a73211d7489462e73ed11be2c"
+    },
+    {
+      "path": "packages/jparker_crypto-core.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/jparker_crypto-core.js?8d7a2b0f9acbbc7dbf0bbbceed45257c91418bbc",
+      "sourceMap": "packages/jparker_crypto-core.js.map",
+      "sourceMapUrl": "/packages/8d7a2b0f9acbbc7dbf0bbbceed45257c91418bbc.map",
+      "size": 86948,
+      "hash": "8d7a2b0f9acbbc7dbf0bbbceed45257c91418bbc"
+    },
+    {
+      "path": "packages/jparker_crypto-md5.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/jparker_crypto-md5.js?10c2710f182ea3d81d6b1e2deda16f8f37d3a607",
+      "sourceMap": "packages/jparker_crypto-md5.js.map",
+      "sourceMapUrl": "/packages/10c2710f182ea3d81d6b1e2deda16f8f37d3a607.map",
+      "size": 24049,
+      "hash": "10c2710f182ea3d81d6b1e2deda16f8f37d3a607"
+    },
+    {
+      "path": "packages/jparker_gravatar.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/jparker_gravatar.js?7c397392549dc8d918d0cea6fc18378e402010e9",
+      "sourceMap": "packages/jparker_gravatar.js.map",
+      "sourceMapUrl": "/packages/7c397392549dc8d918d0cea6fc18378e402010e9.map",
+      "size": 8651,
+      "hash": "7c397392549dc8d918d0cea6fc18378e402010e9"
+    },
+    {
+      "path": "packages/bengott_avatar.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/bengott_avatar.js?958c366eacccabb98ef0c74651539bfae9dc851a",
+      "sourceMap": "packages/bengott_avatar.js.map",
+      "sourceMapUrl": "/packages/958c366eacccabb98ef0c74651539bfae9dc851a.map",
+      "size": 28992,
+      "hash": "958c366eacccabb98ef0c74651539bfae9dc851a"
+    },
+    {
       "path": "packages/autoupdate.js",
       "where": "client",
       "type": "js",
@@ -886,18 +952,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/global-imports.js?79a920447b1e1fa69ec29af12bdccefd1f50686e",
-      "size": 1102,
-      "hash": "79a920447b1e1fa69ec29af12bdccefd1f50686e"
+      "url": "/packages/global-imports.js?b433a2cb0ff97fe2db9f5ac7673a8172cac9e780",
+      "size": 1189,
+      "hash": "b433a2cb0ff97fe2db9f5ac7673a8172cac9e780"
     },
     {
       "path": "app/client/templates/home/template.home.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?3ab8c820576d51309ebdde4ab0d91009e818cbe9",
-      "size": 9496,
-      "hash": "3ab8c820576d51309ebdde4ab0d91009e818cbe9"
+      "url": "/client/templates/home/template.home.js?58d99b67ee3cc68016155718a9a16d0cbf4c3491",
+      "size": 9688,
+      "hash": "58d99b67ee3cc68016155718a9a16d0cbf4c3491"
     },
     {
       "path": "app/client/templates/list/template.list.js",
@@ -931,9 +997,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.message.js?130c3280f87c24df40eb99abf277ac0edc603658",
-      "size": 2292,
-      "hash": "130c3280f87c24df40eb99abf277ac0edc603658"
+      "url": "/client/templates/messages/template.message.js?cdbd2f9892a1460ede712f24a419e928fa0111c0",
+      "size": 2487,
+      "hash": "cdbd2f9892a1460ede712f24a419e928fa0111c0"
     },
     {
       "path": "app/client/templates/messages/template.messages.js",
@@ -994,9 +1060,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/home/gravatar.js?2a3453bba5b8f7e5a39caf4f0fb6016f1b588104",
-      "size": 19,
-      "hash": "2a3453bba5b8f7e5a39caf4f0fb6016f1b588104"
+      "url": "/client/helpers/home/gravatar.js?980d6ac19de1a61b9680778186ab134847e1f86b",
+      "size": 147,
+      "hash": "980d6ac19de1a61b9680778186ab134847e1f86b"
     },
     {
       "path": "app/client/helpers/lists/list.js",
@@ -1089,15 +1155,15 @@
       "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
     },
     {
-      "path": "43715ad59d839e352a854c1fa65c951b7b987c91.css",
+      "path": "727b6abaed01243e63258588aa70c05bc8ca6ce0.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/43715ad59d839e352a854c1fa65c951b7b987c91.css",
-      "sourceMap": "43715ad59d839e352a854c1fa65c951b7b987c91.css.map",
-      "sourceMapUrl": "/43715ad59d839e352a854c1fa65c951b7b987c91.map",
-      "size": 167616,
-      "hash": "43715ad59d839e352a854c1fa65c951b7b987c91"
+      "url": "/727b6abaed01243e63258588aa70c05bc8ca6ce0.css",
+      "sourceMap": "727b6abaed01243e63258588aa70c05bc8ca6ce0.css.map",
+      "sourceMapUrl": "/727b6abaed01243e63258588aa70c05bc8ca6ce0.map",
+      "size": 168782,
+      "hash": "727b6abaed01243e63258588aa70c05bc8ca6ce0"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -1116,6 +1182,15 @@
       "url": "/packages/bootstrap/img/glyphicons-halflings-white.png",
       "size": 8777,
       "hash": "a25c4705320fd63c33790e666872910e702b9bf6"
+    },
+    {
+      "path": "packages/bengott_avatar/default.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/bengott_avatar/default.png",
+      "size": 1577,
+      "hash": "76ec76887e4c748e6358a2aaf9b57006567f8999"
     },
     {
       "path": "app/crumple.wav",
@@ -1247,7 +1322,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "2f9ffdeeaf14440c0daa2e129b44b3322aebdade"
+      "hash": "183ffd1fbd23c9f1e9c6cbf56e37eee7b350d675"
     }
   ]
 }
