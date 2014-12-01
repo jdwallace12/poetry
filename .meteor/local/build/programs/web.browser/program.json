@@ -968,9 +968,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/nav-ui/nav.js?2a3453bba5b8f7e5a39caf4f0fb6016f1b588104",
-      "size": 19,
-      "hash": "2a3453bba5b8f7e5a39caf4f0fb6016f1b588104"
+      "url": "/client/helpers/nav-ui/nav.js?877232699ea38434197c0825ae62d416b5757cc8",
+      "size": 3421,
+      "hash": "877232699ea38434197c0825ae62d416b5757cc8"
     },
     {
       "path": "app/client/helpers/users/user.js",
