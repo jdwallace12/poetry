@@ -1,94 +1,162 @@
 <template name="private">
-    <div class="container" style="position:relative; padding-top:1%;">    
-                <div class="navbar navbar-fixed-top" style="background: #ffffff;">
-                   <ul class="nav">
-                        <li class="nav-links">
-                            <a id="group-fridge" href="{{pathFor 'home'}}"><i class="fa fa-users"></i> Office Fridge</a>
-                        </li>
-                        </ul>
-                        <ul class="nav pull-right" style="left: -40px;"> 
-                        <li>
-                            {{> loginButtons}}
-                        </li>               
-                            <li style="position: relative; left: 43px;">
-                            {{#if user.services.twitter}}
-                            <img src="{{user.services.twitter.profile_image_url}}" style="height:43px; width:auto;" />
-                            {{else}} 
-                            {{#if user.services.facebook}}
-                            <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" style="height:43px; width:auto;" />
-                            {{else}}
-                            <img src="http://www.gravatar.com/avatar" style="height:43px; width:auto;" />
-                            {{/if}} 
-                        {{/if}}
-                        </li>                       
+  <template name="home">
+<div style="position:relative;">
+    <div class="navbar navbar-fixed-top" style="background: #ffffff; min-height:43px;">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <div class="nav-collapse collapse">
+            <ul class="nav"> 
+                
+                <li class="brand-area"><a class="brand" style="padding:0px 15px; margin-top:2px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" /><span style="position:realative; top:2px;"><span style="font-weight: 800;">App</span>netic Poetry</span></a></li>                 
+                  {{#if currentUser}}
+                
+                 <li id="solo_play" class="nav-links">
+                    <a><i class="fa fa-users"></i>  Group Play</a>
+                </li>
+                
+                <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Delete Fridge</a>
+                </li>
+
+                     <li id="word-sets" class="dropdown nav-links">
+                    <a class="dropdown-toggle" id="word-sets-trigger" data-toggle="dropdown" href="#"><i class="fa fa-puzzle-piece"></i> Magnets Sets <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a id="devops-magnets">DevOps</a></li>
+                      <li><a id="developer-magnets">Developer</a></li>
+                      <li><a id="all-magnets">Play With Both Sets</a></li>
                     </ul>
-                </div>
+                </li>
+
+                <li id="add_words" class="nav-links"><a><i class="fa fa-plus-circle"></i> Add Words</a>
+                </li>
+
+                <li id="chat-open" class="nav-links">
+                    <a><i class="fa fa-comments"></i> Chat</a>
+                </li>
+                
+            {{else}}
+                <li class="nav-links visible-tablet visible-phone hidden-desktop mobile-login"><a><i class="fa fa-power-off"></i> {{> loginButtons}}</a></li>
+                 {{/if}}
+            </ul>
+
+       
+            <ul class="nav pull-right hidden-desktop">
+                {{#if currentUser}}
+                <li class="nav-links"><a>
+                    {{#if user.services.twitter}}
+                    <img src="{{user.services.twitter.profile_image_url}}" class="gravatar" />
+                     {{> loginButtons}}
+                    {{else}}
+                        {{#if user.services.facebook}}
+                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
+                     {{> loginButtons}}
+                        {{else}}
+                    <img src="http://www.gravatar.com/avatar" class="gravatar" />
+                     {{> loginButtons}}
+                        {{/if}} 
+                    {{/if}}
+                </a>
+                </li>
+                {{else}} 
+             
+                {{/if}}
+            </ul>
+        </div>
+
+       
+            <ul class="nav pull-right visible-desktop" style="left: -40px;">
+                <li>
+                    {{> loginButtons}}
+                </li>
+                {{#if currentUser}}
+                <li style="position: relative; left: 55px;">
+                    {{#if user.services.twitter}}
+                    <img src="{{user.services.twitter.profile_image_url}}" class="gravatar" />
+                    {{else}}
+                        {{#if user.services.facebook}}
+                    <img src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" class="gravatar" />
+                        {{else}}
+                        {{> avatar user=this }}
+                        {{/if}} 
+                    {{/if}}
+                </li>
+                {{else}} 
+                {{/if}}
+            </ul>
+        </div>
         <div class="chat-wrap">
             <a href="#" id="close_chat">
                 <p class="pull-right" style="position: relative; top: 17px; margin-top:-13px; right:15px; color:#969696;">x</p>
             </a>
-            {{#if currentUser}} {{> input}} {{/if}} {{> messages}}
+            {{#if currentUser}}
+             {{> input}} 
+             {{/if}} 
+             {{> messages}}
         </div>
+ <!--        <h1 class="title visible-desktop">Collaborative Magnetic Poetry</h1> -->
+        <div class="board-wrapper">
+            {{> list}}
+            <div id="logo_magnet" class="magnet">
+                <img style="min-width:190px;" src="/logo_magnet.jpg" />
+            </div>
 
-        <!--     <div class="chat-wrap">
-        {{> header }}
-        {{#if currentUser}} 
-        {{else}}
-        <div class="signin">
-            {{> loginButtons}}
+            <div class="fridge">
+            </div>
+
         </div>
-        {{/if}} 
-        {{#if currentUser}} 
-        {{> input}} 
-        {{/if}} 
-        {{> messages}}
-    </div> -->
-        <!--    <div class="chat-open">
-        <p>Chat</p>
-    </div>
-    <div class="footer-open">
-        <p>Add Words</p>
-    </div> -->
-    <div class="board-wrapper">
-        {{> list}}
-            <div id="logo_magnet" class="magnet" style="position:absolute; top: 7%; left: 7%;">
-            <img style="min-width:190px;" src="/logo_magnet.jpg" />
-        </div>
-        <div class="fridge">
-        </div>
-</div>
         <audio id="slap" preload="metadata">
             <source src="/slap.wav">
         </audio>
-    
-        <!--    {{>wordForm}} -->
+
+
+        <audio id="ding" preload="metadata">
+            <source src="/ding.wav">
+        </audio>
+
+        <audio id="pop" preload="metadata">
+            <source src="/pop.wav">
+        </audio>
+
+
+        <audio id="crumple" preload="metadata">
+            <source src="/crumple.wav">
+        </audio>
+
+        <div id="footer" style="display:none;">
+            {{>wordForm}}
+        </div>
+
     </div>
-      <div class="social-wrap">       
+    <div class="social-wrap">
         <span class='st_facebook_large' displayText='Facebook'></span>
         <span class='st_twitter_large' displayText='Tweet'></span>
         <span class='st_linkedin_large' displayText='LinkedIn'></span>
         <span class='st_pinterest_large' displayText='Pinterest'></span>
         <span class='st_email_large' displayText='Email'></span>
-        <span style="top: -11px; position: relative;"><strong>Share Your Creation</strong></span>
+      <!--   <span style="top: -11px; position: relative;">
+            <span class="visible-desktop social-text"><strong>Share This Creation</strong></span>
+        </span> -->
     </div>
-        <script>
-        $(document).ready(function() {
-            stButtons.locateElements();
-
-            // or if you want to be a bit defensive about whether the lib has been
-            // loaded or not:
-            if (window.stButtons) {
-                stButtons.locateElements();
-            } // Parse ShareThis markup
-
-            $("#logo_magnet").draggable();
-            $(".chat-wrap").draggable();
-            $(document).on("click", ".chat-open", function() {
-                $('.chat-wrap').show();
-
-            });
-        });
 
 
-        </script>
+<!-- login modal -->
+<!-- <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Mobile Login</h3>
+  </div>
+  <div class="modal-body" style="height:350px;">
+  <p>{{> loginButtons}}</p>
+  </div>
+</div> -->
+
+<script>
+    $("#logo_magnet").draggable();    
+</script>
+
+
+</template>
+
 </template>

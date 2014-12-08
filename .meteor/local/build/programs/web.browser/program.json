@@ -961,9 +961,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?8fe3426cb7e3342780dd231c5a037f7d9af60704",
-      "size": 9562,
-      "hash": "8fe3426cb7e3342780dd231c5a037f7d9af60704"
+      "url": "/client/templates/home/template.home.js?a3a4ae1193ed2cb3ed4ea53d2e8c24ccb802a037",
+      "size": 9768,
+      "hash": "a3a4ae1193ed2cb3ed4ea53d2e8c24ccb802a037"
     },
     {
       "path": "app/client/templates/list/template.list.js",
@@ -1009,15 +1009,6 @@
       "url": "/client/templates/messages/template.messages.js?88a9fc924291024d23cf7160bb9257bd855d3760",
       "size": 629,
       "hash": "88a9fc924291024d23cf7160bb9257bd855d3760"
-    },
-    {
-      "path": "app/client/templates/my-board/template.private.js",
-      "where": "client",
-      "type": "js",
-      "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?c9719bb345c3df7ccb3fa6ac66380cc24607bb59",
-      "size": 5213,
-      "hash": "c9719bb345c3df7ccb3fa6ac66380cc24607bb59"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
