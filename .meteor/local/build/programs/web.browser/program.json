@@ -303,11 +303,11 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/mongo.js?9bc2c5a8b2796fab86b51660ca643e5a49a30c84",
+      "url": "/packages/mongo.js?6773d7206be2caaaf6d01340042ef08dcaad7907",
       "sourceMap": "packages/mongo.js.map",
-      "sourceMapUrl": "/packages/9bc2c5a8b2796fab86b51660ca643e5a49a30c84.map",
-      "size": 146178,
-      "hash": "9bc2c5a8b2796fab86b51660ca643e5a49a30c84"
+      "sourceMapUrl": "/packages/6773d7206be2caaaf6d01340042ef08dcaad7907.map",
+      "size": 147410,
+      "hash": "6773d7206be2caaaf6d01340042ef08dcaad7907"
     },
     {
       "path": "packages/deps.js",
@@ -644,33 +644,33 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/iron_url.js?3a21b7348e189346a5f73bbe6220cc5257b9846e",
+      "url": "/packages/iron_url.js?271d2b23f8542769347738353a73f77c63859e8e",
       "sourceMap": "packages/iron_url.js.map",
-      "sourceMapUrl": "/packages/3a21b7348e189346a5f73bbe6220cc5257b9846e.map",
-      "size": 65622,
-      "hash": "3a21b7348e189346a5f73bbe6220cc5257b9846e"
+      "sourceMapUrl": "/packages/271d2b23f8542769347738353a73f77c63859e8e.map",
+      "size": 65852,
+      "hash": "271d2b23f8542769347738353a73f77c63859e8e"
     },
     {
       "path": "packages/iron_middleware-stack.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/iron_middleware-stack.js?87fc6153735b0c669013d562b796bbd57c993d79",
+      "url": "/packages/iron_middleware-stack.js?bc8692a6fce82dfbe55eead781d8e8b3afcbfd1c",
       "sourceMap": "packages/iron_middleware-stack.js.map",
-      "sourceMapUrl": "/packages/87fc6153735b0c669013d562b796bbd57c993d79.map",
-      "size": 46799,
-      "hash": "87fc6153735b0c669013d562b796bbd57c993d79"
+      "sourceMapUrl": "/packages/bc8692a6fce82dfbe55eead781d8e8b3afcbfd1c.map",
+      "size": 45589,
+      "hash": "bc8692a6fce82dfbe55eead781d8e8b3afcbfd1c"
     },
     {
       "path": "packages/iron_location.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/iron_location.js?b56386f5e8c3b7b5f1bb101fbc8aaab9aff9ce25",
+      "url": "/packages/iron_location.js?0434907da386df80b0a769a8c4decc5374a3fdb6",
       "sourceMap": "packages/iron_location.js.map",
-      "sourceMapUrl": "/packages/b56386f5e8c3b7b5f1bb101fbc8aaab9aff9ce25.map",
-      "size": 51127,
-      "hash": "b56386f5e8c3b7b5f1bb101fbc8aaab9aff9ce25"
+      "sourceMapUrl": "/packages/0434907da386df80b0a769a8c4decc5374a3fdb6.map",
+      "size": 51357,
+      "hash": "0434907da386df80b0a769a8c4decc5374a3fdb6"
     },
     {
       "path": "packages/iron_controller.js",
@@ -688,11 +688,11 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/iron_router.js?0151d2075090eb70fafb186dca64a57435104aa9",
+      "url": "/packages/iron_router.js?c45f7b94d616b48432e190827a3ca76d48e51e9d",
       "sourceMap": "packages/iron_router.js.map",
-      "sourceMapUrl": "/packages/0151d2075090eb70fafb186dca64a57435104aa9.map",
-      "size": 213813,
-      "hash": "0151d2075090eb70fafb186dca64a57435104aa9"
+      "sourceMapUrl": "/packages/c45f7b94d616b48432e190827a3ca76d48e51e9d.map",
+      "size": 213337,
+      "hash": "c45f7b94d616b48432e190827a3ca76d48e51e9d"
     },
     {
       "path": "packages/mizzao_timesync.js",
@@ -750,15 +750,26 @@
       "hash": "54a134a10c24c94b322c50a6067f50eff20806a8"
     },
     {
+      "path": "packages/dburles_mongo-collection-instances.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/dburles_mongo-collection-instances.js?19931c50c4b97bfebf08bca8766db31588ba96dd",
+      "sourceMap": "packages/dburles_mongo-collection-instances.js.map",
+      "sourceMapUrl": "/packages/19931c50c4b97bfebf08bca8766db31588ba96dd.map",
+      "size": 8430,
+      "hash": "19931c50c4b97bfebf08bca8766db31588ba96dd"
+    },
+    {
       "path": "packages/houston_admin.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/houston_admin.js?b8363f09f51ab0584e7779e7797f71fb34d3ed30",
+      "url": "/packages/houston_admin.js?56e5515ad0a6fc907f221f6bacf04bc6025e4df5",
       "sourceMap": "packages/houston_admin.js.map",
-      "sourceMapUrl": "/packages/b8363f09f51ab0584e7779e7797f71fb34d3ed30.map",
-      "size": 256244,
-      "hash": "b8363f09f51ab0584e7779e7797f71fb34d3ed30"
+      "sourceMapUrl": "/packages/56e5515ad0a6fc907f221f6bacf04bc6025e4df5.map",
+      "size": 262876,
+      "hash": "56e5515ad0a6fc907f221f6bacf04bc6025e4df5"
     },
     {
       "path": "packages/mrt_moment.js",
@@ -961,9 +972,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?a3a4ae1193ed2cb3ed4ea53d2e8c24ccb802a037",
-      "size": 9768,
-      "hash": "a3a4ae1193ed2cb3ed4ea53d2e8c24ccb802a037"
+      "url": "/client/templates/home/template.home.js?31ae8cebde0edb4d780091c57c78a08c13a323f3",
+      "size": 9801,
+      "hash": "31ae8cebde0edb4d780091c57c78a08c13a323f3"
     },
     {
       "path": "app/client/templates/list/template.list.js",
@@ -988,18 +999,18 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.input.js?9c33a92c2e141b83fa41e8944c17e97c1a64dd4a",
-      "size": 848,
-      "hash": "9c33a92c2e141b83fa41e8944c17e97c1a64dd4a"
+      "url": "/client/templates/messages/template.input.js?119c7b5084f067760d7962de335ab70ac9f2ffcc",
+      "size": 898,
+      "hash": "119c7b5084f067760d7962de335ab70ac9f2ffcc"
     },
     {
       "path": "app/client/templates/messages/template.message.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/messages/template.message.js?cdbd2f9892a1460ede712f24a419e928fa0111c0",
-      "size": 2487,
-      "hash": "cdbd2f9892a1460ede712f24a419e928fa0111c0"
+      "url": "/client/templates/messages/template.message.js?bf020599dbf49bfa5d5b98bcc98add0ed7a4d64f",
+      "size": 2540,
+      "hash": "bf020599dbf49bfa5d5b98bcc98add0ed7a4d64f"
     },
     {
       "path": "app/client/templates/messages/template.messages.js",
@@ -1009,6 +1020,15 @@
       "url": "/client/templates/messages/template.messages.js?88a9fc924291024d23cf7160bb9257bd855d3760",
       "size": 629,
       "hash": "88a9fc924291024d23cf7160bb9257bd855d3760"
+    },
+    {
+      "path": "app/client/templates/my-board/template.private.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/client/templates/my-board/template.private.js?2f24303f5c37a70e7e5426d271433022da627b1f",
+      "size": 9890,
+      "hash": "2f24303f5c37a70e7e5426d271433022da627b1f"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -1042,9 +1062,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?e119fc0b6bb174c1999331c6009c94011e126d9f",
-      "size": 55159,
-      "hash": "e119fc0b6bb174c1999331c6009c94011e126d9f"
+      "url": "/lib/collections/magnets.js?eb75092bb4af8f4766b666ad873d078e0ef30a29",
+      "size": 55328,
+      "hash": "eb75092bb4af8f4766b666ad873d078e0ef30a29"
     },
     {
       "path": "app/client/helpers/home/gravatar.js",
@@ -1069,9 +1089,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?77a29429791899229df16671b7f7a0385b082150",
-      "size": 3718,
-      "hash": "77a29429791899229df16671b7f7a0385b082150"
+      "url": "/client/helpers/magnets/magnets.js?a476dafcbe6bfe017da53eb6df5ee1c18d29c087",
+      "size": 4186,
+      "hash": "a476dafcbe6bfe017da53eb6df5ee1c18d29c087"
     },
     {
       "path": "app/client/helpers/nav-ui/nav.js",
@@ -1141,9 +1161,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?33b3cc0f49167b0918370fe28d9a5d8eedb87038",
-      "size": 194,
-      "hash": "33b3cc0f49167b0918370fe28d9a5d8eedb87038"
+      "url": "/client/router.js?9c6ed822beb8afc133c9292c8be987597f9b862b",
+      "size": 193,
+      "hash": "9c6ed822beb8afc133c9292c8be987597f9b862b"
     },
     {
       "path": "d27b81beeece8132fbf8278fbf0215f2cd9b907b.css",

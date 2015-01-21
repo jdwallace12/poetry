@@ -1,5 +1,5 @@
 <template name="private">
-  <template name="home">
+
 <div style="position:relative;">
     <div class="navbar navbar-fixed-top" style="background: #ffffff; min-height:43px;">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -13,8 +13,8 @@
                 <li class="brand-area"><a class="brand" style="padding:0px 15px; margin-top:2px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" /><span style="position:realative; top:2px;"><span style="font-weight: 800;">App</span>netic Poetry</span></a></li>                 
                   {{#if currentUser}}
                 
-                 <li id="solo_play" class="nav-links">
-                    <a><i class="fa fa-users"></i>  Group Play</a>
+                 <li id="group_play" class="nav-links">
+                    <a href="{{pathFor 'home'}}"><i class="fa fa-users"></i>  Group Play</a>
                 </li>
                 
                 <li id="delete" class="nav-links"><a><i class="fa fa-trash-o"></i> Delete Fridge</a>
@@ -157,6 +157,5 @@
 </script>
 
 
-</template>
 
 </template>
