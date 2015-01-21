@@ -1073,9 +1073,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?8548003352b2730552cc9b646b383731653ff8eb",
-      "size": 44944,
-      "hash": "8548003352b2730552cc9b646b383731653ff8eb"
+      "url": "/lib/collections/magnets.js?37e3664b1cc00cc8cb15ad1d69f7bc4ce10b447b",
+      "size": 44946,
+      "hash": "37e3664b1cc00cc8cb15ad1d69f7bc4ce10b447b"
     },
     {
       "path": "app/client/helpers/home/gravatar.js",
@@ -1172,20 +1172,20 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?0afecf548183467c3068448e7eb8ac4fc5188b18",
-      "size": 191,
-      "hash": "0afecf548183467c3068448e7eb8ac4fc5188b18"
+      "url": "/client/router.js?431b5ab04252614cb51f2ecbd17ba2c72b4e0095",
+      "size": 519,
+      "hash": "431b5ab04252614cb51f2ecbd17ba2c72b4e0095"
     },
     {
-      "path": "4ff986c5c08c23527cb6de0542630a0f698ba42f.css",
+      "path": "e99e167f146a5a445f250a38aa4ac93218f66646.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/4ff986c5c08c23527cb6de0542630a0f698ba42f.css",
-      "sourceMap": "4ff986c5c08c23527cb6de0542630a0f698ba42f.css.map",
-      "sourceMapUrl": "/4ff986c5c08c23527cb6de0542630a0f698ba42f.map",
+      "url": "/e99e167f146a5a445f250a38aa4ac93218f66646.css",
+      "sourceMap": "e99e167f146a5a445f250a38aa4ac93218f66646.css.map",
+      "sourceMapUrl": "/e99e167f146a5a445f250a38aa4ac93218f66646.map",
       "size": 168830,
-      "hash": "4ff986c5c08c23527cb6de0542630a0f698ba42f"
+      "hash": "e99e167f146a5a445f250a38aa4ac93218f66646"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -1267,6 +1267,15 @@
       "url": "/fridge-trans3.png",
       "size": 605706,
       "hash": "9a5b474265a07decabda5a53b63bbe484601a488"
+    },
+    {
+      "path": "app/fridge-trans4.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fridge-trans4.png",
+      "size": 496018,
+      "hash": "6f0a6fbc8429c213108e8206caf8d961061a494b"
     },
     {
       "path": "app/fridge.png",
