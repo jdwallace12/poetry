@@ -19,7 +19,7 @@ Template.magnet.magnetId = function() {
 
 //delete magnets
 Template.private.events = {
-       'click #group_play': function() {
+       'click #group-play': function() {
         var magnet = Magnets.findOne();
         Magnets.update({_id: magnet._id}, {$set: {fridgeId: 1}});
         return Magnets.find({fridgeId: 1});
@@ -58,7 +58,7 @@ Template.home.events = {
         }
     },
 
-     'click #solo_play': function() {
+     'click #new-board': function() {
         var user = Meteor.userId();
         var magnet = Magnets.findOne();
         Magnets.update({_id: magnet._id}, {$set: {fridgeId: user}});

@@ -13,6 +13,8 @@
                         <a class="brand" style="padding:0px 15px; margin-top:2px;" target="_blank" href="http://www.appneta.com"><img src="/logo-emblem.png" /><span style="position:realative; top:2px;"><span style="font-weight: 800;">App</span>netic Poetry</span>
                         </a>
                     </li>
+                        <li id="new-board" class="nav-links"><a href="{{pathFor 'private'}}"><i class="fa fa-magic"></i> Create My Own</a>
+                        </li>
 
                     {{#if currentUser}}
 
@@ -89,6 +91,7 @@
             </a>
             {{#if currentUser}} {{> input}} {{/if}} {{> messages}}
         </div>
+
         <!--        <h1 class="title visible-desktop">Collaborative Magnetic Poetry</h1> -->
         <div class="board-wrapper">
             {{> list}}

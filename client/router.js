@@ -7,5 +7,3 @@ Router.map(function() {
         path: '/' + user
     });
 });
-
-

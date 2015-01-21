@@ -983,9 +983,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?31ae8cebde0edb4d780091c57c78a08c13a323f3",
-      "size": 9801,
-      "hash": "31ae8cebde0edb4d780091c57c78a08c13a323f3"
+      "url": "/client/templates/home/template.home.js?cbc2df31c6263cf55ffe72caf121487dd19eab9f",
+      "size": 10096,
+      "hash": "cbc2df31c6263cf55ffe72caf121487dd19eab9f"
     },
     {
       "path": "app/client/templates/list/template.list.js",
@@ -1037,9 +1037,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/my-board/template.private.js?2f24303f5c37a70e7e5426d271433022da627b1f",
+      "url": "/client/templates/my-board/template.private.js?1e27cbbd351e89b8d7f54efcaadf8ae7b3c44384",
       "size": 9890,
-      "hash": "2f24303f5c37a70e7e5426d271433022da627b1f"
+      "hash": "1e27cbbd351e89b8d7f54efcaadf8ae7b3c44384"
     },
     {
       "path": "app/client/templates/new-word-form/template.wordForm.js",
@@ -1073,9 +1073,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?eb75092bb4af8f4766b666ad873d078e0ef30a29",
-      "size": 55328,
-      "hash": "eb75092bb4af8f4766b666ad873d078e0ef30a29"
+      "url": "/lib/collections/magnets.js?8548003352b2730552cc9b646b383731653ff8eb",
+      "size": 44944,
+      "hash": "8548003352b2730552cc9b646b383731653ff8eb"
     },
     {
       "path": "app/client/helpers/home/gravatar.js",
@@ -1100,9 +1100,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?a476dafcbe6bfe017da53eb6df5ee1c18d29c087",
+      "url": "/client/helpers/magnets/magnets.js?a2e9d9407717b56af959ff2b29f2abb7e1c7a116",
       "size": 4186,
-      "hash": "a476dafcbe6bfe017da53eb6df5ee1c18d29c087"
+      "hash": "a2e9d9407717b56af959ff2b29f2abb7e1c7a116"
     },
     {
       "path": "app/client/helpers/nav-ui/nav.js",
@@ -1172,9 +1172,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/router.js?9c6ed822beb8afc133c9292c8be987597f9b862b",
-      "size": 193,
-      "hash": "9c6ed822beb8afc133c9292c8be987597f9b862b"
+      "url": "/client/router.js?0afecf548183467c3068448e7eb8ac4fc5188b18",
+      "size": 191,
+      "hash": "0afecf548183467c3068448e7eb8ac4fc5188b18"
     },
     {
       "path": "4ff986c5c08c23527cb6de0542630a0f698ba42f.css",
@@ -1257,7 +1257,16 @@
       "cacheable": false,
       "url": "/fridge-trans2.png",
       "size": 780050,
-      "hash": "e4a4e8267aee61addf0a8d20e6e5e4328791b24e"
+      "hash": "e9f00c7d1bbf6cb6039a8a3476942ed41b7014eb"
+    },
+    {
+      "path": "app/fridge-trans3.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fridge-trans3.png",
+      "size": 605706,
+      "hash": "9a5b474265a07decabda5a53b63bbe484601a488"
     },
     {
       "path": "app/fridge.png",
