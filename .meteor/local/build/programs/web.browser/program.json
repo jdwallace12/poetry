@@ -838,17 +838,6 @@
       "hash": "9ef9953d728cd324cfd7280e7b31c1b89ce5eed5"
     },
     {
-      "path": "packages/spiderable.js",
-      "where": "client",
-      "type": "js",
-      "cacheable": true,
-      "url": "/packages/spiderable.js?15e83f35886e22f2be2943f973bc7bb284bf8153",
-      "sourceMap": "packages/spiderable.js.map",
-      "sourceMapUrl": "/packages/15e83f35886e22f2be2943f973bc7bb284bf8153.map",
-      "size": 6294,
-      "hash": "15e83f35886e22f2be2943f973bc7bb284bf8153"
-    },
-    {
       "path": "packages/stylus.js",
       "where": "client",
       "type": "js",
@@ -902,6 +891,28 @@
       "sourceMapUrl": "/packages/958c366eacccabb98ef0c74651539bfae9dc851a.map",
       "size": 28992,
       "hash": "958c366eacccabb98ef0c74651539bfae9dc851a"
+    },
+    {
+      "path": "packages/spiderable.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/spiderable.js?15e83f35886e22f2be2943f973bc7bb284bf8153",
+      "sourceMap": "packages/spiderable.js.map",
+      "sourceMapUrl": "/packages/15e83f35886e22f2be2943f973bc7bb284bf8153.map",
+      "size": 6294,
+      "hash": "15e83f35886e22f2be2943f973bc7bb284bf8153"
+    },
+    {
+      "path": "packages/bitomule_simple-metacrawler.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/bitomule_simple-metacrawler.js?2da573a72fca9a0c3a05cf7e21c8059c32be8916",
+      "sourceMap": "packages/bitomule_simple-metacrawler.js.map",
+      "sourceMapUrl": "/packages/2da573a72fca9a0c3a05cf7e21c8059c32be8916.map",
+      "size": 1312,
+      "hash": "2da573a72fca9a0c3a05cf7e21c8059c32be8916"
     },
     {
       "path": "packages/autoupdate.js",
@@ -963,9 +974,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/global-imports.js?b433a2cb0ff97fe2db9f5ac7673a8172cac9e780",
+      "url": "/packages/global-imports.js?0491fcd727b334533a6ec70b130fbb2271aab1ab",
       "size": 1189,
-      "hash": "b433a2cb0ff97fe2db9f5ac7673a8172cac9e780"
+      "hash": "0491fcd727b334533a6ec70b130fbb2271aab1ab"
     },
     {
       "path": "app/client/templates/home/template.home.js",
@@ -1053,9 +1064,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/chat.js?0ce875cabdc09677f6d5d9b9a932a17bdd1b63a5",
-      "size": 2543,
-      "hash": "0ce875cabdc09677f6d5d9b9a932a17bdd1b63a5"
+      "url": "/lib/collections/chat.js?2d9f93a6ae2aa47ab17247f84df3d93db66108cc",
+      "size": 2544,
+      "hash": "2d9f93a6ae2aa47ab17247f84df3d93db66108cc"
     },
     {
       "path": "app/lib/collections/magnets.js",
@@ -1166,15 +1177,15 @@
       "hash": "9c6ed822beb8afc133c9292c8be987597f9b862b"
     },
     {
-      "path": "d27b81beeece8132fbf8278fbf0215f2cd9b907b.css",
+      "path": "4ff986c5c08c23527cb6de0542630a0f698ba42f.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/d27b81beeece8132fbf8278fbf0215f2cd9b907b.css",
-      "sourceMap": "d27b81beeece8132fbf8278fbf0215f2cd9b907b.css.map",
-      "sourceMapUrl": "/d27b81beeece8132fbf8278fbf0215f2cd9b907b.map",
-      "size": 168802,
-      "hash": "d27b81beeece8132fbf8278fbf0215f2cd9b907b"
+      "url": "/4ff986c5c08c23527cb6de0542630a0f698ba42f.css",
+      "sourceMap": "4ff986c5c08c23527cb6de0542630a0f698ba42f.css.map",
+      "sourceMapUrl": "/4ff986c5c08c23527cb6de0542630a0f698ba42f.map",
+      "size": 168830,
+      "hash": "4ff986c5c08c23527cb6de0542630a0f698ba42f"
     },
     {
       "path": "packages/bootstrap/img/glyphicons-halflings.png",
@@ -1238,6 +1249,15 @@
       "url": "/fridge-trans.png",
       "size": 442971,
       "hash": "eeb3a89e39ac4e31611b2f8a2ac657f035ee98c9"
+    },
+    {
+      "path": "app/fridge-trans2.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/fridge-trans2.png",
+      "size": 780050,
+      "hash": "e4a4e8267aee61addf0a8d20e6e5e4328791b24e"
     },
     {
       "path": "app/fridge.png",
@@ -1333,7 +1353,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "183ffd1fbd23c9f1e9c6cbf56e37eee7b350d675"
+      "hash": "7c5e74b6da69ddbfaef6d28ac1b5209eb3035064"
     }
   ]
 }

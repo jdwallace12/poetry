@@ -439,14 +439,6 @@
       "path": "packages/accounts-google.js"
     },
     {
-      "sourceMap": "packages/spiderable.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/spiderable.js",
-      "assets": {
-        "phantom_script.js": "assets/packages/spiderable/phantom_script.js"
-      }
-    },
-    {
       "sourceMap": "packages/jparker_crypto-core.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/jparker_crypto-core.js"
@@ -468,6 +460,20 @@
       "assets": {
         "default.png": "assets/packages/bengott_avatar/default.png"
       }
+    },
+    {
+      "sourceMap": "packages/spiderable.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/spiderable.js",
+      "assets": {
+        "phantom_script.js": "assets/packages/spiderable/phantom_script.js"
+      }
+    },
+    {
+      "node_modules": "npm/bitomule:simple-metacrawler/node_modules",
+      "sourceMap": "packages/bitomule_simple-metacrawler.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/bitomule_simple-metacrawler.js"
     },
     {
       "sourceMap": "packages/reload.js.map",
