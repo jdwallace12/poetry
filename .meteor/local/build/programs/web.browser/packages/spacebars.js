@@ -20,11 +20,14 @@
 /* Imports */
 var Meteor = Package.meteor.Meteor;
 var HTML = Package.htmljs.HTML;
+var Tracker = Package.tracker.Tracker;
+var Deps = Package.tracker.Deps;
 var Blaze = Package.blaze.Blaze;
 var UI = Package.blaze.UI;
 var Handlebars = Package.blaze.Handlebars;
 var ObserveSequence = Package['observe-sequence'].ObserveSequence;
 var Template = Package.templating.Template;
+var _ = Package.underscore._;
 
 /* Package-scope variables */
 var Spacebars;
@@ -336,7 +339,7 @@ Spacebars.TemplateWith = Blaze._TemplateWith;                                   
 Template.__checkName("__dynamic");                                                                     // 2
 Template["__dynamic"] = new Template("Template.__dynamic", (function() {                               // 3
   var view = this;                                                                                     // 4
-  return [ Blaze.View(function() {                                                                     // 5
+  return [ Blaze.View("lookup:checkContext", function() {                                              // 5
     return Spacebars.mustache(view.lookup("checkContext"));                                            // 6
   }), "\n  ", Blaze.If(function() {                                                                    // 7
     return Spacebars.call(view.lookup("dataContextPresent"));                                          // 8

@@ -16,44 +16,26 @@ var Meteor;
                                                                                                           //
 Meteor = {                                                                                                // 1
   isClient: false,                                                                                        // 2
-  isServer: true                                                                                          // 3
-};                                                                                                        // 4
-                                                                                                          // 5
-Meteor.settings = {};                                                                                     // 6
-                                                                                                          // 7
-if (process.env.APP_CONFIG) {                                                                             // 8
-  // put settings from the app configuration in the settings.  Don't depend on                            // 9
-  // the Galaxy package for now, to avoid silly loops.                                                    // 10
- try {                                                                                                    // 11
-   var appConfig = JSON.parse(process.env.APP_CONFIG);                                                    // 12
-   if (!appConfig.settings) {                                                                             // 13
-     Meteor.settings = {};                                                                                // 14
-   } else if (typeof appConfig.settings === "string") {                                                   // 15
-     Meteor.settings = JSON.parse(appConfig.settings);                                                    // 16
-   } else {                                                                                               // 17
-     // Old versions of Galaxy may store settings in MongoDB as objects. Newer                            // 18
-     // versions store it as strings (so that we aren't restricted to                                     // 19
-     // MongoDB-compatible objects). This line makes it work on older Galaxies.                           // 20
-     // XXX delete this eventually                                                                        // 21
-     Meteor.settings = appConfig.settings;                                                                // 22
-   }                                                                                                      // 23
-  } catch (e) {                                                                                           // 24
-    throw new Error("Settings from APP_CONFIG are not valid JSON: " + process.env.APP_CONFIG);            // 25
-  }                                                                                                       // 26
-} else if (process.env.METEOR_SETTINGS) {                                                                 // 27
-  try {                                                                                                   // 28
-    Meteor.settings = JSON.parse(process.env.METEOR_SETTINGS);                                            // 29
-  } catch (e) {                                                                                           // 30
-    throw new Error("METEOR_SETTINGS are not valid JSON: " + process.env.METEOR_SETTINGS);                // 31
-  }                                                                                                       // 32
-}                                                                                                         // 33
-                                                                                                          // 34
-// Push a subset of settings to the client.                                                               // 35
-if (Meteor.settings && Meteor.settings.public &&                                                          // 36
-    typeof __meteor_runtime_config__ === "object") {                                                      // 37
-  __meteor_runtime_config__.PUBLIC_SETTINGS = Meteor.settings.public;                                     // 38
-}                                                                                                         // 39
-                                                                                                          // 40
+  isServer: true,                                                                                         // 3
+  isCordova: false                                                                                        // 4
+};                                                                                                        // 5
+                                                                                                          // 6
+Meteor.settings = {};                                                                                     // 7
+                                                                                                          // 8
+if (process.env.METEOR_SETTINGS) {                                                                        // 9
+  try {                                                                                                   // 10
+    Meteor.settings = JSON.parse(process.env.METEOR_SETTINGS);                                            // 11
+  } catch (e) {                                                                                           // 12
+    throw new Error("METEOR_SETTINGS are not valid JSON: " + process.env.METEOR_SETTINGS);                // 13
+  }                                                                                                       // 14
+}                                                                                                         // 15
+                                                                                                          // 16
+// Push a subset of settings to the client.                                                               // 17
+if (Meteor.settings && Meteor.settings.public &&                                                          // 18
+    typeof __meteor_runtime_config__ === "object") {                                                      // 19
+  __meteor_runtime_config__.PUBLIC_SETTINGS = Meteor.settings.public;                                     // 20
+}                                                                                                         // 21
+                                                                                                          // 22
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -79,166 +61,167 @@ if (typeof __meteor_runtime_config__ === 'object' &&                            
   /**                                                                                                     // 6
    * @summary `Meteor.release` is a string containing the name of the [release](#meteorupdate) with which the project was built (for example, `"1.2.3"`). It is `undefined` if the project was built using a git checkout of Meteor.
    * @locus Anywhere                                                                                      // 8
-   */                                                                                                     // 9
-  Meteor.release = __meteor_runtime_config__.meteorRelease;                                               // 10
-}                                                                                                         // 11
-                                                                                                          // 12
-// XXX find a better home for these? Ideally they would be _.get,                                         // 13
-// _.ensure, _.delete..                                                                                   // 14
-                                                                                                          // 15
-_.extend(Meteor, {                                                                                        // 16
-  // _get(a,b,c,d) returns a[b][c][d], or else undefined if a[b] or                                       // 17
-  // a[b][c] doesn't exist.                                                                               // 18
-  //                                                                                                      // 19
-  _get: function (obj /*, arguments */) {                                                                 // 20
-    for (var i = 1; i < arguments.length; i++) {                                                          // 21
-      if (!(arguments[i] in obj))                                                                         // 22
-        return undefined;                                                                                 // 23
-      obj = obj[arguments[i]];                                                                            // 24
-    }                                                                                                     // 25
-    return obj;                                                                                           // 26
-  },                                                                                                      // 27
-                                                                                                          // 28
-  // _ensure(a,b,c,d) ensures that a[b][c][d] exists. If it does not,                                     // 29
-  // it is created and set to {}. Either way, it is returned.                                             // 30
-  //                                                                                                      // 31
-  _ensure: function (obj /*, arguments */) {                                                              // 32
-    for (var i = 1; i < arguments.length; i++) {                                                          // 33
-      var key = arguments[i];                                                                             // 34
-      if (!(key in obj))                                                                                  // 35
-        obj[key] = {};                                                                                    // 36
-      obj = obj[key];                                                                                     // 37
-    }                                                                                                     // 38
-                                                                                                          // 39
-    return obj;                                                                                           // 40
-  },                                                                                                      // 41
-                                                                                                          // 42
-  // _delete(a, b, c, d) deletes a[b][c][d], then a[b][c] unless it                                       // 43
-  // isn't empty, then a[b] unless it isn't empty.                                                        // 44
-  //                                                                                                      // 45
-  _delete: function (obj /*, arguments */) {                                                              // 46
-    var stack = [obj];                                                                                    // 47
-    var leaf = true;                                                                                      // 48
-    for (var i = 1; i < arguments.length - 1; i++) {                                                      // 49
-      var key = arguments[i];                                                                             // 50
-      if (!(key in obj)) {                                                                                // 51
-        leaf = false;                                                                                     // 52
-        break;                                                                                            // 53
-      }                                                                                                   // 54
-      obj = obj[key];                                                                                     // 55
-      if (typeof obj !== "object")                                                                        // 56
-        break;                                                                                            // 57
-      stack.push(obj);                                                                                    // 58
-    }                                                                                                     // 59
-                                                                                                          // 60
-    for (var i = stack.length - 1; i >= 0; i--) {                                                         // 61
-      var key = arguments[i+1];                                                                           // 62
-                                                                                                          // 63
-      if (leaf)                                                                                           // 64
-        leaf = false;                                                                                     // 65
-      else                                                                                                // 66
-        for (var other in stack[i][key])                                                                  // 67
-          return; // not empty -- we're done                                                              // 68
-                                                                                                          // 69
-      delete stack[i][key];                                                                               // 70
-    }                                                                                                     // 71
-  },                                                                                                      // 72
-                                                                                                          // 73
-  // wrapAsync can wrap any function that takes some number of arguments that                             // 74
-  // can't be undefined, followed by some optional arguments, where the callback                          // 75
-  // is the last optional argument.                                                                       // 76
-  // e.g. fs.readFile(pathname, [callback]),                                                              // 77
-  // fs.open(pathname, flags, [mode], [callback])                                                         // 78
-  // For maximum effectiveness and least confusion, wrapAsync should be used on                           // 79
-  // functions where the callback is the only argument of type Function.                                  // 80
-                                                                                                          // 81
-  /**                                                                                                     // 82
-   * @memberOf Meteor                                                                                     // 83
+   * @type {String}                                                                                       // 9
+   */                                                                                                     // 10
+  Meteor.release = __meteor_runtime_config__.meteorRelease;                                               // 11
+}                                                                                                         // 12
+                                                                                                          // 13
+// XXX find a better home for these? Ideally they would be _.get,                                         // 14
+// _.ensure, _.delete..                                                                                   // 15
+                                                                                                          // 16
+_.extend(Meteor, {                                                                                        // 17
+  // _get(a,b,c,d) returns a[b][c][d], or else undefined if a[b] or                                       // 18
+  // a[b][c] doesn't exist.                                                                               // 19
+  //                                                                                                      // 20
+  _get: function (obj /*, arguments */) {                                                                 // 21
+    for (var i = 1; i < arguments.length; i++) {                                                          // 22
+      if (!(arguments[i] in obj))                                                                         // 23
+        return undefined;                                                                                 // 24
+      obj = obj[arguments[i]];                                                                            // 25
+    }                                                                                                     // 26
+    return obj;                                                                                           // 27
+  },                                                                                                      // 28
+                                                                                                          // 29
+  // _ensure(a,b,c,d) ensures that a[b][c][d] exists. If it does not,                                     // 30
+  // it is created and set to {}. Either way, it is returned.                                             // 31
+  //                                                                                                      // 32
+  _ensure: function (obj /*, arguments */) {                                                              // 33
+    for (var i = 1; i < arguments.length; i++) {                                                          // 34
+      var key = arguments[i];                                                                             // 35
+      if (!(key in obj))                                                                                  // 36
+        obj[key] = {};                                                                                    // 37
+      obj = obj[key];                                                                                     // 38
+    }                                                                                                     // 39
+                                                                                                          // 40
+    return obj;                                                                                           // 41
+  },                                                                                                      // 42
+                                                                                                          // 43
+  // _delete(a, b, c, d) deletes a[b][c][d], then a[b][c] unless it                                       // 44
+  // isn't empty, then a[b] unless it isn't empty.                                                        // 45
+  //                                                                                                      // 46
+  _delete: function (obj /*, arguments */) {                                                              // 47
+    var stack = [obj];                                                                                    // 48
+    var leaf = true;                                                                                      // 49
+    for (var i = 1; i < arguments.length - 1; i++) {                                                      // 50
+      var key = arguments[i];                                                                             // 51
+      if (!(key in obj)) {                                                                                // 52
+        leaf = false;                                                                                     // 53
+        break;                                                                                            // 54
+      }                                                                                                   // 55
+      obj = obj[key];                                                                                     // 56
+      if (typeof obj !== "object")                                                                        // 57
+        break;                                                                                            // 58
+      stack.push(obj);                                                                                    // 59
+    }                                                                                                     // 60
+                                                                                                          // 61
+    for (var i = stack.length - 1; i >= 0; i--) {                                                         // 62
+      var key = arguments[i+1];                                                                           // 63
+                                                                                                          // 64
+      if (leaf)                                                                                           // 65
+        leaf = false;                                                                                     // 66
+      else                                                                                                // 67
+        for (var other in stack[i][key])                                                                  // 68
+          return; // not empty -- we're done                                                              // 69
+                                                                                                          // 70
+      delete stack[i][key];                                                                               // 71
+    }                                                                                                     // 72
+  },                                                                                                      // 73
+                                                                                                          // 74
+  // wrapAsync can wrap any function that takes some number of arguments that                             // 75
+  // can't be undefined, followed by some optional arguments, where the callback                          // 76
+  // is the last optional argument.                                                                       // 77
+  // e.g. fs.readFile(pathname, [callback]),                                                              // 78
+  // fs.open(pathname, flags, [mode], [callback])                                                         // 79
+  // For maximum effectiveness and least confusion, wrapAsync should be used on                           // 80
+  // functions where the callback is the only argument of type Function.                                  // 81
+                                                                                                          // 82
+  /**                                                                                                     // 83
+   * @memberOf Meteor                                                                                     // 84
    * @summary Wrap a function that takes a callback function as its final parameter. On the server, the wrapped function can be used either synchronously (without passing a callback) or asynchronously (when a callback is passed). On the client, a callback is always required; errors will be logged if there is no callback. If a callback is provided, the environment captured when the original function was called will be restored in the callback.
-   * @locus Anywhere                                                                                      // 85
-   * @param {Function} func A function that takes a callback as its final parameter                       // 86
-   * @param {Object} [context] Optional `this` object against which the original function will be invoked // 87
-   */                                                                                                     // 88
-  wrapAsync: function (fn, context) {                                                                     // 89
-    return function (/* arguments */) {                                                                   // 90
-      var self = context || this;                                                                         // 91
-      var newArgs = _.toArray(arguments);                                                                 // 92
-      var callback;                                                                                       // 93
-                                                                                                          // 94
-      for (var i = newArgs.length - 1; i >= 0; --i) {                                                     // 95
-        var arg = newArgs[i];                                                                             // 96
-        var type = typeof arg;                                                                            // 97
-        if (type !== "undefined") {                                                                       // 98
-          if (type === "function") {                                                                      // 99
-            callback = arg;                                                                               // 100
-          }                                                                                               // 101
-          break;                                                                                          // 102
-        }                                                                                                 // 103
-      }                                                                                                   // 104
-                                                                                                          // 105
-      if (! callback) {                                                                                   // 106
-        if (Meteor.isClient) {                                                                            // 107
-          callback = logErr;                                                                              // 108
-        } else {                                                                                          // 109
-          var fut = new Future();                                                                         // 110
-          callback = fut.resolver();                                                                      // 111
-        }                                                                                                 // 112
-        ++i; // Insert the callback just after arg.                                                       // 113
-      }                                                                                                   // 114
-                                                                                                          // 115
-      newArgs[i] = Meteor.bindEnvironment(callback);                                                      // 116
-      var result = fn.apply(self, newArgs);                                                               // 117
-      return fut ? fut.wait() : result;                                                                   // 118
-    };                                                                                                    // 119
-  },                                                                                                      // 120
-                                                                                                          // 121
-  // Sets child's prototype to a new object whose prototype is parent's                                   // 122
-  // prototype. Used as:                                                                                  // 123
-  //   Meteor._inherits(ClassB, ClassA).                                                                  // 124
-  //   _.extend(ClassB.prototype, { ... })                                                                // 125
-  // Inspired by CoffeeScript's `extend` and Google Closure's `goog.inherits`.                            // 126
-  _inherits: function (Child, Parent) {                                                                   // 127
-    // copy Parent static properties                                                                      // 128
-    for (var key in Parent) {                                                                             // 129
-      // make sure we only copy hasOwnProperty properties vs. prototype                                   // 130
-      // properties                                                                                       // 131
-      if (_.has(Parent, key))                                                                             // 132
-        Child[key] = Parent[key];                                                                         // 133
-    }                                                                                                     // 134
-                                                                                                          // 135
-    // a middle member of prototype chain: takes the prototype from the Parent                            // 136
-    var Middle = function () {                                                                            // 137
-      this.constructor = Child;                                                                           // 138
-    };                                                                                                    // 139
-    Middle.prototype = Parent.prototype;                                                                  // 140
-    Child.prototype = new Middle();                                                                       // 141
-    Child.__super__ = Parent.prototype;                                                                   // 142
-    return Child;                                                                                         // 143
-  }                                                                                                       // 144
-});                                                                                                       // 145
-                                                                                                          // 146
-var warnedAboutWrapAsync = false;                                                                         // 147
-                                                                                                          // 148
-/**                                                                                                       // 149
- * @deprecated in 0.9.3                                                                                   // 150
- */                                                                                                       // 151
-Meteor._wrapAsync = function(fn, context) {                                                               // 152
-  if (! warnedAboutWrapAsync) {                                                                           // 153
-    Meteor._debug("Meteor._wrapAsync has been renamed to Meteor.wrapAsync");                              // 154
-    warnedAboutWrapAsync = true;                                                                          // 155
-  }                                                                                                       // 156
-  return Meteor.wrapAsync.apply(Meteor, arguments);                                                       // 157
-};                                                                                                        // 158
-                                                                                                          // 159
-function logErr(err) {                                                                                    // 160
-  if (err) {                                                                                              // 161
-    return Meteor._debug(                                                                                 // 162
-      "Exception in callback of async function",                                                          // 163
-      err.stack ? err.stack : err                                                                         // 164
-    );                                                                                                    // 165
-  }                                                                                                       // 166
-}                                                                                                         // 167
-                                                                                                          // 168
+   * @locus Anywhere                                                                                      // 86
+   * @param {Function} func A function that takes a callback as its final parameter                       // 87
+   * @param {Object} [context] Optional `this` object against which the original function will be invoked // 88
+   */                                                                                                     // 89
+  wrapAsync: function (fn, context) {                                                                     // 90
+    return function (/* arguments */) {                                                                   // 91
+      var self = context || this;                                                                         // 92
+      var newArgs = _.toArray(arguments);                                                                 // 93
+      var callback;                                                                                       // 94
+                                                                                                          // 95
+      for (var i = newArgs.length - 1; i >= 0; --i) {                                                     // 96
+        var arg = newArgs[i];                                                                             // 97
+        var type = typeof arg;                                                                            // 98
+        if (type !== "undefined") {                                                                       // 99
+          if (type === "function") {                                                                      // 100
+            callback = arg;                                                                               // 101
+          }                                                                                               // 102
+          break;                                                                                          // 103
+        }                                                                                                 // 104
+      }                                                                                                   // 105
+                                                                                                          // 106
+      if (! callback) {                                                                                   // 107
+        if (Meteor.isClient) {                                                                            // 108
+          callback = logErr;                                                                              // 109
+        } else {                                                                                          // 110
+          var fut = new Future();                                                                         // 111
+          callback = fut.resolver();                                                                      // 112
+        }                                                                                                 // 113
+        ++i; // Insert the callback just after arg.                                                       // 114
+      }                                                                                                   // 115
+                                                                                                          // 116
+      newArgs[i] = Meteor.bindEnvironment(callback);                                                      // 117
+      var result = fn.apply(self, newArgs);                                                               // 118
+      return fut ? fut.wait() : result;                                                                   // 119
+    };                                                                                                    // 120
+  },                                                                                                      // 121
+                                                                                                          // 122
+  // Sets child's prototype to a new object whose prototype is parent's                                   // 123
+  // prototype. Used as:                                                                                  // 124
+  //   Meteor._inherits(ClassB, ClassA).                                                                  // 125
+  //   _.extend(ClassB.prototype, { ... })                                                                // 126
+  // Inspired by CoffeeScript's `extend` and Google Closure's `goog.inherits`.                            // 127
+  _inherits: function (Child, Parent) {                                                                   // 128
+    // copy Parent static properties                                                                      // 129
+    for (var key in Parent) {                                                                             // 130
+      // make sure we only copy hasOwnProperty properties vs. prototype                                   // 131
+      // properties                                                                                       // 132
+      if (_.has(Parent, key))                                                                             // 133
+        Child[key] = Parent[key];                                                                         // 134
+    }                                                                                                     // 135
+                                                                                                          // 136
+    // a middle member of prototype chain: takes the prototype from the Parent                            // 137
+    var Middle = function () {                                                                            // 138
+      this.constructor = Child;                                                                           // 139
+    };                                                                                                    // 140
+    Middle.prototype = Parent.prototype;                                                                  // 141
+    Child.prototype = new Middle();                                                                       // 142
+    Child.__super__ = Parent.prototype;                                                                   // 143
+    return Child;                                                                                         // 144
+  }                                                                                                       // 145
+});                                                                                                       // 146
+                                                                                                          // 147
+var warnedAboutWrapAsync = false;                                                                         // 148
+                                                                                                          // 149
+/**                                                                                                       // 150
+ * @deprecated in 0.9.3                                                                                   // 151
+ */                                                                                                       // 152
+Meteor._wrapAsync = function(fn, context) {                                                               // 153
+  if (! warnedAboutWrapAsync) {                                                                           // 154
+    Meteor._debug("Meteor._wrapAsync has been renamed to Meteor.wrapAsync");                              // 155
+    warnedAboutWrapAsync = true;                                                                          // 156
+  }                                                                                                       // 157
+  return Meteor.wrapAsync.apply(Meteor, arguments);                                                       // 158
+};                                                                                                        // 159
+                                                                                                          // 160
+function logErr(err) {                                                                                    // 161
+  if (err) {                                                                                              // 162
+    return Meteor._debug(                                                                                 // 163
+      "Exception in callback of async function",                                                          // 164
+      err.stack ? err.stack : err                                                                         // 165
+    );                                                                                                    // 166
+  }                                                                                                       // 167
+}                                                                                                         // 168
+                                                                                                          // 169
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -653,171 +636,173 @@ Meteor._noYieldsAllowed = function (f) {                                        
   }                                                                                                       // 14
 };                                                                                                        // 15
                                                                                                           // 16
-// Meteor._SynchronousQueue is a queue which runs task functions serially.                                // 17
-// Tasks are assumed to be synchronous: ie, it's assumed that they are                                    // 18
-// done when they return.                                                                                 // 19
-//                                                                                                        // 20
-// It has two methods:                                                                                    // 21
-//   - queueTask queues a task to be run, and returns immediately.                                        // 22
-//   - runTask queues a task to be run, and then yields. It returns                                       // 23
-//     when the task finishes running.                                                                    // 24
-//                                                                                                        // 25
-// It's safe to call queueTask from within a task, but not runTask (unless                                // 26
-// you're calling runTask from a nested Fiber).                                                           // 27
-//                                                                                                        // 28
-// Somewhat inspired by async.queue, but specific to blocking tasks.                                      // 29
-// XXX break this out into an NPM module?                                                                 // 30
-// XXX could maybe use the npm 'schlock' module instead, which would                                      // 31
-//     also support multiple concurrent "read" tasks                                                      // 32
-//                                                                                                        // 33
-Meteor._SynchronousQueue = function () {                                                                  // 34
-  var self = this;                                                                                        // 35
-  // List of tasks to run (not including a currently-running task if any). Each                           // 36
-  // is an object with field 'task' (the task function to run) and 'future' (the                          // 37
-  // Future associated with the blocking runTask call that queued it, or null if                          // 38
-  // called from queueTask).                                                                              // 39
-  self._taskHandles = [];                                                                                 // 40
-  // This is true if self._run() is either currently executing or scheduled to                            // 41
-  // do so soon.                                                                                          // 42
-  self._runningOrRunScheduled = false;                                                                    // 43
-  // During the execution of a task, this is set to the fiber used to execute                             // 44
-  // that task. We use this to throw an error rather than deadlocking if the                              // 45
-  // user calls runTask from within a task on the same fiber.                                             // 46
-  self._currentTaskFiber = undefined;                                                                     // 47
-  // This is true if we're currently draining.  While we're draining, a further                           // 48
-  // drain is a noop, to prevent infinite loops.  "drain" is a heuristic type                             // 49
-  // operation, that has a meaning like unto "what a naive person would expect                            // 50
-  // when modifying a table from an observe"                                                              // 51
-  self._draining = false;                                                                                 // 52
-};                                                                                                        // 53
-                                                                                                          // 54
-_.extend(Meteor._SynchronousQueue.prototype, {                                                            // 55
-  runTask: function (task) {                                                                              // 56
-    var self = this;                                                                                      // 57
-                                                                                                          // 58
-    if (!self.safeToRunTask()) {                                                                          // 59
-      if (Fiber.current)                                                                                  // 60
-        throw new Error("Can't runTask from another task in the same fiber");                             // 61
-      else                                                                                                // 62
-        throw new Error("Can only call runTask in a Fiber");                                              // 63
-    }                                                                                                     // 64
-                                                                                                          // 65
-    var fut = new Future;                                                                                 // 66
-    var handle = {                                                                                        // 67
-      task: Meteor.bindEnvironment(task, function (e) {                                                   // 68
-        Meteor._debug("Exception from task:", e && e.stack || e);                                         // 69
-        throw e;                                                                                          // 70
-      }),                                                                                                 // 71
-      future: fut,                                                                                        // 72
-      name: task.name                                                                                     // 73
-    };                                                                                                    // 74
-    self._taskHandles.push(handle);                                                                       // 75
-    self._scheduleRun();                                                                                  // 76
-    // Yield. We'll get back here after the task is run (and will throw if the                            // 77
-    // task throws).                                                                                      // 78
-    fut.wait();                                                                                           // 79
-  },                                                                                                      // 80
-  queueTask: function (task) {                                                                            // 81
-    var self = this;                                                                                      // 82
-    self._taskHandles.push({                                                                              // 83
-      task: task,                                                                                         // 84
-      name: task.name                                                                                     // 85
-    });                                                                                                   // 86
-    self._scheduleRun();                                                                                  // 87
-    // No need to block.                                                                                  // 88
-  },                                                                                                      // 89
-                                                                                                          // 90
-  flush: function () {                                                                                    // 91
-    var self = this;                                                                                      // 92
-    self.runTask(function () {});                                                                         // 93
-  },                                                                                                      // 94
-                                                                                                          // 95
-  safeToRunTask: function () {                                                                            // 96
-    var self = this;                                                                                      // 97
-    return Fiber.current && self._currentTaskFiber !== Fiber.current;                                     // 98
-  },                                                                                                      // 99
-                                                                                                          // 100
-  drain: function () {                                                                                    // 101
-    var self = this;                                                                                      // 102
-    if (self._draining)                                                                                   // 103
-      return;                                                                                             // 104
-    if (!self.safeToRunTask())                                                                            // 105
+Meteor._DoubleEndedQueue = Npm.require('double-ended-queue');                                             // 17
+                                                                                                          // 18
+// Meteor._SynchronousQueue is a queue which runs task functions serially.                                // 19
+// Tasks are assumed to be synchronous: ie, it's assumed that they are                                    // 20
+// done when they return.                                                                                 // 21
+//                                                                                                        // 22
+// It has two methods:                                                                                    // 23
+//   - queueTask queues a task to be run, and returns immediately.                                        // 24
+//   - runTask queues a task to be run, and then yields. It returns                                       // 25
+//     when the task finishes running.                                                                    // 26
+//                                                                                                        // 27
+// It's safe to call queueTask from within a task, but not runTask (unless                                // 28
+// you're calling runTask from a nested Fiber).                                                           // 29
+//                                                                                                        // 30
+// Somewhat inspired by async.queue, but specific to blocking tasks.                                      // 31
+// XXX break this out into an NPM module?                                                                 // 32
+// XXX could maybe use the npm 'schlock' module instead, which would                                      // 33
+//     also support multiple concurrent "read" tasks                                                      // 34
+//                                                                                                        // 35
+Meteor._SynchronousQueue = function () {                                                                  // 36
+  var self = this;                                                                                        // 37
+  // List of tasks to run (not including a currently-running task if any). Each                           // 38
+  // is an object with field 'task' (the task function to run) and 'future' (the                          // 39
+  // Future associated with the blocking runTask call that queued it, or null if                          // 40
+  // called from queueTask).                                                                              // 41
+  self._taskHandles = new Meteor._DoubleEndedQueue();                                                     // 42
+  // This is true if self._run() is either currently executing or scheduled to                            // 43
+  // do so soon.                                                                                          // 44
+  self._runningOrRunScheduled = false;                                                                    // 45
+  // During the execution of a task, this is set to the fiber used to execute                             // 46
+  // that task. We use this to throw an error rather than deadlocking if the                              // 47
+  // user calls runTask from within a task on the same fiber.                                             // 48
+  self._currentTaskFiber = undefined;                                                                     // 49
+  // This is true if we're currently draining.  While we're draining, a further                           // 50
+  // drain is a noop, to prevent infinite loops.  "drain" is a heuristic type                             // 51
+  // operation, that has a meaning like unto "what a naive person would expect                            // 52
+  // when modifying a table from an observe"                                                              // 53
+  self._draining = false;                                                                                 // 54
+};                                                                                                        // 55
+                                                                                                          // 56
+_.extend(Meteor._SynchronousQueue.prototype, {                                                            // 57
+  runTask: function (task) {                                                                              // 58
+    var self = this;                                                                                      // 59
+                                                                                                          // 60
+    if (!self.safeToRunTask()) {                                                                          // 61
+      if (Fiber.current)                                                                                  // 62
+        throw new Error("Can't runTask from another task in the same fiber");                             // 63
+      else                                                                                                // 64
+        throw new Error("Can only call runTask in a Fiber");                                              // 65
+    }                                                                                                     // 66
+                                                                                                          // 67
+    var fut = new Future;                                                                                 // 68
+    var handle = {                                                                                        // 69
+      task: Meteor.bindEnvironment(task, function (e) {                                                   // 70
+        Meteor._debug("Exception from task:", e && e.stack || e);                                         // 71
+        throw e;                                                                                          // 72
+      }),                                                                                                 // 73
+      future: fut,                                                                                        // 74
+      name: task.name                                                                                     // 75
+    };                                                                                                    // 76
+    self._taskHandles.push(handle);                                                                       // 77
+    self._scheduleRun();                                                                                  // 78
+    // Yield. We'll get back here after the task is run (and will throw if the                            // 79
+    // task throws).                                                                                      // 80
+    fut.wait();                                                                                           // 81
+  },                                                                                                      // 82
+  queueTask: function (task) {                                                                            // 83
+    var self = this;                                                                                      // 84
+    self._taskHandles.push({                                                                              // 85
+      task: task,                                                                                         // 86
+      name: task.name                                                                                     // 87
+    });                                                                                                   // 88
+    self._scheduleRun();                                                                                  // 89
+    // No need to block.                                                                                  // 90
+  },                                                                                                      // 91
+                                                                                                          // 92
+  flush: function () {                                                                                    // 93
+    var self = this;                                                                                      // 94
+    self.runTask(function () {});                                                                         // 95
+  },                                                                                                      // 96
+                                                                                                          // 97
+  safeToRunTask: function () {                                                                            // 98
+    var self = this;                                                                                      // 99
+    return Fiber.current && self._currentTaskFiber !== Fiber.current;                                     // 100
+  },                                                                                                      // 101
+                                                                                                          // 102
+  drain: function () {                                                                                    // 103
+    var self = this;                                                                                      // 104
+    if (self._draining)                                                                                   // 105
       return;                                                                                             // 106
-    self._draining = true;                                                                                // 107
-    while (!_.isEmpty(self._taskHandles)) {                                                               // 108
-      self.flush();                                                                                       // 109
-    }                                                                                                     // 110
-    self._draining = false;                                                                               // 111
-  },                                                                                                      // 112
-                                                                                                          // 113
-  _scheduleRun: function () {                                                                             // 114
-    var self = this;                                                                                      // 115
-    // Already running or scheduled? Do nothing.                                                          // 116
-    if (self._runningOrRunScheduled)                                                                      // 117
-      return;                                                                                             // 118
-                                                                                                          // 119
-    self._runningOrRunScheduled = true;                                                                   // 120
-    setImmediate(function () {                                                                            // 121
-      Fiber(function () {                                                                                 // 122
-        self._run();                                                                                      // 123
-      }).run();                                                                                           // 124
-    });                                                                                                   // 125
-  },                                                                                                      // 126
-  _run: function () {                                                                                     // 127
-    var self = this;                                                                                      // 128
-                                                                                                          // 129
-    if (!self._runningOrRunScheduled)                                                                     // 130
-      throw new Error("expected to be _runningOrRunScheduled");                                           // 131
-                                                                                                          // 132
-    if (_.isEmpty(self._taskHandles)) {                                                                   // 133
-      // Done running tasks! Don't immediately schedule another run, but                                  // 134
-      // allow future tasks to do so.                                                                     // 135
-      self._runningOrRunScheduled = false;                                                                // 136
-      return;                                                                                             // 137
-    }                                                                                                     // 138
-    var taskHandle = self._taskHandles.shift();                                                           // 139
-                                                                                                          // 140
-    // Run the task.                                                                                      // 141
-    self._currentTaskFiber = Fiber.current;                                                               // 142
-    var exception = undefined;                                                                            // 143
-    try {                                                                                                 // 144
-      taskHandle.task();                                                                                  // 145
-    } catch (err) {                                                                                       // 146
-      if (taskHandle.future) {                                                                            // 147
-        // We'll throw this exception through runTask.                                                    // 148
-        exception = err;                                                                                  // 149
-      } else {                                                                                            // 150
-        Meteor._debug("Exception in queued task: " + err.stack);                                          // 151
-      }                                                                                                   // 152
-    }                                                                                                     // 153
-    self._currentTaskFiber = undefined;                                                                   // 154
-                                                                                                          // 155
-    // Soon, run the next task, if there is any.                                                          // 156
-    self._runningOrRunScheduled = false;                                                                  // 157
-    self._scheduleRun();                                                                                  // 158
-                                                                                                          // 159
-    // If this was queued with runTask, let the runTask call return (throwing if                          // 160
-    // the task threw).                                                                                   // 161
-    if (taskHandle.future) {                                                                              // 162
-      if (exception)                                                                                      // 163
-        taskHandle.future['throw'](exception);                                                            // 164
-      else                                                                                                // 165
-        taskHandle.future['return']();                                                                    // 166
-    }                                                                                                     // 167
-  }                                                                                                       // 168
-});                                                                                                       // 169
-                                                                                                          // 170
-// Sleep. Mostly used for debugging (eg, inserting latency into server                                    // 171
-// methods).                                                                                              // 172
-//                                                                                                        // 173
-Meteor._sleepForMs = function (ms) {                                                                      // 174
-  var fiber = Fiber.current;                                                                              // 175
-  setTimeout(function() {                                                                                 // 176
-    fiber.run();                                                                                          // 177
-  }, ms);                                                                                                 // 178
-  Fiber.yield();                                                                                          // 179
-};                                                                                                        // 180
-                                                                                                          // 181
+    if (!self.safeToRunTask())                                                                            // 107
+      return;                                                                                             // 108
+    self._draining = true;                                                                                // 109
+    while (! self._taskHandles.isEmpty()) {                                                               // 110
+      self.flush();                                                                                       // 111
+    }                                                                                                     // 112
+    self._draining = false;                                                                               // 113
+  },                                                                                                      // 114
+                                                                                                          // 115
+  _scheduleRun: function () {                                                                             // 116
+    var self = this;                                                                                      // 117
+    // Already running or scheduled? Do nothing.                                                          // 118
+    if (self._runningOrRunScheduled)                                                                      // 119
+      return;                                                                                             // 120
+                                                                                                          // 121
+    self._runningOrRunScheduled = true;                                                                   // 122
+    setImmediate(function () {                                                                            // 123
+      Fiber(function () {                                                                                 // 124
+        self._run();                                                                                      // 125
+      }).run();                                                                                           // 126
+    });                                                                                                   // 127
+  },                                                                                                      // 128
+  _run: function () {                                                                                     // 129
+    var self = this;                                                                                      // 130
+                                                                                                          // 131
+    if (!self._runningOrRunScheduled)                                                                     // 132
+      throw new Error("expected to be _runningOrRunScheduled");                                           // 133
+                                                                                                          // 134
+    if (self._taskHandles.isEmpty()) {                                                                    // 135
+      // Done running tasks! Don't immediately schedule another run, but                                  // 136
+      // allow future tasks to do so.                                                                     // 137
+      self._runningOrRunScheduled = false;                                                                // 138
+      return;                                                                                             // 139
+    }                                                                                                     // 140
+    var taskHandle = self._taskHandles.shift();                                                           // 141
+                                                                                                          // 142
+    // Run the task.                                                                                      // 143
+    self._currentTaskFiber = Fiber.current;                                                               // 144
+    var exception = undefined;                                                                            // 145
+    try {                                                                                                 // 146
+      taskHandle.task();                                                                                  // 147
+    } catch (err) {                                                                                       // 148
+      if (taskHandle.future) {                                                                            // 149
+        // We'll throw this exception through runTask.                                                    // 150
+        exception = err;                                                                                  // 151
+      } else {                                                                                            // 152
+        Meteor._debug("Exception in queued task: " + err.stack);                                          // 153
+      }                                                                                                   // 154
+    }                                                                                                     // 155
+    self._currentTaskFiber = undefined;                                                                   // 156
+                                                                                                          // 157
+    // Soon, run the next task, if there is any.                                                          // 158
+    self._runningOrRunScheduled = false;                                                                  // 159
+    self._scheduleRun();                                                                                  // 160
+                                                                                                          // 161
+    // If this was queued with runTask, let the runTask call return (throwing if                          // 162
+    // the task threw).                                                                                   // 163
+    if (taskHandle.future) {                                                                              // 164
+      if (exception)                                                                                      // 165
+        taskHandle.future['throw'](exception);                                                            // 166
+      else                                                                                                // 167
+        taskHandle.future['return']();                                                                    // 168
+    }                                                                                                     // 169
+  }                                                                                                       // 170
+});                                                                                                       // 171
+                                                                                                          // 172
+// Sleep. Mostly used for debugging (eg, inserting latency into server                                    // 173
+// methods).                                                                                              // 174
+//                                                                                                        // 175
+Meteor._sleepForMs = function (ms) {                                                                      // 176
+  var fiber = Fiber.current;                                                                              // 177
+  setTimeout(function() {                                                                                 // 178
+    fiber.run();                                                                                          // 179
+  }, ms);                                                                                                 // 180
+  Fiber.yield();                                                                                          // 181
+};                                                                                                        // 182
+                                                                                                          // 183
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -924,6 +909,11 @@ Meteor._suppress_log = function (count) {                                       
   suppress += count;                                                                                      // 61
 };                                                                                                        // 62
                                                                                                           // 63
+Meteor._supressed_log_expected = function () {                                                            // 64
+  return suppress !== 0;                                                                                  // 65
+};                                                                                                        // 66
+                                                                                                          // 67
+                                                                                                          // 68
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1121,7 +1111,7 @@ if (process.env.ROOT_URL &&                                                     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                           //
 /**                                                                                                       // 1
- * @summary Generate an absolute URL pointing to the application. The server reads from the `ROOT_URL` environment variable to determine where it is running. This is taken care of automatically for apps deployed with `meteor deploy`, but must be provided when using `meteor bundle`.
+ * @summary Generate an absolute URL pointing to the application. The server reads from the `ROOT_URL` environment variable to determine where it is running. This is taken care of automatically for apps deployed with `meteor deploy`, but must be provided when using `meteor build`.
  * @locus Anywhere                                                                                        // 3
  * @param {String} [path] A path to append to the root URL. Do not include a leading "`/`".               // 4
  * @param {Object} [options]                                                                              // 5
@@ -1179,6 +1169,63 @@ Meteor._relativeToSiteRootUrl = function (link) {                               
   return link;                                                                                            // 57
 };                                                                                                        // 58
                                                                                                           // 59
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}).call(this);
+
+
+
+
+
+
+(function () {
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// packages/meteor/flush-buffers-on-exit-in-windows.js                                                    //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
+if (process.platform === "win32") {                                                                       // 1
+  /*                                                                                                      // 2
+   * Based on https://github.com/cowboy/node-exit                                                         // 3
+   *                                                                                                      // 4
+   * Copyright (c) 2013 "Cowboy" Ben Alman                                                                // 5
+   * Licensed under the MIT license.                                                                      // 6
+   */                                                                                                     // 7
+  var origProcessExit = process.exit.bind(process);                                                       // 8
+  process.exit = function (exitCode) {                                                                    // 9
+    var streams = [process.stdout, process.stderr];                                                       // 10
+    var drainCount = 0;                                                                                   // 11
+    // Actually exit if all streams are drained.                                                          // 12
+    function tryToExit() {                                                                                // 13
+      if (drainCount === streams.length) {                                                                // 14
+        origProcessExit(exitCode);                                                                        // 15
+      }                                                                                                   // 16
+    }                                                                                                     // 17
+    streams.forEach(function(stream) {                                                                    // 18
+      // Count drained streams now, but monitor non-drained streams.                                      // 19
+      if (stream.bufferSize === 0) {                                                                      // 20
+        drainCount++;                                                                                     // 21
+      } else {                                                                                            // 22
+        stream.write('', 'utf-8', function() {                                                            // 23
+          drainCount++;                                                                                   // 24
+          tryToExit();                                                                                    // 25
+        });                                                                                               // 26
+      }                                                                                                   // 27
+      // Prevent further writing.                                                                         // 28
+      stream.write = function() {};                                                                       // 29
+    });                                                                                                   // 30
+    // If all streams were already drained, exit now.                                                     // 31
+    tryToExit();                                                                                          // 32
+    // In Windows, when run as a Node.js child process, a script utilizing                                // 33
+    // this library might just exit with a 0 exit code, regardless. This code,                            // 34
+    // despite the fact that it looks a bit crazy, appears to fix that.                                   // 35
+    process.on('exit', function() {                                                                       // 36
+      origProcessExit(exitCode);                                                                          // 37
+    });                                                                                                   // 38
+  };                                                                                                      // 39
+}                                                                                                         // 40
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

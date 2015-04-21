@@ -8,6 +8,7 @@
       "path": "packages/underscore.js"
     },
     {
+      "node_modules": "npm/meteor/node_modules",
       "sourceMap": "packages/meteor.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/meteor.js"
@@ -48,6 +49,23 @@
       "path": "packages/jquery-waypoints.js"
     },
     {
+      "node_modules": "npm/email/node_modules",
+      "sourceMap": "packages/email.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/email.js"
+    },
+    {
+      "sourceMap": "packages/standard-app-packages.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/standard-app-packages.js"
+    },
+    {
+      "node_modules": "npm/npm-bcrypt/node_modules",
+      "sourceMap": "packages/npm-bcrypt.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/npm-bcrypt.js"
+    },
+    {
       "sourceMap": "packages/base64.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/base64.js"
@@ -56,12 +74,6 @@
       "sourceMap": "packages/ejson.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/ejson.js"
-    },
-    {
-      "node_modules": "npm/logging/node_modules",
-      "sourceMap": "packages/logging.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/logging.js"
     },
     {
       "sourceMap": "packages/check.js.map",
@@ -74,9 +86,20 @@
       "path": "packages/random.js"
     },
     {
+      "sourceMap": "packages/callback-hook.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/callback-hook.js"
+    },
+    {
       "sourceMap": "packages/tracker.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/tracker.js"
+    },
+    {
+      "node_modules": "npm/logging/node_modules",
+      "sourceMap": "packages/logging.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/logging.js"
     },
     {
       "sourceMap": "packages/retry.js.map",
@@ -107,12 +130,6 @@
       "sourceMap": "packages/blaze-tools.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/blaze-tools.js"
-    },
-    {
-      "node_modules": "npm/minifiers/node_modules",
-      "sourceMap": "packages/minifiers.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/minifiers.js"
     },
     {
       "sourceMap": "packages/spacebars-compiler.js.map",
@@ -190,42 +207,10 @@
       "path": "packages/webapp.js"
     },
     {
-      "sourceMap": "packages/callback-hook.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/callback-hook.js"
-    },
-    {
       "node_modules": "npm/ddp/node_modules",
       "sourceMap": "packages/ddp.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/ddp.js"
-    },
-    {
-      "sourceMap": "packages/follower-livedata.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/follower-livedata.js"
-    },
-    {
-      "sourceMap": "packages/application-configuration.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/application-configuration.js"
-    },
-    {
-      "node_modules": "npm/email/node_modules",
-      "sourceMap": "packages/email.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/email.js"
-    },
-    {
-      "sourceMap": "packages/standard-app-packages.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/standard-app-packages.js"
-    },
-    {
-      "node_modules": "npm/npm-bcrypt/node_modules",
-      "sourceMap": "packages/npm-bcrypt.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/npm-bcrypt.js"
     },
     {
       "sourceMap": "packages/binary-heap.js.map",
@@ -380,7 +365,7 @@
       "path": "packages/iron_controller.js"
     },
     {
-      "node_modules": "npm/iron:router/node_modules",
+      "node_modules": "npm/iron_router/node_modules",
       "sourceMap": "packages/iron_router.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/iron_router.js",
@@ -470,7 +455,7 @@
       }
     },
     {
-      "node_modules": "npm/bitomule:simple-metacrawler/node_modules",
+      "node_modules": "npm/bitomule_simple-metacrawler/node_modules",
       "sourceMap": "packages/bitomule_simple-metacrawler.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/bitomule_simple-metacrawler.js"

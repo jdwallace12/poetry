@@ -112,5 +112,21 @@
    $(document).on('click', "#login-buttons .login-close-text", function() {
        $('.nav-collapse').css('height', 'auto');
    });
+
+
+   $(window).scroll(function() {
+    if ($(this).scrollTop() == 0) {
+        $('.navbar-fixed-top, .navbar-fixed-bottom').css({
+                'box-shadow': 'none',
+                '-moz-box-shadow' : 'none',
+                '-webkit-box-shadow' : 'none' });
+    }
+    else {
+        $('.navbar-fixed-top, .navbar-fixed-bottom').css({
+                'box-shadow': '0px 1px 8px #4c4c4c',
+                '-moz-box-shadow' : '0px 1px 8px #4c4c4c',
+                '-webkit-box-shadow' : '0px 1px 8px #4c4c4c' });
+    }
+});
  });
 

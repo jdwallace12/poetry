@@ -74,49 +74,47 @@ Template.__define__ = function (name, renderFunc) {                             
 };                                                                                                              // 36
                                                                                                                 // 37
 // Define a template `Template.body` that renders its                                                           // 38
-// `contentViews`.  `<body>` tags (of which there may be                                                        // 39
+// `contentRenderFuncs`.  `<body>` tags (of which there may be                                                  // 39
 // multiple) will have their contents added to it.                                                              // 40
                                                                                                                 // 41
 /**                                                                                                             // 42
- * @summary The [template object](#templates_api) representing your `<body>` tag.                               // 43
- * @locus Client                                                                                                // 44
- */                                                                                                             // 45
-Template.body = new Template('body', function () {                                                              // 46
-  var parts = Template.body.contentViews;                                                                       // 47
-  // enable lookup by setting `view.template`                                                                   // 48
-  for (var i = 0; i < parts.length; i++)                                                                        // 49
-    parts[i].template = Template.body;                                                                          // 50
-  return parts;                                                                                                 // 51
+ * @summary The [template object](#templates_api) representing your `<body>`                                    // 43
+ * tag.                                                                                                         // 44
+ * @locus Client                                                                                                // 45
+ */                                                                                                             // 46
+Template.body = new Template('body', function () {                                                              // 47
+  var view = this;                                                                                              // 48
+  return _.map(Template.body.contentRenderFuncs, function (func) {                                              // 49
+    return func.apply(view);                                                                                    // 50
+  });                                                                                                           // 51
 });                                                                                                             // 52
-Template.body.contentViews = []; // array of Blaze.Views                                                        // 53
+Template.body.contentRenderFuncs = []; // array of Blaze.Views                                                  // 53
 Template.body.view = null;                                                                                      // 54
                                                                                                                 // 55
 Template.body.addContent = function (renderFunc) {                                                              // 56
-  var kind = 'body_content_' + Template.body.contentViews.length;                                               // 57
-                                                                                                                // 58
-  Template.body.contentViews.push(Blaze.View(kind, renderFunc));                                                // 59
-};                                                                                                              // 60
-                                                                                                                // 61
-// This function does not use `this` and so it may be called                                                    // 62
-// as `Meteor.startup(Template.body.renderIntoDocument)`.                                                       // 63
-Template.body.renderToDocument = function () {                                                                  // 64
-  // Only do it once.                                                                                           // 65
-  if (Template.body.view)                                                                                       // 66
-    return;                                                                                                     // 67
-                                                                                                                // 68
-  var view = Blaze.render(Template.body, document.body);                                                        // 69
-  Template.body.view = view;                                                                                    // 70
-};                                                                                                              // 71
-                                                                                                                // 72
-// XXX COMPAT WITH 0.9.0                                                                                        // 73
-UI.body = Template.body;                                                                                        // 74
-                                                                                                                // 75
-// XXX COMPAT WITH 0.9.0                                                                                        // 76
-// (<body> tags in packages built with 0.9.0)                                                                   // 77
-Template.__body__ = Template.body;                                                                              // 78
-Template.__body__.__contentParts = Template.body.contentViews;                                                  // 79
-Template.__body__.__instantiate = Template.body.renderToDocument;                                               // 80
-                                                                                                                // 81
+  Template.body.contentRenderFuncs.push(renderFunc);                                                            // 57
+};                                                                                                              // 58
+                                                                                                                // 59
+// This function does not use `this` and so it may be called                                                    // 60
+// as `Meteor.startup(Template.body.renderIntoDocument)`.                                                       // 61
+Template.body.renderToDocument = function () {                                                                  // 62
+  // Only do it once.                                                                                           // 63
+  if (Template.body.view)                                                                                       // 64
+    return;                                                                                                     // 65
+                                                                                                                // 66
+  var view = Blaze.render(Template.body, document.body);                                                        // 67
+  Template.body.view = view;                                                                                    // 68
+};                                                                                                              // 69
+                                                                                                                // 70
+// XXX COMPAT WITH 0.9.0                                                                                        // 71
+UI.body = Template.body;                                                                                        // 72
+                                                                                                                // 73
+// XXX COMPAT WITH 0.9.0                                                                                        // 74
+// (<body> tags in packages built with 0.9.0)                                                                   // 75
+Template.__body__ = Template.body;                                                                              // 76
+Template.__body__.__contentParts = Template.body.contentViews;                                                  // 77
+Template.__body__.__instantiate = Template.body.renderToDocument;                                               // 78
+                                                                                                                // 79
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

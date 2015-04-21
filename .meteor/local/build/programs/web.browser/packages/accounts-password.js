@@ -62,7 +62,7 @@ Meteor.loginWithPassword = function (selector, password, callback) {            
   Accounts.callLoginMethod({                                                                                  // 25
     methodArguments: [{                                                                                       // 26
       user: selector,                                                                                         // 27
-      password: hashPassword(password)                                                                        // 28
+      password: Accounts._hashPassword(password)                                                              // 28
     }],                                                                                                       // 29
     userCallback: function (error, result) {                                                                  // 30
       if (error && error.error === 400 &&                                                                     // 31
@@ -94,7 +94,7 @@ Meteor.loginWithPassword = function (selector, password, callback) {            
   });                                                                                                         // 57
 };                                                                                                            // 58
                                                                                                               // 59
-var hashPassword = function (password) {                                                                      // 60
+Accounts._hashPassword = function (password) {                                                                // 60
   return {                                                                                                    // 61
     digest: SHA256(password),                                                                                 // 62
     algorithm: "sha-256"                                                                                      // 63
@@ -122,7 +122,7 @@ var srpUpgradePath = function (options, callback) {                             
       methodArguments: [{                                                                                     // 85
         user: options.userSelector,                                                                           // 86
         srp: SHA256(details.identity + ":" + options.plaintextPassword),                                      // 87
-        password: hashPassword(options.plaintextPassword)                                                     // 88
+        password: Accounts._hashPassword(options.plaintextPassword)                                           // 88
       }],                                                                                                     // 89
       userCallback: callback                                                                                  // 90
     });                                                                                                       // 91
@@ -153,7 +153,7 @@ Accounts.createUser = function (options, callback) {                            
   }                                                                                                           // 116
                                                                                                               // 117
   // Replace password with the hashed password.                                                               // 118
-  options.password = hashPassword(options.password);                                                          // 119
+  options.password = Accounts._hashPassword(options.password);                                                // 119
                                                                                                               // 120
   Accounts.callLoginMethod({                                                                                  // 121
     methodName: 'createUser',                                                                                 // 122
@@ -193,110 +193,111 @@ Accounts.changePassword = function (oldPassword, newPassword, callback) {       
                                                                                                               // 156
   Accounts.connection.apply(                                                                                  // 157
     'changePassword',                                                                                         // 158
-    [oldPassword ? hashPassword(oldPassword) : null, hashPassword(newPassword)],                              // 159
-    function (error, result) {                                                                                // 160
-      if (error || !result) {                                                                                 // 161
-        if (error && error.error === 400 &&                                                                   // 162
-            error.reason === 'old password format') {                                                         // 163
-          // XXX COMPAT WITH 0.8.1.3                                                                          // 164
-          // The server is telling us to upgrade from SRP to bcrypt, as                                       // 165
-          // in Meteor.loginWithPassword.                                                                     // 166
-          srpUpgradePath({                                                                                    // 167
-            upgradeError: error,                                                                              // 168
-            userSelector: { id: Meteor.userId() },                                                            // 169
-            plaintextPassword: oldPassword                                                                    // 170
-          }, function (err) {                                                                                 // 171
-            if (err) {                                                                                        // 172
-              callback && callback(err);                                                                      // 173
-            } else {                                                                                          // 174
-              // Now that we've successfully migrated from srp to                                             // 175
-              // bcrypt, try changing the password again.                                                     // 176
-              Accounts.changePassword(oldPassword, newPassword, callback);                                    // 177
-            }                                                                                                 // 178
-          });                                                                                                 // 179
-        } else {                                                                                              // 180
-          // A normal error, not an error telling us to upgrade to bcrypt                                     // 181
-          callback && callback(                                                                               // 182
-            error || new Error("No result from changePassword."));                                            // 183
-        }                                                                                                     // 184
-      } else {                                                                                                // 185
-        callback && callback();                                                                               // 186
-      }                                                                                                       // 187
-    }                                                                                                         // 188
-  );                                                                                                          // 189
-};                                                                                                            // 190
-                                                                                                              // 191
-// Sends an email to a user with a link that can be used to reset                                             // 192
-// their password                                                                                             // 193
-//                                                                                                            // 194
-// @param options {Object}                                                                                    // 195
-//   - email: (email)                                                                                         // 196
-// @param callback (optional) {Function(error|undefined)}                                                     // 197
-                                                                                                              // 198
-/**                                                                                                           // 199
- * @summary Request a forgot password email.                                                                  // 200
- * @locus Client                                                                                              // 201
- * @param {Object} options                                                                                    // 202
- * @param {String} options.email The email address to send a password reset link.                             // 203
+    [oldPassword ? Accounts._hashPassword(oldPassword) : null,                                                // 159
+     Accounts._hashPassword(newPassword)],                                                                    // 160
+    function (error, result) {                                                                                // 161
+      if (error || !result) {                                                                                 // 162
+        if (error && error.error === 400 &&                                                                   // 163
+            error.reason === 'old password format') {                                                         // 164
+          // XXX COMPAT WITH 0.8.1.3                                                                          // 165
+          // The server is telling us to upgrade from SRP to bcrypt, as                                       // 166
+          // in Meteor.loginWithPassword.                                                                     // 167
+          srpUpgradePath({                                                                                    // 168
+            upgradeError: error,                                                                              // 169
+            userSelector: { id: Meteor.userId() },                                                            // 170
+            plaintextPassword: oldPassword                                                                    // 171
+          }, function (err) {                                                                                 // 172
+            if (err) {                                                                                        // 173
+              callback && callback(err);                                                                      // 174
+            } else {                                                                                          // 175
+              // Now that we've successfully migrated from srp to                                             // 176
+              // bcrypt, try changing the password again.                                                     // 177
+              Accounts.changePassword(oldPassword, newPassword, callback);                                    // 178
+            }                                                                                                 // 179
+          });                                                                                                 // 180
+        } else {                                                                                              // 181
+          // A normal error, not an error telling us to upgrade to bcrypt                                     // 182
+          callback && callback(                                                                               // 183
+            error || new Error("No result from changePassword."));                                            // 184
+        }                                                                                                     // 185
+      } else {                                                                                                // 186
+        callback && callback();                                                                               // 187
+      }                                                                                                       // 188
+    }                                                                                                         // 189
+  );                                                                                                          // 190
+};                                                                                                            // 191
+                                                                                                              // 192
+// Sends an email to a user with a link that can be used to reset                                             // 193
+// their password                                                                                             // 194
+//                                                                                                            // 195
+// @param options {Object}                                                                                    // 196
+//   - email: (email)                                                                                         // 197
+// @param callback (optional) {Function(error|undefined)}                                                     // 198
+                                                                                                              // 199
+/**                                                                                                           // 200
+ * @summary Request a forgot password email.                                                                  // 201
+ * @locus Client                                                                                              // 202
+ * @param {Object} options                                                                                    // 203
+ * @param {String} options.email The email address to send a password reset link.                             // 204
  * @param {Function} [callback] Optional callback. Called with no arguments on success, or with a single `Error` argument on failure.
- */                                                                                                           // 205
-Accounts.forgotPassword = function(options, callback) {                                                       // 206
-  if (!options.email)                                                                                         // 207
-    throw new Error("Must pass options.email");                                                               // 208
-  Accounts.connection.call("forgotPassword", options, callback);                                              // 209
-};                                                                                                            // 210
-                                                                                                              // 211
-// Resets a password based on a token originally created by                                                   // 212
-// Accounts.forgotPassword, and then logs in the matching user.                                               // 213
-//                                                                                                            // 214
-// @param token {String}                                                                                      // 215
-// @param newPassword {String}                                                                                // 216
-// @param callback (optional) {Function(error|undefined)}                                                     // 217
-                                                                                                              // 218
-/**                                                                                                           // 219
- * @summary Reset the password for a user using a token received in email. Logs the user in afterwards.       // 220
- * @locus Client                                                                                              // 221
- * @param {String} token The token retrieved from the reset password URL.                                     // 222
- * @param {String} newPassword A new password for the user. This is __not__ sent in plain text over the wire. // 223
+ */                                                                                                           // 206
+Accounts.forgotPassword = function(options, callback) {                                                       // 207
+  if (!options.email)                                                                                         // 208
+    throw new Error("Must pass options.email");                                                               // 209
+  Accounts.connection.call("forgotPassword", options, callback);                                              // 210
+};                                                                                                            // 211
+                                                                                                              // 212
+// Resets a password based on a token originally created by                                                   // 213
+// Accounts.forgotPassword, and then logs in the matching user.                                               // 214
+//                                                                                                            // 215
+// @param token {String}                                                                                      // 216
+// @param newPassword {String}                                                                                // 217
+// @param callback (optional) {Function(error|undefined)}                                                     // 218
+                                                                                                              // 219
+/**                                                                                                           // 220
+ * @summary Reset the password for a user using a token received in email. Logs the user in afterwards.       // 221
+ * @locus Client                                                                                              // 222
+ * @param {String} token The token retrieved from the reset password URL.                                     // 223
+ * @param {String} newPassword A new password for the user. This is __not__ sent in plain text over the wire. // 224
  * @param {Function} [callback] Optional callback. Called with no arguments on success, or with a single `Error` argument on failure.
- */                                                                                                           // 225
-Accounts.resetPassword = function(token, newPassword, callback) {                                             // 226
-  check(token, String);                                                                                       // 227
-  check(newPassword, String);                                                                                 // 228
-                                                                                                              // 229
-  if (!newPassword) {                                                                                         // 230
-    callback(new Meteor.Error(400, "Password may not be empty"));                                             // 231
-    return;                                                                                                   // 232
-  }                                                                                                           // 233
-                                                                                                              // 234
-  Accounts.callLoginMethod({                                                                                  // 235
-    methodName: 'resetPassword',                                                                              // 236
-    methodArguments: [token, hashPassword(newPassword)],                                                      // 237
-    userCallback: callback});                                                                                 // 238
-};                                                                                                            // 239
-                                                                                                              // 240
-// Verifies a user's email address based on a token originally                                                // 241
-// created by Accounts.sendVerificationEmail                                                                  // 242
-//                                                                                                            // 243
-// @param token {String}                                                                                      // 244
-// @param callback (optional) {Function(error|undefined)}                                                     // 245
-                                                                                                              // 246
-/**                                                                                                           // 247
- * @summary Marks the user's email address as verified. Logs the user in afterwards.                          // 248
- * @locus Client                                                                                              // 249
- * @param {String} token The token retrieved from the verification URL.                                       // 250
+ */                                                                                                           // 226
+Accounts.resetPassword = function(token, newPassword, callback) {                                             // 227
+  check(token, String);                                                                                       // 228
+  check(newPassword, String);                                                                                 // 229
+                                                                                                              // 230
+  if (!newPassword) {                                                                                         // 231
+    callback(new Meteor.Error(400, "Password may not be empty"));                                             // 232
+    return;                                                                                                   // 233
+  }                                                                                                           // 234
+                                                                                                              // 235
+  Accounts.callLoginMethod({                                                                                  // 236
+    methodName: 'resetPassword',                                                                              // 237
+    methodArguments: [token, Accounts._hashPassword(newPassword)],                                            // 238
+    userCallback: callback});                                                                                 // 239
+};                                                                                                            // 240
+                                                                                                              // 241
+// Verifies a user's email address based on a token originally                                                // 242
+// created by Accounts.sendVerificationEmail                                                                  // 243
+//                                                                                                            // 244
+// @param token {String}                                                                                      // 245
+// @param callback (optional) {Function(error|undefined)}                                                     // 246
+                                                                                                              // 247
+/**                                                                                                           // 248
+ * @summary Marks the user's email address as verified. Logs the user in afterwards.                          // 249
+ * @locus Client                                                                                              // 250
+ * @param {String} token The token retrieved from the verification URL.                                       // 251
  * @param {Function} [callback] Optional callback. Called with no arguments on success, or with a single `Error` argument on failure.
- */                                                                                                           // 252
-Accounts.verifyEmail = function(token, callback) {                                                            // 253
-  if (!token)                                                                                                 // 254
-    throw new Error("Need to pass token");                                                                    // 255
-                                                                                                              // 256
-  Accounts.callLoginMethod({                                                                                  // 257
-    methodName: 'verifyEmail',                                                                                // 258
-    methodArguments: [token],                                                                                 // 259
-    userCallback: callback});                                                                                 // 260
-};                                                                                                            // 261
-                                                                                                              // 262
+ */                                                                                                           // 253
+Accounts.verifyEmail = function(token, callback) {                                                            // 254
+  if (!token)                                                                                                 // 255
+    throw new Error("Need to pass token");                                                                    // 256
+                                                                                                              // 257
+  Accounts.callLoginMethod({                                                                                  // 258
+    methodName: 'verifyEmail',                                                                                // 259
+    methodArguments: [token],                                                                                 // 260
+    userCallback: callback});                                                                                 // 261
+};                                                                                                            // 262
+                                                                                                              // 263
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

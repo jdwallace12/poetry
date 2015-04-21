@@ -245,7 +245,7 @@ Template["_loginButtonsMessages"] = new Template("Template._loginButtonsMessages
   }, function() {                                                                                                      // 88
     return [ "\n    ", HTML.DIV({                                                                                      // 89
       "class": "message error-message"                                                                                 // 90
-    }, Blaze.View(function() {                                                                                         // 91
+    }, Blaze.View("lookup:errorMessage", function() {                                                                  // 91
       return Spacebars.mustache(view.lookup("errorMessage"));                                                          // 92
     })), "\n  " ];                                                                                                     // 93
   }), "\n  ", Blaze.If(function() {                                                                                    // 94
@@ -253,7 +253,7 @@ Template["_loginButtonsMessages"] = new Template("Template._loginButtonsMessages
   }, function() {                                                                                                      // 96
     return [ "\n    ", HTML.DIV({                                                                                      // 97
       "class": "message info-message"                                                                                  // 98
-    }, Blaze.View(function() {                                                                                         // 99
+    }, Blaze.View("lookup:infoMessage", function() {                                                                   // 99
       return Spacebars.mustache(view.lookup("infoMessage"));                                                           // 100
     })), "\n  " ];                                                                                                     // 101
   }) ];                                                                                                                // 102
@@ -334,7 +334,7 @@ Template["_loginButtonsLoggedOutSingleLoginButton"] = new Template("Template._lo
       "class": function() {                                                                                            // 27
         return [ "text-besides-image sign-in-text-", Spacebars.mustache(view.lookup("name")) ];                        // 28
       }                                                                                                                // 29
-    }, "Sign in with ", Blaze.View(function() {                                                                        // 30
+    }, "Sign in with ", Blaze.View("lookup:capitalizedName", function() {                                              // 30
       return Spacebars.mustache(view.lookup("capitalizedName"));                                                       // 31
     })), "\n      " ];                                                                                                 // 32
   }, function() {                                                                                                      // 33
@@ -342,7 +342,7 @@ Template["_loginButtonsLoggedOutSingleLoginButton"] = new Template("Template._lo
       "class": function() {                                                                                            // 35
         return [ "text-besides-image configure-text-", Spacebars.mustache(view.lookup("name")) ];                      // 36
       }                                                                                                                // 37
-    }, "Configure ", Blaze.View(function() {                                                                           // 38
+    }, "Configure ", Blaze.View("lookup:capitalizedName", function() {                                                 // 38
       return Spacebars.mustache(view.lookup("capitalizedName"));                                                       // 39
     }), " Login"), "\n      " ];                                                                                       // 40
   }), "\n    "), "\n  ");                                                                                              // 41
@@ -363,7 +363,7 @@ Template["_loginButtonsLoggedInSingleLogoutButton"] = new Template("Template._lo
     "class": "login-text-and-button"                                                                                   // 56
   }, "\n    ", HTML.DIV({                                                                                              // 57
     "class": "login-display-name"                                                                                      // 58
-  }, "\n      ", Blaze.View(function() {                                                                               // 59
+  }, "\n      ", Blaze.View("lookup:displayName", function() {                                                         // 59
     return Spacebars.mustache(view.lookup("displayName"));                                                             // 60
   }), "\n    "), HTML.Raw('\n    <div class="login-button single-login-button" id="login-buttons-logout">Sign Out</div>\n  '));
 }));                                                                                                                   // 62
@@ -394,7 +394,7 @@ Template["_loginButtonsLoggedInDropdown"] = new Template("Template._loginButtons
   }, "\n    ", HTML.A({                                                                                                // 7
     "class": "login-link-text",                                                                                        // 8
     id: "login-name-link"                                                                                              // 9
-  }, "\n      ", Blaze.View(function() {                                                                               // 10
+  }, "\n      ", Blaze.View("lookup:displayName", function() {                                                         // 10
     return Spacebars.mustache(view.lookup("displayName"));                                                             // 11
   }), " ▾\n    "), "\n\n    ", Blaze.If(function() {                                                                   // 12
     return Spacebars.call(view.lookup("dropdownVisible"));                                                             // 13
@@ -588,7 +588,7 @@ Template["_loginButtonsFormField"] = new Template("Template._loginButtonsFormFie
       "for": function() {                                                                                              // 201
         return [ "login-", Spacebars.mustache(view.lookup("fieldName")) ];                                             // 202
       }                                                                                                                // 203
-    }, "\n        ", Blaze.View(function() {                                                                           // 204
+    }, "\n        ", Blaze.View("lookup:fieldLabel", function() {                                                      // 204
       return Spacebars.mustache(view.lookup("fieldLabel"));                                                            // 205
     }), "\n      "), "\n      ", HTML.INPUT({                                                                          // 206
       id: function() {                                                                                                 // 207
@@ -631,7 +631,7 @@ Template["_loginButtonsChangePassword"] = new Template("Template._loginButtonsCh
                                                                                                                        // 1
 Template.body.addContent((function() {                                                                                 // 2
   var view = this;                                                                                                     // 3
-  return [ Spacebars.include(view.lookupTemplate("_resetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justResetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_enrollAccountDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justVerifiedEmailDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_configureLoginServiceDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_configureLoginOnDesktopDialog")), HTML.Raw("\n\n  <!-- if we're not showing a dropdown, we need some other place to show messages -->\n  "), Spacebars.include(view.lookupTemplate("_loginButtonsMessagesDialog")) ];
+  return [ Spacebars.include(view.lookupTemplate("_resetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justResetPasswordDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_enrollAccountDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_justVerifiedEmailDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_configureLoginServiceDialog")), "\n  ", Spacebars.include(view.lookupTemplate("_configureLoginOnDesktopDialog")), "\n\n  \n  ", Spacebars.include(view.lookupTemplate("_loginButtonsMessagesDialog")) ];
 }));                                                                                                                   // 5
 Meteor.startup(Template.body.renderToDocument);                                                                        // 6
                                                                                                                        // 7
@@ -674,7 +674,7 @@ Template["_justResetPasswordDialog"] = new Template("Template._justResetPassword
   }, function() {                                                                                                      // 44
     return [ "\n    ", HTML.DIV({                                                                                      // 45
       "class": "accounts-dialog accounts-centered-dialog"                                                              // 46
-    }, "\n      Password reset.\n      You are now logged in as ", Blaze.View(function() {                             // 47
+    }, "\n      Password reset.\n      You are now logged in as ", Blaze.View("lookup:displayName", function() {       // 47
       return Spacebars.mustache(view.lookup("displayName"));                                                           // 48
     }), ".\n      ", HTML.DIV({                                                                                        // 49
       "class": "login-button",                                                                                         // 50
@@ -722,7 +722,7 @@ Template["_justVerifiedEmailDialog"] = new Template("Template._justVerifiedEmail
   }, function() {                                                                                                      // 92
     return [ "\n    ", HTML.DIV({                                                                                      // 93
       "class": "accounts-dialog accounts-centered-dialog"                                                              // 94
-    }, "\n      Email verified.\n      You are now logged in as ", Blaze.View(function() {                             // 95
+    }, "\n      Email verified.\n      You are now logged in as ", Blaze.View("lookup:displayName", function() {       // 95
       return Spacebars.mustache(view.lookup("displayName"));                                                           // 96
     }), ".\n      ", HTML.DIV({                                                                                        // 97
       "class": "login-button",                                                                                         // 98
@@ -753,7 +753,7 @@ Template["_configureLoginServiceDialog"] = new Template("Template._configureLogi
         "for": function() {                                                                                            // 123
           return [ "configure-login-service-dialog-", Spacebars.mustache(view.lookup("property")) ];                   // 124
         }                                                                                                              // 125
-      }, Blaze.View(function() {                                                                                       // 126
+      }, Blaze.View("lookup:label", function() {                                                                       // 126
         return Spacebars.mustache(view.lookup("label"));                                                               // 127
       })), "\n              "), "\n              ", HTML.TD("\n                ", HTML.INPUT({                         // 128
         id: function() {                                                                                               // 129
@@ -1841,247 +1841,251 @@ Template._resetPasswordDialog.events({                                          
   },                                                                                                                   // 41
   'click #login-buttons-cancel-reset-password': function () {                                                          // 42
     loginButtonsSession.set('resetPasswordToken', null);                                                               // 43
-    doneCallback();                                                                                                    // 44
-  }                                                                                                                    // 45
-});                                                                                                                    // 46
-                                                                                                                       // 47
-var resetPassword = function () {                                                                                      // 48
-  loginButtonsSession.resetMessages();                                                                                 // 49
-  var newPassword = document.getElementById('reset-password-new-password').value;                                      // 50
-  if (!validatePassword(newPassword))                                                                                  // 51
-    return;                                                                                                            // 52
-                                                                                                                       // 53
-  Accounts.resetPassword(                                                                                              // 54
-    loginButtonsSession.get('resetPasswordToken'), newPassword,                                                        // 55
-    function (error) {                                                                                                 // 56
-      if (error) {                                                                                                     // 57
-        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 58
-      } else {                                                                                                         // 59
-        loginButtonsSession.set('resetPasswordToken', null);                                                           // 60
-        loginButtonsSession.set('justResetPassword', true);                                                            // 61
-        doneCallback();                                                                                                // 62
-      }                                                                                                                // 63
-    });                                                                                                                // 64
-};                                                                                                                     // 65
-                                                                                                                       // 66
-Template._resetPasswordDialog.helpers({                                                                                // 67
-  inResetPasswordFlow: function () {                                                                                   // 68
-    return loginButtonsSession.get('resetPasswordToken');                                                              // 69
-  }                                                                                                                    // 70
-});                                                                                                                    // 71
-                                                                                                                       // 72
-//                                                                                                                     // 73
-// justResetPasswordDialog template                                                                                    // 74
+    if (doneCallback)                                                                                                  // 44
+      doneCallback();                                                                                                  // 45
+  }                                                                                                                    // 46
+});                                                                                                                    // 47
+                                                                                                                       // 48
+var resetPassword = function () {                                                                                      // 49
+  loginButtonsSession.resetMessages();                                                                                 // 50
+  var newPassword = document.getElementById('reset-password-new-password').value;                                      // 51
+  if (!validatePassword(newPassword))                                                                                  // 52
+    return;                                                                                                            // 53
+                                                                                                                       // 54
+  Accounts.resetPassword(                                                                                              // 55
+    loginButtonsSession.get('resetPasswordToken'), newPassword,                                                        // 56
+    function (error) {                                                                                                 // 57
+      if (error) {                                                                                                     // 58
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 59
+      } else {                                                                                                         // 60
+        loginButtonsSession.set('resetPasswordToken', null);                                                           // 61
+        loginButtonsSession.set('justResetPassword', true);                                                            // 62
+        if (doneCallback)                                                                                              // 63
+          doneCallback();                                                                                              // 64
+      }                                                                                                                // 65
+    });                                                                                                                // 66
+};                                                                                                                     // 67
+                                                                                                                       // 68
+Template._resetPasswordDialog.helpers({                                                                                // 69
+  inResetPasswordFlow: function () {                                                                                   // 70
+    return loginButtonsSession.get('resetPasswordToken');                                                              // 71
+  }                                                                                                                    // 72
+});                                                                                                                    // 73
+                                                                                                                       // 74
 //                                                                                                                     // 75
-                                                                                                                       // 76
-Template._justResetPasswordDialog.events({                                                                             // 77
-  'click #just-verified-dismiss-button': function () {                                                                 // 78
-    loginButtonsSession.set('justResetPassword', false);                                                               // 79
-  }                                                                                                                    // 80
-});                                                                                                                    // 81
-                                                                                                                       // 82
-Template._justResetPasswordDialog.helpers({                                                                            // 83
-  visible: function () {                                                                                               // 84
-    return loginButtonsSession.get('justResetPassword');                                                               // 85
-  },                                                                                                                   // 86
-  displayName: displayName                                                                                             // 87
-});                                                                                                                    // 88
-                                                                                                                       // 89
-                                                                                                                       // 90
+// justResetPasswordDialog template                                                                                    // 76
+//                                                                                                                     // 77
+                                                                                                                       // 78
+Template._justResetPasswordDialog.events({                                                                             // 79
+  'click #just-verified-dismiss-button': function () {                                                                 // 80
+    loginButtonsSession.set('justResetPassword', false);                                                               // 81
+  }                                                                                                                    // 82
+});                                                                                                                    // 83
+                                                                                                                       // 84
+Template._justResetPasswordDialog.helpers({                                                                            // 85
+  visible: function () {                                                                                               // 86
+    return loginButtonsSession.get('justResetPassword');                                                               // 87
+  },                                                                                                                   // 88
+  displayName: displayName                                                                                             // 89
+});                                                                                                                    // 90
                                                                                                                        // 91
-//                                                                                                                     // 92
-// enrollAccountDialog template                                                                                        // 93
+                                                                                                                       // 92
+                                                                                                                       // 93
 //                                                                                                                     // 94
-                                                                                                                       // 95
-Template._enrollAccountDialog.events({                                                                                 // 96
-  'click #login-buttons-enroll-account-button': function () {                                                          // 97
-    enrollAccount();                                                                                                   // 98
-  },                                                                                                                   // 99
-  'keypress #enroll-account-password': function (event) {                                                              // 100
-    if (event.keyCode === 13)                                                                                          // 101
-      enrollAccount();                                                                                                 // 102
-  },                                                                                                                   // 103
-  'click #login-buttons-cancel-enroll-account': function () {                                                          // 104
-    loginButtonsSession.set('enrollAccountToken', null);                                                               // 105
-    doneCallback();                                                                                                    // 106
-  }                                                                                                                    // 107
-});                                                                                                                    // 108
-                                                                                                                       // 109
-var enrollAccount = function () {                                                                                      // 110
-  loginButtonsSession.resetMessages();                                                                                 // 111
-  var password = document.getElementById('enroll-account-password').value;                                             // 112
-  if (!validatePassword(password))                                                                                     // 113
-    return;                                                                                                            // 114
-                                                                                                                       // 115
-  Accounts.resetPassword(                                                                                              // 116
-    loginButtonsSession.get('enrollAccountToken'), password,                                                           // 117
-    function (error) {                                                                                                 // 118
-      if (error) {                                                                                                     // 119
-        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 120
-      } else {                                                                                                         // 121
-        loginButtonsSession.set('enrollAccountToken', null);                                                           // 122
-        doneCallback();                                                                                                // 123
-      }                                                                                                                // 124
-    });                                                                                                                // 125
-};                                                                                                                     // 126
-                                                                                                                       // 127
-Template._enrollAccountDialog.helpers({                                                                                // 128
-  inEnrollAccountFlow: function () {                                                                                   // 129
-    return loginButtonsSession.get('enrollAccountToken');                                                              // 130
-  }                                                                                                                    // 131
-});                                                                                                                    // 132
-                                                                                                                       // 133
-                                                                                                                       // 134
-//                                                                                                                     // 135
-// justVerifiedEmailDialog template                                                                                    // 136
-//                                                                                                                     // 137
+// enrollAccountDialog template                                                                                        // 95
+//                                                                                                                     // 96
+                                                                                                                       // 97
+Template._enrollAccountDialog.events({                                                                                 // 98
+  'click #login-buttons-enroll-account-button': function () {                                                          // 99
+    enrollAccount();                                                                                                   // 100
+  },                                                                                                                   // 101
+  'keypress #enroll-account-password': function (event) {                                                              // 102
+    if (event.keyCode === 13)                                                                                          // 103
+      enrollAccount();                                                                                                 // 104
+  },                                                                                                                   // 105
+  'click #login-buttons-cancel-enroll-account': function () {                                                          // 106
+    loginButtonsSession.set('enrollAccountToken', null);                                                               // 107
+    if (doneCallback)                                                                                                  // 108
+      doneCallback();                                                                                                  // 109
+  }                                                                                                                    // 110
+});                                                                                                                    // 111
+                                                                                                                       // 112
+var enrollAccount = function () {                                                                                      // 113
+  loginButtonsSession.resetMessages();                                                                                 // 114
+  var password = document.getElementById('enroll-account-password').value;                                             // 115
+  if (!validatePassword(password))                                                                                     // 116
+    return;                                                                                                            // 117
+                                                                                                                       // 118
+  Accounts.resetPassword(                                                                                              // 119
+    loginButtonsSession.get('enrollAccountToken'), password,                                                           // 120
+    function (error) {                                                                                                 // 121
+      if (error) {                                                                                                     // 122
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");                                             // 123
+      } else {                                                                                                         // 124
+        loginButtonsSession.set('enrollAccountToken', null);                                                           // 125
+        if (doneCallback)                                                                                              // 126
+          doneCallback();                                                                                              // 127
+      }                                                                                                                // 128
+    });                                                                                                                // 129
+};                                                                                                                     // 130
+                                                                                                                       // 131
+Template._enrollAccountDialog.helpers({                                                                                // 132
+  inEnrollAccountFlow: function () {                                                                                   // 133
+    return loginButtonsSession.get('enrollAccountToken');                                                              // 134
+  }                                                                                                                    // 135
+});                                                                                                                    // 136
+                                                                                                                       // 137
                                                                                                                        // 138
-Template._justVerifiedEmailDialog.events({                                                                             // 139
-  'click #just-verified-dismiss-button': function () {                                                                 // 140
-    loginButtonsSession.set('justVerifiedEmail', false);                                                               // 141
-  }                                                                                                                    // 142
-});                                                                                                                    // 143
-                                                                                                                       // 144
-Template._justVerifiedEmailDialog.helpers({                                                                            // 145
-  visible: function () {                                                                                               // 146
-    return loginButtonsSession.get('justVerifiedEmail');                                                               // 147
-  },                                                                                                                   // 148
-  displayName: displayName                                                                                             // 149
-});                                                                                                                    // 150
-                                                                                                                       // 151
-                                                                                                                       // 152
-//                                                                                                                     // 153
-// loginButtonsMessagesDialog template                                                                                 // 154
-//                                                                                                                     // 155
+//                                                                                                                     // 139
+// justVerifiedEmailDialog template                                                                                    // 140
+//                                                                                                                     // 141
+                                                                                                                       // 142
+Template._justVerifiedEmailDialog.events({                                                                             // 143
+  'click #just-verified-dismiss-button': function () {                                                                 // 144
+    loginButtonsSession.set('justVerifiedEmail', false);                                                               // 145
+  }                                                                                                                    // 146
+});                                                                                                                    // 147
+                                                                                                                       // 148
+Template._justVerifiedEmailDialog.helpers({                                                                            // 149
+  visible: function () {                                                                                               // 150
+    return loginButtonsSession.get('justVerifiedEmail');                                                               // 151
+  },                                                                                                                   // 152
+  displayName: displayName                                                                                             // 153
+});                                                                                                                    // 154
+                                                                                                                       // 155
                                                                                                                        // 156
-Template._loginButtonsMessagesDialog.events({                                                                          // 157
-  'click #messages-dialog-dismiss-button': function () {                                                               // 158
-    loginButtonsSession.resetMessages();                                                                               // 159
-  }                                                                                                                    // 160
-});                                                                                                                    // 161
-                                                                                                                       // 162
-Template._loginButtonsMessagesDialog.helpers({                                                                         // 163
-  visible: function () {                                                                                               // 164
-    var hasMessage = loginButtonsSession.get('infoMessage') || loginButtonsSession.get('errorMessage');                // 165
-    return !dropdown() && hasMessage;                                                                                  // 166
-  }                                                                                                                    // 167
-});                                                                                                                    // 168
-                                                                                                                       // 169
-                                                                                                                       // 170
-//                                                                                                                     // 171
-// configureLoginServiceDialog template                                                                                // 172
-//                                                                                                                     // 173
+//                                                                                                                     // 157
+// loginButtonsMessagesDialog template                                                                                 // 158
+//                                                                                                                     // 159
+                                                                                                                       // 160
+Template._loginButtonsMessagesDialog.events({                                                                          // 161
+  'click #messages-dialog-dismiss-button': function () {                                                               // 162
+    loginButtonsSession.resetMessages();                                                                               // 163
+  }                                                                                                                    // 164
+});                                                                                                                    // 165
+                                                                                                                       // 166
+Template._loginButtonsMessagesDialog.helpers({                                                                         // 167
+  visible: function () {                                                                                               // 168
+    var hasMessage = loginButtonsSession.get('infoMessage') || loginButtonsSession.get('errorMessage');                // 169
+    return !dropdown() && hasMessage;                                                                                  // 170
+  }                                                                                                                    // 171
+});                                                                                                                    // 172
+                                                                                                                       // 173
                                                                                                                        // 174
-Template._configureLoginServiceDialog.events({                                                                         // 175
-  'click .configure-login-service-dismiss-button': function () {                                                       // 176
-    loginButtonsSession.set('configureLoginServiceDialogVisible', false);                                              // 177
-  },                                                                                                                   // 178
-  'click #configure-login-service-dialog-save-configuration': function () {                                            // 179
-    if (loginButtonsSession.get('configureLoginServiceDialogVisible') &&                                               // 180
-        ! loginButtonsSession.get('configureLoginServiceDialogSaveDisabled')) {                                        // 181
-      // Prepare the configuration document for this login service                                                     // 182
-      var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                             // 183
-      var configuration = {                                                                                            // 184
-        service: serviceName                                                                                           // 185
-      };                                                                                                               // 186
-                                                                                                                       // 187
-      // Fetch the value of each input field                                                                           // 188
-      _.each(configurationFields(), function(field) {                                                                  // 189
-        configuration[field.property] = document.getElementById(                                                       // 190
-          'configure-login-service-dialog-' + field.property).value                                                    // 191
-          .replace(/^\s*|\s*$/g, ""); // trim() doesnt work on IE8;                                                    // 192
-      });                                                                                                              // 193
-                                                                                                                       // 194
-      configuration.loginStyle =                                                                                       // 195
-        $('#configure-login-service-dialog input[name="loginStyle"]:checked')                                          // 196
-        .val();                                                                                                        // 197
+//                                                                                                                     // 175
+// configureLoginServiceDialog template                                                                                // 176
+//                                                                                                                     // 177
+                                                                                                                       // 178
+Template._configureLoginServiceDialog.events({                                                                         // 179
+  'click .configure-login-service-dismiss-button': function () {                                                       // 180
+    loginButtonsSession.set('configureLoginServiceDialogVisible', false);                                              // 181
+  },                                                                                                                   // 182
+  'click #configure-login-service-dialog-save-configuration': function () {                                            // 183
+    if (loginButtonsSession.get('configureLoginServiceDialogVisible') &&                                               // 184
+        ! loginButtonsSession.get('configureLoginServiceDialogSaveDisabled')) {                                        // 185
+      // Prepare the configuration document for this login service                                                     // 186
+      var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                             // 187
+      var configuration = {                                                                                            // 188
+        service: serviceName                                                                                           // 189
+      };                                                                                                               // 190
+                                                                                                                       // 191
+      // Fetch the value of each input field                                                                           // 192
+      _.each(configurationFields(), function(field) {                                                                  // 193
+        configuration[field.property] = document.getElementById(                                                       // 194
+          'configure-login-service-dialog-' + field.property).value                                                    // 195
+          .replace(/^\s*|\s*$/g, ""); // trim() doesnt work on IE8;                                                    // 196
+      });                                                                                                              // 197
                                                                                                                        // 198
-      // Configure this login service                                                                                  // 199
-      Accounts.connection.call(                                                                                        // 200
-        "configureLoginService", configuration, function (error, result) {                                             // 201
-          if (error)                                                                                                   // 202
-            Meteor._debug("Error configuring login service " + serviceName,                                            // 203
-                          error);                                                                                      // 204
-          else                                                                                                         // 205
-            loginButtonsSession.set('configureLoginServiceDialogVisible',                                              // 206
-                                    false);                                                                            // 207
-        });                                                                                                            // 208
-    }                                                                                                                  // 209
-  },                                                                                                                   // 210
-  // IE8 doesn't support the 'input' event, so we'll run this on the keyup as                                          // 211
-  // well. (Keeping the 'input' event means that this also fires when you use                                          // 212
-  // the mouse to change the contents of the field, eg 'Cut' menu item.)                                               // 213
-  'input, keyup input': function (event) {                                                                             // 214
-    // if the event fired on one of the configuration input fields,                                                    // 215
-    // check whether we should enable the 'save configuration' button                                                  // 216
-    if (event.target.id.indexOf('configure-login-service-dialog') === 0)                                               // 217
-      updateSaveDisabled();                                                                                            // 218
-  }                                                                                                                    // 219
-});                                                                                                                    // 220
-                                                                                                                       // 221
-// check whether the 'save configuration' button should be enabled.                                                    // 222
-// this is a really strange way to implement this and a Forms                                                          // 223
-// Abstraction would make all of this reactive, and simpler.                                                           // 224
-var updateSaveDisabled = function () {                                                                                 // 225
-  var anyFieldEmpty = _.any(configurationFields(), function(field) {                                                   // 226
-    return document.getElementById(                                                                                    // 227
-      'configure-login-service-dialog-' + field.property).value === '';                                                // 228
-  });                                                                                                                  // 229
-                                                                                                                       // 230
-  loginButtonsSession.set('configureLoginServiceDialogSaveDisabled', anyFieldEmpty);                                   // 231
-};                                                                                                                     // 232
-                                                                                                                       // 233
-// Returns the appropriate template for this login service.  This                                                      // 234
-// template should be defined in the service's package                                                                 // 235
-var configureLoginServiceDialogTemplateForService = function () {                                                      // 236
-  var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                                 // 237
-  // XXX Service providers should be able to specify their configuration                                               // 238
-  // template name.                                                                                                    // 239
-  return Template['configureLoginServiceDialogFor' +                                                                   // 240
-                  (serviceName === 'meteor-developer' ?                                                                // 241
-                   'MeteorDeveloper' :                                                                                 // 242
-                   capitalize(serviceName))];                                                                          // 243
-};                                                                                                                     // 244
-                                                                                                                       // 245
-var configurationFields = function () {                                                                                // 246
-  var template = configureLoginServiceDialogTemplateForService();                                                      // 247
-  return template.fields();                                                                                            // 248
-};                                                                                                                     // 249
-                                                                                                                       // 250
-Template._configureLoginServiceDialog.helpers({                                                                        // 251
-  configurationFields: function () {                                                                                   // 252
-    return configurationFields();                                                                                      // 253
-  },                                                                                                                   // 254
-  visible: function () {                                                                                               // 255
-    return loginButtonsSession.get('configureLoginServiceDialogVisible');                                              // 256
-  },                                                                                                                   // 257
-  configurationSteps: function () {                                                                                    // 258
-    // renders the appropriate template                                                                                // 259
-    return configureLoginServiceDialogTemplateForService();                                                            // 260
+      configuration.loginStyle =                                                                                       // 199
+        $('#configure-login-service-dialog input[name="loginStyle"]:checked')                                          // 200
+        .val();                                                                                                        // 201
+                                                                                                                       // 202
+      // Configure this login service                                                                                  // 203
+      Accounts.connection.call(                                                                                        // 204
+        "configureLoginService", configuration, function (error, result) {                                             // 205
+          if (error)                                                                                                   // 206
+            Meteor._debug("Error configuring login service " + serviceName,                                            // 207
+                          error);                                                                                      // 208
+          else                                                                                                         // 209
+            loginButtonsSession.set('configureLoginServiceDialogVisible',                                              // 210
+                                    false);                                                                            // 211
+        });                                                                                                            // 212
+    }                                                                                                                  // 213
+  },                                                                                                                   // 214
+  // IE8 doesn't support the 'input' event, so we'll run this on the keyup as                                          // 215
+  // well. (Keeping the 'input' event means that this also fires when you use                                          // 216
+  // the mouse to change the contents of the field, eg 'Cut' menu item.)                                               // 217
+  'input, keyup input': function (event) {                                                                             // 218
+    // if the event fired on one of the configuration input fields,                                                    // 219
+    // check whether we should enable the 'save configuration' button                                                  // 220
+    if (event.target.id.indexOf('configure-login-service-dialog') === 0)                                               // 221
+      updateSaveDisabled();                                                                                            // 222
+  }                                                                                                                    // 223
+});                                                                                                                    // 224
+                                                                                                                       // 225
+// check whether the 'save configuration' button should be enabled.                                                    // 226
+// this is a really strange way to implement this and a Forms                                                          // 227
+// Abstraction would make all of this reactive, and simpler.                                                           // 228
+var updateSaveDisabled = function () {                                                                                 // 229
+  var anyFieldEmpty = _.any(configurationFields(), function(field) {                                                   // 230
+    return document.getElementById(                                                                                    // 231
+      'configure-login-service-dialog-' + field.property).value === '';                                                // 232
+  });                                                                                                                  // 233
+                                                                                                                       // 234
+  loginButtonsSession.set('configureLoginServiceDialogSaveDisabled', anyFieldEmpty);                                   // 235
+};                                                                                                                     // 236
+                                                                                                                       // 237
+// Returns the appropriate template for this login service.  This                                                      // 238
+// template should be defined in the service's package                                                                 // 239
+var configureLoginServiceDialogTemplateForService = function () {                                                      // 240
+  var serviceName = loginButtonsSession.get('configureLoginServiceDialogServiceName');                                 // 241
+  // XXX Service providers should be able to specify their configuration                                               // 242
+  // template name.                                                                                                    // 243
+  return Template['configureLoginServiceDialogFor' +                                                                   // 244
+                  (serviceName === 'meteor-developer' ?                                                                // 245
+                   'MeteorDeveloper' :                                                                                 // 246
+                   capitalize(serviceName))];                                                                          // 247
+};                                                                                                                     // 248
+                                                                                                                       // 249
+var configurationFields = function () {                                                                                // 250
+  var template = configureLoginServiceDialogTemplateForService();                                                      // 251
+  return template.fields();                                                                                            // 252
+};                                                                                                                     // 253
+                                                                                                                       // 254
+Template._configureLoginServiceDialog.helpers({                                                                        // 255
+  configurationFields: function () {                                                                                   // 256
+    return configurationFields();                                                                                      // 257
+  },                                                                                                                   // 258
+  visible: function () {                                                                                               // 259
+    return loginButtonsSession.get('configureLoginServiceDialogVisible');                                              // 260
   },                                                                                                                   // 261
-  saveDisabled: function () {                                                                                          // 262
-    return loginButtonsSession.get('configureLoginServiceDialogSaveDisabled');                                         // 263
-  }                                                                                                                    // 264
-});                                                                                                                    // 265
-                                                                                                                       // 266
-// XXX from http://epeli.github.com/underscore.string/lib/underscore.string.js                                         // 267
-var capitalize = function(str){                                                                                        // 268
-  str = str == null ? '' : String(str);                                                                                // 269
-  return str.charAt(0).toUpperCase() + str.slice(1);                                                                   // 270
-};                                                                                                                     // 271
-                                                                                                                       // 272
-Template._configureLoginOnDesktopDialog.helpers({                                                                      // 273
-  visible: function () {                                                                                               // 274
-    return loginButtonsSession.get('configureOnDesktopVisible');                                                       // 275
-  }                                                                                                                    // 276
-});                                                                                                                    // 277
-                                                                                                                       // 278
-Template._configureLoginOnDesktopDialog.events({                                                                       // 279
-  'click #configure-on-desktop-dismiss-button': function () {                                                          // 280
-    loginButtonsSession.set('configureOnDesktopVisible', false);                                                       // 281
-  }                                                                                                                    // 282
-});                                                                                                                    // 283
-                                                                                                                       // 284
+  configurationSteps: function () {                                                                                    // 262
+    // renders the appropriate template                                                                                // 263
+    return configureLoginServiceDialogTemplateForService();                                                            // 264
+  },                                                                                                                   // 265
+  saveDisabled: function () {                                                                                          // 266
+    return loginButtonsSession.get('configureLoginServiceDialogSaveDisabled');                                         // 267
+  }                                                                                                                    // 268
+});                                                                                                                    // 269
+                                                                                                                       // 270
+// XXX from http://epeli.github.com/underscore.string/lib/underscore.string.js                                         // 271
+var capitalize = function(str){                                                                                        // 272
+  str = str == null ? '' : String(str);                                                                                // 273
+  return str.charAt(0).toUpperCase() + str.slice(1);                                                                   // 274
+};                                                                                                                     // 275
+                                                                                                                       // 276
+Template._configureLoginOnDesktopDialog.helpers({                                                                      // 277
+  visible: function () {                                                                                               // 278
+    return loginButtonsSession.get('configureOnDesktopVisible');                                                       // 279
+  }                                                                                                                    // 280
+});                                                                                                                    // 281
+                                                                                                                       // 282
+Template._configureLoginOnDesktopDialog.events({                                                                       // 283
+  'click #configure-on-desktop-dismiss-button': function () {                                                          // 284
+    loginButtonsSession.set('configureOnDesktopVisible', false);                                                       // 285
+  }                                                                                                                    // 286
+});                                                                                                                    // 287
+                                                                                                                       // 288
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);

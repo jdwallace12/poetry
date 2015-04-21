@@ -3,10 +3,13 @@
 /* Imports */
 var Meteor = Package.meteor.Meteor;
 var HTML = Package.htmljs.HTML;
+var Tracker = Package.tracker.Tracker;
+var Deps = Package.tracker.Deps;
 var Blaze = Package.blaze.Blaze;
 var UI = Package.blaze.UI;
 var Handlebars = Package.blaze.Handlebars;
 var ObserveSequence = Package['observe-sequence'].ObserveSequence;
+var _ = Package.underscore._;
 
 /* Package-scope variables */
 var Spacebars;

@@ -23,11 +23,12 @@ var _ = Package.underscore._;
 var Tracker = Package.tracker.Tracker;
 var Deps = Package.tracker.Deps;
 var Random = Package.random.Random;
+var Hook = Package['callback-hook'].Hook;
 var DDP = Package.ddp.DDP;
 var Mongo = Package.mongo.Mongo;
 
 /* Package-scope variables */
-var Accounts, AccountsTest, EXPIRE_TOKENS_INTERVAL_MS, CONNECTION_CLOSE_DELAY_MS, getTokenLifetimeMs, autoLoginEnabled, tokenRegex, match, makeClientLoggedOut, makeClientLoggedIn, storeLoginToken, unstoreLoginToken, storedLoginToken, storedLoginTokenExpires;
+var Accounts, AccountsTest, EXPIRE_TOKENS_INTERVAL_MS, CONNECTION_CLOSE_DELAY_MS, getTokenLifetimeMs, onLoginHook, onLoginFailureHook, autoLoginEnabled, tokenRegex, match, makeClientLoggedOut, makeClientLoggedIn, storeLoginToken, unstoreLoginToken, storedLoginToken, storedLoginTokenExpires;
 
 (function () {
 
@@ -175,54 +176,82 @@ if (Meteor.isClient) {                                                          
 /**                                                                                                                  // 136
  * @summary A [Mongo.Collection](#collections) containing user documents.                                            // 137
  * @locus Anywhere                                                                                                   // 138
- */                                                                                                                  // 139
-Meteor.users = new Mongo.Collection("users", {                                                                       // 140
-  _preventAutopublish: true,                                                                                         // 141
-  connection: Meteor.isClient ? Accounts.connection : Meteor.connection                                              // 142
-});                                                                                                                  // 143
-// There is an allow call in accounts_server that restricts this                                                     // 144
-// collection.                                                                                                       // 145
-                                                                                                                     // 146
-// loginServiceConfiguration and ConfigError are maintained for backwards compatibility                              // 147
-Meteor.startup(function () {                                                                                         // 148
-  var ServiceConfiguration =                                                                                         // 149
-    Package['service-configuration'].ServiceConfiguration;                                                           // 150
-  Accounts.loginServiceConfiguration = ServiceConfiguration.configurations;                                          // 151
-  Accounts.ConfigError = ServiceConfiguration.ConfigError;                                                           // 152
-});                                                                                                                  // 153
-                                                                                                                     // 154
-// Thrown when the user cancels the login process (eg, closes an oauth                                               // 155
-// popup, declines retina scan, etc)                                                                                 // 156
-Accounts.LoginCancelledError = function(description) {                                                               // 157
-  this.message = description;                                                                                        // 158
-};                                                                                                                   // 159
-                                                                                                                     // 160
-// This is used to transmit specific subclass errors over the wire. We should                                        // 161
-// come up with a more generic way to do this (eg, with some sort of symbolic                                        // 162
-// error code rather than a number).                                                                                 // 163
-Accounts.LoginCancelledError.numericError = 0x8acdc2f;                                                               // 164
-Accounts.LoginCancelledError.prototype = new Error();                                                                // 165
-Accounts.LoginCancelledError.prototype.name = 'Accounts.LoginCancelledError';                                        // 166
-                                                                                                                     // 167
-getTokenLifetimeMs = function () {                                                                                   // 168
-  return (Accounts._options.loginExpirationInDays ||                                                                 // 169
-          DEFAULT_LOGIN_EXPIRATION_DAYS) * 24 * 60 * 60 * 1000;                                                      // 170
-};                                                                                                                   // 171
-                                                                                                                     // 172
-Accounts._tokenExpiration = function (when) {                                                                        // 173
-  // We pass when through the Date constructor for backwards compatibility;                                          // 174
-  // `when` used to be a number.                                                                                     // 175
-  return new Date((new Date(when)).getTime() + getTokenLifetimeMs());                                                // 176
-};                                                                                                                   // 177
-                                                                                                                     // 178
-Accounts._tokenExpiresSoon = function (when) {                                                                       // 179
-  var minLifetimeMs = .1 * getTokenLifetimeMs();                                                                     // 180
-  var minLifetimeCapMs = MIN_TOKEN_LIFETIME_CAP_SECS * 1000;                                                         // 181
-  if (minLifetimeMs > minLifetimeCapMs)                                                                              // 182
-    minLifetimeMs = minLifetimeCapMs;                                                                                // 183
-  return new Date() > (new Date(when) - minLifetimeMs);                                                              // 184
-};                                                                                                                   // 185
-                                                                                                                     // 186
+ * @type {Mongo.Collection}                                                                                          // 139
+ */                                                                                                                  // 140
+Meteor.users = new Mongo.Collection("users", {                                                                       // 141
+  _preventAutopublish: true,                                                                                         // 142
+  connection: Meteor.isClient ? Accounts.connection : Meteor.connection                                              // 143
+});                                                                                                                  // 144
+// There is an allow call in accounts_server that restricts this                                                     // 145
+// collection.                                                                                                       // 146
+                                                                                                                     // 147
+// loginServiceConfiguration and ConfigError are maintained for backwards compatibility                              // 148
+Meteor.startup(function () {                                                                                         // 149
+  var ServiceConfiguration =                                                                                         // 150
+    Package['service-configuration'].ServiceConfiguration;                                                           // 151
+  Accounts.loginServiceConfiguration = ServiceConfiguration.configurations;                                          // 152
+  Accounts.ConfigError = ServiceConfiguration.ConfigError;                                                           // 153
+});                                                                                                                  // 154
+                                                                                                                     // 155
+// Thrown when the user cancels the login process (eg, closes an oauth                                               // 156
+// popup, declines retina scan, etc)                                                                                 // 157
+Accounts.LoginCancelledError = function(description) {                                                               // 158
+  this.message = description;                                                                                        // 159
+};                                                                                                                   // 160
+                                                                                                                     // 161
+// This is used to transmit specific subclass errors over the wire. We should                                        // 162
+// come up with a more generic way to do this (eg, with some sort of symbolic                                        // 163
+// error code rather than a number).                                                                                 // 164
+Accounts.LoginCancelledError.numericError = 0x8acdc2f;                                                               // 165
+Accounts.LoginCancelledError.prototype = new Error();                                                                // 166
+Accounts.LoginCancelledError.prototype.name = 'Accounts.LoginCancelledError';                                        // 167
+                                                                                                                     // 168
+getTokenLifetimeMs = function () {                                                                                   // 169
+  return (Accounts._options.loginExpirationInDays ||                                                                 // 170
+          DEFAULT_LOGIN_EXPIRATION_DAYS) * 24 * 60 * 60 * 1000;                                                      // 171
+};                                                                                                                   // 172
+                                                                                                                     // 173
+Accounts._tokenExpiration = function (when) {                                                                        // 174
+  // We pass when through the Date constructor for backwards compatibility;                                          // 175
+  // `when` used to be a number.                                                                                     // 176
+  return new Date((new Date(when)).getTime() + getTokenLifetimeMs());                                                // 177
+};                                                                                                                   // 178
+                                                                                                                     // 179
+Accounts._tokenExpiresSoon = function (when) {                                                                       // 180
+  var minLifetimeMs = .1 * getTokenLifetimeMs();                                                                     // 181
+  var minLifetimeCapMs = MIN_TOKEN_LIFETIME_CAP_SECS * 1000;                                                         // 182
+  if (minLifetimeMs > minLifetimeCapMs)                                                                              // 183
+    minLifetimeMs = minLifetimeCapMs;                                                                                // 184
+  return new Date() > (new Date(when) - minLifetimeMs);                                                              // 185
+};                                                                                                                   // 186
+                                                                                                                     // 187
+// Callback exceptions are printed with Meteor._debug and ignored.                                                   // 188
+onLoginHook = new Hook({                                                                                             // 189
+  debugPrintExceptions: "onLogin callback"                                                                           // 190
+});                                                                                                                  // 191
+onLoginFailureHook = new Hook({                                                                                      // 192
+  debugPrintExceptions: "onLoginFailure callback"                                                                    // 193
+});                                                                                                                  // 194
+                                                                                                                     // 195
+                                                                                                                     // 196
+/**                                                                                                                  // 197
+ * @summary Register a callback to be called after a login attempt succeeds.                                         // 198
+ * @locus Anywhere                                                                                                   // 199
+ * @param {Function} func The callback to be called when login is successful.                                        // 200
+ */                                                                                                                  // 201
+Accounts.onLogin = function (func) {                                                                                 // 202
+  return onLoginHook.register(func);                                                                                 // 203
+};                                                                                                                   // 204
+                                                                                                                     // 205
+/**                                                                                                                  // 206
+ * @summary Register a callback to be called after a login attempt fails.                                            // 207
+ * @locus Anywhere                                                                                                   // 208
+ * @param {Function} func The callback to be called after the login has failed.                                      // 209
+ */                                                                                                                  // 210
+Accounts.onLoginFailure = function (func) {                                                                          // 211
+  return onLoginFailureHook.register(func);                                                                          // 212
+};                                                                                                                   // 213
+                                                                                                                     // 214
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -488,280 +517,291 @@ Accounts.callLoginMethod = function (options) {                                 
     if (!options[f])                                                                                                 // 86
       options[f] = function () {};                                                                                   // 87
   });                                                                                                                // 88
-  // make sure we only call the user's callback once.                                                                // 89
-  var onceUserCallback = _.once(options.userCallback);                                                               // 90
-                                                                                                                     // 91
-  var reconnected = false;                                                                                           // 92
-                                                                                                                     // 93
-  // We want to set up onReconnect as soon as we get a result token back from                                        // 94
-  // the server, without having to wait for subscriptions to rerun. This is                                          // 95
-  // because if we disconnect and reconnect between getting the result and                                           // 96
-  // getting the results of subscription rerun, we WILL NOT re-send this                                             // 97
-  // method (because we never re-send methods whose results we've received)                                          // 98
-  // but we WILL call loggedInAndDataReadyCallback at "reconnect quiesce"                                            // 99
-  // time. This will lead to makeClientLoggedIn(result.id) even though we                                            // 100
-  // haven't actually sent a login method!                                                                           // 101
-  //                                                                                                                 // 102
-  // But by making sure that we send this "resume" login in that case (and                                           // 103
-  // calling makeClientLoggedOut if it fails), we'll end up with an accurate                                         // 104
-  // client-side userId. (It's important that livedata_connection guarantees                                         // 105
-  // that the "reconnect quiesce"-time call to loggedInAndDataReadyCallback                                          // 106
-  // will occur before the callback from the resume login call.)                                                     // 107
-  var onResultReceived = function (err, result) {                                                                    // 108
-    if (err || !result || !result.token) {                                                                           // 109
-      Accounts.connection.onReconnect = null;                                                                        // 110
-    } else {                                                                                                         // 111
-      Accounts.connection.onReconnect = function () {                                                                // 112
-        reconnected = true;                                                                                          // 113
-        // If our token was updated in storage, use the latest one.                                                  // 114
-        var storedToken = storedLoginToken();                                                                        // 115
-        if (storedToken) {                                                                                           // 116
-          result = {                                                                                                 // 117
-            token: storedToken,                                                                                      // 118
-            tokenExpires: storedLoginTokenExpires()                                                                  // 119
-          };                                                                                                         // 120
-        }                                                                                                            // 121
-        if (! result.tokenExpires)                                                                                   // 122
-          result.tokenExpires = Accounts._tokenExpiration(new Date());                                               // 123
-        if (Accounts._tokenExpiresSoon(result.tokenExpires)) {                                                       // 124
-          makeClientLoggedOut();                                                                                     // 125
-        } else {                                                                                                     // 126
-          Accounts.callLoginMethod({                                                                                 // 127
-            methodArguments: [{resume: result.token}],                                                               // 128
-            // Reconnect quiescence ensures that the user doesn't see an                                             // 129
-            // intermediate state before the login method finishes. So we don't                                      // 130
-            // need to show a logging-in animation.                                                                  // 131
-            _suppressLoggingIn: true,                                                                                // 132
-            userCallback: function (error) {                                                                         // 133
-              var storedTokenNow = storedLoginToken();                                                               // 134
-              if (error) {                                                                                           // 135
-                // If we had a login error AND the current stored token is the                                       // 136
-                // one that we tried to log in with, then declare ourselves                                          // 137
-                // logged out. If there's a token in storage but it's not the                                        // 138
-                // token that we tried to log in with, we don't know anything                                        // 139
-                // about whether that token is valid or not, so do nothing. The                                      // 140
-                // periodic localStorage poll will decide if we are logged in or                                     // 141
-                // out with this token, if it hasn't already. Of course, even                                        // 142
-                // with this check, another tab could insert a new valid token                                       // 143
-                // immediately before we clear localStorage here, which would                                        // 144
-                // lead to both tabs being logged out, but by checking the token                                     // 145
-                // in storage right now we hope to make that unlikely to happen.                                     // 146
-                //                                                                                                   // 147
-                // If there is no token in storage right now, we don't have to                                       // 148
-                // do anything; whatever code removed the token from storage was                                     // 149
-                // responsible for calling `makeClientLoggedOut()`, or the                                           // 150
-                // periodic localStorage poll will call `makeClientLoggedOut`                                        // 151
-                // eventually if another tab wiped the token from storage.                                           // 152
-                if (storedTokenNow && storedTokenNow === result.token) {                                             // 153
-                  makeClientLoggedOut();                                                                             // 154
-                }                                                                                                    // 155
-              }                                                                                                      // 156
-              // Possibly a weird callback to call, but better than nothing if                                       // 157
-              // there is a reconnect between "login result received" and "data                                      // 158
-              // ready".                                                                                             // 159
-              onceUserCallback(error);                                                                               // 160
-            }});                                                                                                     // 161
-        }                                                                                                            // 162
-      };                                                                                                             // 163
-    }                                                                                                                // 164
-  };                                                                                                                 // 165
-                                                                                                                     // 166
-  // This callback is called once the local cache of the current-user                                                // 167
-  // subscription (and all subscriptions, in fact) are guaranteed to be up to                                        // 168
-  // date.                                                                                                           // 169
-  var loggedInAndDataReadyCallback = function (error, result) {                                                      // 170
-    // If the login method returns its result but the connection is lost                                             // 171
-    // before the data is in the local cache, it'll set an onReconnect (see                                          // 172
-    // above). The onReconnect will try to log in using the token, and *it*                                          // 173
-    // will call userCallback via its own version of this                                                            // 174
-    // loggedInAndDataReadyCallback. So we don't have to do anything here.                                           // 175
-    if (reconnected)                                                                                                 // 176
-      return;                                                                                                        // 177
-                                                                                                                     // 178
-    // Note that we need to call this even if _suppressLoggingIn is true,                                            // 179
-    // because it could be matching a _setLoggingIn(true) from a                                                     // 180
-    // half-completed pre-reconnect login method.                                                                    // 181
-    Accounts._setLoggingIn(false);                                                                                   // 182
-    if (error || !result) {                                                                                          // 183
-      error = error || new Error(                                                                                    // 184
-        "No result from call to " + options.methodName);                                                             // 185
-      onceUserCallback(error);                                                                                       // 186
-      return;                                                                                                        // 187
-    }                                                                                                                // 188
-    try {                                                                                                            // 189
-      options.validateResult(result);                                                                                // 190
-    } catch (e) {                                                                                                    // 191
-      onceUserCallback(e);                                                                                           // 192
-      return;                                                                                                        // 193
-    }                                                                                                                // 194
-                                                                                                                     // 195
-    // Make the client logged in. (The user data should already be loaded!)                                          // 196
-    makeClientLoggedIn(result.id, result.token, result.tokenExpires);                                                // 197
-    onceUserCallback();                                                                                              // 198
-  };                                                                                                                 // 199
-                                                                                                                     // 200
-  if (!options._suppressLoggingIn)                                                                                   // 201
-    Accounts._setLoggingIn(true);                                                                                    // 202
-  Accounts.connection.apply(                                                                                         // 203
-    options.methodName,                                                                                              // 204
-    options.methodArguments,                                                                                         // 205
-    {wait: true, onResultReceived: onResultReceived},                                                                // 206
-    loggedInAndDataReadyCallback);                                                                                   // 207
-};                                                                                                                   // 208
-                                                                                                                     // 209
-makeClientLoggedOut = function() {                                                                                   // 210
-  unstoreLoginToken();                                                                                               // 211
-  Accounts.connection.setUserId(null);                                                                               // 212
-  Accounts.connection.onReconnect = null;                                                                            // 213
-};                                                                                                                   // 214
-                                                                                                                     // 215
-makeClientLoggedIn = function(userId, token, tokenExpires) {                                                         // 216
-  storeLoginToken(userId, token, tokenExpires);                                                                      // 217
-  Accounts.connection.setUserId(userId);                                                                             // 218
+  // Prepare callbacks: user provided and onLogin/onLoginFailure hooks.                                              // 89
+  var loginCallbacks = _.once(function (error) {                                                                     // 90
+    if (!error) {                                                                                                    // 91
+      onLoginHook.each(function (callback) {                                                                         // 92
+        callback();                                                                                                  // 93
+      });                                                                                                            // 94
+    } else {                                                                                                         // 95
+      onLoginFailureHook.each(function (callback) {                                                                  // 96
+        callback();                                                                                                  // 97
+      });                                                                                                            // 98
+    }                                                                                                                // 99
+    options.userCallback.apply(this, arguments);                                                                     // 100
+  });                                                                                                                // 101
+                                                                                                                     // 102
+  var reconnected = false;                                                                                           // 103
+                                                                                                                     // 104
+  // We want to set up onReconnect as soon as we get a result token back from                                        // 105
+  // the server, without having to wait for subscriptions to rerun. This is                                          // 106
+  // because if we disconnect and reconnect between getting the result and                                           // 107
+  // getting the results of subscription rerun, we WILL NOT re-send this                                             // 108
+  // method (because we never re-send methods whose results we've received)                                          // 109
+  // but we WILL call loggedInAndDataReadyCallback at "reconnect quiesce"                                            // 110
+  // time. This will lead to makeClientLoggedIn(result.id) even though we                                            // 111
+  // haven't actually sent a login method!                                                                           // 112
+  //                                                                                                                 // 113
+  // But by making sure that we send this "resume" login in that case (and                                           // 114
+  // calling makeClientLoggedOut if it fails), we'll end up with an accurate                                         // 115
+  // client-side userId. (It's important that livedata_connection guarantees                                         // 116
+  // that the "reconnect quiesce"-time call to loggedInAndDataReadyCallback                                          // 117
+  // will occur before the callback from the resume login call.)                                                     // 118
+  var onResultReceived = function (err, result) {                                                                    // 119
+    if (err || !result || !result.token) {                                                                           // 120
+      Accounts.connection.onReconnect = null;                                                                        // 121
+    } else {                                                                                                         // 122
+      Accounts.connection.onReconnect = function () {                                                                // 123
+        reconnected = true;                                                                                          // 124
+        // If our token was updated in storage, use the latest one.                                                  // 125
+        var storedToken = storedLoginToken();                                                                        // 126
+        if (storedToken) {                                                                                           // 127
+          result = {                                                                                                 // 128
+            token: storedToken,                                                                                      // 129
+            tokenExpires: storedLoginTokenExpires()                                                                  // 130
+          };                                                                                                         // 131
+        }                                                                                                            // 132
+        if (! result.tokenExpires)                                                                                   // 133
+          result.tokenExpires = Accounts._tokenExpiration(new Date());                                               // 134
+        if (Accounts._tokenExpiresSoon(result.tokenExpires)) {                                                       // 135
+          makeClientLoggedOut();                                                                                     // 136
+        } else {                                                                                                     // 137
+          Accounts.callLoginMethod({                                                                                 // 138
+            methodArguments: [{resume: result.token}],                                                               // 139
+            // Reconnect quiescence ensures that the user doesn't see an                                             // 140
+            // intermediate state before the login method finishes. So we don't                                      // 141
+            // need to show a logging-in animation.                                                                  // 142
+            _suppressLoggingIn: true,                                                                                // 143
+            userCallback: function (error) {                                                                         // 144
+              var storedTokenNow = storedLoginToken();                                                               // 145
+              if (error) {                                                                                           // 146
+                // If we had a login error AND the current stored token is the                                       // 147
+                // one that we tried to log in with, then declare ourselves                                          // 148
+                // logged out. If there's a token in storage but it's not the                                        // 149
+                // token that we tried to log in with, we don't know anything                                        // 150
+                // about whether that token is valid or not, so do nothing. The                                      // 151
+                // periodic localStorage poll will decide if we are logged in or                                     // 152
+                // out with this token, if it hasn't already. Of course, even                                        // 153
+                // with this check, another tab could insert a new valid token                                       // 154
+                // immediately before we clear localStorage here, which would                                        // 155
+                // lead to both tabs being logged out, but by checking the token                                     // 156
+                // in storage right now we hope to make that unlikely to happen.                                     // 157
+                //                                                                                                   // 158
+                // If there is no token in storage right now, we don't have to                                       // 159
+                // do anything; whatever code removed the token from storage was                                     // 160
+                // responsible for calling `makeClientLoggedOut()`, or the                                           // 161
+                // periodic localStorage poll will call `makeClientLoggedOut`                                        // 162
+                // eventually if another tab wiped the token from storage.                                           // 163
+                if (storedTokenNow && storedTokenNow === result.token) {                                             // 164
+                  makeClientLoggedOut();                                                                             // 165
+                }                                                                                                    // 166
+              }                                                                                                      // 167
+              // Possibly a weird callback to call, but better than nothing if                                       // 168
+              // there is a reconnect between "login result received" and "data                                      // 169
+              // ready".                                                                                             // 170
+              loginCallbacks(error);                                                                                 // 171
+            }});                                                                                                     // 172
+        }                                                                                                            // 173
+      };                                                                                                             // 174
+    }                                                                                                                // 175
+  };                                                                                                                 // 176
+                                                                                                                     // 177
+  // This callback is called once the local cache of the current-user                                                // 178
+  // subscription (and all subscriptions, in fact) are guaranteed to be up to                                        // 179
+  // date.                                                                                                           // 180
+  var loggedInAndDataReadyCallback = function (error, result) {                                                      // 181
+    // If the login method returns its result but the connection is lost                                             // 182
+    // before the data is in the local cache, it'll set an onReconnect (see                                          // 183
+    // above). The onReconnect will try to log in using the token, and *it*                                          // 184
+    // will call userCallback via its own version of this                                                            // 185
+    // loggedInAndDataReadyCallback. So we don't have to do anything here.                                           // 186
+    if (reconnected)                                                                                                 // 187
+      return;                                                                                                        // 188
+                                                                                                                     // 189
+    // Note that we need to call this even if _suppressLoggingIn is true,                                            // 190
+    // because it could be matching a _setLoggingIn(true) from a                                                     // 191
+    // half-completed pre-reconnect login method.                                                                    // 192
+    Accounts._setLoggingIn(false);                                                                                   // 193
+    if (error || !result) {                                                                                          // 194
+      error = error || new Error(                                                                                    // 195
+        "No result from call to " + options.methodName);                                                             // 196
+      loginCallbacks(error);                                                                                         // 197
+      return;                                                                                                        // 198
+    }                                                                                                                // 199
+    try {                                                                                                            // 200
+      options.validateResult(result);                                                                                // 201
+    } catch (e) {                                                                                                    // 202
+      loginCallbacks(e);                                                                                             // 203
+      return;                                                                                                        // 204
+    }                                                                                                                // 205
+                                                                                                                     // 206
+    // Make the client logged in. (The user data should already be loaded!)                                          // 207
+    makeClientLoggedIn(result.id, result.token, result.tokenExpires);                                                // 208
+    loginCallbacks();                                                                                                // 209
+  };                                                                                                                 // 210
+                                                                                                                     // 211
+  if (!options._suppressLoggingIn)                                                                                   // 212
+    Accounts._setLoggingIn(true);                                                                                    // 213
+  Accounts.connection.apply(                                                                                         // 214
+    options.methodName,                                                                                              // 215
+    options.methodArguments,                                                                                         // 216
+    {wait: true, onResultReceived: onResultReceived},                                                                // 217
+    loggedInAndDataReadyCallback);                                                                                   // 218
 };                                                                                                                   // 219
                                                                                                                      // 220
-/**                                                                                                                  // 221
- * @summary Log the user out.                                                                                        // 222
- * @locus Client                                                                                                     // 223
+makeClientLoggedOut = function() {                                                                                   // 221
+  unstoreLoginToken();                                                                                               // 222
+  Accounts.connection.setUserId(null);                                                                               // 223
+  Accounts.connection.onReconnect = null;                                                                            // 224
+};                                                                                                                   // 225
+                                                                                                                     // 226
+makeClientLoggedIn = function(userId, token, tokenExpires) {                                                         // 227
+  storeLoginToken(userId, token, tokenExpires);                                                                      // 228
+  Accounts.connection.setUserId(userId);                                                                             // 229
+};                                                                                                                   // 230
+                                                                                                                     // 231
+/**                                                                                                                  // 232
+ * @summary Log the user out.                                                                                        // 233
+ * @locus Client                                                                                                     // 234
  * @param {Function} [callback] Optional callback. Called with no arguments on success, or with a single `Error` argument on failure.
- */                                                                                                                  // 225
-Meteor.logout = function (callback) {                                                                                // 226
-  Accounts.connection.apply('logout', [], {wait: true}, function(error, result) {                                    // 227
-    if (error) {                                                                                                     // 228
-      callback && callback(error);                                                                                   // 229
-    } else {                                                                                                         // 230
-      makeClientLoggedOut();                                                                                         // 231
-      callback && callback();                                                                                        // 232
-    }                                                                                                                // 233
-  });                                                                                                                // 234
-};                                                                                                                   // 235
-                                                                                                                     // 236
-/**                                                                                                                  // 237
+ */                                                                                                                  // 236
+Meteor.logout = function (callback) {                                                                                // 237
+  Accounts.connection.apply('logout', [], {wait: true}, function(error, result) {                                    // 238
+    if (error) {                                                                                                     // 239
+      callback && callback(error);                                                                                   // 240
+    } else {                                                                                                         // 241
+      makeClientLoggedOut();                                                                                         // 242
+      callback && callback();                                                                                        // 243
+    }                                                                                                                // 244
+  });                                                                                                                // 245
+};                                                                                                                   // 246
+                                                                                                                     // 247
+/**                                                                                                                  // 248
  * @summary Log out other clients logged in as the current user, but does not log out the client that calls this function.
- * @locus Client                                                                                                     // 239
+ * @locus Client                                                                                                     // 250
  * @param {Function} [callback] Optional callback. Called with no arguments on success, or with a single `Error` argument on failure.
- */                                                                                                                  // 241
-Meteor.logoutOtherClients = function (callback) {                                                                    // 242
-  // We need to make two method calls: one to replace our current token,                                             // 243
-  // and another to remove all tokens except the current one. We want to                                             // 244
-  // call these two methods one after the other, without any other                                                   // 245
-  // methods running between them. For example, we don't want `logout`                                               // 246
-  // to be called in between our two method calls (otherwise the second                                              // 247
-  // method call would return an error). Another example: we don't want                                              // 248
-  // logout to be called before the callback for `getNewToken`;                                                      // 249
-  // otherwise we would momentarily log the user out and then write a                                                // 250
-  // new token to localStorage.                                                                                      // 251
-  //                                                                                                                 // 252
-  // To accomplish this, we make both calls as wait methods, and queue                                               // 253
-  // them one after the other, without spinning off the event loop in                                                // 254
-  // between. Even though we queue `removeOtherTokens` before                                                        // 255
-  // `getNewToken`, we won't actually send the `removeOtherTokens` call                                              // 256
-  // until the `getNewToken` callback has finished running, because they                                             // 257
-  // are both wait methods.                                                                                          // 258
-  Accounts.connection.apply(                                                                                         // 259
-    'getNewToken',                                                                                                   // 260
-    [],                                                                                                              // 261
-    { wait: true },                                                                                                  // 262
-    function (err, result) {                                                                                         // 263
-      if (! err) {                                                                                                   // 264
-        storeLoginToken(Meteor.userId(), result.token, result.tokenExpires);                                         // 265
-      }                                                                                                              // 266
-    }                                                                                                                // 267
-  );                                                                                                                 // 268
-  Accounts.connection.apply(                                                                                         // 269
-    'removeOtherTokens',                                                                                             // 270
-    [],                                                                                                              // 271
-    { wait: true },                                                                                                  // 272
-    function (err) {                                                                                                 // 273
-      callback && callback(err);                                                                                     // 274
-    }                                                                                                                // 275
-  );                                                                                                                 // 276
-};                                                                                                                   // 277
-                                                                                                                     // 278
-                                                                                                                     // 279
-///                                                                                                                  // 280
-/// LOGIN SERVICES                                                                                                   // 281
-///                                                                                                                  // 282
-                                                                                                                     // 283
-var loginServicesHandle =                                                                                            // 284
-  Accounts.connection.subscribe("meteor.loginServiceConfiguration");                                                 // 285
-                                                                                                                     // 286
-// A reactive function returning whether the loginServiceConfiguration                                               // 287
-// subscription is ready. Used by accounts-ui to hide the login button                                               // 288
-// until we have all the configuration loaded                                                                        // 289
-//                                                                                                                   // 290
-Accounts.loginServicesConfigured = function () {                                                                     // 291
-  return loginServicesHandle.ready();                                                                                // 292
-};                                                                                                                   // 293
+ */                                                                                                                  // 252
+Meteor.logoutOtherClients = function (callback) {                                                                    // 253
+  // We need to make two method calls: one to replace our current token,                                             // 254
+  // and another to remove all tokens except the current one. We want to                                             // 255
+  // call these two methods one after the other, without any other                                                   // 256
+  // methods running between them. For example, we don't want `logout`                                               // 257
+  // to be called in between our two method calls (otherwise the second                                              // 258
+  // method call would return an error). Another example: we don't want                                              // 259
+  // logout to be called before the callback for `getNewToken`;                                                      // 260
+  // otherwise we would momentarily log the user out and then write a                                                // 261
+  // new token to localStorage.                                                                                      // 262
+  //                                                                                                                 // 263
+  // To accomplish this, we make both calls as wait methods, and queue                                               // 264
+  // them one after the other, without spinning off the event loop in                                                // 265
+  // between. Even though we queue `removeOtherTokens` before                                                        // 266
+  // `getNewToken`, we won't actually send the `removeOtherTokens` call                                              // 267
+  // until the `getNewToken` callback has finished running, because they                                             // 268
+  // are both wait methods.                                                                                          // 269
+  Accounts.connection.apply(                                                                                         // 270
+    'getNewToken',                                                                                                   // 271
+    [],                                                                                                              // 272
+    { wait: true },                                                                                                  // 273
+    function (err, result) {                                                                                         // 274
+      if (! err) {                                                                                                   // 275
+        storeLoginToken(Meteor.userId(), result.token, result.tokenExpires);                                         // 276
+      }                                                                                                              // 277
+    }                                                                                                                // 278
+  );                                                                                                                 // 279
+  Accounts.connection.apply(                                                                                         // 280
+    'removeOtherTokens',                                                                                             // 281
+    [],                                                                                                              // 282
+    { wait: true },                                                                                                  // 283
+    function (err) {                                                                                                 // 284
+      callback && callback(err);                                                                                     // 285
+    }                                                                                                                // 286
+  );                                                                                                                 // 287
+};                                                                                                                   // 288
+                                                                                                                     // 289
+                                                                                                                     // 290
+///                                                                                                                  // 291
+/// LOGIN SERVICES                                                                                                   // 292
+///                                                                                                                  // 293
                                                                                                                      // 294
-// Some login services such as the redirect login flow or the resume                                                 // 295
-// login handler can log the user in at page load time.  The                                                         // 296
-// Meteor.loginWithX functions have a callback argument, but the                                                     // 297
-// callback function instance won't be in memory any longer if the                                                   // 298
-// page was reloaded.  The `onPageLoadLogin` function allows a                                                       // 299
-// callback to be registered for the case where the login was                                                        // 300
-// initiated in a previous VM, and we now have the result of the login                                               // 301
-// attempt in a new VM.                                                                                              // 302
-                                                                                                                     // 303
-var pageLoadLoginCallbacks = [];                                                                                     // 304
-var pageLoadLoginAttemptInfo = null;                                                                                 // 305
-                                                                                                                     // 306
-// Register a callback to be called if we have information about a                                                   // 307
-// login attempt at page load time.  Call the callback immediately if                                                // 308
-// we already have the page load login attempt info, otherwise stash                                                 // 309
-// the callback to be called if and when we do get the attempt info.                                                 // 310
-//                                                                                                                   // 311
-Accounts.onPageLoadLogin = function (f) {                                                                            // 312
-  if (pageLoadLoginAttemptInfo)                                                                                      // 313
-    f(pageLoadLoginAttemptInfo);                                                                                     // 314
-  else                                                                                                               // 315
-    pageLoadLoginCallbacks.push(f);                                                                                  // 316
-};                                                                                                                   // 317
-                                                                                                                     // 318
-                                                                                                                     // 319
-// Receive the information about the login attempt at page load time.                                                // 320
-// Call registered callbacks, and also record the info in case                                                       // 321
-// someone's callback hasn't been registered yet.                                                                    // 322
-//                                                                                                                   // 323
-Accounts._pageLoadLogin = function (attemptInfo) {                                                                   // 324
-  if (pageLoadLoginAttemptInfo) {                                                                                    // 325
-    Meteor._debug("Ignoring unexpected duplicate page load login attempt info");                                     // 326
-    return;                                                                                                          // 327
-  }                                                                                                                  // 328
-  _.each(pageLoadLoginCallbacks, function (callback) { callback(attemptInfo); });                                    // 329
-  pageLoadLoginCallbacks = [];                                                                                       // 330
-  pageLoadLoginAttemptInfo = attemptInfo;                                                                            // 331
-};                                                                                                                   // 332
-                                                                                                                     // 333
-                                                                                                                     // 334
-///                                                                                                                  // 335
-/// HANDLEBARS HELPERS                                                                                               // 336
-///                                                                                                                  // 337
-                                                                                                                     // 338
-// If our app has a Blaze, register the {{currentUser}} and {{loggingIn}}                                            // 339
-// global helpers.                                                                                                   // 340
-if (Package.blaze) {                                                                                                 // 341
-  /**                                                                                                                // 342
-   * @global                                                                                                         // 343
-   * @name  currentUser                                                                                              // 344
-   * @isHelper true                                                                                                  // 345
-   * @summary Calls [Meteor.user()](#meteor_user). Use `{{#if currentUser}}` to check whether the user is logged in. // 346
-   */                                                                                                                // 347
-  Package.blaze.Blaze.Template.registerHelper('currentUser', function () {                                           // 348
-    return Meteor.user();                                                                                            // 349
-  });                                                                                                                // 350
-                                                                                                                     // 351
-  /**                                                                                                                // 352
-   * @global                                                                                                         // 353
-   * @name  loggingIn                                                                                                // 354
-   * @isHelper true                                                                                                  // 355
-   * @summary Calls [Meteor.loggingIn()](#meteor_loggingin).                                                         // 356
-   */                                                                                                                // 357
-  Package.blaze.Blaze.Template.registerHelper('loggingIn', function () {                                             // 358
-    return Meteor.loggingIn();                                                                                       // 359
-  });                                                                                                                // 360
-}                                                                                                                    // 361
+var loginServicesHandle =                                                                                            // 295
+  Accounts.connection.subscribe("meteor.loginServiceConfiguration");                                                 // 296
+                                                                                                                     // 297
+// A reactive function returning whether the loginServiceConfiguration                                               // 298
+// subscription is ready. Used by accounts-ui to hide the login button                                               // 299
+// until we have all the configuration loaded                                                                        // 300
+//                                                                                                                   // 301
+Accounts.loginServicesConfigured = function () {                                                                     // 302
+  return loginServicesHandle.ready();                                                                                // 303
+};                                                                                                                   // 304
+                                                                                                                     // 305
+// Some login services such as the redirect login flow or the resume                                                 // 306
+// login handler can log the user in at page load time.  The                                                         // 307
+// Meteor.loginWithX functions have a callback argument, but the                                                     // 308
+// callback function instance won't be in memory any longer if the                                                   // 309
+// page was reloaded.  The `onPageLoadLogin` function allows a                                                       // 310
+// callback to be registered for the case where the login was                                                        // 311
+// initiated in a previous VM, and we now have the result of the login                                               // 312
+// attempt in a new VM.                                                                                              // 313
+                                                                                                                     // 314
+var pageLoadLoginCallbacks = [];                                                                                     // 315
+var pageLoadLoginAttemptInfo = null;                                                                                 // 316
+                                                                                                                     // 317
+// Register a callback to be called if we have information about a                                                   // 318
+// login attempt at page load time.  Call the callback immediately if                                                // 319
+// we already have the page load login attempt info, otherwise stash                                                 // 320
+// the callback to be called if and when we do get the attempt info.                                                 // 321
+//                                                                                                                   // 322
+Accounts.onPageLoadLogin = function (f) {                                                                            // 323
+  if (pageLoadLoginAttemptInfo)                                                                                      // 324
+    f(pageLoadLoginAttemptInfo);                                                                                     // 325
+  else                                                                                                               // 326
+    pageLoadLoginCallbacks.push(f);                                                                                  // 327
+};                                                                                                                   // 328
+                                                                                                                     // 329
+                                                                                                                     // 330
+// Receive the information about the login attempt at page load time.                                                // 331
+// Call registered callbacks, and also record the info in case                                                       // 332
+// someone's callback hasn't been registered yet.                                                                    // 333
+//                                                                                                                   // 334
+Accounts._pageLoadLogin = function (attemptInfo) {                                                                   // 335
+  if (pageLoadLoginAttemptInfo) {                                                                                    // 336
+    Meteor._debug("Ignoring unexpected duplicate page load login attempt info");                                     // 337
+    return;                                                                                                          // 338
+  }                                                                                                                  // 339
+  _.each(pageLoadLoginCallbacks, function (callback) { callback(attemptInfo); });                                    // 340
+  pageLoadLoginCallbacks = [];                                                                                       // 341
+  pageLoadLoginAttemptInfo = attemptInfo;                                                                            // 342
+};                                                                                                                   // 343
+                                                                                                                     // 344
+                                                                                                                     // 345
+///                                                                                                                  // 346
+/// HANDLEBARS HELPERS                                                                                               // 347
+///                                                                                                                  // 348
+                                                                                                                     // 349
+// If our app has a Blaze, register the {{currentUser}} and {{loggingIn}}                                            // 350
+// global helpers.                                                                                                   // 351
+if (Package.blaze) {                                                                                                 // 352
+  /**                                                                                                                // 353
+   * @global                                                                                                         // 354
+   * @name  currentUser                                                                                              // 355
+   * @isHelper true                                                                                                  // 356
+   * @summary Calls [Meteor.user()](#meteor_user). Use `{{#if currentUser}}` to check whether the user is logged in. // 357
+   */                                                                                                                // 358
+  Package.blaze.Blaze.Template.registerHelper('currentUser', function () {                                           // 359
+    return Meteor.user();                                                                                            // 360
+  });                                                                                                                // 361
                                                                                                                      // 362
+  /**                                                                                                                // 363
+   * @global                                                                                                         // 364
+   * @name  loggingIn                                                                                                // 365
+   * @isHelper true                                                                                                  // 366
+   * @summary Calls [Meteor.loggingIn()](#meteor_loggingin).                                                         // 367
+   */                                                                                                                // 368
+  Package.blaze.Blaze.Template.registerHelper('loggingIn', function () {                                             // 369
+    return Meteor.loggingIn();                                                                                       // 370
+  });                                                                                                                // 371
+}                                                                                                                    // 372
+                                                                                                                     // 373
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
