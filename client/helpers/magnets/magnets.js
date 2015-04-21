@@ -17,12 +17,26 @@ Template.magnet.magnetId = function() {
     return this._id;
 };
 
+Template.list.helpers({
+    isOwner: function() {
+        return this.owner === Meteor.userId();
+    }
+});
+
 //delete magnets
 Template.private.events = {
-       'click #group-play': function() {
+    'click #group_play': function() {
         var magnet = Magnets.findOne();
-        Magnets.update({_id: magnet._id}, {$set: {fridgeId: 1}});
-        return Magnets.find({fridgeId: 1});
+        Magnets.update({
+            _id: magnet._id
+        }, {
+            $set: {
+                fridgeId: 1
+            }
+        });
+        return Magnets.find({
+            fridgeId: 1
+        });
     }
 };
 
@@ -58,12 +72,12 @@ Template.home.events = {
         }
     },
 
-     'click #new-board': function() {
-        var user = Meteor.userId();
-        var magnet = Magnets.findOne();
-        Magnets.update({_id: magnet._id}, {$set: {fridgeId: user}});
-        return Magnets.find({fridgeId: user});
-    }
+    //  'click #new-board': function() {
+    //     var user = Meteor.userId();
+    //     var magnet = Magnets.findOne();
+    //     Magnets.update({_id: magnet._id}, {$set: {fridgeId: user}});
+    //     return Magnets.find({fridgeId: user});
+    // }
 
 };
 
@@ -166,5 +180,5 @@ $(function() {
             $('#send').click();
         }
     });
-    
+
 });

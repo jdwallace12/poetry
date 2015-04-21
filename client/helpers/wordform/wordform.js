@@ -8,7 +8,8 @@ Template.wordForm.events = {
             name: tmpl.find("#name_of_word").value,
             top: Math.floor(Random.fraction() * 100) * 7,
             left: Math.floor(Random.fraction() * 100) * 8,
-            user: user
+            user: user,
+            owner: Meteor.userId(),
         });
 
         var slap = $('#slap')[0]

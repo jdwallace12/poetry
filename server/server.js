@@ -12,6 +12,14 @@ Meteor.methods({
             }
         });
     },
+
+    setPrivate: function (taskId, setToPrivate) {
+  var magnet = Magnets.findOne(magnetId);
+
+  Magnets.update(magnetId, { $set: { private: setToPrivate } });
+},
+
+
     'set_position': function(magnetId, position) {
         console.log(position)
         Magnets.update(magnetId, {

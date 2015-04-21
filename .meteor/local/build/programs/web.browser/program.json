@@ -983,9 +983,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/templates/home/template.home.js?cbc2df31c6263cf55ffe72caf121487dd19eab9f",
-      "size": 10096,
-      "hash": "cbc2df31c6263cf55ffe72caf121487dd19eab9f"
+      "url": "/client/templates/home/template.home.js?79276ee832f69a7447b9eea0f3f379eb10e18559",
+      "size": 9994,
+      "hash": "79276ee832f69a7447b9eea0f3f379eb10e18559"
     },
     {
       "path": "app/client/templates/list/template.list.js",
@@ -1073,9 +1073,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/lib/collections/magnets.js?37e3664b1cc00cc8cb15ad1d69f7bc4ce10b447b",
-      "size": 44946,
-      "hash": "37e3664b1cc00cc8cb15ad1d69f7bc4ce10b447b"
+      "url": "/lib/collections/magnets.js?10fa4ad020943211eac16a152f64b81f85b7c09b",
+      "size": 45108,
+      "hash": "10fa4ad020943211eac16a152f64b81f85b7c09b"
     },
     {
       "path": "app/client/helpers/home/gravatar.js",
@@ -1100,9 +1100,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/magnets/magnets.js?a2e9d9407717b56af959ff2b29f2abb7e1c7a116",
-      "size": 4186,
-      "hash": "a2e9d9407717b56af959ff2b29f2abb7e1c7a116"
+      "url": "/client/helpers/magnets/magnets.js?052f66ae54c1ddf8bf8da44824a72a96a893c6b7",
+      "size": 4401,
+      "hash": "052f66ae54c1ddf8bf8da44824a72a96a893c6b7"
     },
     {
       "path": "app/client/helpers/nav-ui/nav.js",
@@ -1127,9 +1127,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/client/helpers/wordform/wordform.js?c62df2c5dd322e91f39603ee48a8a2036cc05fc7",
-      "size": 627,
-      "hash": "c62df2c5dd322e91f39603ee48a8a2036cc05fc7"
+      "url": "/client/helpers/wordform/wordform.js?fa80f91cd36ad336dc6f2ed60fb58eb386eeaccc",
+      "size": 664,
+      "hash": "fa80f91cd36ad336dc6f2ed60fb58eb386eeaccc"
     },
     {
       "path": "app/client/vendor/jquery-ui.min.js",
